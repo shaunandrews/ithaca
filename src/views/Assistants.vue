@@ -83,8 +83,8 @@ function goToAssistant(assistant, event) {
 }
 
 .assistant-title {
-  font-size: var(--font-size-l);
-  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
   text-decoration: none;
   color: var(--color-surface-fg);
 }
@@ -101,13 +101,16 @@ function goToAssistant(assistant, event) {
 }
 
 .assistant-owner {
+  font-size: var(--font-size-s);
   padding-top: var(--space-xs);
   gap: var(--space-xs);
-  flex: 1;
-  align-items: flex-end;
+  align-items: center;
+  color: var(--color-surface-fg-tertiary);
 }
 
 .assistant-owner-icon {
+  height: 16px;
+  width: 16px;
   border-radius: var(--radius-s);
 }
 
