@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Assistants from './views/Assistants.vue';
 import Tools from './views/Tools.vue';
 import Assistant from './views/Assistant.vue';
+import Workflows from './views/Workflows.vue';
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     name: 'Assistant',
     component: Assistant,
     props: true,
+  },
+  {
+    path: '/workflows',
+    name: 'Workflows',
+    component: Workflows,
   },
 ];
 
