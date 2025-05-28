@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="ithaca">
     <header>
       <div class="header-start">
         <h1>Ithaca</h1>
@@ -40,6 +40,12 @@ const isAssistantRoute = computed(() => route.name === 'Assistant');
 </script>
 
 <style scoped>
+.ithaca {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
 header {
   display: flex;
   align-items: center;
@@ -87,5 +93,9 @@ ul {
 .user-initials {
   font-size: var(--font-size-xs);
   font-weight: 900;
+}
+
+main {
+  flex: 1;
 }
 </style>

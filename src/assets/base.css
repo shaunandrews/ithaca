@@ -77,6 +77,10 @@ select {
 }
 
 /* Layout */
+#app {
+  /* height: 100vh; */
+}
+
 .hstack,
 .vstack {
   display: flex;

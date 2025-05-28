@@ -1,114 +1,118 @@
 <template>
-  <header v-if="assistant">
-    <h2 class="assistant-title">{{ assistant.title }}</h2>
-    <span class="separator">/</span>
-    <nav>
-      <ul>
-        <li :class="{ active: activeTab === 'details' }" @click="activeTab = 'details'">Details</li>
-        <li :class="{ active: activeTab === 'activity' }" @click="activeTab = 'activity'">Activity</li>
-      </ul>
-    </nav>
-  </header>
+  <div class="assistant-container">
+    <header v-if="assistant">
+      <h2 class="assistant-title">{{ assistant.title }}</h2>
+      <span class="separator">/</span>
+      <nav>
+        <ul>
+          <li :class="{ active: activeTab === 'details' }" @click="activeTab = 'details'">Details</li>
+          <li :class="{ active: activeTab === 'activity' }" @click="activeTab = 'activity'">Activity</li>
+        </ul>
+      </nav>
+    </header>
 
-  <div v-else>
-    <p>Assistant not found.</p>
-  </div>
+    <div v-else>
+      <p>Assistant not found.</p>
+    </div>
 
-  <div v-if="assistant && activeTab === 'details'" class="assistant-details hstack">
-    <div class="assistant-config vstack">
-      <div class="instructions">
-        <h4>Instructions</h4>
-        <div
-          class="text-field"
-          contenteditable="true"
-          @input="onTextFieldInput"
-          @keydown="onTextFieldKeydown"
-        >
-          <template v-for="(paragraph, pIdx) in parsedInstructions" :key="pIdx">
-            <p>
-              <template v-for="(part, idx) in paragraph" :key="idx">
-                <span v-if="part.type === 'text'">{{ part.value }}</span>
-                <span
-                  v-else-if="part.type === 'tool'"
-                  class="highlight-tool"
-                  contenteditable="false"
-                  :title="part.value ? part.value : undefined"
-                  @mouseenter="event => showPopover(event, part.title)"
-                  @mouseleave="hidePopover"
-                >
-                  @{{ part.title }}<template v-if="part.value">: {{ part.value }}</template>
-                </span>
-              </template>
-            </p>
-          </template>
+    <div v-if="assistant && activeTab === 'details'" class="assistant-details hstack">
+      <div class="assistant-config vstack">
+        <div class="instructions">
+          <h4>Instructions</h4>
           <div
-            v-if="popover.show"
-            class="tool-popover"
-            :style="{ left: popover.x + 'px', top: popover.y + 'px' }"
+            class="text-field"
+            contenteditable="true"
+            @input="onTextFieldInput"
+            @keydown="onTextFieldKeydown"
           >
-            {{ popover.text }}
-          </div>
-          <ul
-            v-if="autocomplete.show && autocomplete.filtered.length"
-            class="autocomplete-menu"
-            :style="{ left: autocomplete.x + 'px', top: autocomplete.y + 'px' }"
-          >
-            <li
-              v-for="tool in autocomplete.filtered"
-              :key="tool.title"
-              :class="{ selected: tool.title === autocomplete.selected }"
-              @mousedown.prevent="selectTool(tool)"
+            <template v-for="(paragraph, pIdx) in parsedInstructions" :key="pIdx">
+              <p>
+                <template v-for="(part, idx) in paragraph" :key="idx">
+                  <span v-if="part.type === 'text'">{{ part.value }}</span>
+                  <span
+                    v-else-if="part.type === 'tool'"
+                    class="highlight-tool"
+                    contenteditable="false"
+                    :title="part.value ? part.value : undefined"
+                    @mouseenter="event => showPopover(event, part.title)"
+                    @mouseleave="hidePopover"
+                  >
+                    @{{ part.title }}<template v-if="part.value">: {{ part.value }}</template>
+                  </span>
+                </template>
+              </p>
+            </template>
+            <div
+              v-if="popover.show"
+              class="tool-popover"
+              :style="{ left: popover.x + 'px', top: popover.y + 'px' }"
             >
-              <span v-if="tool.icon" class="autocomplete-icon"><img :src="tool.icon" :alt="tool.title" width="16" height="16" /></span>
-              <span class="autocomplete-title">{{ tool.title }}</span>
-              <span class="autocomplete-desc">{{ tool.description }}</span>
-            </li>
-          </ul>
+              {{ popover.text }}
+            </div>
+            <ul
+              v-if="autocomplete.show && autocomplete.filtered.length"
+              class="autocomplete-menu"
+              :style="{ left: autocomplete.x + 'px', top: autocomplete.y + 'px' }"
+            >
+              <li
+                v-for="tool in autocomplete.filtered"
+                :key="tool.title"
+                :class="{ selected: tool.title === autocomplete.selected }"
+                @mousedown.prevent="selectTool(tool)"
+              >
+                <span v-if="tool.icon" class="autocomplete-icon"><img :src="tool.icon" :alt="tool.title" width="16" height="16" /></span>
+                <span class="autocomplete-title">{{ tool.title }}</span>
+                <span class="autocomplete-desc">{{ tool.description }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tools">
+          <h4>Tools</h4>
+          <div class="tools-list hstack">
+            <ToolListItem
+              v-for="(tool, idx) in assistant.tools"
+              :key="idx"
+              :icon="tool.icon"
+              :title="tool.title"
+              :subtitle="tool.subtitle"
+            />
+          </div>
+        </div>
+
+        <div class="trigger">
+          <h4>Trigger</h4>
+          <select :value="assistant.trigger">
+            <option value="on-demand">On-demand</option>
+            <option value="scheduled">Scheduled</option>
+            <option value="email-message">Email</option>
+            <option value="chat-message">Chat</option>
+            <option value="slack-message">Slack</option>
+          </select>
         </div>
       </div>
 
-      <div class="tools-list hstack">
-        <h4>Tools</h4>
-        <ToolListItem
-          v-for="(tool, idx) in assistant.tools"
-          :key="idx"
-          :icon="tool.icon"
-          :title="tool.title"
-          :subtitle="tool.subtitle"
-        />
-      </div>
-
-      <div class="trigger">
-        <h4>Trigger</h4>
-        <select :value="assistant.trigger">
-          <option value="on-demand">On-demand</option>
-          <option value="scheduled">Scheduled</option>
-          <option value="email-message">Email</option>
-          <option value="chat-message">Chat</option>
-          <option value="slack-message">Slack</option>
-        </select>
+      <div class="assistant-preview">
+        <h4>Preview</h4>
+        <div class="preview-start">
+          <button><PlayIcon />Start preview</button>
+          <p>Preview your assistant's behavior and chat with it to test it out.</p>
+        </div>
       </div>
     </div>
 
-    <div class="assistant-preview">
-      <h4>Preview</h4>
-      <div class="preview-canvas">
-        <button><PlayIcon />Start preview</button>
-        <p>Preview your assistant's behavior and chat with it to test it out.</p>
-      </div>
+    <div v-if="assistant && activeTab === 'activity'" class="assistant-activity">
+      <ol>
+        <li v-for="(item, idx) in assistant.activity" :key="idx">
+          <span class="activity-datetime">{{ formatDate(item.datetime) }}</span>
+          &bull;
+          <span class="activity-event">{{ item.event }}</span>
+          &mdash;
+          <span class="activity-summary">{{ item.summary }}</span>
+        </li>
+      </ol>
     </div>
-  </div>
-
-  <div v-if="assistant && activeTab === 'activity'" class="assistant-activity">
-    <ol>
-      <li v-for="(item, idx) in assistant.activity" :key="idx">
-        <span class="activity-datetime">{{ formatDate(item.datetime) }}</span>
-        &bull;
-        <span class="activity-event">{{ item.event }}</span>
-        &mdash;
-        <span class="activity-summary">{{ item.summary }}</span>
-      </li>
-    </ol>
   </div>
 </template>
 
@@ -246,16 +250,8 @@ function onTextFieldKeydown(e) {
 </script>
 
 <style>
-.text-field {
-  padding: var(--space-s) var(--space-m);
-  border-radius: var(--radius);
-  border: 1px solid var(--color-surface-tint);
-  background-color: var(--color-surface);
-}
-
 .text-field:focus {
   outline: none;
-  border-color: var(--color-accent);
 }
 
 .text-field p {
@@ -267,18 +263,27 @@ function onTextFieldKeydown(e) {
 }
 
 .highlight-tool {
-  color: rgb(255, 50, 180);
+  color: var(--color-accent);
+  
+  /* background-color: var(--color-accent); */
+  /* color: var(--color-accent-fg); */
+  font-size: var(--font-size-s);
   font-weight: var(--font-weight-medium);
-  border-radius: var(--radius-s);
+  border-radius: 3px;
   cursor: pointer;
-  border: 1px solid transparent;
+  border: 0.5px solid transparent;
+  border-color: var(--color-accent);
   white-space: nowrap;
-
+  /* padding: var(--space-xxs); */
+  padding: 2px 3px;
 }
 
 .highlight-tool:hover {
-  background-color: rgba(255, 50, 180, 0.1);
-  border-color: rgba(255, 50, 180, 0.2);
+  color: var(--color-accent-fg);
+  background-color: var(--color-accent);
+  /* color: rgb(255, 50, 180); */
+  /* background-color: rgba(255, 50, 180, 0.1); */
+  /* border-color: rgba(255, 50, 180, 0.2); */
 }
 
 .tool-popover {
@@ -340,10 +345,18 @@ function onTextFieldKeydown(e) {
 </style>
 
 <style scoped>
+.assistant-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 header {
   display: flex;
   align-items: center;
   gap: var(--space-m);
+  padding: var(--space-s) var(--space-m);
+  border-bottom: 1px solid var(--color-surface-tint);
 }
 
 header h2 {
@@ -375,12 +388,13 @@ nav li:hover {
 }
 
 .assistant-details {
-  /* gap: var(--space-l); */
+  flex: 1;
 }
 
 .assistant-config {
   gap: var(--space-m);
   width: 60%;
+  padding: var(--space-m);
 }
 
 h4 {
@@ -393,9 +407,16 @@ h4 {
   flex-wrap: wrap;
 }
 
-.preview-canvas {
-  border: 1px solid var(--color-surface-tint);
-  border-radius: var(--radius);
+.assistant-preview {
+  border-left: 1px solid var(--color-surface-tint);
+  padding: var(--space-m);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.preview-start {
+  flex: 1;
   padding: var(--space-xl);
   display: flex;
   flex-direction: column;
