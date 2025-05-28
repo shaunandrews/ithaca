@@ -42,31 +42,37 @@
                 </template>
               </p>
             </template>
-            <div
-              v-if="popover.show"
-              class="tool-popover"
-              :style="{ left: popover.x + 'px', top: popover.y + 'px' }"
-            >
-              {{ popover.text }}
-            </div>
-            <ul
-              v-if="autocomplete.show && autocomplete.filtered.length"
-              class="autocomplete-menu"
-              :style="{ left: autocomplete.x + 'px', top: autocomplete.y + 'px' }"
-            >
-              <li
-                v-for="tool in autocomplete.filtered"
-                :key="tool.title"
-                :class="{ selected: tool.title === autocomplete.selected }"
-                @mousedown.prevent="selectTool(tool)"
+            <teleport to="body">
+              <div
+                v-if="popover.show"
+                class="tool-popover"
+                :style="{ left: popover.x + 'px', top: popover.y + 'px' }"
               >
-                <span v-if="tool.icon" class="autocomplete-icon"><img :src="tool.icon" :alt="tool.title" width="16" height="16" /></span>
-                <span class="autocomplete-title">{{ tool.title }}</span>
-                <span class="autocomplete-desc">{{ tool.description }}</span>
-              </li>
-            </ul>
+                {{ popover.text }}
+              </div>
+            </teleport>
+            <teleport to="body">
+              <ul
+                v-if="autocomplete.show && autocomplete.filtered.length"
+                class="autocomplete-menu"
+                :style="{ left: autocomplete.x + 'px', top: autocomplete.y + 'px' }"
+              >
+                <li
+                  v-for="tool in autocomplete.filtered"
+                  :key="tool.title"
+                  :class="{ selected: tool.title === autocomplete.selected }"
+                  @mousedown.prevent="selectTool(tool)"
+                >
+                  <span v-if="tool.icon" class="autocomplete-icon"><img :src="tool.icon" :alt="tool.title" width="16" height="16" /></span>
+                  <span class="autocomplete-title">{{ tool.title }}</span>
+                  <span class="autocomplete-desc">{{ tool.description }}</span>
+                </li>
+              </ul>
+            </teleport>
           </div>
         </div>
+
+        <hr />
 
         <div class="tools">
           <h4>Tools</h4>
@@ -83,13 +89,28 @@
 
         <div class="trigger">
           <h4>Trigger</h4>
-          <select :value="assistant.trigger">
+          <select v-model="trigger">
             <option value="on-demand">On-demand</option>
             <option value="scheduled">Scheduled</option>
             <option value="email-message">Email</option>
             <option value="chat-message">Chat</option>
             <option value="slack-message">Slack</option>
           </select>
+          <p v-if="trigger === 'on-demand'">
+            This assistant will only run when specifically requested.
+          </p>
+          <p v-else-if="trigger === 'scheduled'">
+            This assistant will run on a schedule.
+          </p>
+          <p v-else-if="trigger === 'email-message'">
+            This assistant will run when an email is sent to the associated inbox.
+          </p>
+          <p v-else-if="trigger === 'chat-message'">
+            This assistant will run when a chat message is sent to the assistant.
+          </p>
+          <p v-else-if="trigger === 'slack-message'">
+            This assistant will run when @ pinged by name in Slack.
+          </p>
         </div>
       </div>
 
@@ -117,7 +138,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import ToolListItem from '@/components/ToolListItem.vue';
 import { assistants } from '@/data/assistants.js';
@@ -142,6 +163,16 @@ const getToolDescription = (title) => {
 const popover = ref({ show: false, text: '', x: 0, y: 0 });
 
 const autocomplete = ref({ show: false, x: 0, y: 0, query: '', filtered: tools, caretNode: null });
+
+const trigger = ref(assistant.value ? assistant.value.trigger : 'on-demand');
+
+watch(trigger, (newVal) => {
+  if (assistant.value) assistant.value.trigger = newVal;
+});
+
+watch(assistant, (newAssistant) => {
+  if (newAssistant) trigger.value = newAssistant.trigger;
+});
 
 function showPopover(event, title) {
   popover.value = {
@@ -252,10 +283,11 @@ function onTextFieldKeydown(e) {
 <style>
 .text-field:focus {
   outline: none;
+  caret-color: var(--color-accent);
 }
 
 .text-field p {
-  margin-bottom: var(--space-s);
+  margin-bottom: var(--space-m);
 }
 
 .text-field p:last-child {
@@ -382,6 +414,13 @@ nav li:hover {
 
 .assistant-details {
   flex: 1;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-color: var(--color-surface-tint);
+  margin: 0 calc(-1 * var(--space-m));
 }
 
 .assistant-config {
