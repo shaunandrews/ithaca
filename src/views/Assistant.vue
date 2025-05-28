@@ -264,9 +264,6 @@ function onTextFieldKeydown(e) {
 
 .highlight-tool {
   color: var(--color-accent);
-  
-  /* background-color: var(--color-accent); */
-  /* color: var(--color-accent-fg); */
   font-size: var(--font-size-s);
   font-weight: var(--font-weight-medium);
   border-radius: 3px;
@@ -274,16 +271,12 @@ function onTextFieldKeydown(e) {
   border: 0.5px solid transparent;
   border-color: var(--color-accent);
   white-space: nowrap;
-  /* padding: var(--space-xxs); */
   padding: 2px 3px;
 }
 
 .highlight-tool:hover {
   color: var(--color-accent-fg);
   background-color: var(--color-accent);
-  /* color: rgb(255, 50, 180); */
-  /* background-color: rgba(255, 50, 180, 0.1); */
-  /* border-color: rgba(255, 50, 180, 0.2); */
 }
 
 .tool-popover {
