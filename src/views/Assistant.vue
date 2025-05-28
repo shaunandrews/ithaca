@@ -71,7 +71,13 @@
 
   <div v-if="assistant && activeTab === 'activity'" class="assistant-activity">
     <ol>
-      <li>12 min ago &bull; Some event occurred and the assistant did something.</li>
+      <li v-for="(item, idx) in assistant.activity" :key="idx">
+        <span class="activity-datetime">{{ formatDate(item.datetime) }}</span>
+        &bull;
+        <span class="activity-event">{{ item.event }}</span>
+        &mdash;
+        <span class="activity-summary">{{ item.summary }}</span>
+      </li>
     </ol>
   </div>
 </template>
@@ -92,6 +98,17 @@ const activeTab = ref('details');
 const parsedInstructions = computed(() =>
   assistant.value ? parseInstructions(assistant.value.instructions) : []
 );
+
+function formatDate(datetime) {
+  const date = new Date(datetime);
+  return date.toLocaleString(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
 </script>
 
 <style>
