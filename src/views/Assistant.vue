@@ -1,14 +1,18 @@
 <template>
   <div class="assistant-container">
     <header v-if="assistant">
-      <h2 class="assistant-title">{{ assistant.title }}</h2>
-      <span class="separator">/</span>
-      <nav>
-        <ul>
-          <li :class="{ active: activeTab === 'details' }" @click="activeTab = 'details'">Details</li>
-          <li :class="{ active: activeTab === 'activity' }" @click="activeTab = 'activity'">Activity</li>
-        </ul>
-      </nav>
+      <div class="assistant-header-start">
+        <h2 class="assistant-title">{{ assistant.title }}:</h2>
+        <nav>
+          <ul>
+            <li :class="{ active: activeTab === 'details' }" @click="activeTab = 'details'">Details</li>
+            <li :class="{ active: activeTab === 'activity' }" @click="activeTab = 'activity'">Activity</li>
+          </ul>
+        </nav>
+      </div>
+      <div class="assistant-header-end">
+        <button class="primary">Save</button>
+      </div>
     </header>
 
     <div v-else>
@@ -76,6 +80,7 @@
 
         <div class="tools">
           <h4>Tools</h4>
+          <p>Assistants can use any tool below, even if not specifically instructed to do so.</p>
           <div class="tools-list hstack">
             <ToolListItem
               v-for="(tool, idx) in assistant.tools"
@@ -379,13 +384,22 @@ function onTextFieldKeydown(e) {
 header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--space-m);
   padding: var(--space-s) var(--space-m);
   border-bottom: 1px solid var(--color-surface-tint);
 }
 
+.assistant-header-start,
+.assistant-header-end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+}
+
 header h2 {
   font-size: var(--font-size-m);
+  font-weight: var(--font-weight-semibold);
 }
 
 nav ul {
@@ -398,18 +412,20 @@ nav ul {
 nav li {
   list-style: none;
   cursor: pointer;
+  font-size: var(--font-size-s);
   padding: var(--space-xxs) var(--space-xs);
   border-radius: var(--radius);
   color: var(--color-chrome-fg-secondary);
 }
 
 nav li.active {
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-chrome-fg);
+  background-color: var(--color-surface-tint);
 }
 
-nav li:hover {
-  background-color: var(--color-surface-tint);
+nav li:hover:not(.active) {
+  background-color: var(--color-surface-tint-dark);
 }
 
 .assistant-details {
@@ -432,6 +448,7 @@ hr {
 h4 {
   font-size: var(--font-size-s);
   margin-bottom: var(--space-xs);
+  color: var(--color-surface-fg-tertiary);
 }
 
 .tools-list {

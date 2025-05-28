@@ -11,6 +11,7 @@
   --color-surface-tint-dark: rgba(0, 0, 0, 0.1);
 
   --color-accent: #0640e0;
+  --color-accent-dark: #0536b8;
   --color-accent-fg: #ffffff;
 }
 
@@ -28,6 +29,7 @@
     --color-surface-tint-dark: rgba(0, 0, 0, 0.1);
 
     --color-accent: #5494fb;
+    --color-accent-dark: #4078c0;
     --color-accent-fg: #000000;
   }
 }

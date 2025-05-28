@@ -71,15 +71,15 @@ function goToAssistant(assistant, event) {
 .assistant-item {
   display: flex;
   flex-direction: column;
-  background: var(--color-surface);
+  background: var(--color-surface-tint);
   border-radius: var(--radius);
   padding: var(--space-m);
-  border: 1px solid var(--color-surface-tint);
+  border: 0.5px solid var(--color-surface-tint);
   cursor: pointer;
 }
 
 .assistant-item:hover {
-  background-color: var(--color-surface-tint);
+  background-color: var(--color-surface-tint-dark);
 }
 
 .assistant-title {

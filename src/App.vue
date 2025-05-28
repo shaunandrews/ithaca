@@ -21,7 +21,8 @@
       </div>
       <div class="header-end">
         <div class="user">
-          <p class="user-initials">SA</p>
+          <!-- <p class="user-initials">SA</p> -->
+          <img src="/images/avatar-shaunandrews.png" alt="Shaun Andrews" height="24" width="24" />
         </div>
       </div>
     </header>
@@ -88,11 +89,22 @@ ul {
   align-items: center;
   justify-content: center;
   border-radius: 100%;
+  transition: transform 0.1s ease-in-out;
+}
+
+.user:hover {
+  transform: scale(1.1);
 }
 
 .user-initials {
   font-size: var(--font-size-xs);
   font-weight: 900;
+}
+
+.user img {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
 }
 
 main {
