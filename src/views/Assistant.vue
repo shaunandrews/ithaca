@@ -50,12 +50,12 @@
 
       <div class="trigger">
         <h4>Trigger</h4>
-        <select>
+        <select :value="assistant.trigger">
           <option value="on-demand">On-demand</option>
           <option value="scheduled">Scheduled</option>
-          <option value="new-email">New email</option>
-          <option value="new-message">New message</option>
-          <option value="new-project">New project</option>
+          <option value="email-message">Email</option>
+          <option value="chat-message">Chat</option>
+          <option value="slack-message">Slack</option>
         </select>
       </div>
     </div>
@@ -213,4 +213,16 @@ h4 {
   justify-content: center;
   text-align: center;
 }
+
+.assistant-activity ol {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.assistant-activity li {
+  list-style: none;
+}
+
 </style>

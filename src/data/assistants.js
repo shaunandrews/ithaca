@@ -36,6 +36,7 @@ export const assistants = [
         summary: 'Escalated a billing issue to a human agent after insufficient information was found in the reference tool.'
       }
     ],
+    trigger: 'chat-message',
   },
   {
     id: 2,
@@ -74,6 +75,7 @@ export const assistants = [
         summary: 'Escalated a technical issue to a human agent after automated troubleshooting failed.'
       }
     ],
+    trigger: 'email-message',
   },
   {
     id: 3,
@@ -107,6 +109,7 @@ export const assistants = [
         summary: 'Sent a reminder to the last updater of an overdue project after no owner was listed.'
       }
     ],
+    trigger: 'scheduled',
   },
   {
     id: 4,
@@ -140,5 +143,41 @@ export const assistants = [
         summary: 'Parsed malformed HTML and successfully returned the requested block.'
       }
     ],
+    trigger: 'on-demand',
+  },
+  {
+    id: 5,
+    title: 'Meeting Scheduler',
+    description: 'Schedules meetings for groups based on Slack messages',
+    owner: "Team HAL",
+    tools: [
+      { icon: '/images/icon-slack.png', title: 'Slack' },
+      { title: 'Calendar' }
+    ],
+    instructions: `
+    Find all participants for the meeting. This is usually indicated in the triggering [tool title="Slack"] message. If no one is specified refer to the members of the channel.
+    Avoid scheduling meetings with more than 8 participants, and no longer than 45 minutes.
+    For each participant, check their [tool title="Calendar"] and find times when everyone is available for a short meeting in the next 48 hours.
+    If a suitable time is available, create a [tool title="Calendar"] event at the earliest mutually available time inviting all participants and send a [tool title="Slack"] message with the event details.
+    If no suitable time is available, send a [tool title="Slack"] explaining that you can't find a time.
+    `,
+    activity: [
+      {
+        datetime: '2024-06-11T10:00:00Z',
+        event: 'Slack trigger',
+        summary: 'Detected a Slack message requesting a meeting. Checked availability for 4 participants.'
+      },
+      {
+        datetime: '2024-06-11T10:01:00Z',
+        event: 'Calendar lookup',
+        summary: 'Found a mutually available slot at 2:00pm. Created a calendar event and sent invites.'
+      },
+      {
+        datetime: '2024-06-11T10:02:00Z',
+        event: 'Slack notification',
+        summary: 'Sent a Slack message summarizing the scheduled meeting and participants.'
+      }
+    ],
+    trigger: 'slack-message',
   },
 ]; 
