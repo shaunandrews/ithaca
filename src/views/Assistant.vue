@@ -18,7 +18,12 @@
     <div class="assistant-config vstack">
       <div class="instructions">
         <h4>Instructions</h4>
-        <div class="text-field" contenteditable="true">
+        <div
+          class="text-field"
+          contenteditable="true"
+          @input="onTextFieldInput"
+          @keydown="onTextFieldKeydown"
+        >
           <template v-for="(paragraph, pIdx) in parsedInstructions" :key="pIdx">
             <p>
               <template v-for="(part, idx) in paragraph" :key="idx">
@@ -28,12 +33,37 @@
                   class="highlight-tool"
                   contenteditable="false"
                   :title="part.value ? part.value : undefined"
+                  @mouseenter="event => showPopover(event, part.title)"
+                  @mouseleave="hidePopover"
                 >
                   @{{ part.title }}<template v-if="part.value">: {{ part.value }}</template>
                 </span>
               </template>
             </p>
           </template>
+          <div
+            v-if="popover.show"
+            class="tool-popover"
+            :style="{ left: popover.x + 'px', top: popover.y + 'px' }"
+          >
+            {{ popover.text }}
+          </div>
+          <ul
+            v-if="autocomplete.show && autocomplete.filtered.length"
+            class="autocomplete-menu"
+            :style="{ left: autocomplete.x + 'px', top: autocomplete.y + 'px' }"
+          >
+            <li
+              v-for="tool in autocomplete.filtered"
+              :key="tool.title"
+              :class="{ selected: tool.title === autocomplete.selected }"
+              @mousedown.prevent="selectTool(tool)"
+            >
+              <span v-if="tool.icon" class="autocomplete-icon"><img :src="tool.icon" :alt="tool.title" width="16" height="16" /></span>
+              <span class="autocomplete-title">{{ tool.title }}</span>
+              <span class="autocomplete-desc">{{ tool.description }}</span>
+            </li>
+          </ul>
         </div>
       </div>
 
@@ -89,6 +119,7 @@ import ToolListItem from '@/components/ToolListItem.vue';
 import { assistants } from '@/data/assistants.js';
 import { PlayIcon } from 'lucide-vue-next';
 import { parseInstructions } from '@/data/parseInstructions.js';
+import { tools } from '@/data/tools.js';
 
 const route = useRoute();
 const assistantId = computed(() => Number(route.params.id));
@@ -99,6 +130,27 @@ const parsedInstructions = computed(() =>
   assistant.value ? parseInstructions(assistant.value.instructions) : []
 );
 
+const getToolDescription = (title) => {
+  const tool = tools.find(t => t.title === title);
+  return tool ? tool.description : '';
+};
+
+const popover = ref({ show: false, text: '', x: 0, y: 0 });
+
+const autocomplete = ref({ show: false, x: 0, y: 0, query: '', filtered: tools, caretNode: null });
+
+function showPopover(event, title) {
+  popover.value = {
+    show: true,
+    text: getToolDescription(title),
+    x: event.clientX + 10,
+    y: event.clientY + 10,
+  };
+}
+function hidePopover() {
+  popover.value.show = false;
+}
+
 function formatDate(datetime) {
   const date = new Date(datetime);
   return date.toLocaleString(undefined, {
@@ -108,6 +160,88 @@ function formatDate(datetime) {
     hour: '2-digit',
     minute: '2-digit',
   });
+}
+
+function onTextFieldInput(e) {
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
+  const range = sel.getRangeAt(0);
+  const node = range.startContainer;
+  const text = node.textContent;
+  const caretPos = range.startOffset;
+  const before = text.slice(0, caretPos);
+  const atIdx = before.lastIndexOf('@');
+  if (atIdx !== -1 && (atIdx === 0 || /\s/.test(before[atIdx - 1]))) {
+    const query = before.slice(atIdx + 1);
+    const filtered = tools.filter(t => t.title.toLowerCase().startsWith(query.toLowerCase()));
+    const rect = range.getBoundingClientRect();
+    autocomplete.value = {
+      show: true,
+      x: rect.left + window.scrollX,
+      y: rect.bottom + window.scrollY,
+      query,
+      filtered,
+      caretNode: node,
+      atIdx,
+      caretPos
+    };
+  } else {
+    autocomplete.value.show = false;
+  }
+}
+
+function selectTool(tool) {
+  if (!autocomplete.value.caretNode) return;
+  const node = autocomplete.value.caretNode;
+  const text = node.textContent;
+  const atIdx = autocomplete.value.atIdx;
+  const caretPos = autocomplete.value.caretPos;
+  // Replace @query with a highlight-tool span
+  const after = text.slice(caretPos);
+  const before = text.slice(0, atIdx);
+  const parent = node.parentNode;
+  // Remove the text node and insert before, span, after
+  const beforeNode = document.createTextNode(before);
+  const span = document.createElement('span');
+  span.className = 'highlight-tool';
+  span.setAttribute('contenteditable', 'false');
+  span.textContent = `@${tool.title}`;
+  span.addEventListener('mouseenter', event => showPopover(event, tool.title));
+  span.addEventListener('mouseleave', hidePopover);
+  const afterNode = document.createTextNode(after);
+  parent.replaceChild(afterNode, node);
+  parent.insertBefore(span, afterNode);
+  parent.insertBefore(beforeNode, span);
+  // Move caret after the inserted span
+  const range = document.createRange();
+  range.setStartAfter(span);
+  range.collapse(true);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+  autocomplete.value.show = false;
+}
+
+function onTextFieldKeydown(e) {
+  if (autocomplete.value.show) {
+    if (e.key === 'ArrowDown' || e.key === 'Tab') {
+      e.preventDefault();
+      const idx = autocomplete.value.filtered.findIndex(t => t.title === autocomplete.value.selected);
+      const nextIdx = (idx + 1) % autocomplete.value.filtered.length;
+      autocomplete.value.selected = autocomplete.value.filtered[nextIdx].title;
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const idx = autocomplete.value.filtered.findIndex(t => t.title === autocomplete.value.selected);
+      const prevIdx = (idx - 1 + autocomplete.value.filtered.length) % autocomplete.value.filtered.length;
+      autocomplete.value.selected = autocomplete.value.filtered[prevIdx].title;
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      const tool = autocomplete.value.filtered.find(t => t.title === autocomplete.value.selected) || autocomplete.value.filtered[0];
+      if (tool) selectTool(tool);
+    } else if (e.key === 'Escape') {
+      autocomplete.value.show = false;
+    }
+  }
 }
 </script>
 
@@ -145,6 +279,63 @@ function formatDate(datetime) {
 .highlight-tool:hover {
   background-color: rgba(255, 50, 180, 0.1);
   border-color: rgba(255, 50, 180, 0.2);
+}
+
+.tool-popover {
+  position: fixed;
+  z-index: 1000;
+  background: var(--color-surface);
+  color: var(--color-chrome-fg);
+  border: 1px solid var(--color-surface-tint);
+  border-radius: var(--radius-s);
+  padding: var(--space-xs) var(--space-s);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  pointer-events: none;
+  font-size: var(--font-size-s);
+  max-width: 260px;
+  white-space: normal;
+}
+
+.autocomplete-menu {
+  position: fixed;
+  z-index: 1100;
+  background: var(--color-surface);
+  border: 1px solid var(--color-surface-tint);
+  border-radius: var(--radius-s);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  min-width: 220px;
+  max-width: 320px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+.autocomplete-menu li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-s);
+  cursor: pointer;
+  font-size: var(--font-size-s);
+}
+.autocomplete-menu li.selected,
+.autocomplete-menu li:hover {
+  background: var(--color-surface-tint);
+}
+.autocomplete-icon {
+  flex-shrink: 0;
+  margin-right: var(--space-xs);
+}
+.autocomplete-title {
+  font-weight: var(--font-weight-medium);
+  margin-right: var(--space-xs);
+}
+.autocomplete-desc {
+  color: var(--color-chrome-fg-secondary);
+  font-size: var(--font-size-xs);
+  flex: 1;
+  white-space: normal;
 }
 </style>
 

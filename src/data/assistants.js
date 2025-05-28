@@ -1,3 +1,5 @@
+import { tools } from './tools.js';
+
 export const assistants = [
   {
     id: 1,
@@ -5,11 +7,11 @@ export const assistants = [
     description: 'Answering customer questions in realtime',
     owner: "Team HAL",
     tools: [
-      { title: 'Chat', subtitle: 'WordPress.com' },
-      { title: 'Persona', subtitle: 'Wappu' },
-      { title: 'User Profile' },
-      { title: 'Support History' },
-      { title: 'Reference', subtitle: 'support.wordpress.com' }
+      { ...tools.find(t => t.title === 'Chat'), subtitle: 'WordPress.com' },
+      { ...tools.find(t => t.title === 'Persona'), subtitle: 'Wappu' },
+      { ...tools.find(t => t.title === 'User Profile') },
+      { ...tools.find(t => t.title === 'Support History') },
+      { ...tools.find(t => t.title === 'Reference'), subtitle: 'support.wordpress.com' }
     ],
     instructions: `
         You are a helpful support assistant for WordPress.com. Use [tool title="Persona" value="Wappuu"] for all responses.
@@ -44,12 +46,12 @@ export const assistants = [
     description: 'First-line email triage for help@tumblr.com',
     owner: "Team HAL",
     tools: [
-      { icon: '/images/icon-zendesk.png', title: 'Zendesk' },
-      { title: 'Email', subtitle: 'help@tumblr.com' },
-      { title: 'Persona', subtitle: 'TumblrBot' },
-      { title: 'User Profile' },
-      { title: 'Support History' },
-      { title: 'Reference', subtitle: 'support.tumblr.com' }
+      { ...tools.find(t => t.title === 'Zendesk') },
+      { ...tools.find(t => t.title === 'Email'), subtitle: 'help@tumblr.com' },
+      { ...tools.find(t => t.title === 'Persona'), subtitle: 'TumblrBot' },
+      { ...tools.find(t => t.title === 'User Profile') },
+      { ...tools.find(t => t.title === 'Support History') },
+      { ...tools.find(t => t.title === 'Reference'), subtitle: 'support.tumblr.com' }
     ],
     instructions: `
     You are a helpful support assistant for Tumblr.com. Use [tool title="Persona" value="TumblrBot"] for all responses.
@@ -83,11 +85,11 @@ export const assistants = [
     description: 'Daily Slack reminders for overdue projects',
     owner: "Lighthouse",
     tools: [
-      { icon: '/images/icon-linear.png', title: 'Linear' },
-      { icon: '/images/icon-slack.png', title: 'Slack' },
+      { ...tools.find(t => t.title === 'Linear'), subtitle: 'Team Gravatar' },
+      { ...tools.find(t => t.title === 'Slack') },
     ],
     instructions: `
-    Find any overdue projects for the [tool title="Gravatar team" value="Linear"]
+    Find any overdue projects for the [tool title="Linear" value="Team Gravatar"]
     If there hasn't been an update in the last week, determine the owner of the project. If no owner is listed, find the last person to update the project.
     Find the owner in [tool title="Slack"]. If multiple people are found, message the most likely one.
     The Slack message should inform them that the project is overdue, and should include a summary of the project (and its last update) with a link to Linear.
@@ -117,8 +119,8 @@ export const assistants = [
     description: 'Given some HTML, return a specific block',
     owner: "Team HAL",
     tools: [
-      { icon: '/images/icon-input.png', title: 'Input', subtitle: 'HTML' },
-      { icon: '/images/icon-input.png', title: 'Input', subtitle: 'Requested block' },
+      { ...tools.find(t => t.title === 'Input'), subtitle: 'HTML' },
+      { ...tools.find(t => t.title === 'Input'), subtitle: 'Requested block' },
     ],
     instructions: `
     Receive an HTML snippet and a requested block name.
@@ -151,8 +153,8 @@ export const assistants = [
     description: 'Schedules meetings for groups based on Slack messages',
     owner: "Team HAL",
     tools: [
-      { icon: '/images/icon-slack.png', title: 'Slack' },
-      { title: 'Calendar' }
+      { ...tools.find(t => t.title === 'Slack') },
+      { ...tools.find(t => t.title === 'Calendar') }
     ],
     instructions: `
     Find all participants for the meeting. This is usually indicated in the triggering [tool title="Slack"] message. If no one is specified refer to the members of the channel.
@@ -186,8 +188,8 @@ export const assistants = [
     description: 'A Slack chatbot for searching, finding insights, and locating DRIs across many P2 sites.',
     owner: 'Team HAL',
     tools: [
-      { icon: '/images/icon-slack.png', title: 'Slack', subtitle: 'Chat' },
-      { icon: '/images/icon-input.png', title: 'P2', subtitle: 'Work Sites' }
+      { ...tools.find(t => t.title === 'Slack'), subtitle: 'Chat' },
+      { ...tools.find(t => t.title === 'P2'), subtitle: 'Work Sites' }
     ],
     instructions: `
     You are Agent Dave, a helpful Slack chatbot with access to many P2 work sites. Use [tool title="Slack"] to chat with users and [tool title="P2" value="Work Sites"] to search for information, find insights, and locate DRIs (Directly Responsible Individuals) for projects.
