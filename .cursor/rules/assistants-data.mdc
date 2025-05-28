@@ -1,0 +1,12 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Assistant Data Source
+
+The list of assistants displayed in the app is powered by a static, mocked data array found in [src/data/assistants.js](mdc:src/data/assistants.js).
+
+- To add, remove, or update assistants, edit this file directly.
+- Each assistant object includes: `id`, `title`, `description`, and a `tools` array (with `icon`, `title`, and optional `subtitle`).
+- This data is used in [src/views/Assistants.vue](mdc:src/views/Assistants.vue) to render the assistant list.

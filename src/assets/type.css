@@ -1,0 +1,75 @@
+:root {
+    /* Font families */
+    --font-system: SF Pro Display, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    --font-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+  
+    /* Font sizes */
+    --font-size-xs: 11px;
+    --font-size-s: 14px;
+    --font-size-m: 16px;
+    --font-size-l: 18px;
+    --font-size-xl: 20px;
+    --font-size-xxl: 24px;
+    --font-size-xxxl: 30px;
+    --font-size-xxxxl: 36px;
+  
+    /* Line heights */
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+  
+    /* Font weights */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+  
+    /* Letter spacing */
+    --letter-spacing-tight: -0.025em;
+    --letter-spacing-normal: 0em;
+    --letter-spacing-wide: 0.025em;
+  }
+  
+  /* Default typography styles */
+  body {
+    font-family: var(--font-system);
+    font-size: var(--font-size-m);
+    line-height: var(--line-height-normal);
+    font-weight: var(--font-weight-normal);
+    letter-spacing: var(--letter-spacing-normal);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    margin-top: 0;
+  }
+  
+  h1 {
+    font-size: var(--font-size-xxxl);
+  }
+  
+  h2 {
+    font-size: var(--font-size-xxl);
+  }
+  
+  h3 {
+    font-size: var(--font-size-xl);
+  }
+  
+  h4 {
+    font-size: var(--font-size-l);
+  }
+  
+  h5, h6 {
+    font-size: var(--font-size-m);
+  }
+  
+  code, pre {
+    font-family: var(--font-monospace);
+    font-size: var(--font-size-s);
+  }
+  

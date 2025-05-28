@@ -1,0 +1,91 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-chrome-fg);
+  background: var(--color-chrome);
+}
+
+/* Links */
+a {
+  color: var(--color-accent);
+}
+
+/* Buttons */ 
+button {
+  color: var(--color-surface-fg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-surface-tint-dark);
+  padding: var(--space-s) var(--space-m);
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+button svg {
+  width: 18px;
+  height: 18px;
+}
+
+button:hover {
+  background: var(--color-surface-tint);
+}
+
+/* Inputs */
+input {
+  border: none;
+  display: block;
+  width: 100%;
+  background: var(--color-surface-tint);
+  border-radius: var(--radius);
+  padding: var(--space-s) var(--space-m);
+  font-size: var(--font-size-m);
+  color: var(--color-surface-fg);
+}
+
+input::placeholder {
+  color: var(--color-surface-fg-tertiary);
+}
+
+input:hover {
+  outline: 1px solid var(--color-accent);
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid var(--color-accent);
+}
+
+select {
+  border: none;
+  display: block;
+  width: 100%;
+  background: var(--color-surface-tint);
+  border-radius: var(--radius);
+  padding: var(--space-xs) var(--space-m);
+  font-size: var(--font-size-s);
+  color: var(--color-surface-fg);
+}
+
+/* Layout */
+.hstack,
+.vstack {
+  display: flex;
+}
+
+.hstack {
+  flex-direction: row;
+}
+
+.vstack {
+  flex-direction: column;
+}

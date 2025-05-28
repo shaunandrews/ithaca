@@ -1,0 +1,14 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Import Shortcut Rule
+
+Use the `@` alias as a shortcut for importing from the `src` directory. For example, to import a component from `src/components/ToolListItem.vue`, use:
+
+```js
+import ToolListItem from '@/components/ToolListItem.vue';
+```
+
+This convention should be used for all imports from the `src` directory to improve readability and maintain consistency across the codebase.
