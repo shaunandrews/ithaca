@@ -41,23 +41,12 @@
                     v-else-if="part.type === 'tool'"
                     class="highlight-tool"
                     contenteditable="false"
-                    @mouseenter="event => showPopover(event, part.title)"
-                    @mouseleave="hidePopover"
                   >
                     @{{ part.title }}<template v-if="part.value">:<span class="tool-value">{{ part.value }}</span></template>
                   </span>
                 </template>
               </p>
             </template>
-            <teleport to="body">
-              <div
-                v-if="popover.show"
-                class="tool-popover"
-                :style="{ left: popover.x + 'px', top: popover.y + 'px' }"
-              >
-                {{ popover.text }}
-              </div>
-            </teleport>
             <teleport to="body">
               <ul
                 v-if="autocomplete.show && autocomplete.filtered.length"
@@ -177,8 +166,6 @@ const getToolDescription = (title) => {
   return tool ? tool.description : '';
 };
 
-const popover = ref({ show: false, text: '', x: 0, y: 0 });
-
 const autocomplete = ref({ show: false, x: 0, y: 0, query: '', filtered: tools, caretNode: null });
 
 const trigger = ref(assistant.value ? assistant.value.trigger : 'on-demand');
@@ -194,18 +181,6 @@ watch(trigger, (newVal) => {
 watch(assistant, (newAssistant) => {
   if (newAssistant) trigger.value = newAssistant.trigger;
 });
-
-function showPopover(event, title) {
-  popover.value = {
-    show: true,
-    text: getToolDescription(title),
-    x: event.clientX + 10,
-    y: event.clientY + 10,
-  };
-}
-function hidePopover() {
-  popover.value.show = false;
-}
 
 function formatDate(datetime) {
   const date = new Date(datetime);
@@ -262,8 +237,6 @@ function selectTool(tool) {
   span.className = 'highlight-tool';
   span.setAttribute('contenteditable', 'false');
   span.textContent = `@${tool.title}`;
-  span.addEventListener('mouseenter', event => showPopover(event, tool.title));
-  span.addEventListener('mouseleave', hidePopover);
   const afterNode = document.createTextNode(after);
   parent.replaceChild(afterNode, node);
   parent.insertBefore(span, afterNode);
@@ -346,21 +319,6 @@ function closeToolModal() {
   background-color: var(--color-highlight);
 }
 
-.tool-popover {
-  position: fixed;
-  z-index: 1000;
-  background: var(--color-surface);
-  color: var(--color-chrome-fg);
-  border: 1px solid var(--color-surface-tint);
-  border-radius: var(--radius-s);
-  padding: var(--space-xs) var(--space-s);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  pointer-events: none;
-  font-size: var(--font-size-s);
-  max-width: 260px;
-  white-space: normal;
-}
-
 .autocomplete-menu {
   position: fixed;
   z-index: 1100;
@@ -418,6 +376,7 @@ header {
   gap: var(--space-m);
   background-color: var(--color-surface);
   padding: var(--space-s) var(--space-m);
+  border-top: 1px solid var(--color-surface-tint);
   border-bottom: 1px solid var(--color-surface-tint);
 }
 
@@ -478,6 +437,7 @@ hr {
 
 .section-header {
   margin-bottom: var(--space-xs);
+  user-select: none;
 }
 
 .section-title {
