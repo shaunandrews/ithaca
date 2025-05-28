@@ -68,7 +68,7 @@ header {
   flex: 1;
   display: flex;
   align-items: center;
-  gap: var(--space-m);
+  gap: var(--space-s);
 }
 
 .header-end {
@@ -92,7 +92,7 @@ ul {
   padding: 0;
   margin: 0;
   display: flex;
-  gap: var(--space-m);
+  gap: var(--space-xs);
 }
 
 .nav-item a {

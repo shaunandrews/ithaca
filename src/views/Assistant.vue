@@ -2,10 +2,11 @@
   <div class="assistant-container">
     <header v-if="assistant">
       <div class="assistant-header-start">
-        <h2 class="assistant-title">{{ assistant.title }}:</h2>
+        <h2 class="assistant-title">{{ assistant.title }}</h2>
         <nav>
           <ul>
             <li :class="{ active: activeTab === 'instructions' }" @click="activeTab = 'instructions'">Instructions</li>
+            <li :class="{ active: activeTab === 'details' }" @click="activeTab = 'details'">Details</li>
             <li :class="{ active: activeTab === 'activity' }" @click="activeTab = 'activity'">Activity</li>
           </ul>
         </nav>
@@ -24,7 +25,7 @@
         <div class="instructions">
           <div class="section-header">
             <h4 class="section-title">Instructions</h4>
-            <p class="section-description">Tell your assistant what to do. Add tools by typing <code>@tool-name</code>.</p>
+            <p class="section-description">Tell your assistant what to do. Add tools by typing @tool.</p>
           </div>
           <div
             class="text-field"
@@ -94,6 +95,7 @@
               :subtitle="tool.subtitle"
               @click="openToolModal(tool)"
             />
+            <button class="add-tool"><Plus :size="18" /></button>
           </div>
         </div>
       </div>
@@ -101,11 +103,32 @@
       <div class="assistant-preview">
         <div class="section-header">
           <h4 class="section-title">Preview</h4>
-          <p class="section-description">Preview your assistant's behavior and chat with it to test it out.</p>
+          <p class="section-description">See how this assistant behaves and chat with it.</p>
         </div>
         <div class="preview-start">
           <button><Play :size="18" />Start preview <span class="shortcut"><Command :size="12" /> <CornerDownLeft :size="12" /></span></button>
         </div>
+        <div class="preview-chat hstack">
+          <input type="text" placeholder="Ask me anything..." />
+          <button><Send :size="18" /></button>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="assistant && activeTab === 'details'" class="assistant-details">
+      <h4>Description</h4>
+      <p>{{ assistant.description }}</p>
+
+      <h4>Status</h4>
+      <p>Active</p>
+
+      <h4>Version</h4>
+      <p>1.1.3</p>
+
+      <h4>Owner</h4>
+      <div class="details-owner hstack">
+        <img :src="`/images/${assistant.ownerIcon}`" :alt="assistant.owner" width="24" height="24" class="owner-icon" />
+        <span class="owner-name">{{ assistant.owner }}</span>
       </div>
     </div>
 
@@ -136,7 +159,7 @@ import { useRoute } from 'vue-router';
 import ToolListItem from '@/components/ToolListItem.vue';
 import Modal from '@/components/modal/Modal.vue';
 import { assistants } from '@/data/assistants.js';
-import { Play, Command, CornerDownLeft } from 'lucide-vue-next';
+import { Play, Command, CornerDownLeft, Send, Plus } from 'lucide-vue-next';
 import { parseInstructions } from '@/data/parseInstructions.js';
 import { tools } from '@/data/tools.js';
 
@@ -412,7 +435,7 @@ header h2 {
 
 nav ul {
   display: flex;
-  gap: var(--space-s);
+  gap: var(--space-xs);
   padding: 0;
   margin: 0;
 }
@@ -427,8 +450,8 @@ nav li {
 }
 
 nav li.active {
-  font-weight: var(--font-weight-semibold);
   color: var(--color-chrome-fg);
+  font-weight: var(--font-weight-semibold);
   background-color: var(--color-surface-tint);
 }
 
@@ -478,6 +501,7 @@ hr {
 }
 
 .assistant-preview {
+  width: 40%;
   border-left: 1px solid var(--color-surface-tint);
   padding: var(--space-m);
   display: flex;
@@ -507,4 +531,12 @@ hr {
   list-style: none;
 }
 
+.assistant-details {
+  padding: var(--space-m);
+}
+
+.assistant-details h4 {
+  font-size: var(--font-size-s);
+  color: var(--color-surface-fg-tertiary);
+}
 </style>
