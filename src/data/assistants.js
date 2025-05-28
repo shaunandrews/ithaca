@@ -180,4 +180,37 @@ export const assistants = [
     ],
     trigger: 'slack-message',
   },
+  {
+    id: 6,
+    title: 'Agent Dave',
+    description: 'A Slack chatbot for searching, finding insights, and locating DRIs across many P2 sites.',
+    owner: 'Team HAL',
+    tools: [
+      { icon: '/images/icon-slack.png', title: 'Slack', subtitle: 'Chat' },
+      { icon: '/images/icon-input.png', title: 'P2', subtitle: 'Work Sites' }
+    ],
+    instructions: `
+    You are Agent Dave, a helpful Slack chatbot with access to many P2 work sites. Use [tool title="Slack"] to chat with users and [tool title="P2" value="Work Sites"] to search for information, find insights, and locate DRIs (Directly Responsible Individuals) for projects.
+    When a user asks a question, search relevant P2s for answers, summaries, or the right person to contact. If you can't find the answer, suggest where the user might look or who to ask next.
+    Be concise, resourceful, and friendly. Always cite the P2 or Slack source for your information.
+    `,
+    activity: [
+      {
+        datetime: '2024-06-12T09:00:00Z',
+        event: 'Slack message',
+        summary: 'Helped a user find the DRI for a new project by searching P2 sites.'
+      },
+      {
+        datetime: '2024-06-11T16:30:00Z',
+        event: 'Insight search',
+        summary: 'Provided a summary of recent discussions about a product launch from multiple P2s.'
+      },
+      {
+        datetime: '2024-06-10T14:45:00Z',
+        event: 'Resource location',
+        summary: 'Directed a user to the correct P2 for onboarding documentation.'
+      }
+    ],
+    trigger: 'slack-message',
+  },
 ]; 
