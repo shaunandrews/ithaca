@@ -88,6 +88,7 @@
               :icon="tool.icon"
               :title="tool.title"
               :subtitle="tool.subtitle"
+              @click="openToolModal(tool)"
             />
           </div>
         </div>
@@ -139,6 +140,13 @@
         </li>
       </ol>
     </div>
+
+    <Modal :isOpen="isToolModalOpen" @close="closeToolModal">
+      <template v-if="selectedTool">
+        <h2>{{ selectedTool.title }}</h2>
+        <p>{{ selectedTool.description }}</p>
+      </template>
+    </Modal>
   </div>
 </template>
 
@@ -146,6 +154,7 @@
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import ToolListItem from '@/components/ToolListItem.vue';
+import Modal from '@/components/modal/Modal.vue';
 import { assistants } from '@/data/assistants.js';
 import { PlayIcon } from 'lucide-vue-next';
 import { parseInstructions } from '@/data/parseInstructions.js';
@@ -170,6 +179,10 @@ const popover = ref({ show: false, text: '', x: 0, y: 0 });
 const autocomplete = ref({ show: false, x: 0, y: 0, query: '', filtered: tools, caretNode: null });
 
 const trigger = ref(assistant.value ? assistant.value.trigger : 'on-demand');
+
+// Modal state for tool details
+const isToolModalOpen = ref(false);
+const selectedTool = ref(null);
 
 watch(trigger, (newVal) => {
   if (assistant.value) assistant.value.trigger = newVal;
@@ -282,6 +295,15 @@ function onTextFieldKeydown(e) {
       autocomplete.value.show = false;
     }
   }
+}
+
+function openToolModal(tool) {
+  selectedTool.value = tool;
+  isToolModalOpen.value = true;
+}
+function closeToolModal() {
+  isToolModalOpen.value = false;
+  selectedTool.value = null;
 }
 </script>
 

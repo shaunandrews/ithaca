@@ -1,5 +1,9 @@
 <template>
-  <div class="tool-item">
+  <div
+    class="tool-item"
+    :class="{ clickable: isClickable }"
+    v-bind="$attrs"
+  >
     <div class="tool-icon" v-if="icon">
       <img :src="icon" :alt="title" height="20" width="20" />
     </div>
@@ -9,6 +13,9 @@
 </template>
 
 <script setup>
+import { computed, useAttrs } from 'vue';
+const attrs = useAttrs();
+const isClickable = computed(() => !!attrs.onClick);
 defineProps({
   icon: {
     type: String,
@@ -48,5 +55,10 @@ defineProps({
 
 .tool-subtitle {
   color: var(--color-surface-fg-secondary);
+}
+
+.tool-item.clickable:hover {
+  background-color: var(--color-surface-tint-dark);
+  cursor: pointer;
 }
 </style> 

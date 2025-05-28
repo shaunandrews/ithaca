@@ -1,0 +1,10 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Vue Project Rule
+
+This project is a Vue.js application. Do **not** suggest or use React, JSX, or React-style code examples. All component and UI code should be written using Vue's syntax and conventions (e.g., `.vue` single-file components, Vue templates, Vue composition/options API, etc.).
+
+If you reference code examples, they must be in Vue format.

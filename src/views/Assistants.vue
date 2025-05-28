@@ -22,22 +22,12 @@
         <img height="24" width="24" :src="`/images/${assistant.ownerIcon}`" class="assistant-owner-icon" />
         <span class="assistant-owner-name">{{ assistant.owner }}</span>
       </div>
-      <!-- <div class="assistant-tools">
-        <ToolListItem
-          v-for="(tool, idx) in assistant.tools"
-          :key="idx"
-          :icon="tool.icon"
-          :title="tool.title"
-          :subtitle="tool.subtitle"
-        />
-      </div> -->
     </div>
   </div>
 </template>
 
 <script setup>
 import { RouterLink, useRouter } from 'vue-router';
-import ToolListItem from '@/components/ToolListItem.vue';
 import { assistants } from '@/data/assistants.js';
 
 const router = useRouter();

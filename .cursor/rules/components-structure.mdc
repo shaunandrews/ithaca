@@ -1,0 +1,10 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Component Structure Rule
+
+All components must reside in their own folder within the `src/components/` directory. For example, the `Modal` component should be located at `src/components/modal/Modal.vue`.
+
+This structure should be followed for all components to ensure consistency and maintainability.
