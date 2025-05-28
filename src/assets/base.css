@@ -29,16 +29,22 @@ button {
   display: flex;
   align-items: center;
   gap: var(--space-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button .shortcut {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  opacity: 0.5;
+  margin-left: var(--space-s);
 }
 
 button.primary {
   background: var(--color-accent);
   color: var(--color-accent-fg);
-}
-
-button svg {
-  width: 18px;
-  height: 18px;
 }
 
 button:hover {

@@ -2,7 +2,10 @@
   <div class="ithaca">
     <header>
       <div class="header-start">
-        <h1>Ithaca</h1>
+        <h1 class="logo">
+          <Landmark :size="24" />
+          <span v-if="!isAssistantRoute" class="logo-text">Ithaca</span>
+        </h1>
         <nav>
           <ul>
             <li v-if="isAssistantRoute" class="nav-item">
@@ -11,6 +14,9 @@
             <template v-else>
               <li class="nav-item" :class="{ active: $route.name === 'Assistants' }">
                 <router-link to="/">Assistants</router-link>
+              </li>
+              <li class="nav-item" :class="{ active: $route.name === 'Workflows' }">
+                <router-link to="/workflows">Workflows</router-link>
               </li>
               <li class="nav-item" :class="{ active: $route.name === 'Tools' }">
                 <router-link to="/tools">Tools</router-link>
@@ -36,6 +42,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { Landmark } from 'lucide-vue-next';
 const route = useRoute();
 const isAssistantRoute = computed(() => route.name === 'Assistant');
 </script>
@@ -51,6 +58,7 @@ header {
   display: flex;
   align-items: center;
   gap: var(--space-m);
+  background-color: var(--color-surface);
   padding: var(--space-s) var(--space-m);
   border-bottom: 1px solid var(--color-surface-tint);
 }
@@ -67,8 +75,16 @@ header {
   justify-content: flex-end;
 }
 
-h1 {
+.logo {
   font-size: var(--font-size-l);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.logo-text {
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
 }
 
 ul {
@@ -77,6 +93,25 @@ ul {
   margin: 0;
   display: flex;
   gap: var(--space-m);
+}
+
+.nav-item a {
+  cursor: pointer;
+  font-size: var(--font-size-s);
+  padding: var(--space-xxs) var(--space-xs);
+  border-radius: var(--radius);
+  color: var(--color-chrome-fg-secondary);
+  text-decoration: none;
+}
+
+.nav-item.active a {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-chrome-fg);
+  background-color: var(--color-surface-tint);
+}
+
+.nav-item:not(.active) a:hover {
+  background-color: var(--color-surface-tint-dark);
 }
 
 .user {

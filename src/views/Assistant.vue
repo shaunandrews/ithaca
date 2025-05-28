@@ -5,7 +5,7 @@
         <h2 class="assistant-title">{{ assistant.title }}:</h2>
         <nav>
           <ul>
-            <li :class="{ active: activeTab === 'details' }" @click="activeTab = 'details'">Details</li>
+            <li :class="{ active: activeTab === 'instructions' }" @click="activeTab = 'instructions'">Instructions</li>
             <li :class="{ active: activeTab === 'activity' }" @click="activeTab = 'activity'">Activity</li>
           </ul>
         </nav>
@@ -19,10 +19,13 @@
       <p>Assistant not found.</p>
     </div>
 
-    <div v-if="assistant && activeTab === 'details'" class="assistant-details hstack">
+    <div v-if="assistant && activeTab === 'instructions'" class="assistant-instructions hstack">
       <div class="assistant-config vstack">
         <div class="instructions">
-          <h4>Instructions</h4>
+          <div class="section-header">
+            <h4 class="section-title">Instructions</h4>
+            <p class="section-description">Tell your assistant what to do. Add tools by typing <code>@tool-name</code>.</p>
+          </div>
           <div
             class="text-field"
             contenteditable="true"
@@ -37,11 +40,10 @@
                     v-else-if="part.type === 'tool'"
                     class="highlight-tool"
                     contenteditable="false"
-                    :title="part.value ? part.value : undefined"
                     @mouseenter="event => showPopover(event, part.title)"
                     @mouseleave="hidePopover"
                   >
-                    @{{ part.title }}<template v-if="part.value">: {{ part.value }}</template>
+                    @{{ part.title }}<template v-if="part.value">:<span class="tool-value">{{ part.value }}</span></template>
                   </span>
                 </template>
               </p>
@@ -79,8 +81,10 @@
         <hr />
 
         <div class="tools">
-          <h4>Tools</h4>
-          <p>Assistants can use any tool below, even if not specifically instructed to do so.</p>
+          <div class="section-header">
+            <h4 class="section-title">Tools</h4>
+            <p class="section-description">Configure the tools available to your assistant.</p>
+          </div>
           <div class="tools-list hstack">
             <ToolListItem
               v-for="(tool, idx) in assistant.tools"
@@ -92,39 +96,15 @@
             />
           </div>
         </div>
-
-        <div class="trigger">
-          <h4>Trigger</h4>
-          <select v-model="trigger">
-            <option value="on-demand">On-demand</option>
-            <option value="scheduled">Scheduled</option>
-            <option value="email-message">Email</option>
-            <option value="chat-message">Chat</option>
-            <option value="slack-message">Slack</option>
-          </select>
-          <p v-if="trigger === 'on-demand'">
-            This assistant will only run when specifically requested.
-          </p>
-          <p v-else-if="trigger === 'scheduled'">
-            This assistant will run on a schedule.
-          </p>
-          <p v-else-if="trigger === 'email-message'">
-            This assistant will run when an email is sent to the associated inbox.
-          </p>
-          <p v-else-if="trigger === 'chat-message'">
-            This assistant will run when a chat message is sent to the assistant.
-          </p>
-          <p v-else-if="trigger === 'slack-message'">
-            This assistant will run when @ pinged by name in Slack.
-          </p>
-        </div>
       </div>
 
       <div class="assistant-preview">
-        <h4>Preview</h4>
+        <div class="section-header">
+          <h4 class="section-title">Preview</h4>
+          <p class="section-description">Preview your assistant's behavior and chat with it to test it out.</p>
+        </div>
         <div class="preview-start">
-          <button><PlayIcon />Start preview</button>
-          <p>Preview your assistant's behavior and chat with it to test it out.</p>
+          <button><Play :size="18" />Start preview <span class="shortcut"><Command :size="12" /> <CornerDownLeft :size="12" /></span></button>
         </div>
       </div>
     </div>
@@ -156,14 +136,14 @@ import { useRoute } from 'vue-router';
 import ToolListItem from '@/components/ToolListItem.vue';
 import Modal from '@/components/modal/Modal.vue';
 import { assistants } from '@/data/assistants.js';
-import { PlayIcon } from 'lucide-vue-next';
+import { Play, Command, CornerDownLeft } from 'lucide-vue-next';
 import { parseInstructions } from '@/data/parseInstructions.js';
 import { tools } from '@/data/tools.js';
 
 const route = useRoute();
 const assistantId = computed(() => Number(route.params.id));
 const assistant = computed(() => assistants.find(a => a.id === assistantId.value));
-const activeTab = ref('details');
+const activeTab = ref('instructions');
 
 const parsedInstructions = computed(() =>
   assistant.value ? parseInstructions(assistant.value.instructions) : []
@@ -322,20 +302,25 @@ function closeToolModal() {
 }
 
 .highlight-tool {
-  color: var(--color-accent);
+  color: var(--color-highlight);
   font-size: var(--font-size-s);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   border-radius: 3px;
   cursor: pointer;
-  border: 0.5px solid transparent;
-  border-color: var(--color-accent);
+  background-color: var(--color-highlight-tint);
+  border: 0.5px solid var(--color-highlight);
   white-space: nowrap;
   padding: 2px 3px;
 }
 
+.tool-value {
+  font-weight: var(--font-weight-normal);
+  margin-left: 4px;
+}
+
 .highlight-tool:hover {
-  color: var(--color-accent-fg);
-  background-color: var(--color-accent);
+  color: var(--color-highlight-fg);
+  background-color: var(--color-highlight);
 }
 
 .tool-popover {
@@ -408,6 +393,7 @@ header {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-m);
+  background-color: var(--color-surface);
   padding: var(--space-s) var(--space-m);
   border-bottom: 1px solid var(--color-surface-tint);
 }
@@ -450,7 +436,7 @@ nav li:hover:not(.active) {
   background-color: var(--color-surface-tint-dark);
 }
 
-.assistant-details {
+.assistant-instructions {
   flex: 1;
 }
 
@@ -467,10 +453,23 @@ hr {
   padding: var(--space-m);
 }
 
-h4 {
-  font-size: var(--font-size-s);
+.section-header {
   margin-bottom: var(--space-xs);
+}
+
+.section-title {
+  font-size: var(--font-size-s);
   color: var(--color-surface-fg-tertiary);
+}
+
+.section-description {
+  font-size: var(--font-size-s);
+  color: var(--color-surface-fg-tertiary);
+}
+
+.instructions {
+  flex: 1;
+  /* background-color: var(--color-surface); */
 }
 
 .tools-list {

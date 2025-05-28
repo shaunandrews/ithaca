@@ -16,7 +16,6 @@ export const tools = [
   {
     title: 'Chat',
     description: 'Engage in real-time chat conversations with users.',
-    icon: '/images/icon-wordpress.png',
   },
   {
     title: 'Support History',
@@ -30,7 +29,6 @@ export const tools = [
     title: 'Reference',
     description: 'Look up documentation, support articles, or knowledge base entries.',
     value: 'e.g. support.wordpress.com',
-    icon: '/images/icon-zendesk.png',
   },
   {
     title: 'Email',

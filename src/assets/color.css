@@ -13,6 +13,11 @@
   --color-accent: #0640e0;
   --color-accent-dark: #0536b8;
   --color-accent-fg: #ffffff;
+
+  --color-highlight: #dd0fb7;
+  --color-highlight-dark: #c00d9e;
+  --color-highlight-tint: rgba(221, 15, 183, 0.1);
+  --color-highlight-fg: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
