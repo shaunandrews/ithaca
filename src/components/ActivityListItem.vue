@@ -4,7 +4,7 @@
     <div class="activity-event">{{ item.event }}</div>
     <div class="activity-summary">{{ item.summary }}</div>
     <div v-if="item.customer" class="activity-customer">
-      <img :src="gravatarUrl(item.customer)" alt="Gravatar" width="20" height="20" class="activity-gravatar" :title="item.customer" />
+      <img :src="gravatarUrl(item.customer)" alt="Gravatar" width="28" height="28" class="activity-gravatar" :title="item.customer" />
       <!-- {{ item.customer }} -->
     </div>
   </div>
@@ -45,7 +45,8 @@ function gravatarUrl(email) {
   align-items: center;
   gap: var(--space-s);
   background-color: var(--color-surface);
-  padding: var(--space-s) var(--space-m);
+  padding: var(--space-xs);
+  min-height: 44px;
   border-bottom: 1px solid var(--color-surface-tint);
   cursor: pointer;
 }

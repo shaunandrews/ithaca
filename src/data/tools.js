@@ -7,6 +7,7 @@ export const tools = [
   {
     title: 'Calendar',
     description: 'Access and schedule events on user or team calendars.',
+    icon: '/images/icon-calendar.png',
   },
   {
     title: 'Persona',
@@ -34,6 +35,7 @@ export const tools = [
     title: 'Email',
     description: 'Send and receive emails for support or notifications.',
     value: 'e.g. help@tumblr.com',
+    icon: '/images/icon-email.png',
   },
   {
     title: 'Linear',

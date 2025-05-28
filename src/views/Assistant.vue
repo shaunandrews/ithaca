@@ -89,19 +89,7 @@
         </div>
       </div>
 
-      <div class="assistant-preview">
-        <div class="section-header">
-          <h4 class="section-title">Preview</h4>
-          <p class="section-description">See how this assistant behaves and chat with it.</p>
-        </div>
-        <div class="preview-start">
-          <button><Play :size="18" />Start preview <span class="shortcut"><Command :size="12" /> <CornerDownLeft :size="12" /></span></button>
-        </div>
-        <div class="preview-chat hstack">
-          <input type="text" placeholder="Ask me anything..." />
-          <button><Send :size="18" /></button>
-        </div>
-      </div>
+      <AssistantPreview />
     </div>
 
     <div v-if="assistant && activeTab === 'details'" class="assistant-details">
@@ -145,6 +133,7 @@ import { parseInstructions } from '@/data/parseInstructions.js';
 import { tools } from '@/data/tools.js';
 import CryptoJS from 'crypto-js';
 import ActivityListItem from '@/components/ActivityListItem.vue';
+import AssistantPreview from '@/components/AssistantPreview.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -452,26 +441,6 @@ hr {
 .tools-list {
   gap: var(--space-xs);
   flex-wrap: wrap;
-}
-
-.assistant-preview {
-  width: 40%;
-  border-left: 1px solid var(--color-surface-tint);
-  padding: var(--space-m);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-s);
-}
-
-.preview-start {
-  flex: 1;
-  padding: var(--space-xl);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-s);
-  align-items: center;
-  justify-content: center;
-  text-align: center;
 }
 
 .assistant-details {

@@ -38,6 +38,7 @@ export const assistants = [
       {
         datetime: '2024-06-09T17:30:00Z',
         event: 'Escalation',
+        customer: 'cain@automattic.com',
         summary: 'Escalated a billing issue to a human agent after insufficient information was found in the reference tool.'
       }
     ],
