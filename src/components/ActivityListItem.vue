@@ -4,7 +4,7 @@
     <div class="activity-event">{{ item.event }}</div>
     <div class="activity-summary">{{ item.summary }}</div>
     <div v-if="item.customer" class="activity-customer">
-      <img :src="gravatarUrl(item.customer)" alt="Gravatar" width="20" height="20" class="activity-gravatar" />
+      <img :src="gravatarUrl(item.customer)" alt="Gravatar" width="20" height="20" class="activity-gravatar" :title="item.customer" />
       <!-- {{ item.customer }} -->
     </div>
   </div>
@@ -47,6 +47,11 @@ function gravatarUrl(email) {
   background-color: var(--color-surface);
   padding: var(--space-s) var(--space-m);
   border-bottom: 1px solid var(--color-surface-tint);
+  cursor: pointer;
+}
+
+.activity-list-item:last-child {
+  border-bottom: none;
 }
 
 .activity-list-item:hover {
@@ -60,7 +65,7 @@ function gravatarUrl(email) {
 .activity-datetime {
   font-size: var(--font-size-s);
   color: var(--color-chrome-fg-tertiary);
-  width: 140px;
+  width: 120px;
   text-align: right;
   flex: 0 0 auto;
 }

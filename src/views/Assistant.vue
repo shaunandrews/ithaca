@@ -136,7 +136,7 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import ToolListItem from '@/components/ToolListItem.vue';
 import Modal from '@/components/modal/Modal.vue';
 import { assistants } from '@/data/assistants.js';
@@ -147,9 +147,10 @@ import CryptoJS from 'crypto-js';
 import ActivityListItem from '@/components/ActivityListItem.vue';
 
 const route = useRoute();
+const router = useRouter();
 const assistantId = computed(() => Number(route.params.id));
 const assistant = computed(() => assistants.find(a => a.id === assistantId.value));
-const activeTab = ref('instructions');
+const activeTab = ref(route.query.tab || 'instructions');
 
 const parsedInstructions = computed(() =>
   assistant.value ? parseInstructions(assistant.value.instructions) : []
@@ -169,6 +170,22 @@ watch(trigger, (newVal) => {
 
 watch(assistant, (newAssistant) => {
   if (newAssistant) trigger.value = newAssistant.trigger;
+});
+
+// Sync activeTab to URL query
+watch(activeTab, (newTab) => {
+  if (route.query.tab !== newTab) {
+    router.replace({
+      query: { ...route.query, tab: newTab },
+    });
+  }
+});
+
+// Sync URL query to activeTab
+watch(() => route.query.tab, (newTab) => {
+  if (newTab && newTab !== activeTab.value) {
+    activeTab.value = newTab;
+  }
 });
 
 function onTextFieldInput(e) {
@@ -457,10 +474,6 @@ hr {
   text-align: center;
 }
 
-.assistant-activity {
-  
-}
-
 .assistant-details {
   padding: var(--space-m);
 }
@@ -468,5 +481,12 @@ hr {
 .assistant-details h4 {
   font-size: var(--font-size-s);
   color: var(--color-surface-fg-tertiary);
+}
+
+.assistant-activity {
+  margin: var(--space-m);
+  border: 1px solid var(--color-surface-tint);
+  border-radius: var(--radius-m);
+  overflow: hidden;
 }
 </style>
