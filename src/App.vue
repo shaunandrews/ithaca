@@ -1,22 +1,29 @@
 <template>
   <div>
     <header>
-      <h1>Ithaca</h1>
-      <nav>
-        <ul>
-          <li class="nav-item" v-if="isAssistantRoute">
-            <router-link to="/">Go home</router-link>
-          </li>
-          <template v-else>
-            <li class="nav-item" :class="{ active: $route.name === 'Assistants' }">
-              <router-link to="/">Assistants</router-link>
+      <div class="header-start">
+        <h1>Ithaca</h1>
+        <nav>
+          <ul>
+            <li v-if="isAssistantRoute" class="nav-item">
+              <router-link to="/">Go home</router-link>
             </li>
-            <li class="nav-item" :class="{ active: $route.name === 'Tools' }">
-              <router-link to="/tools">Tools</router-link>
-            </li>
-          </template>
-        </ul>
-      </nav>
+            <template v-else>
+              <li class="nav-item" :class="{ active: $route.name === 'Assistants' }">
+                <router-link to="/">Assistants</router-link>
+              </li>
+              <li class="nav-item" :class="{ active: $route.name === 'Tools' }">
+                <router-link to="/tools">Tools</router-link>
+              </li>
+            </template>
+          </ul>
+        </nav>
+      </div>
+      <div class="header-end">
+        <div class="user">
+          <p class="user-initials">SA</p>
+        </div>
+      </div>
     </header>
 
     <main>
@@ -41,18 +48,44 @@ header {
   border-bottom: 1px solid var(--color-surface-tint);
 }
 
+.header-start,
+.header-end {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+}
+
+.header-end {
+  justify-content: flex-end;
+}
+
+h1 {
+  font-size: var(--font-size-l);
+}
+
 ul {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
-  gap: var(--space-s);
+  gap: var(--space-m);
 }
 
-main {
-  padding: var(--space-m);
+.user {
+  background-color: blue;
+  color: white;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
   display: flex;
-  flex-direction: column;
-  gap: var(--space-m);
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+}
+
+.user-initials {
+  font-size: var(--font-size-xs);
+  font-weight: 900;
 }
 </style>

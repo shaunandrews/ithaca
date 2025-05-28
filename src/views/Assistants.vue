@@ -1,14 +1,27 @@
 <template>
   <div class="assistants-toolbar">
-    <input type="search" placeholder="Search assistants" />
-    <button>New assistant</button>
+    <div class="toolbar-start">
+      <input type="search" placeholder="Search assistants" />
+    </div>
+    <div class="toolbar-end">
+      <button>New assistant</button>
+    </div>
   </div>
 
   <div class="assistant-list">
-    <div v-for="assistant in assistants" :key="assistant.id" class="assistant-item">
+    <div
+      v-for="assistant in assistants"
+      :key="assistant.id"
+      class="assistant-item"
+      @click="goToAssistant(assistant, $event)"
+      style="user-select: none;"
+    >
       <router-link :to="`/assistant/${assistant.id}`" class="assistant-title">{{ assistant.title }}</router-link>
       <div class="assistant-description">{{ assistant.description }}</div>
-      <div class="assistant-owner">{{ assistant.owner }}</div>
+      <div class="assistant-owner hstack">
+        <img height="24" width="24" :src="`/images/${assistant.ownerIcon}`" class="assistant-owner-icon" />
+        <span class="assistant-owner-name">{{ assistant.owner }}</span>
+      </div>
       <!-- <div class="assistant-tools">
         <ToolListItem
           v-for="(tool, idx) in assistant.tools"
@@ -23,9 +36,21 @@
 </template>
 
 <script setup>
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 import ToolListItem from '@/components/ToolListItem.vue';
 import { assistants } from '@/data/assistants.js';
+
+const router = useRouter();
+
+function goToAssistant(assistant, event) {
+  // Prevent navigation if the router-link was clicked
+  if (
+    event.target.closest('.assistant-title')
+  ) {
+    return;
+  }
+  router.push(`/assistant/${assistant.id}`);
+}
 </script> 
 
 <style scoped>
@@ -33,28 +58,57 @@ import { assistants } from '@/data/assistants.js';
   display: flex;
   justify-content: space-between;
   gap: var(--space-s);
+  padding: var(--space-s) var(--space-m);
 }
 
 .assistant-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: var(--space-s);
+  padding: 0 var(--space-m);
 }
 
 .assistant-item {
+  display: flex;
+  flex-direction: column;
   background: var(--color-surface);
   border-radius: var(--radius);
   padding: var(--space-m);
   border: 1px solid var(--color-surface-tint);
+  cursor: pointer;
+}
+
+.assistant-item:hover {
+  background-color: var(--color-surface-tint);
 }
 
 .assistant-title {
+  font-size: var(--font-size-l);
   font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  color: var(--color-surface-fg);
 }
 
 .assistant-description {
   color: var(--color-surface-fg-secondary);
-  line-height: var(--line-height-tight);
+  line-height: 1.5em;
+  min-height: 3em; /* Always at least 2 lines tall */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.assistant-owner {
+  padding-top: var(--space-xs);
+  gap: var(--space-xs);
+  flex: 1;
+  align-items: flex-end;
+}
+
+.assistant-owner-icon {
+  border-radius: var(--radius-s);
 }
 
 .assistant-tools {

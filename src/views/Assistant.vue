@@ -375,7 +375,7 @@ nav li:hover {
 }
 
 .assistant-details {
-  gap: var(--space-l);
+  /* gap: var(--space-l); */
 }
 
 .assistant-config {

@@ -6,6 +6,7 @@ export const assistants = [
     title: 'WP.com Support Chat',
     description: 'Answering customer questions in realtime',
     owner: "Team HAL",
+    ownerIcon: 'icon-teamhal.png',
     tools: [
       { ...tools.find(t => t.title === 'Chat'), subtitle: 'WordPress.com' },
       { ...tools.find(t => t.title === 'Persona'), subtitle: 'Wappu' },
@@ -45,6 +46,7 @@ export const assistants = [
     title: 'Tumblr Email Triage',
     description: 'First-line email triage for help@tumblr.com',
     owner: "Team HAL",
+    ownerIcon: 'icon-teamhal.png',
     tools: [
       { ...tools.find(t => t.title === 'Zendesk') },
       { ...tools.find(t => t.title === 'Email'), subtitle: 'help@tumblr.com' },
@@ -84,6 +86,7 @@ export const assistants = [
     title: 'Gravatar Overdue Projects',
     description: 'Daily Slack reminders for overdue projects',
     owner: "Lighthouse",
+    ownerIcon: 'icon-teamlighthouse.png',
     tools: [
       { ...tools.find(t => t.title === 'Linear'), subtitle: 'Team Gravatar' },
       { ...tools.find(t => t.title === 'Slack') },
@@ -118,6 +121,7 @@ export const assistants = [
     title: 'WP Block Finder',
     description: 'Given some HTML, return a specific block',
     owner: "Team HAL",
+    ownerIcon: 'icon-teamhal.png',
     tools: [
       { ...tools.find(t => t.title === 'Input'), subtitle: 'HTML' },
       { ...tools.find(t => t.title === 'Input'), subtitle: 'Requested block' },
@@ -152,6 +156,7 @@ export const assistants = [
     title: 'Meeting Scheduler',
     description: 'Schedules meetings for groups based on Slack messages',
     owner: "Team HAL",
+    ownerIcon: 'icon-teamhal.png',
     tools: [
       { ...tools.find(t => t.title === 'Slack') },
       { ...tools.find(t => t.title === 'Calendar') }
@@ -186,7 +191,8 @@ export const assistants = [
     id: 6,
     title: 'Agent Dave',
     description: 'A Slack chatbot for searching, finding insights, and locating DRIs across many P2 sites.',
-    owner: 'Team HAL',
+    owner: '@apeatling',
+    ownerIcon: 'avatar-apeatling.png',
     tools: [
       { ...tools.find(t => t.title === 'Slack'), subtitle: 'Chat' },
       { ...tools.find(t => t.title === 'P2'), subtitle: 'Work Sites' }
