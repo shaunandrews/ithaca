@@ -16,7 +16,7 @@
       </div>
     </header>
 
-    <div v-else>
+    <div v-else class="assistant-not-found">
       <p>Assistant not found.</p>
     </div>
 
@@ -121,16 +121,8 @@
       </div>
     </div>
 
-    <div v-if="assistant && activeTab === 'activity'" class="assistant-activity">
-      <ol>
-        <li v-for="(item, idx) in assistant.activity" :key="idx">
-          <span class="activity-datetime">{{ formatDate(item.datetime) }}</span>
-          &bull;
-          <span class="activity-event">{{ item.event }}</span>
-          &mdash;
-          <span class="activity-summary">{{ item.summary }}</span>
-        </li>
-      </ol>
+    <div v-if="assistant && activeTab === 'activity'" class="assistant-activity vstack">
+        <ActivityListItem v-for="(item, idx) in assistant.activity" :key="idx" :item="item" />
     </div>
 
     <Modal :isOpen="isToolModalOpen" @close="closeToolModal">
@@ -151,6 +143,8 @@ import { assistants } from '@/data/assistants.js';
 import { Play, Command, CornerDownLeft, Send, Plus } from 'lucide-vue-next';
 import { parseInstructions } from '@/data/parseInstructions.js';
 import { tools } from '@/data/tools.js';
+import CryptoJS from 'crypto-js';
+import ActivityListItem from '@/components/ActivityListItem.vue';
 
 const route = useRoute();
 const assistantId = computed(() => Number(route.params.id));
@@ -160,11 +154,6 @@ const activeTab = ref('instructions');
 const parsedInstructions = computed(() =>
   assistant.value ? parseInstructions(assistant.value.instructions) : []
 );
-
-const getToolDescription = (title) => {
-  const tool = tools.find(t => t.title === title);
-  return tool ? tool.description : '';
-};
 
 const autocomplete = ref({ show: false, x: 0, y: 0, query: '', filtered: tools, caretNode: null });
 
@@ -181,17 +170,6 @@ watch(trigger, (newVal) => {
 watch(assistant, (newAssistant) => {
   if (newAssistant) trigger.value = newAssistant.trigger;
 });
-
-function formatDate(datetime) {
-  const date = new Date(datetime);
-  return date.toLocaleString(undefined, {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
-}
 
 function onTextFieldInput(e) {
   const sel = window.getSelection();
@@ -452,7 +430,6 @@ hr {
 
 .instructions {
   flex: 1;
-  /* background-color: var(--color-surface); */
 }
 
 .tools-list {
@@ -480,15 +457,8 @@ hr {
   text-align: center;
 }
 
-.assistant-activity ol {
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-s);
-}
-
-.assistant-activity li {
-  list-style: none;
+.assistant-activity {
+  
 }
 
 .assistant-details {

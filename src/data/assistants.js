@@ -25,13 +25,15 @@ export const assistants = [
     activity: [
       {
         datetime: '2024-06-10T14:12:00Z',
-        event: 'New chat message',
-        summary: 'Answered a user question about upgrading their WordPress.com plan. Provided relevant support article and offered further assistance.'
+        event: 'New reply (existing chat)',
+        customer: 'koalababy3@gmail.com',
+        summary: 'Reviewed support history and provided a fix for a recurring login issue.',
       },
       {
         datetime: '2024-06-10T13:45:00Z',
-        event: 'Support history review',
-        summary: 'Reviewed user support history to provide context for a recurring login issue.'
+        event: 'First reply',
+        customer: 'shaun@shaunandrews.com',
+        summary: 'Customer had a question about upgrading their WordPress.com plan. Provided relevant support article and offered further assistance.'
       },
       {
         datetime: '2024-06-09T17:30:00Z',
