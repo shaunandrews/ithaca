@@ -27,45 +27,14 @@
             <h4 class="section-title">Instructions</h4>
             <p class="section-description">Tell your assistant what to do. Add tools by typing @tool.</p>
           </div>
-          <div
-            class="text-field"
-            contenteditable="true"
+          <InstructionsField
+            :parsedInstructions="parsedInstructions"
+            :autocomplete="autocomplete"
+            :tools="tools"
             @input="onTextFieldInput"
             @keydown="onTextFieldKeydown"
-          >
-            <template v-for="(paragraph, pIdx) in parsedInstructions" :key="pIdx">
-              <p>
-                <template v-for="(part, idx) in paragraph" :key="idx">
-                  <span v-if="part.type === 'text'">{{ part.value }}</span>
-                  <span
-                    v-else-if="part.type === 'tool'"
-                    class="highlight-tool"
-                    contenteditable="false"
-                  >
-                    @{{ part.title }}<template v-if="part.value">:<span class="tool-value">{{ part.value }}</span></template>
-                  </span>
-                </template>
-              </p>
-            </template>
-            <teleport to="body">
-              <ul
-                v-if="autocomplete.show && autocomplete.filtered.length"
-                class="autocomplete-menu"
-                :style="{ left: autocomplete.x + 'px', top: autocomplete.y + 'px' }"
-              >
-                <li
-                  v-for="tool in autocomplete.filtered"
-                  :key="tool.title"
-                  :class="{ selected: tool.title === autocomplete.selected }"
-                  @mousedown.prevent="selectTool(tool)"
-                >
-                  <span v-if="tool.icon" class="autocomplete-icon"><img :src="tool.icon" :alt="tool.title" width="16" height="16" /></span>
-                  <span class="autocomplete-title">{{ tool.title }}</span>
-                  <span class="autocomplete-desc">{{ tool.description }}</span>
-                </li>
-              </ul>
-            </teleport>
-          </div>
+            @select-tool="selectTool"
+          />
         </div>
 
         <hr />
@@ -134,6 +103,7 @@ import { tools } from '@/data/tools.js';
 import CryptoJS from 'crypto-js';
 import ActivityListItem from '@/components/ActivityListItem.vue';
 import AssistantPreview from '@/components/AssistantPreview.vue';
+import InstructionsField from '@/components/InstructionsField.vue';
 
 const route = useRoute();
 const router = useRouter();
