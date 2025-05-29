@@ -58,9 +58,7 @@ header {
   display: flex;
   align-items: center;
   gap: var(--space-m);
-  /* background-color: var(--color-surface); */
   padding: var(--space-s) var(--space-m);
-  /* border-bottom: 1px solid var(--color-surface-tint); */
 }
 
 .header-start,

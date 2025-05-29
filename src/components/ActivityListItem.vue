@@ -59,10 +59,6 @@ function gravatarUrl(email) {
   background-color: var(--color-surface-tint);
 }
 
-.activity-list-item > * {
-  /* flex: 0 0 auto; */
-}
-
 .activity-datetime {
   font-size: var(--font-size-s);
   color: var(--color-chrome-fg-tertiary);
