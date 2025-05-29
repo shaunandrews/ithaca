@@ -89,7 +89,7 @@
         </div>
       </div>
 
-      <AssistantPreview />
+      <AssistantPreview :assistant="assistant" />
     </div>
 
     <div v-if="assistant && activeTab === 'details'" class="assistant-details">

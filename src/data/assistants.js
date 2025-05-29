@@ -43,6 +43,34 @@ export const assistants = [
       }
     ],
     trigger: 'chat-message',
+    previewEvents: [
+      {
+        question: "Hi, I'm Wappuu, an AI helper for WordPress.com. How can I help you today?"
+      },
+      {
+        loading: 'Reviewing your question...',
+        done: 'Found a relevant support article',
+        delay: 1200,
+      },
+      {
+        loading: 'Reviewing your profile and support history...',
+        done: 'Reviewed profile and recent support history.',
+        delay: 1000,
+      },
+      {
+        loading: 'Reviewing chat history...',
+        done: 'No relevant chat history found.',
+        delay: 1000,
+      },
+      {
+        loading: 'Wappuu is composing response...',
+        done: 'Response ready.',
+        delay: 1000,
+      },
+      {
+        question: 'Oh no! That\'s no good. But I can help you with that. \n\nI\'ve found a few articles that might help you. \n\n[tool title="Reference" value="support.wordpress.com"]\n\nBasically, you need to find the "reset password" link and check your email for a new message.\n\nHopefully this helps. Are you able to reset you password?',
+      }
+    ],
   },
   {
     id: 2,
@@ -83,6 +111,9 @@ export const assistants = [
       }
     ],
     trigger: 'email-message',
+    previewEvents: [
+      { loading: 'Connecting to email...', done: 'Connected to email', delay: 1000 },
+    ],
   },
   {
     id: 3,
@@ -118,6 +149,33 @@ export const assistants = [
       }
     ],
     trigger: 'scheduled',
+    previewEvents: [
+      {
+        loading: 'Connecting to Linear',
+        done: 'Connected to Linear',
+        delay: 1000,
+      },
+      {
+        loading: 'Reviewing 23 Gravatar projects',
+        done: 'Found 3 overdue projects',
+        delay: 1200,
+        details: [
+          'Profile Color Scheme, Owner: Shaun Andrews • 1 day overdue',
+          'Gravatar for Teams, Owner: Jack Smith • 2 days overdue',
+          'Combined Design Controls, Owner: Katie Genovese • 3 days overdue',
+        ],
+      },
+      {
+        loading: 'Searching Slack for project owners',
+        done: 'Found 3 project owners and sent each a message',
+        delay: 1000,
+        details: [
+          'Shaun Andrews: "Hey Shaun, the Profile Color Scheme is 1 day overdue. Can you take a look? linear.app/s/profile-color-scheme"',
+          'Jack Smith: "Hey Jack, the Gravatar for Teams is 2 days overdue. Can you take a look? linear.app/s/gravatar-for-teams"',
+          'Katie Genovese: "Hey Katie, the Combined Design Controls is 3 days overdue. Can you take a look? linear.app/s/combined-design-controls"',
+        ],
+      },
+    ],
   },
   {
     id: 4,
@@ -153,6 +211,9 @@ export const assistants = [
       }
     ],
     trigger: 'on-demand',
+    previewEvents: [
+      { loading: 'Parsing HTML...', done: 'Block found', delay: 1000 },
+    ],
   },
   {
     id: 5,
@@ -189,6 +250,9 @@ export const assistants = [
       }
     ],
     trigger: 'slack-message',
+    previewEvents: [
+      { loading: 'Checking Slack for meeting requests...', done: 'Meeting scheduled', delay: 1000 },
+    ],
   },
   {
     id: 6,
@@ -223,5 +287,8 @@ export const assistants = [
       }
     ],
     trigger: 'slack-message',
+    previewEvents: [
+      { loading: 'Searching P2 sites...', done: 'Found DRI', delay: 1000 },
+    ],
   },
 ]; 
