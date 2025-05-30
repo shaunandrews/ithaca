@@ -97,10 +97,9 @@ import { useRoute, useRouter } from 'vue-router';
 import ToolListItem from '@/components/ToolListItem.vue';
 import Modal from '@/components/modal/Modal.vue';
 import { assistants } from '@/data/assistants.js';
-import { Play, Command, CornerDownLeft, Send, Plus } from 'lucide-vue-next';
+import { Plus } from 'lucide-vue-next';
 import { parseInstructions } from '@/data/parseInstructions.js';
 import { tools } from '@/data/tools.js';
-import CryptoJS from 'crypto-js';
 import ActivityListItem from '@/components/ActivityListItem.vue';
 import AssistantPreview from '@/components/AssistantPreview.vue';
 import InstructionsField from '@/components/InstructionsField.vue';
@@ -236,85 +235,6 @@ function closeToolModal() {
   selectedTool.value = null;
 }
 </script>
-
-<style>
-.text-field:focus {
-  outline: none;
-  caret-color: var(--color-accent);
-}
-
-.text-field p {
-  margin-bottom: var(--space-m);
-}
-
-.text-field p:last-child {
-  margin-bottom: 0;
-}
-
-.highlight-tool {
-  color: var(--color-highlight);
-  font-size: var(--font-size-s);
-  font-weight: var(--font-weight-semibold);
-  border-radius: 3px;
-  cursor: pointer;
-  background-color: var(--color-highlight-tint);
-  border: 0.5px solid var(--color-highlight);
-  white-space: nowrap;
-  padding: 2px 3px;
-}
-
-.tool-value {
-  font-weight: var(--font-weight-normal);
-  margin-left: 4px;
-}
-
-.highlight-tool:hover {
-  color: var(--color-highlight-fg);
-  background-color: var(--color-highlight);
-}
-
-.autocomplete-menu {
-  position: fixed;
-  z-index: 1100;
-  background: var(--color-surface);
-  border: 1px solid var(--color-surface-tint);
-  border-radius: var(--radius-s);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  min-width: 220px;
-  max-width: 320px;
-  max-height: 240px;
-  overflow-y: auto;
-}
-.autocomplete-menu li {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-xs);
-  padding: var(--space-xs) var(--space-s);
-  cursor: pointer;
-  font-size: var(--font-size-s);
-}
-.autocomplete-menu li.selected,
-.autocomplete-menu li:hover {
-  background: var(--color-surface-tint);
-}
-.autocomplete-icon {
-  flex-shrink: 0;
-  margin-right: var(--space-xs);
-}
-.autocomplete-title {
-  font-weight: var(--font-weight-medium);
-  margin-right: var(--space-xs);
-}
-.autocomplete-desc {
-  color: var(--color-chrome-fg-secondary);
-  font-size: var(--font-size-xs);
-  flex: 1;
-  white-space: normal;
-}
-</style>
 
 <style scoped>
 .assistant-container {
