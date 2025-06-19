@@ -8,7 +8,7 @@
         </h1>
         <nav>
           <ul>
-              <li class="nav-item" :class="{ active: $route.name === 'Assistants' }">
+              <li class="nav-item" :class="{ active: $route.name === 'Assistants' || $route.name === 'Assistant' || $route.path.startsWith('/assistant') }">
                 <router-link to="/">Assistants</router-link>
               </li>
               <li class="nav-item" :class="{ active: $route.name === 'Experts' }">
