@@ -4,14 +4,10 @@
       <div class="sidebar-top">
         <h1 class="logo">
           <Landmark :size="24" />
-          <span v-if="!isAssistantRoute" class="logo-text">Ithaca</span>
+          <span class="logo-text">Ithaca</span>
         </h1>
         <nav>
           <ul>
-            <li v-if="isAssistantRoute" class="nav-item">
-              <router-link to="/">Go home</router-link>
-            </li>
-            <template v-else>
               <li class="nav-item" :class="{ active: $route.name === 'Assistants' }">
                 <router-link to="/">Assistants</router-link>
               </li>
@@ -21,13 +17,11 @@
               <li class="nav-item" :class="{ active: $route.name === 'Tools' }">
                 <router-link to="/tools">Tools</router-link>
               </li>
-            </template>
           </ul>
         </nav>
       </div>
       <div class="sidebar-bottom">
         <div class="user">
-          <!-- <p class="user-initials">SA</p> -->
           <img src="/images/avatar-shaunandrews.png" alt="Shaun Andrews" height="24" width="24" />
         </div>
       </div>
@@ -40,11 +34,9 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { Landmark } from 'lucide-vue-next';
 const route = useRoute();
-const isAssistantRoute = computed(() => route.name === 'Assistant');
 </script>
 
 <style scoped>
