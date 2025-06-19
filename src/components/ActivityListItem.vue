@@ -54,6 +54,7 @@ function gravatarUrl(email) {
   min-height: 44px;
   border-bottom: 1px solid var(--color-surface-tint);
   cursor: pointer;
+  text-decoration: none;
 }
 
 .activity-list-item:last-child {

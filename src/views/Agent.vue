@@ -260,7 +260,6 @@ header {
   gap: var(--space-m);
   background-color: var(--color-surface);
   padding: var(--space-s) var(--space-m);
-  border-top: 1px solid var(--color-surface-tint);
   border-bottom: 1px solid var(--color-surface-tint);
 }
 

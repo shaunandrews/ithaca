@@ -46,7 +46,8 @@ const route = useRoute();
 }
 
 .sidebar {
-  width: 220px;
+  min-width: 220px;
+  border-right: 1px solid var(--color-surface-tint);
   padding: var(--space-m);
   display: flex;
   flex-direction: column;
