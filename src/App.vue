@@ -15,8 +15,8 @@
               <li class="nav-item" :class="{ active: $route.name === 'Assistants' }">
                 <router-link to="/">Assistants</router-link>
               </li>
-              <li class="nav-item" :class="{ active: $route.name === 'Workflows' }">
-                <router-link to="/workflows">Workflows</router-link>
+              <li class="nav-item" :class="{ active: $route.name === 'Experts' }">
+                <router-link to="/experts">Experts</router-link>
               </li>
               <li class="nav-item" :class="{ active: $route.name === 'Tools' }">
                 <router-link to="/tools">Tools</router-link>

@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Assistants from './views/Assistants.vue';
 import Tools from './views/Tools.vue';
 import Assistant from './views/Assistant.vue';
-import Workflows from './views/Workflows.vue';
+import Experts from './views/Experts.vue';
 
 const routes = [
   {
@@ -22,9 +22,9 @@ const routes = [
     props: true,
   },
   {
-    path: '/workflows',
-    name: 'Workflows',
-    component: Workflows,
+    path: '/experts',
+    name: 'Experts',
+    component: Experts,
   },
 ];
 
