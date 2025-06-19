@@ -4,7 +4,7 @@
 - Agent List (Browse, Search, Sort)
   - Create New Agent
   - Agent Detail
-    - Overview / Configuration / Preview
+    - Workbench (Overview, Configuration, Preview)
     - Versions (History, Compare, Rollback)
     - Insights (Performance, Usage, Trends)
     - Activity
