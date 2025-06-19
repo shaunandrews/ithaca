@@ -1,6 +1,6 @@
 import { tools } from './tools.js';
 
-export const assistants = [
+export const agents = [
   {
     id: 1,
     title: 'WP.com Support Chat',
@@ -15,7 +15,7 @@ export const assistants = [
       { ...tools.find(t => t.title === 'Reference'), subtitle: 'support.wordpress.com' }
     ],
     instructions: `
-        You are a helpful support assistant for WordPress.com. Use [tool title="Persona" value="Wappuu"] for all responses.
+        You are a helpful support agent for WordPress.com. Use [tool title="Persona" value="Wappuu"] for all responses.
         Review the [tool title="User Profile"] and [tool title="Support History"] to learn about the user and their past support interactions. Prioritize recent interactions and use this context in response if needed.
         Review the [tool title="Chat"] to see the user's previous messages and use this context in your response.
         If the user is asking about a specific issue, use the [tool title="Reference" value="support.wordpress.com"] tool to find the most relevant support article.
@@ -93,7 +93,7 @@ export const assistants = [
       { ...tools.find(t => t.title === 'Reference'), subtitle: 'support.tumblr.com' }
     ],
     instructions: `
-    You are a helpful support assistant for Tumblr.com. Use [tool title="Persona" value="TumblrBot"] for all responses.
+    You are a helpful support agent for Tumblr.com. Use [tool title="Persona" value="TumblrBot"] for all responses.
     Review the [tool title="Email" value="help@tumblr.com"] to see the user's email and use this context in your response.
     If the user is asking about a specific issue, use the [tool title="Reference" value="support.tumblr.com"] tool to find the most relevant support article.
     If you don't have the information to answer the user's question, say you don't know and escalate to a human agent.

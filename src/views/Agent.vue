@@ -1,8 +1,8 @@
 <template>
-  <div class="assistant-container">
-    <header v-if="assistant">
-      <div class="assistant-header-start">
-        <h2 class="assistant-title">{{ assistant.title }}</h2>
+  <div class="agent-container">
+    <header v-if="agent">
+      <div class="agent-header-start">
+        <h2 class="agent-title">{{ agent.title }}</h2>
         <nav>
           <ul>
             <li :class="{ active: activeTab === 'workbench' }" @click="activeTab = 'workbench'">Workbench</li>
@@ -12,21 +12,21 @@
           </ul>
         </nav>
       </div>
-      <div class="assistant-header-end">
+      <div class="agent-header-end">
         <button class="primary">Save</button>
       </div>
     </header>
 
-    <div v-else class="assistant-not-found">
-      <p>Assistant not found.</p>
+    <div v-else class="agent-not-found">
+      <p>Agent not found.</p>
     </div>
 
-    <div v-if="assistant && activeTab === 'workbench'" class="assistant-workbench hstack">
-      <div class="assistant-config vstack">
+    <div v-if="agent && activeTab === 'workbench'" class="agent-workbench hstack">
+      <div class="agent-config vstack">
         <div class="instructions">
           <div class="section-header">
             <h4 class="section-title">Instructions</h4>
-            <p class="section-description">Tell your assistant what to do. Add tools by typing @tool.</p>
+            <p class="section-description">Tell your agent what to do. Add tools by typing @tool.</p>
           </div>
           <InstructionsField
             :parsedInstructions="parsedInstructions"
@@ -43,11 +43,11 @@
         <div class="tools">
           <div class="section-header">
             <h4 class="section-title">Tools</h4>
-            <p class="section-description">Configure the tools available to your assistant.</p>
+            <p class="section-description">Configure the tools available to your agent.</p>
           </div>
           <div class="tools-list hstack">
             <ToolListItem
-              v-for="(tool, idx) in assistant.tools"
+              v-for="(tool, idx) in agent.tools"
               :key="idx"
               :icon="tool.icon"
               :title="tool.title"
@@ -59,12 +59,12 @@
         </div>
       </div>
 
-      <AssistantPreview :assistant="assistant" />
+      <AgentPreview :agent="agent" />
     </div>
 
-    <div v-if="assistant && activeTab === 'versions'" class="assistant-versions">
+    <div v-if="agent && activeTab === 'versions'" class="agent-versions">
       <h4>Description</h4>
-      <p>{{ assistant.description }}</p>
+      <p>{{ agent.description }}</p>
 
       <h4>Status</h4>
       <p>Active</p>
@@ -74,21 +74,21 @@
 
       <h4>Owner</h4>
       <div class="details-owner hstack">
-        <img :src="`/images/${assistant.ownerIcon}`" :alt="assistant.owner" width="24" height="24" class="owner-icon" />
-        <span class="owner-name">{{ assistant.owner }}</span>
+        <img :src="`/images/${agent.ownerIcon}`" :alt="agent.owner" width="24" height="24" class="owner-icon" />
+        <span class="owner-name">{{ agent.owner }}</span>
       </div>
     </div>
 
-    <div v-if="assistant && activeTab === 'insights'" class="assistant-insights">
+    <div v-if="agent && activeTab === 'insights'" class="agent-insights">
       <p>Insights coming soon.</p>
     </div>
 
-    <div v-if="assistant && activeTab === 'activity'" class="assistant-activity vstack">
+    <div v-if="agent && activeTab === 'activity'" class="agent-activity vstack">
         <ActivityListItem
-          v-for="(item, idx) in assistant.activity"
+          v-for="(item, idx) in agent.activity"
           :key="idx"
           :item="item"
-          :to="`/assistant/${assistant.id}/activity/${item.id}`"
+          :to="`/agent/${agent.id}/activity/${item.id}`"
         />
     </div>
 
@@ -106,38 +106,38 @@ import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import ToolListItem from '@/components/ToolListItem.vue';
 import Modal from '@/components/Modal.vue';
-import { assistants } from '@/data/assistants.js';
+import { agents } from '@/data/agents.js';
 import { Plus } from 'lucide-vue-next';
 import { parseInstructions } from '@/data/parseInstructions.js';
 import { tools } from '@/data/tools.js';
 import ActivityListItem from '@/components/ActivityListItem.vue';
-import AssistantPreview from '@/components/AssistantPreview.vue';
+import AgentPreview from '@/components/AgentPreview.vue';
 import InstructionsField from '@/components/InstructionsField.vue';
 
 const route = useRoute();
 const router = useRouter();
-const assistantId = computed(() => Number(route.params.id));
-const assistant = computed(() => assistants.find(a => a.id === assistantId.value));
+const agentId = computed(() => Number(route.params.id));
+const agent = computed(() => agents.find(a => a.id === agentId.value));
 const activeTab = ref(route.query.tab || 'workbench');
 
 const parsedInstructions = computed(() =>
-  assistant.value ? parseInstructions(assistant.value.instructions) : []
+  agent.value ? parseInstructions(agent.value.instructions) : []
 );
 
 const autocomplete = ref({ show: false, x: 0, y: 0, query: '', filtered: tools, caretNode: null });
 
-const trigger = ref(assistant.value ? assistant.value.trigger : 'on-demand');
+const trigger = ref(agent.value ? agent.value.trigger : 'on-demand');
 
 // Modal state for tool details
 const isToolModalOpen = ref(false);
 const selectedTool = ref(null);
 
 watch(trigger, (newVal) => {
-  if (assistant.value) assistant.value.trigger = newVal;
+  if (agent.value) agent.value.trigger = newVal;
 });
 
-watch(assistant, (newAssistant) => {
-  if (newAssistant) trigger.value = newAssistant.trigger;
+watch(agent, (newAgent) => {
+  if (newAgent) trigger.value = newAgent.trigger;
 });
 
 // Sync activeTab to URL query
@@ -247,7 +247,7 @@ function closeToolModal() {
 </script>
 
 <style scoped>
-.assistant-container {
+.agent-container {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -264,8 +264,8 @@ header {
   border-bottom: 1px solid var(--color-surface-tint);
 }
 
-.assistant-header-start,
-.assistant-header-end {
+.agent-header-start,
+.agent-header-end {
   display: flex;
   align-items: center;
   gap: var(--space-m);
@@ -302,7 +302,7 @@ nav li:hover:not(.active) {
   background-color: var(--color-surface-tint-dark);
 }
 
-.assistant-workbench {
+.agent-workbench {
   flex: 1;
 }
 
@@ -313,7 +313,7 @@ hr {
   margin: 0 calc(-1 * var(--space-m));
 }
 
-.assistant-config {
+.agent-config {
   gap: var(--space-m);
   width: 60%;
   padding: var(--space-m);
@@ -343,23 +343,23 @@ hr {
   flex-wrap: wrap;
 }
 
-.assistant-versions {
+.agent-versions {
   padding: var(--space-m);
 }
 
-.assistant-versions h4 {
+.agent-versions h4 {
   font-size: var(--font-size-s);
   color: var(--color-surface-fg-tertiary);
 }
 
-.assistant-activity {
+.agent-activity {
   margin: var(--space-m);
   border: 1px solid var(--color-surface-tint);
   border-radius: var(--radius-m);
   overflow: hidden;
 }
 
-.assistant-insights {
+.agent-insights {
   padding: var(--space-m);
 }
 </style>

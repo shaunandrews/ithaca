@@ -1,8 +1,8 @@
 <template>
-  <div class="assistant-preview">
+  <div class="agent-preview">
     <div class="section-header">
       <h4 class="section-title">Preview</h4>
-      <p class="section-description">See how this assistant behaves and chat with it.</p>
+      <p class="section-description">See how this agent behaves and chat with it.</p>
     </div>
     <div class="preview-start" v-if="!started">
       <button @click="startPreview"><Play :size="18" />Start preview <span class="shortcut"><Command :size="12" /> <CornerDownLeft :size="12" /></span></button>
@@ -44,7 +44,7 @@ import { ref, watch, nextTick } from 'vue';
 import { Play, Command, CornerDownLeft, Send, Check } from 'lucide-vue-next';
 
 const props = defineProps({
-  assistant: {
+  agent: {
     type: Object,
     required: true,
   },
@@ -58,7 +58,7 @@ const chatHistory = ref([]); // For user messages
 const waitingForInput = ref(false);
 
 function startPreview() {
-  if (!Array.isArray(props.assistant?.previewEvents) || props.assistant.previewEvents.length === 0) return;
+  if (!Array.isArray(props.agent?.previewEvents) || props.agent.previewEvents.length === 0) return;
   started.value = true;
   currentStep.value = 0;
   revealedEvents.value = [];
@@ -69,8 +69,8 @@ function startPreview() {
 }
 
 function runStep() {
-  if (currentStep.value >= props.assistant.previewEvents.length) return;
-  const event = props.assistant.previewEvents[currentStep.value];
+  if (currentStep.value >= props.agent.previewEvents.length) return;
+  const event = props.agent.previewEvents[currentStep.value];
   if (event.question) {
     revealedEvents.value.push({ ...event, state: 'question' });
     waitingForInput.value = true;
@@ -108,9 +108,9 @@ function onInputKeydown(e) {
   }
 }
 
-// Reset preview if assistant changes
+// Reset preview if agent changes
 watch(
-  () => props.assistant,
+  () => props.agent,
   () => {
     started.value = false;
     currentStep.value = -1;
@@ -123,7 +123,7 @@ watch(
 </script>
 
 <style scoped>
-.assistant-preview {
+.agent-preview {
   width: 40%;
   border-left: 1px solid var(--color-surface-tint);
   padding: var(--space-m);

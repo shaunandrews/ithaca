@@ -8,8 +8,8 @@
         </h1>
         <nav>
           <ul>
-              <li class="nav-item" :class="{ active: $route.name === 'Assistants' || $route.name === 'Assistant' || $route.path.startsWith('/assistant') }">
-                <router-link to="/">Assistants</router-link>
+              <li class="nav-item" :class="{ active: $route.name === 'Agents' || $route.name === 'Agent' || $route.path.startsWith('/agent') }">
+                <router-link to="/">Agents</router-link>
               </li>
               <li class="nav-item" :class="{ active: $route.name === 'Experts' }">
                 <router-link to="/experts">Experts</router-link>
