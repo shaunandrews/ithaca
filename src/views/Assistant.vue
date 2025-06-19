@@ -95,7 +95,7 @@
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import ToolListItem from '@/components/ToolListItem.vue';
-import Modal from '@/components/modal/Modal.vue';
+import Modal from '@/components/Modal.vue';
 import { assistants } from '@/data/assistants.js';
 import { Plus } from 'lucide-vue-next';
 import { parseInstructions } from '@/data/parseInstructions.js';
