@@ -1,0 +1,143 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Data Management & State
+
+The Ithaca project uses a static data approach with well-organized data structures and utility functions.
+
+## Data Organization
+
+All application data is stored in the [src/data/](mdc:src/data/) directory:
+
+### Core Data Files
+
+- **[src/data/agents.js](mdc:src/data/agents.js)** - Agent definitions and configurations
+  - Each agent has: `id`, `title`, `description`, `owner`, `tools`, `instructions`, `activity`
+  - Tools are references to the tools data with optional `subtitle` overrides
+  - Activity contains conversation history and events
+
+- **[src/data/tools.js](mdc:src/data/tools.js)** - Available tools for agents
+  - Each tool has: `title`, `description`, `icon`
+  - Tools are referenced by agents in their `tools` array
+
+- **[src/data/conversations.js](mdc:src/data/conversations.js)** - Conversation history
+  - Used by the [src/views/Conversation.vue](mdc:src/views/Conversation.vue) component
+  - Contains message history and metadata
+
+- **[src/data/experts.js](mdc:src/data/experts.js)** - Expert definitions
+  - Used by the [src/views/Experts.vue](mdc:src/views/Experts.vue) component
+
+### Utility Functions
+
+- **[src/data/parseInstructions.js](mdc:src/data/parseInstructions.js)** - Instruction parsing
+  - Parses agent instructions to extract tool references
+  - Used by [src/components/InstructionsField.vue](mdc:src/components/InstructionsField.vue)
+
+## Data Access Patterns
+
+### Direct Import
+Components import data directly:
+
+```javascript
+import { agents } from '@/data/agents.js';
+import { tools } from '@/data/tools.js';
+```
+
+### Route-Based Filtering
+Views filter data based on route parameters:
+
+```javascript
+const route = useRoute();
+const agentId = computed(() => Number(route.params.id));
+const agent = computed(() => agents.find(a => a.id === agentId.value));
+```
+
+### Computed Data
+Derived data is computed from source data:
+
+```javascript
+const parsedInstructions = computed(() =>
+  agent.value ? parseInstructions(agent.value.instructions) : []
+);
+```
+
+## Data Flow
+
+### Agent Data Flow
+1. User navigates to `/agent/:id`
+2. [src/views/AgentLayout.vue](mdc:src/views/AgentLayout.vue) loads agent data
+3. Agent data is passed to child components via props
+4. Child components access specific agent properties
+
+### Tool Data Flow
+1. Tools are loaded from [src/data/tools.js](mdc:src/data/tools.js)
+2. Agent tools are filtered and displayed in [src/views/AgentWorkbench.vue](mdc:src/views/AgentWorkbench.vue)
+3. Tool autocomplete uses the full tools list
+4. Tool modals display tool details
+
+### Activity Data Flow
+1. Agent activity is loaded from the agent object
+2. [src/views/AgentActivity.vue](mdc:src/views/AgentActivity.vue) renders activity list
+3. Activity items link to conversations via [src/views/Conversation.vue](mdc:src/views/Conversation.vue)
+
+## Data Mutations
+
+Currently, the application uses static data. For future state management:
+
+### Potential State Management
+- Consider Pinia for complex state management
+- Implement data persistence for user changes
+- Add real-time updates for agent activity
+
+### Data Validation
+- Agent data should validate required fields
+- Tool references should exist in tools data
+- Activity items should have valid conversation IDs
+
+## Data Structure Examples
+
+### Agent Object
+```javascript
+{
+  id: 1,
+  title: 'WP.com Support Chat',
+  description: 'Answering customer questions in realtime',
+  owner: 'Team HAL',
+  ownerIcon: 'icon-teamhal.png',
+  tools: [
+    { title: 'Chat', subtitle: 'WordPress.com' },
+    { title: 'Persona', subtitle: 'Wappu' }
+  ],
+  instructions: 'You are a helpful support agent...',
+  activity: [
+    {
+      id: 1,
+      datetime: '2024-06-10T14:12:00Z',
+      event: 'New reply (existing chat)',
+      customer: 'koalababy3@gmail.com',
+      summary: 'Reviewed support history...',
+      conversationId: 1
+    }
+  ]
+}
+```
+
+### Tool Object
+```javascript
+{
+  title: 'Chat',
+  description: 'Access to chat conversation history',
+  icon: 'icon-chat.png'
+}
+```
+
+## Best Practices
+
+1. **Single Source of Truth**: Each data type has one source file
+2. **Consistent Structure**: All data objects follow consistent patterns
+3. **Type Safety**: Consider adding TypeScript for better type safety
+4. **Data Validation**: Validate data structure and relationships
+5. **Performance**: Use computed properties for expensive operations
+6. **Caching**: Consider caching frequently accessed data

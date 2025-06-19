@@ -1,0 +1,74 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Agent Architecture & Routing
+
+The agent system uses a sophisticated nested routing architecture that separates concerns and provides better user experience.
+
+## Agent Layout Pattern
+
+The agent interface follows a layout pattern where [src/views/AgentLayout.vue](mdc:src/views/AgentLayout.vue) serves as the base container:
+
+- **Header**: Contains agent title and navigation tabs
+- **Navigation**: Uses `router-link` components for proper routing
+- **Content Area**: Uses `<router-view>` to render tab-specific content
+
+## Tab-Based Navigation
+
+Each agent tab is implemented as a separate view component for better performance and maintainability:
+
+### Workbench Tab
+- **Route**: `/agent/:id` (default) or `/agent/:id/workbench`
+- **Component**: [src/views/AgentWorkbench.vue](mdc:src/views/AgentWorkbench.vue)
+- **Features**: Instructions field with autocomplete, tools configuration, agent preview
+- **Key Components**: [src/components/InstructionsField.vue](mdc:src/components/InstructionsField.vue), [src/components/AgentPreview.vue](mdc:src/components/AgentPreview.vue)
+
+### Versions Tab
+- **Route**: `/agent/:id/versions`
+- **Component**: [src/views/AgentVersions.vue](mdc:src/views/AgentVersions.vue)
+- **Features**: Agent metadata, version information, owner details
+
+### Insights Tab
+- **Route**: `/agent/:id/insights`
+- **Component**: [src/views/AgentInsights.vue](mdc:src/views/AgentInsights.vue)
+- **Status**: Currently placeholder for future insights features
+
+### Activity Tab
+- **Route**: `/agent/:id/activity`
+- **Component**: [src/views/AgentActivity.vue](mdc:src/views/AgentActivity.vue)
+- **Features**: Activity list with links to conversations
+- **Key Component**: [src/components/ActivityListItem.vue](mdc:src/components/ActivityListItem.vue)
+
+## Active Tab Detection
+
+The `isActiveTab()` function in [src/views/AgentLayout.vue](mdc:src/views/AgentLayout.vue) handles active tab highlighting:
+
+```javascript
+function isActiveTab(tabName) {
+  const currentPath = route.path;
+  const expectedPath = `/agent/${agentId.value}/${tabName}`;
+  const defaultPath = `/agent/${agentId.value}`;
+  
+  if (tabName === 'workbench') {
+    return currentPath === expectedPath || currentPath === defaultPath;
+  }
+  return currentPath === expectedPath;
+}
+```
+
+## Data Flow
+
+1. **Agent Data**: Loaded from [src/data/agents.js](mdc:src/data/agents.js) using the route parameter
+2. **Tool Data**: Available tools from [src/data/tools.js](mdc:src/data/tools.js)
+3. **Instruction Parsing**: Handled by [src/data/parseInstructions.js](mdc:src/data/parseInstructions.js)
+4. **Activity Data**: Agent-specific activity from the agents data structure
+
+## Benefits of This Architecture
+
+- **Direct URL Access**: Users can bookmark specific tabs
+- **Better Performance**: Only active tab content is rendered
+- **Improved Maintainability**: Each tab is a focused component
+- **SEO Friendly**: Each tab has its own URL
+- **Better UX**: Browser back/forward buttons work correctly

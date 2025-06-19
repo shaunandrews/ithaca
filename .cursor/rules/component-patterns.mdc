@@ -1,0 +1,151 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Component Patterns & Best Practices
+
+The Ithaca project follows consistent patterns for Vue 3 components using the Composition API.
+
+## Component Structure
+
+All components follow this standard structure:
+
+```vue
+<template>
+  <!-- Template content -->
+</template>
+
+<script setup>
+// Imports
+import { computed, ref } from 'vue';
+import { useRoute } from 'vue-router';
+
+// Component logic
+</script>
+
+<style scoped>
+/* Component-specific styles */
+</style>
+```
+
+## View vs Component Pattern
+
+### Views (Pages)
+Located in [src/views/](mdc:src/views/):
+- Represent full pages or major sections
+- Handle routing and data fetching
+- Use route parameters to load data
+- Example: [src/views/AgentWorkbench.vue](mdc:src/views/AgentWorkbench.vue)
+
+### Components (Reusable UI)
+Located in [src/components/](mdc:src/components/):
+- Reusable UI elements
+- Accept props and emit events
+- Focused on presentation logic
+- Example: [src/components/ToolListItem.vue](mdc:src/components/ToolListItem.vue)
+
+## Data Access Patterns
+
+### Route-Based Data Loading
+Views access data using route parameters:
+
+```javascript
+const route = useRoute();
+const agentId = computed(() => Number(route.params.id));
+const agent = computed(() => agents.find(a => a.id === agentId.value));
+```
+
+### Props Pattern
+Components receive data via props:
+
+```javascript
+// In parent
+<ToolListItem :icon="tool.icon" :title="tool.title" />
+
+// In component
+const props = defineProps(['icon', 'title']);
+```
+
+### Event Emission
+Components communicate with parents via events:
+
+```javascript
+// In component
+const emit = defineEmits(['click', 'select-tool']);
+
+// In parent
+<ToolListItem @click="openToolModal" @select-tool="handleToolSelect" />
+```
+
+## Styling Patterns
+
+### CSS Custom Properties
+The project uses CSS custom properties for consistent theming:
+- Colors: `var(--color-surface-fg)`, `var(--color-chrome-fg)`
+- Spacing: `var(--space-s)`, `var(--space-m)`, `var(--space-l)`
+- Typography: `var(--font-size-s)`, `var(--font-weight-semibold)`
+
+### Utility Classes
+Common utility classes defined in [src/assets/base.css](mdc:src/assets/base.css):
+- `.hstack` - Horizontal flexbox layout
+- `.vstack` - Vertical flexbox layout
+- `.primary` - Primary button styling
+
+### Scoped Styles
+All components use `<style scoped>` to prevent style conflicts.
+
+## Icon Usage
+
+The project uses Lucide Vue icons:
+```javascript
+import { Plus, Calendar, Email } from 'lucide-vue-next';
+```
+
+## Modal Pattern
+
+Modals follow a consistent pattern using [src/components/Modal.vue](mdc:src/components/Modal.vue):
+
+```javascript
+const isModalOpen = ref(false);
+const modalData = ref(null);
+
+function openModal(data) {
+  modalData.value = data;
+  isModalOpen.value = true;
+}
+
+function closeModal() {
+  isModalOpen.value = false;
+  modalData.value = null;
+}
+```
+
+## Form Handling
+
+Form components like [src/components/InstructionsField.vue](mdc:src/components/InstructionsField.vue) use:
+- Contenteditable for rich text editing
+- Custom autocomplete functionality
+- Event emission for parent communication
+
+## List Rendering
+
+List components follow this pattern:
+```vue
+<ComponentName
+  v-for="(item, idx) in items"
+  :key="idx"
+  :item="item"
+  @click="handleClick(item)"
+/>
+```
+
+## Best Practices
+
+1. **Use Composition API**: Always use `<script setup>` syntax
+2. **Computed Properties**: Use `computed()` for derived state
+3. **Reactive References**: Use `ref()` for local state
+4. **Props Validation**: Define prop types when needed
+5. **Event Naming**: Use kebab-case for event names
+6. **Component Naming**: Use PascalCase for component names
+7. **File Naming**: Use PascalCase for component files
