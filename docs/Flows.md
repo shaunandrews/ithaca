@@ -2,7 +2,7 @@
 
 ## Personas
 
-### 1. Customer Support Rep
+### 1. Happiness Engineer (Customer Support Rep, NOT an engineer)
 - **Role**: Monitors agent responses in customer conversations.
 - **Goals**: Ensure quality and correctness of AI replies; flag and correct issues.
 - **Technical Skill**: Low to moderate.
