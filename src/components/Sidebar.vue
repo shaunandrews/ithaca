@@ -57,7 +57,6 @@ import NavItem from './NavItem.vue';
 
 .sidebar-bottom {
   display: flex;
-  justify-content: flex-end;
 }
 
 .logo {
@@ -82,8 +81,8 @@ import NavItem from './NavItem.vue';
 }
 
 .user {
-  background-color: blue;
-  color: white;
+  background-color: var(--color-surface-tint);
+  color: var(--color-chrome-fg);
   height: 24px;
   width: 24px;
   border-radius: 50%;
@@ -96,11 +95,6 @@ import NavItem from './NavItem.vue';
 
 .user:hover {
   transform: scale(1.1);
-}
-
-.user-initials {
-  font-size: var(--font-size-xs);
-  font-weight: 900;
 }
 
 .user img {
