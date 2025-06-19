@@ -26,21 +26,21 @@
 <script setup>
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { assistants } from '@/data/assistants.js';
+import { agents } from '@/data/agents.js';
 import { conversations } from '@/data/conversations.js';
 
 const route = useRoute();
-const assistantId = computed(() => Number(route.params.id));
+const agentId = computed(() => Number(route.params.id));
 const activityId = computed(() => Number(route.params.activityId));
 
-const assistant = computed(() => assistants.find(a => a.id === assistantId.value));
-const conversationItem = computed(() => assistant.value?.activity.find(a => a.id === activityId.value));
+const agent = computed(() => agents.find(a => a.id === agentId.value));
+const conversationItem = computed(() => agent.value?.activity.find(a => a.id === activityId.value));
 const conversation = computed(() => {
   const convId = conversationItem.value?.conversationId;
   return conversations.find(c => c.id === convId);
 });
 
-const backLink = computed(() => `/assistant/${assistantId.value}?tab=activity`);
+const backLink = computed(() => `/agent/${agentId.value}?tab=activity`);
 
 function formatDate(datetime) {
   const date = new Date(datetime);
@@ -76,7 +76,7 @@ header {
   background-color: var(--color-surface-tint);
   border-radius: var(--radius);
 }
-.message.assistant {
+.message.agent {
   background-color: var(--color-accent);
   color: var(--color-accent-fg);
 }

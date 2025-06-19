@@ -1,4 +1,4 @@
-// Simple parser for assistant instructions
+// Simple parser for agent instructions
 // Recognizes [tool title="..."] and [tool title="..." value="..."]
 
 export function parseInstructions(instructions) {

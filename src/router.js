@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Assistants from './views/Assistants.vue';
+import Agents from './views/Agents.vue';
 import Tools from './views/Tools.vue';
-import Assistant from './views/Assistant.vue';
+import Agent from './views/Agent.vue';
 import Conversation from './views/Conversation.vue';
 import Experts from './views/Experts.vue';
 
 const routes = [
   {
     path: '/',
-    name: 'Assistants',
-    component: Assistants,
+    name: 'Agents',
+    component: Agents,
   },
   {
     path: '/tools',
@@ -17,13 +17,13 @@ const routes = [
     component: Tools,
   },
   {
-    path: '/assistant/:id',
-    name: 'Assistant',
-    component: Assistant,
+    path: '/agent/:id',
+    name: 'Agent',
+    component: Agent,
     props: true,
   },
   {
-    path: '/assistant/:id/activity/:activityId',
+    path: '/agent/:id/activity/:activityId',
     name: 'Conversation',
     component: Conversation,
     props: true,
