@@ -1,5 +1,5 @@
 <template>
-  <div class="activity-list-item">
+  <RouterLink :to="to" class="activity-list-item">
     <div class="activity-datetime">{{ formatDate(item.datetime) }}</div>
     <div class="activity-event">{{ item.event }}</div>
     <div class="activity-summary">{{ item.summary }}</div>
@@ -7,16 +7,21 @@
       <img :src="gravatarUrl(item.customer)" alt="Gravatar" width="28" height="28" class="activity-gravatar" :title="item.customer" />
       <!-- {{ item.customer }} -->
     </div>
-  </div>
+  </RouterLink>
 </template>
 
 <script setup>
 import CryptoJS from 'crypto-js';
+import { RouterLink } from 'vue-router';
 
 const props = defineProps({
   item: {
     type: Object,
     required: true
+  },
+  to: {
+    type: String,
+    required: true,
   }
 });
 

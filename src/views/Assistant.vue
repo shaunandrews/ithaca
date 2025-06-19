@@ -84,7 +84,12 @@
     </div>
 
     <div v-if="assistant && activeTab === 'activity'" class="assistant-activity vstack">
-        <ActivityListItem v-for="(item, idx) in assistant.activity" :key="idx" :item="item" />
+        <ActivityListItem
+          v-for="(item, idx) in assistant.activity"
+          :key="idx"
+          :item="item"
+          :to="`/assistant/${assistant.id}/activity/${item.id}`"
+        />
     </div>
 
     <Modal :isOpen="isToolModalOpen" @close="closeToolModal">

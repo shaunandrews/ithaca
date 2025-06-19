@@ -24,22 +24,28 @@ export const assistants = [
     `,
     activity: [
       {
+        id: 1,
         datetime: '2024-06-10T14:12:00Z',
         event: 'New reply (existing chat)',
         customer: 'koalababy3@gmail.com',
         summary: 'Reviewed support history and provided a fix for a recurring login issue.',
+        conversationId: 1,
       },
       {
+        id: 2,
         datetime: '2024-06-10T13:45:00Z',
         event: 'First reply',
         customer: 'shaun@shaunandrews.com',
-        summary: 'Customer had a question about upgrading their WordPress.com plan. Provided relevant support article and offered further assistance.'
+        summary: 'Customer had a question about upgrading their WordPress.com plan. Provided relevant support article and offered further assistance.',
+        conversationId: 2,
       },
       {
+        id: 3,
         datetime: '2024-06-09T17:30:00Z',
         event: 'Escalation',
         customer: 'cain@automattic.com',
-        summary: 'Escalated a billing issue to a human agent after insufficient information was found in the reference tool.'
+        summary: 'Escalated a billing issue to a human agent after insufficient information was found in the reference tool.',
+        conversationId: 3,
       }
     ],
     trigger: 'chat-message',
@@ -95,19 +101,25 @@ export const assistants = [
     `,
     activity: [
       {
+        id: 4,
         datetime: '2024-06-10T09:00:00Z',
         event: 'New email received',
-        summary: 'Triaged a user email about password reset. Sent automated response with instructions and flagged for follow-up.'
+        summary: 'Triaged a user email about password reset. Sent automated response with instructions and flagged for follow-up.',
+        conversationId: 4,
       },
       {
+        id: 5,
         datetime: '2024-06-09T16:20:00Z',
         event: 'Reference lookup',
-        summary: 'Provided a support article link for a user asking about Tumblr blog customization.'
+        summary: 'Provided a support article link for a user asking about Tumblr blog customization.',
+        conversationId: 5,
       },
       {
+        id: 6,
         datetime: '2024-06-08T11:05:00Z',
         event: 'Escalation',
-        summary: 'Escalated a technical issue to a human agent after automated troubleshooting failed.'
+        summary: 'Escalated a technical issue to a human agent after automated troubleshooting failed.',
+        conversationId: 6,
       }
     ],
     trigger: 'email-message',
@@ -133,19 +145,25 @@ export const assistants = [
     `,
     activity: [
       {
+        id: 7,
         datetime: '2024-06-10T08:30:00Z',
         event: 'Scheduled check',
-        summary: 'Identified 2 overdue projects in Linear. Sent Slack reminders to project owners.'
+        summary: 'Identified 2 overdue projects in Linear. Sent Slack reminders to project owners.',
+        conversationId: 7,
       },
       {
+        id: 8,
         datetime: '2024-06-09T08:30:00Z',
         event: 'Scheduled check',
-        summary: 'No overdue projects found during daily check.'
+        summary: 'No overdue projects found during daily check.',
+        conversationId: 8,
       },
       {
+        id: 9,
         datetime: '2024-06-08T08:30:00Z',
         event: 'Slack notification',
-        summary: 'Sent a reminder to the last updater of an overdue project after no owner was listed.'
+        summary: 'Sent a reminder to the last updater of an overdue project after no owner was listed.',
+        conversationId: 9,
       }
     ],
     trigger: 'scheduled',
@@ -195,19 +213,25 @@ export const assistants = [
     `,
     activity: [
       {
+        id: 10,
         datetime: '2024-06-10T15:00:00Z',
         event: 'On-demand',
-        summary: 'Returned the HTML for a requested "cover" block from a user-provided snippet.'
+        summary: 'Returned the HTML for a requested "cover" block from a user-provided snippet.',
+        conversationId: 10,
       },
       {
+        id: 11,
         datetime: '2024-06-09T12:10:00Z',
         event: 'On-demand',
-        summary: 'Could not find the requested block. Provided a helpful error message and suggestions.'
+        summary: 'Could not find the requested block. Provided a helpful error message and suggestions.',
+        conversationId: 11,
       },
       {
+        id: 12,
         datetime: '2024-06-08T10:45:00Z',
         event: 'On-demand',
-        summary: 'Parsed malformed HTML and successfully returned the requested block.'
+        summary: 'Parsed malformed HTML and successfully returned the requested block.',
+        conversationId: 12,
       }
     ],
     trigger: 'on-demand',
@@ -234,19 +258,25 @@ export const assistants = [
     `,
     activity: [
       {
+        id: 13,
         datetime: '2024-06-11T10:00:00Z',
         event: 'Slack trigger',
-        summary: 'Detected a Slack message requesting a meeting. Checked availability for 4 participants.'
+        summary: 'Detected a Slack message requesting a meeting. Checked availability for 4 participants.',
+        conversationId: 13,
       },
       {
+        id: 14,
         datetime: '2024-06-11T10:01:00Z',
         event: 'Calendar lookup',
-        summary: 'Found a mutually available slot at 2:00pm. Created a calendar event and sent invites.'
+        summary: 'Found a mutually available slot at 2:00pm. Created a calendar event and sent invites.',
+        conversationId: 14,
       },
       {
+        id: 15,
         datetime: '2024-06-11T10:02:00Z',
         event: 'Slack notification',
-        summary: 'Sent a Slack message summarizing the scheduled meeting and participants.'
+        summary: 'Sent a Slack message summarizing the scheduled meeting and participants.',
+        conversationId: 15,
       }
     ],
     trigger: 'slack-message',
@@ -271,19 +301,25 @@ export const assistants = [
     `,
     activity: [
       {
+        id: 16,
         datetime: '2024-06-12T09:00:00Z',
         event: 'Slack message',
-        summary: 'Helped a user find the DRI for a new project by searching P2 sites.'
+        summary: 'Helped a user find the DRI for a new project by searching P2 sites.',
+        conversationId: 16,
       },
       {
+        id: 17,
         datetime: '2024-06-11T16:30:00Z',
         event: 'Insight search',
-        summary: 'Provided a summary of recent discussions about a product launch from multiple P2s.'
+        summary: 'Provided a summary of recent discussions about a product launch from multiple P2s.',
+        conversationId: 17,
       },
       {
+        id: 18,
         datetime: '2024-06-10T14:45:00Z',
         event: 'Resource location',
-        summary: 'Directed a user to the correct P2 for onboarding documentation.'
+        summary: 'Directed a user to the correct P2 for onboarding documentation.',
+        conversationId: 18,
       }
     ],
     trigger: 'slack-message',
