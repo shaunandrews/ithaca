@@ -55,6 +55,8 @@ function gravatarUrl(email) {
   border-bottom: 1px solid var(--color-surface-tint);
   cursor: pointer;
   text-decoration: none;
+  width: 100%;
+  min-width: 0;
 }
 
 .activity-list-item:last-child {
@@ -95,5 +97,7 @@ function gravatarUrl(email) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
 }
 </style> 
