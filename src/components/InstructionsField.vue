@@ -14,6 +14,8 @@
             v-else-if="part.type === 'tool'"
             class="highlight-tool"
             contenteditable="false"
+            @mouseenter="showToolPreview($event, part)"
+            @mouseleave="hideToolPreview"
           >
             @{{ part.title }}<template v-if="part.value">:<span class="tool-value">{{ part.value }}</span></template>
           </span>
@@ -29,13 +31,20 @@
         :y="autocomplete.y"
         @select="selectTool"
       />
+      <ToolPreview
+        v-if="toolPreview.show"
+        :tool="toolPreview.tool"
+        :x="toolPreview.x"
+        :y="toolPreview.y"
+      />
     </teleport>
   </div>
 </template>
 
 <script setup>
-import { ref, watch, computed, toRefs } from 'vue';
+import { ref, toRefs } from 'vue';
 import AutocompleteMenu from './AutocompleteMenu.vue';
+import ToolPreview from './ToolPreview.vue';
 
 const props = defineProps({
   modelValue: String,
@@ -46,6 +55,8 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'input', 'keydown', 'select-tool', 'autocomplete-change']);
 
 const fieldRef = ref(null);
+
+const toolPreview = ref({ show: false, tool: null, x: 0, y: 0 });
 
 function onTextFieldInput(e) {
   emit('input', e);
@@ -58,6 +69,23 @@ function onTextFieldKeydown(e) {
 
 function selectTool(tool) {
   emit('select-tool', tool);
+}
+
+function showToolPreview(event, part) {
+  const tool = props.tools.find(t => t.title === part.title);
+  if (tool) {
+    const rect = event.target.getBoundingClientRect();
+    toolPreview.value = {
+      show: true,
+      tool: tool,
+      x: rect.left,
+      y: rect.bottom + 8
+    };
+  }
+}
+
+function hideToolPreview() {
+  toolPreview.value.show = false;
 }
 </script>
 
