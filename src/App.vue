@@ -1,7 +1,7 @@
 <template>
   <div class="ithaca">
-    <header>
-      <div class="header-start">
+    <aside class="sidebar">
+      <div class="sidebar-top">
         <h1 class="logo">
           <Landmark :size="24" />
           <span v-if="!isAssistantRoute" class="logo-text">Ithaca</span>
@@ -25,13 +25,13 @@
           </ul>
         </nav>
       </div>
-      <div class="header-end">
+      <div class="sidebar-bottom">
         <div class="user">
           <!-- <p class="user-initials">SA</p> -->
           <img src="/images/avatar-shaunandrews.png" alt="Shaun Andrews" height="24" width="24" />
         </div>
       </div>
-    </header>
+    </aside>
 
     <main>
       <router-view/>
@@ -51,25 +51,25 @@ const isAssistantRoute = computed(() => route.name === 'Assistant');
 .ithaca {
   height: 100dvh;
   display: flex;
+}
+
+.sidebar {
+  width: 220px;
+  padding: var(--space-m);
+  display: flex;
   flex-direction: column;
-}
-
-header {
-  display: flex;
-  align-items: center;
+  justify-content: space-between;
   gap: var(--space-m);
-  padding: var(--space-s) var(--space-m);
 }
 
-.header-start,
-.header-end {
-  flex: 1;
+.sidebar-top {
   display: flex;
-  align-items: center;
-  gap: var(--space-s);
+  flex-direction: column;
+  gap: var(--space-m);
 }
 
-.header-end {
+.sidebar-bottom {
+  display: flex;
   justify-content: flex-end;
 }
 
@@ -85,11 +85,12 @@ header {
   font-weight: var(--font-weight-bold);
 }
 
-ul {
+.sidebar nav ul {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
+  flex-direction: column;
   gap: var(--space-xs);
 }
 
