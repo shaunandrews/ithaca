@@ -5,8 +5,9 @@
         <h2 class="assistant-title">{{ assistant.title }}</h2>
         <nav>
           <ul>
-            <li :class="{ active: activeTab === 'instructions' }" @click="activeTab = 'instructions'">Instructions</li>
-            <li :class="{ active: activeTab === 'details' }" @click="activeTab = 'details'">Details</li>
+            <li :class="{ active: activeTab === 'workbench' }" @click="activeTab = 'workbench'">Workbench</li>
+            <li :class="{ active: activeTab === 'versions' }" @click="activeTab = 'versions'">Versions</li>
+            <li :class="{ active: activeTab === 'insights' }" @click="activeTab = 'insights'">Insights</li>
             <li :class="{ active: activeTab === 'activity' }" @click="activeTab = 'activity'">Activity</li>
           </ul>
         </nav>
@@ -20,7 +21,7 @@
       <p>Assistant not found.</p>
     </div>
 
-    <div v-if="assistant && activeTab === 'instructions'" class="assistant-instructions hstack">
+    <div v-if="assistant && activeTab === 'workbench'" class="assistant-workbench hstack">
       <div class="assistant-config vstack">
         <div class="instructions">
           <div class="section-header">
@@ -61,7 +62,7 @@
       <AssistantPreview :assistant="assistant" />
     </div>
 
-    <div v-if="assistant && activeTab === 'details'" class="assistant-details">
+    <div v-if="assistant && activeTab === 'versions'" class="assistant-versions">
       <h4>Description</h4>
       <p>{{ assistant.description }}</p>
 
@@ -76,6 +77,10 @@
         <img :src="`/images/${assistant.ownerIcon}`" :alt="assistant.owner" width="24" height="24" class="owner-icon" />
         <span class="owner-name">{{ assistant.owner }}</span>
       </div>
+    </div>
+
+    <div v-if="assistant && activeTab === 'insights'" class="assistant-insights">
+      <p>Insights coming soon.</p>
     </div>
 
     <div v-if="assistant && activeTab === 'activity'" class="assistant-activity vstack">
@@ -108,7 +113,7 @@ const route = useRoute();
 const router = useRouter();
 const assistantId = computed(() => Number(route.params.id));
 const assistant = computed(() => assistants.find(a => a.id === assistantId.value));
-const activeTab = ref(route.query.tab || 'instructions');
+const activeTab = ref(route.query.tab || 'workbench');
 
 const parsedInstructions = computed(() =>
   assistant.value ? parseInstructions(assistant.value.instructions) : []
@@ -292,7 +297,7 @@ nav li:hover:not(.active) {
   background-color: var(--color-surface-tint-dark);
 }
 
-.assistant-instructions {
+.assistant-workbench {
   flex: 1;
 }
 
@@ -333,11 +338,11 @@ hr {
   flex-wrap: wrap;
 }
 
-.assistant-details {
+.assistant-versions {
   padding: var(--space-m);
 }
 
-.assistant-details h4 {
+.assistant-versions h4 {
   font-size: var(--font-size-s);
   color: var(--color-surface-fg-tertiary);
 }
@@ -347,5 +352,9 @@ hr {
   border: 1px solid var(--color-surface-tint);
   border-radius: var(--radius-m);
   overflow: hidden;
+}
+
+.assistant-insights {
+  padding: var(--space-m);
 }
 </style>
