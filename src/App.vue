@@ -136,5 +136,6 @@ const route = useRoute();
 
 main {
   flex: 1;
+  max-width: calc(100dvw - 220px);
 }
 </style>
