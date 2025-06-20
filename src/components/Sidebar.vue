@@ -1,49 +1,58 @@
 <template>
-<aside class="sidebar">
+<aside class="sidebar" :class="{ 'sidebar--mini': mini }">
     <div class="sidebar-top">
       <h1 class="logo">
-        <Landmark :size="24" />
-        <span class="logo-text">Ithaca</span>
+        <img src="/images/logo.png" alt="Ithaca" height="56" width="56" />
       </h1>
       <nav>
-        <ul>
-          <NavItem 
-            to="/" 
-            label="Agents" 
-            :active-routes="['Agents', 'Agent', '/agent']"
-          />
-          <NavItem 
-            to="/experts" 
-            label="Experts" 
-            :active-routes="['Experts']"
-          />
-          <NavItem 
-            to="/tools" 
-            label="Tools" 
-            :active-routes="['Tools']"
-          />
-        </ul>
+        <NavItem 
+          to="/" 
+          label="Agents" 
+          :active-routes="['Agents', 'Agent', '/agent']"
+          icon="Bot"
+          :mini="mini"
+        />
+        <NavItem 
+          to="/experts" 
+          label="Experts" 
+          :active-routes="['Experts']"
+          icon="FlaskRound"
+          :mini="mini"
+        />
+        <NavItem 
+          to="/tools" 
+          label="Tools" 
+          :active-routes="['Tools']"
+          icon="Hammer"
+          :mini="mini"
+        />
       </nav>
     </div>
     <div class="sidebar-bottom">
-      <button class="sidebar-toggle" @click="emit('toggle')">
-        <ChevronLeft v-if="!props.mini" />
-        <ChevronRight v-else />
-      </button>
       <div class="user">
         <img src="/images/avatar-shaunandrews.png" alt="Shaun Andrews" height="24" width="24" />
       </div>
+      <button 
+        v-if="!isMobile || mini"
+        class="sidebar-toggle" 
+        @click="emit('toggle')"
+        :aria-label="mini ? 'Expand sidebar' : 'Collapse sidebar'"
+      >
+        <PanelLeft v-if="!mini" />
+        <PanelLeftOpen v-else />
+      </button>
     </div>
   </aside>
 </template>
 
 <script setup>
 import { defineProps, defineEmits } from 'vue';
-import { Landmark, ChevronLeft, ChevronRight } from 'lucide-vue-next';
+import { PanelLeft, PanelLeftOpen } from 'lucide-vue-next';
 import NavItem from './NavItem.vue';
 
 const props = defineProps({
   mini: Boolean,
+  isMobile: Boolean,
 });
 
 const emit = defineEmits(['toggle']);
@@ -53,13 +62,17 @@ const emit = defineEmits(['toggle']);
 .sidebar {
   width: var(--sidebar-width);
   min-width: var(--sidebar-width);
-  border-right: 1px solid var(--color-surface-tint);
-  padding: var(--space-m);
+  border-right: 0.5px solid var(--color-surface-tint);
+  padding: var(--space-s);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: var(--space-m);
-  transition: width 0.2s;
+  transition: all 0.2s ease-in-out;
+}
+
+.sidebar--mini {
+  /* padding: var(--space-s); */
 }
 
 .sidebar-top {
@@ -70,8 +83,10 @@ const emit = defineEmits(['toggle']);
 
 .sidebar-bottom {
   display: flex;
-  align-items: center;
-  gap: var(--space-s);
+  flex-direction: column;
+  gap: var(--space-m);
+  /* align-items: center; */
+  /* justify-content: space-between; */
 }
 
 .logo {
@@ -79,30 +94,30 @@ const emit = defineEmits(['toggle']);
   display: flex;
   align-items: center;
   gap: var(--space-xs);
+  height: 56px;
+  width: 56px;
+  transition: all 0.2s ease-in-out;
 }
 
-.logo-text {
-  font-size: var(--font-size-m);
-  font-weight: var(--font-weight-bold);
+.logo img {
+  height: 100%;
+  width: 100%;
 }
 
-.sidebar nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.sidebar--mini .logo {
+  gap: 0;
+  height: 24px;
+  width: 24px;
+}
+
+nav {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--space-xxs);
 }
 
-.sidebar-toggle {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.sidebar-toggle:hover {
+  background-color: var(--color-surface-tint);
 }
 
 .user {
@@ -111,20 +126,15 @@ const emit = defineEmits(['toggle']);
   height: 24px;
   width: 24px;
   border-radius: 50%;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 100%;
   transition: transform 0.1s ease-in-out;
 }
 
-.user:hover {
-  transform: scale(1.1);
-}
-
 .user img {
-  height: 24px;
-  width: 24px;
-  border-radius: 50%;
+  height: 100%;
+  width: 100%;
 }
 </style> 

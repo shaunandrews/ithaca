@@ -1,12 +1,16 @@
 <template>
-  <li class="nav-item" :class="{ active: isActive }">
-    <router-link :to="to">{{ label }}</router-link>
-  </li>
+  <div class="nav-item" :class="{ active: isActive }">
+    <router-link :to="to" :title="mini ? label : ''">
+      <component v-if="icon" :is="iconComponent" class="nav-icon" />
+      <span v-show="!mini">{{ label }}</span>
+    </router-link>
+  </div>
 </template>
 
 <script setup>
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+import * as LucideIcons from 'lucide-vue-next';
 
 const props = defineProps({
   to: {
@@ -20,10 +24,23 @@ const props = defineProps({
   activeRoutes: {
     type: Array,
     default: () => []
+  },
+  icon: {
+    type: String,
+    default: null
+  },
+  mini: {
+    type: Boolean,
+    default: false
   }
 });
 
 const route = useRoute();
+
+const iconComponent = computed(() => {
+  if (!props.icon) return null;
+  return LucideIcons[props.icon] || null;
+});
 
 const isActive = computed(() => {
   if (props.activeRoutes.length > 0) {
@@ -42,20 +59,34 @@ const isActive = computed(() => {
 .nav-item a {
   cursor: pointer;
   font-size: var(--font-size-s);
-  padding: var(--space-xxs) var(--space-xs);
+  font-weight: var(--font-weight-medium);
+  padding: var(--space-xs);
   border-radius: var(--radius);
   color: var(--color-chrome-fg-secondary);
   text-decoration: none;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  transition: all 0.15s ease-in-out;
+}
+
+.nav-item a:has(span:only-child) {
+  justify-content: center;
+}
+
+.nav-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 .nav-item.active a {
-  font-weight: var(--font-weight-semibold);
   color: var(--color-chrome-fg);
-  background-color: var(--color-surface-tint);
+  background-color: var(--color-surface-tint-dark);
 }
 
 .nav-item:not(.active) a:hover {
-  background-color: var(--color-surface-tint-dark);
+  color: var(--color-chrome-fg);
+  background-color: var(--color-surface-tint);
 }
 </style> 

@@ -41,7 +41,7 @@ function handleClick(event) {
   background: var(--color-surface);
   border-radius: var(--radius);
   padding: var(--space-m);
-  border: 1px solid var(--color-surface-tint-dark);
+  border: 0.5px solid var(--color-surface-tint-dark);
   cursor: pointer;
 }
 

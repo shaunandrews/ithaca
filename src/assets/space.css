@@ -16,6 +16,10 @@
   
     /* Default radius */
     --radius: var(--radius-m);
+
+    /* Sidebar */
+    --sidebar-width-full: 220px;
+    --sidebar-width-mini: 60px;
   }
   
   

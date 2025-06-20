@@ -1,6 +1,6 @@
 <template>
-  <div class="ithaca" :style="{ '--sidebar-width': sidebarWidth }">
-    <Sidebar :mini="isMini" @toggle="toggleSidebar" />
+  <div class="ithaca" :class="{ 'sidebar-is-mini': isMini }">
+    <Sidebar :mini="isMini" :is-mobile="isMobile" @toggle="toggleSidebar" />
     <main>
       <router-view/>
     </main>
@@ -8,25 +8,38 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { useSidebar } from './composables/useSidebar';
 import Sidebar from './components/Sidebar.vue';
 
-const isMini = ref(false);
-const sidebarWidth = computed(() => (isMini.value ? '56px' : '220px'));
-
-function toggleSidebar() {
-  isMini.value = !isMini.value;
-}
+const { isMini, isMobile, toggleSidebar } = useSidebar();
 </script>
 
 <style scoped>
 .ithaca {
   height: 100dvh;
   display: flex;
+  --sidebar-width: var(--sidebar-width-full);
+}
+
+.ithaca.sidebar-is-mini {
+  --sidebar-width: var(--sidebar-width-mini);
 }
 
 main {
   flex: 1;
   max-width: calc(100dvw - var(--sidebar-width));
+  overflow-x: auto;
+  transition: max-width 0.2s ease-in-out;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .ithaca {
+    position: relative;
+  }
+  
+  main {
+    max-width: 100dvw;
+  }
 }
 </style>
