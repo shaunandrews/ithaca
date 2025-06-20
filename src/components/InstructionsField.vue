@@ -14,6 +14,7 @@
             v-else-if="part.type === 'tool'"
             class="highlight-tool"
             contenteditable="false"
+            @click="onToolClick(part)"
           >
             @{{ part.title }}<template v-if="part.value">:<span class="tool-value">{{ part.value }}</span></template>
           </span>
@@ -43,7 +44,7 @@ const props = defineProps({
   autocomplete: Object,
   tools: Array
 });
-const emit = defineEmits(['update:modelValue', 'input', 'keydown', 'select-tool', 'autocomplete-change']);
+const emit = defineEmits(['update:modelValue', 'input', 'keydown', 'select-tool', 'autocomplete-change', 'tool-click']);
 
 const fieldRef = ref(null);
 
@@ -58,6 +59,10 @@ function onTextFieldKeydown(e) {
 
 function selectTool(tool) {
   emit('select-tool', tool);
+}
+
+function onToolClick(part) {
+  emit('tool-click', part);
 }
 </script>
 

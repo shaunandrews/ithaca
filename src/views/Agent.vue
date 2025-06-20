@@ -35,6 +35,7 @@
             @input="onTextFieldInput"
             @keydown="onTextFieldKeydown"
             @select-tool="selectTool"
+            @tool-click="onInstructionToolClick"
           />
         </div>
 
@@ -200,6 +201,7 @@ function selectTool(tool) {
   span.className = 'highlight-tool';
   span.setAttribute('contenteditable', 'false');
   span.textContent = `@${tool.title}`;
+  span.addEventListener('click', () => onInstructionToolClick({ title: tool.title }));
   const afterNode = document.createTextNode(after);
   parent.replaceChild(afterNode, node);
   parent.insertBefore(span, afterNode);
@@ -233,6 +235,13 @@ function onTextFieldKeydown(e) {
     } else if (e.key === 'Escape') {
       autocomplete.value.show = false;
     }
+  }
+}
+
+function onInstructionToolClick(part) {
+  const tool = tools.find(t => t.title === part.title);
+  if (tool) {
+    openToolModal(tool);
   }
 }
 
