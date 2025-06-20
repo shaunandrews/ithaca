@@ -50,6 +50,10 @@ function isActiveTab(tabName) {
   if (tabName === 'workbench') {
     return currentPath === expectedPath || currentPath === defaultPath;
   }
+  if (tabName === 'activity') {
+    // Show activity tab as active for both activity list and conversation detail
+    return currentPath.startsWith(`/agent/${agentId.value}/activity`);
+  }
   return currentPath === expectedPath;
 }
 </script>
@@ -92,6 +96,7 @@ nav ul {
 nav li {
   list-style: none;
   font-size: var(--font-size-s);
+  font-weight: var(--font-weight-medium);
   padding: var(--space-xxs) var(--space-xs);
   border-radius: var(--radius);
   color: var(--color-chrome-fg-secondary);
@@ -104,12 +109,11 @@ nav li a {
 
 nav li.active {
   color: var(--color-chrome-fg);
-  font-weight: var(--font-weight-semibold);
-  background-color: var(--color-surface-tint);
+  background-color: var(--color-surface-tint-dark);
 }
 
 nav li:hover:not(.active) {
-  background-color: var(--color-surface-tint-dark);
+  background-color: var(--color-surface-tint);
 }
 
 .agent-not-found {

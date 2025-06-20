@@ -49,13 +49,13 @@ const routes = [
         name: 'AgentActivity',
         component: AgentActivity,
       },
+      {
+        path: 'activity/:activityId',
+        name: 'Conversation',
+        component: Conversation,
+        props: true,
+      },
     ],
-  },
-  {
-    path: '/agent/:id/activity/:activityId',
-    name: 'Conversation',
-    component: Conversation,
-    props: true,
   },
   {
     path: '/experts',

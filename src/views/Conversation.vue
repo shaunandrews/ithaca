@@ -1,14 +1,16 @@
 <template>
   <div class="conversation-view">
-    <header>
-      <router-link :to="backLink" class="back-link">Back to Activity</router-link>
-      <h2>Conversation Detail</h2>
-    </header>
+    <div class="conversation-header">
+      <router-link :to="`/agent/${agentId}/activity`" class="back-link">
+        <ArrowBigLeft /> All activity
+      </router-link>
+    </div>
+    
     <div v-if="conversation">
       <div class="conversation-meta">
-        <div class="meta-row"><strong>Date:</strong> {{ formatDate(conversationItem.datetime) }}</div>
-        <div class="meta-row"><strong>Event:</strong> {{ conversationItem.event }}</div>
-        <div class="meta-row" v-if="conversationItem.customer"><strong>Customer:</strong> {{ conversationItem.customer }}</div>
+        <div class="meta-row">{{ formatDate(conversationItem.datetime) }}</div>
+        <div class="meta-row">{{ conversationItem.event }}</div>
+        <div class="meta-row">{{ conversationItem.customer }}</div>
       </div>
       <div class="messages">
         <div v-for="(msg, idx) in conversation.messages" :key="idx" :class="['message', msg.role]">
@@ -28,6 +30,7 @@ import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { agents } from '@/data/agents.js';
 import { conversations } from '@/data/conversations.js';
+import { ArrowBigLeft } from 'lucide-vue-next';
 
 const route = useRoute();
 const agentId = computed(() => Number(route.params.id));
@@ -39,8 +42,6 @@ const conversation = computed(() => {
   const convId = conversationItem.value?.conversationId;
   return conversations.find(c => c.id === convId);
 });
-
-const backLink = computed(() => `/agent/${agentId.value}?tab=activity`);
 
 function formatDate(datetime) {
   const date = new Date(datetime);
@@ -55,15 +56,37 @@ function formatDate(datetime) {
   flex-direction: column;
   gap: var(--space-m);
 }
-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-m);
+
+.conversation-header {
+  margin-bottom: var(--space-s);
 }
+
 .back-link {
   text-decoration: none;
-  color: var(--color-accent-fg);
+  font-size: var(--font-size-s);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
 }
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.conversation-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-s);
+  background-color: var(--color-surface-tint);
+  border-radius: var(--radius);
+  margin-bottom: var(--space-m);
+}
+
+.meta-row {
+  font-size: var(--font-size-s);
+}
+
 .messages {
   border-top: 1px solid var(--color-surface-tint);
   padding-top: var(--space-m);
@@ -71,15 +94,18 @@ header {
   flex-direction: column;
   gap: var(--space-s);
 }
+
 .message {
   padding: var(--space-xs) var(--space-s);
   background-color: var(--color-surface-tint);
   border-radius: var(--radius);
 }
+
 .message.agent {
   background-color: var(--color-accent);
   color: var(--color-accent-fg);
 }
+
 .role {
   font-weight: bold;
   margin-right: var(--space-xs);
