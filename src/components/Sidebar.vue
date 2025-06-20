@@ -1,5 +1,5 @@
 <template>
-  <aside class="sidebar">
+<aside class="sidebar">
     <div class="sidebar-top">
       <h1 class="logo">
         <Landmark :size="24" />
@@ -26,6 +26,10 @@
       </nav>
     </div>
     <div class="sidebar-bottom">
+      <button class="sidebar-toggle" @click="emit('toggle')">
+        <ChevronLeft v-if="!props.mini" />
+        <ChevronRight v-else />
+      </button>
       <div class="user">
         <img src="/images/avatar-shaunandrews.png" alt="Shaun Andrews" height="24" width="24" />
       </div>
@@ -34,19 +38,28 @@
 </template>
 
 <script setup>
-import { Landmark } from 'lucide-vue-next';
+import { defineProps, defineEmits } from 'vue';
+import { Landmark, ChevronLeft, ChevronRight } from 'lucide-vue-next';
 import NavItem from './NavItem.vue';
+
+const props = defineProps({
+  mini: Boolean,
+});
+
+const emit = defineEmits(['toggle']);
 </script>
 
 <style scoped>
 .sidebar {
-  min-width: 220px;
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
   border-right: 1px solid var(--color-surface-tint);
   padding: var(--space-m);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: var(--space-m);
+  transition: width 0.2s;
 }
 
 .sidebar-top {
@@ -57,6 +70,8 @@ import NavItem from './NavItem.vue';
 
 .sidebar-bottom {
   display: flex;
+  align-items: center;
+  gap: var(--space-s);
 }
 
 .logo {
@@ -78,6 +93,16 @@ import NavItem from './NavItem.vue';
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
+}
+
+.sidebar-toggle {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .user {

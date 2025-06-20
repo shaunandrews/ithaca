@@ -1,6 +1,6 @@
 <template>
-  <div class="ithaca">
-    <Sidebar />
+  <div class="ithaca" :style="{ '--sidebar-width': sidebarWidth }">
+    <Sidebar :mini="isMini" @toggle="toggleSidebar" />
     <main>
       <router-view/>
     </main>
@@ -8,7 +8,15 @@
 </template>
 
 <script setup>
+import { ref, computed } from 'vue';
 import Sidebar from './components/Sidebar.vue';
+
+const isMini = ref(false);
+const sidebarWidth = computed(() => (isMini.value ? '56px' : '220px'));
+
+function toggleSidebar() {
+  isMini.value = !isMini.value;
+}
 </script>
 
 <style scoped>
@@ -19,6 +27,6 @@ import Sidebar from './components/Sidebar.vue';
 
 main {
   flex: 1;
-  max-width: calc(100dvw - 220px);
+  max-width: calc(100dvw - var(--sidebar-width));
 }
 </style>
