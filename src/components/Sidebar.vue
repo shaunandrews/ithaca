@@ -1,6 +1,6 @@
 <template>
-<aside class="sidebar" :class="{ 'sidebar--mini': mini }">
-    <div class="sidebar-top">
+<aside class="sidebar" :class="{ 'sidebar-mini': mini }">
+    <div class="sidebar-start">
       <h1 class="logo">
         <img src="/images/logo.png" alt="Ithaca" height="56" width="56" />
       </h1>
@@ -16,7 +16,7 @@
           to="/experts" 
           label="Experts" 
           :active-routes="['Experts']"
-          icon="FlaskRound"
+          icon="FlaskConical"
           :mini="mini"
         />
         <NavItem 
@@ -28,9 +28,9 @@
         />
       </nav>
     </div>
-    <div class="sidebar-bottom">
+    <div class="sidebar-end">
       <div class="user">
-        <img src="/images/avatar-shaunandrews.png" alt="Shaun Andrews" height="24" width="24" />
+        <img src="/images/avatar-shaunandrews.png" alt="Shaun Andrews" height="32" width="32" />
       </div>
       <button 
         v-if="!isMobile || mini"
@@ -38,8 +38,7 @@
         @click="emit('toggle')"
         :aria-label="mini ? 'Expand sidebar' : 'Collapse sidebar'"
       >
-        <PanelLeft v-if="!mini" />
-        <PanelLeftOpen v-else />
+        <PanelLeft stroke-width="1.5" />
       </button>
     </div>
   </aside>
@@ -71,22 +70,21 @@ const emit = defineEmits(['toggle']);
   transition: all 0.2s ease-in-out;
 }
 
-.sidebar--mini {
-  /* padding: var(--space-s); */
-}
-
-.sidebar-top {
+.sidebar-start {
   display: flex;
   flex-direction: column;
   gap: var(--space-m);
 }
 
-.sidebar-bottom {
+.sidebar-end {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
   gap: var(--space-m);
-  /* align-items: center; */
-  /* justify-content: space-between; */
+}
+
+.sidebar-mini .sidebar-end {
+  flex-direction: column;
 }
 
 .logo {
@@ -104,10 +102,10 @@ const emit = defineEmits(['toggle']);
   width: 100%;
 }
 
-.sidebar--mini .logo {
+.sidebar-mini .logo {
   gap: 0;
-  height: 24px;
-  width: 24px;
+  height: 32px;
+  width: 32px;
 }
 
 nav {
@@ -116,15 +114,11 @@ nav {
   gap: var(--space-xxs);
 }
 
-.sidebar-toggle:hover {
-  background-color: var(--color-surface-tint);
-}
-
 .user {
   background-color: var(--color-surface-tint);
   color: var(--color-chrome-fg);
-  height: 24px;
-  width: 24px;
+  height: 32px;
+  width: 32px;
   border-radius: 50%;
   overflow: hidden;
   display: flex;
@@ -136,5 +130,24 @@ nav {
 .user img {
   height: 100%;
   width: 100%;
+}
+
+.sidebar-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  transition: all 0.1s ease-in-out;
+}
+
+.sidebar-toggle:hover {
+  background-color: var(--color-surface-tint);
 }
 </style> 

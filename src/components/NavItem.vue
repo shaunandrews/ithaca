@@ -1,7 +1,7 @@
 <template>
-  <div class="nav-item" :class="{ active: isActive }">
+  <div class="nav-item" :class="{ active: isActive, 'nav-item--mini': mini }">
     <router-link :to="to" :title="mini ? label : ''">
-      <component v-if="icon" :is="iconComponent" class="nav-icon" />
+      <component v-if="icon" :is="iconComponent" class="nav-icon" :stroke-width="1.5" />
       <span v-show="!mini">{{ label }}</span>
     </router-link>
   </div>
@@ -75,8 +75,8 @@ const isActive = computed(() => {
 }
 
 .nav-icon {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
 }
 
@@ -88,5 +88,19 @@ const isActive = computed(() => {
 .nav-item:not(.active) a:hover {
   color: var(--color-chrome-fg);
   background-color: var(--color-surface-tint);
+}
+
+/* Mini state styling */
+.nav-item--mini a {
+  width: 32px;
+  height: 32px;
+  padding: var(--space-xxs);
+  justify-content: center;
+  gap: 0;
+}
+
+.nav-item--mini .nav-icon {
+  width: 20px;
+  height: 20px;
 }
 </style> 
