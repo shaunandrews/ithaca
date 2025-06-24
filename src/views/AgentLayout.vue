@@ -72,6 +72,9 @@ header {
   gap: var(--space-m);
   padding: var(--space-s) var(--space-m);
   border-bottom: 1px solid var(--color-surface-tint);
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(20px);
 }
 
 .agent-header-start,
