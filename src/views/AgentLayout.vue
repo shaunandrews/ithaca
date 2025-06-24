@@ -98,24 +98,24 @@ nav ul {
 
 nav li {
   list-style: none;
-  font-size: var(--font-size-s);
-  font-weight: var(--font-weight-medium);
-  padding: var(--space-xxs) var(--space-xs);
-  border-radius: var(--radius);
-  color: var(--color-chrome-fg-secondary);
 }
 
 nav li a {
   text-decoration: none;
-  color: inherit;
+  color: var(--color-chrome-fg-secondary);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-medium);
+  padding: var(--space-xxs) var(--space-xs);
+  border-radius: var(--radius);
+  display: block;
 }
 
-nav li.active {
+nav li.active a {
   color: var(--color-chrome-fg);
   background-color: var(--color-surface-tint-dark);
 }
 
-nav li:hover:not(.active) {
+nav li a:hover:not(.active) {
   background-color: var(--color-surface-tint);
 }
 
