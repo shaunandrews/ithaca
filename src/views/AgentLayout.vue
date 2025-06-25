@@ -5,17 +5,17 @@
         <h2 class="agent-title">{{ agent.title }}</h2>
         <nav>
           <ul>
-            <li :class="{ active: isActiveTab('workbench') }">
-              <router-link :to="`/agent/${agent.id}`">Workbench</router-link>
-            </li>
-            <li :class="{ active: isActiveTab('versions') }">
-              <router-link :to="`/agent/${agent.id}/versions`">Versions</router-link>
+            <li :class="{ active: isActiveTab('activity') }">
+              <router-link :to="`/agent/${agent.id}/activity`">Activity</router-link>
             </li>
             <li :class="{ active: isActiveTab('insights') }">
               <router-link :to="`/agent/${agent.id}/insights`">Insights</router-link>
             </li>
-            <li :class="{ active: isActiveTab('activity') }">
-              <router-link :to="`/agent/${agent.id}/activity`">Activity</router-link>
+            <li :class="{ active: isActiveTab('workbench') }">
+              <router-link :to="`/agent/${agent.id}/workbench`">Workbench</router-link>
+            </li>
+            <li :class="{ active: isActiveTab('versions') }">
+              <router-link :to="`/agent/${agent.id}/versions`">Versions</router-link>
             </li>
           </ul>
         </nav>
@@ -34,28 +34,27 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
-import { agents } from '@/data/agents.js';
+  import { computed } from 'vue';
+  import { useRoute } from 'vue-router';
+  import { agents } from '@/data/agents.js';
 
-const route = useRoute();
-const agentId = computed(() => Number(route.params.id));
-const agent = computed(() => agents.find(a => a.id === agentId.value));
+  const route = useRoute();
+  const agentId = computed(() => Number(route.params.id));
+  const agent = computed(() => agents.find(a => a.id === agentId.value));
 
-function isActiveTab(tabName) {
-  const currentPath = route.path;
-  const expectedPath = `/agent/${agentId.value}/${tabName}`;
-  const defaultPath = `/agent/${agentId.value}`;
-  
-  if (tabName === 'workbench') {
-    return currentPath === expectedPath || currentPath === defaultPath;
+  function isActiveTab(tabName) {
+    const currentPath = route.path;
+    const expectedPath = `/agent/${agentId.value}/${tabName}`;
+    const defaultPath = `/agent/${agentId.value}`;
+    
+    if (tabName === 'activity') {
+      return currentPath === expectedPath || currentPath === defaultPath || currentPath.startsWith(`/agent/${agentId.value}/activity`);
+    }
+    if (tabName === 'workbench') {
+      return currentPath === expectedPath;
+    }
+    return currentPath === expectedPath;
   }
-  if (tabName === 'activity') {
-    // Show activity tab as active for both activity list and conversation detail
-    return currentPath.startsWith(`/agent/${agentId.value}/activity`);
-  }
-  return currentPath === expectedPath;
-}
 </script>
 
 <style scoped>
@@ -92,7 +91,7 @@ header h2 {
 
 nav ul {
   display: flex;
-  gap: var(--space-xs);
+  gap: var(--space-xxs);
   padding: 0;
   margin: 0;
 }

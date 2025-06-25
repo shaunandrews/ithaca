@@ -26,12 +26,12 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'AgentWorkbench',
-        component: AgentWorkbench,
+        name: 'AgentActivityDefault',
+        component: AgentActivity,
       },
       {
         path: 'workbench',
-        name: 'AgentWorkbenchAlt',
+        name: 'AgentWorkbench',
         component: AgentWorkbench,
       },
       {

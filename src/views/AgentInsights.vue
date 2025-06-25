@@ -1,6 +1,6 @@
 <template>
   <div class="agent-insights">
-    <p>Insights coming soon.</p>
+    <p>Insights about the agent's performance, activity, history, and more.</p>
   </div>
 </template>
 

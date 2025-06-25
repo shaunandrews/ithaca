@@ -14,6 +14,27 @@ export const agents = [
       { ...tools.find(t => t.title === 'Support History') },
       { ...tools.find(t => t.title === 'Reference'), subtitle: 'support.wordpress.com' }
     ],
+    stats: {
+      totalConversations: 1247,
+      qualityScore: 4.6,
+      flagRate: 2.3,
+      correctionPercentage: 8.7,
+      avgResponseTime: 45, // seconds
+      escalationRate: 12.4,
+      agentVersion: '2.1.3',
+      satisfactionRating: 4.5,
+      resolutionRate: 87.2,
+      firstContactResolution: 72.8,
+      uptime: 99.2,
+      commonFeedbackThemes: [
+        'Helpful and friendly',
+        'Quick response time',
+        'Sometimes needs human escalation',
+        'Good at finding relevant articles'
+      ],
+      performanceTrend: 'improving',
+      lastUpdated: '2024-06-10T14:30:00Z'
+    },
     instructions: `
         You are a helpful support agent for WordPress.com. Use [tool title="Persona" value="Wappuu"] for all responses.
         Review the [tool title="User Profile"] and [tool title="Support History"] to learn about the user and their past support interactions. Prioritize recent interactions and use this context in response if needed.
@@ -92,6 +113,27 @@ export const agents = [
       { ...tools.find(t => t.title === 'Support History') },
       { ...tools.find(t => t.title === 'Reference'), subtitle: 'support.tumblr.com' }
     ],
+    stats: {
+      totalConversations: 892,
+      qualityScore: 4.2,
+      flagRate: 3.1,
+      correctionPercentage: 11.2,
+      avgResponseTime: 180, // seconds (3 minutes)
+      escalationRate: 18.7,
+      agentVersion: '1.8.9',
+      satisfactionRating: 4.1,
+      resolutionRate: 79.3,
+      firstContactResolution: 65.4,
+      uptime: 98.7,
+      commonFeedbackThemes: [
+        'Good at categorizing issues',
+        'Sometimes too robotic',
+        'Needs better context understanding',
+        'Fast triage processing'
+      ],
+      performanceTrend: 'stable',
+      lastUpdated: '2024-06-09T16:45:00Z'
+    },
     instructions: `
     You are a helpful support agent for Tumblr.com. Use [tool title="Persona" value="TumblrBot"] for all responses.
     Review the [tool title="Email" value="help@tumblr.com"] to see the user's email and use this context in your response.
@@ -140,6 +182,27 @@ export const agents = [
       { ...tools.find(t => t.title === 'Linear'), subtitle: 'Team Gravatar' },
       { ...tools.find(t => t.title === 'Slack') },
     ],
+    stats: {
+      totalConversations: 156,
+      qualityScore: 4.8,
+      flagRate: 1.2,
+      correctionPercentage: 3.4,
+      avgResponseTime: 5, // seconds (very fast for automated tasks)
+      escalationRate: 0.6,
+      agentVersion: '3.2.1',
+      satisfactionRating: 4.7,
+      resolutionRate: 96.8,
+      firstContactResolution: 94.2,
+      uptime: 99.8,
+      commonFeedbackThemes: [
+        'Very reliable for reminders',
+        'Excellent at finding project owners',
+        'Helpful project summaries',
+        'Never misses scheduled runs'
+      ],
+      performanceTrend: 'excellent',
+      lastUpdated: '2024-06-10T08:30:00Z'
+    },
     instructions: `
     Find any overdue projects for the [tool title="Linear" value="Team Gravatar"]
     If there hasn't been an update in the last week, determine the owner of the project. If no owner is listed, find the last person to update the project.
@@ -203,43 +266,64 @@ export const agents = [
   },
   {
     id: 4,
-    title: 'WP Block Finder',
-    description: 'Given some HTML, return a specific block',
+    title: 'Big Sky',
+    description: 'Designing beautiful sites for WordPress.com',
     owner: "Team HAL",
     ownerIcon: 'icon-teamhal.png',
     tools: [
       { ...tools.find(t => t.title === 'Input'), subtitle: 'HTML' },
       { ...tools.find(t => t.title === 'Input'), subtitle: 'Requested block' },
     ],
+    stats: {
+      totalConversations: 423,
+      qualityScore: 4.4,
+      flagRate: 4.7,
+      correctionPercentage: 14.8,
+      avgResponseTime: 12, // seconds
+      escalationRate: 5.2,
+      agentVersion: '1.4.7',
+      satisfactionRating: 4.3,
+      resolutionRate: 91.5,
+      firstContactResolution: 88.9,
+      uptime: 99.1,
+      commonFeedbackThemes: [
+        'Great at parsing HTML',
+        'Handles malformed code well',
+        'Could be better with edge cases',
+        'Fast and accurate results'
+      ],
+      performanceTrend: 'improving',
+      lastUpdated: '2024-06-10T15:15:00Z'
+    },
     instructions: `
-    Receive an HTML snippet and a requested block name.
-    Parse the HTML and search for the block that matches the requested name.
+    You are a helpful designer for WordPress.com. Use [tool title="Input" value="HTML"] to parse the HTML and [tool title="Input" value="Requested block"] to search for the block that matches the requested name.
     If found, return the block's HTML. If not found, reply with a helpful error message.
     Be robust to malformed HTML and ambiguous block names.
+    Be friendly, concise, and professional in all responses.
     `,
     activity: [
       {
         id: 10,
         datetime: '2024-06-10T15:00:00Z',
-        event: 'On-demand',
+        event: 'Creating a new site',
         customer: 'developer@wordpress.org',
-        summary: 'Returned the HTML for a requested "cover" block from a user-provided snippet.',
+        summary: 'A new customer wants a site for their coffee shop. They have an Instagram account and want a site that matches the look and feel of their account.',
         conversationId: 10,
       },
       {
         id: 11,
         datetime: '2024-06-09T12:10:00Z',
-        event: 'On-demand',
+        event: 'Block customization',
         customer: 'designer@example.com',
-        summary: 'Could not find the requested block. Provided a helpful error message and suggestions.',
+        summary: 'Client requested custom styling for their portfolio gallery. Needed to modify the grid layout and add hover effects to match their brand colors.',
         conversationId: 11,
       },
       {
         id: 12,
         datetime: '2024-06-08T10:45:00Z',
-        event: 'On-demand',
+        event: 'Layout optimization',
         customer: 'frontend@startup.com',
-        summary: 'Parsed malformed HTML and successfully returned the requested block.',
+        summary: 'Startup needed responsive design improvements for their landing page. Optimized mobile layout and fixed spacing issues across different screen sizes.',
         conversationId: 12,
       }
     ],
@@ -258,6 +342,27 @@ export const agents = [
       { ...tools.find(t => t.title === 'Slack') },
       { ...tools.find(t => t.title === 'Calendar') }
     ],
+    stats: {
+      totalConversations: 287,
+      qualityScore: 4.1,
+      flagRate: 5.8,
+      correctionPercentage: 16.3,
+      avgResponseTime: 95, // seconds
+      escalationRate: 22.3,
+      agentVersion: '2.0.4',
+      satisfactionRating: 3.9,
+      resolutionRate: 74.6,
+      firstContactResolution: 68.2,
+      uptime: 97.4,
+      commonFeedbackThemes: [
+        'Good at finding meeting times',
+        'Sometimes schedules inconvenient times',
+        'Calendar integration works well',
+        'Could better handle timezone conflicts'
+      ],
+      performanceTrend: 'declining',
+      lastUpdated: '2024-06-11T10:02:00Z'
+    },
     instructions: `
     Find all participants for the meeting. This is usually indicated in the triggering [tool title="Slack"] message. If no one is specified refer to the members of the channel.
     Avoid scheduling meetings with more than 8 participants, and no longer than 45 minutes.
@@ -306,6 +411,27 @@ export const agents = [
       { ...tools.find(t => t.title === 'Slack'), subtitle: 'Chat' },
       { ...tools.find(t => t.title === 'P2'), subtitle: 'Work Sites' }
     ],
+    stats: {
+      totalConversations: 1834,
+      qualityScore: 4.7,
+      flagRate: 1.8,
+      correctionPercentage: 6.2,
+      avgResponseTime: 28, // seconds
+      escalationRate: 7.9,
+      agentVersion: '4.1.2',
+      satisfactionRating: 4.6,
+      resolutionRate: 92.1,
+      firstContactResolution: 85.7,
+      uptime: 99.6,
+      commonFeedbackThemes: [
+        'Excellent at finding the right person',
+        'Very knowledgeable about P2 content',
+        'Saves time on information searches',
+        'Great contextual understanding'
+      ],
+      performanceTrend: 'excellent',
+      lastUpdated: '2024-06-12T09:15:00Z'
+    },
     instructions: `
     You are Agent Dave, a helpful Slack chatbot with access to many P2 work sites. Use [tool title="Slack"] to chat with users and [tool title="P2" value="Work Sites"] to search for information, find insights, and locate DRIs (Directly Responsible Individuals) for projects.
     When a user asks a question, search relevant P2s for answers, summaries, or the right person to contact. If you can't find the answer, suggest where the user might look or who to ask next.

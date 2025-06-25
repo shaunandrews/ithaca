@@ -1,11 +1,11 @@
 <template>
   <RouterLink :to="to" class="activity-list-item">
-    <div class="activity-datetime">{{ formatDate(item.datetime) }}</div>
-    <div class="activity-event">{{ item.event }}</div>
-    <div class="activity-summary">{{ item.summary }}</div>
-    <div v-if="item.customer" class="activity-customer">
-      <img :src="gravatarUrl(item.customer)" alt="Gravatar" width="28" height="28" class="activity-gravatar" :title="item.customer" />
-      <!-- {{ item.customer }} -->
+    <div class="datetime">{{ formatDate(item.datetime) }}</div>
+    <div class="event">{{ item.event }}</div>
+    <div class="summary">{{ item.summary }}</div>
+    <div v-if="item.customer" class="customer">
+        <img :src="gravatarUrl(item.customer)" alt="Gravatar" width="28" height="28" class="gravatar" :title="item.customer" />
+        <!-- {{ item.customer }} -->
     </div>
   </RouterLink>
 </template>
@@ -52,7 +52,7 @@ function gravatarUrl(email) {
   background-color: var(--color-surface);
   padding: var(--space-xs);
   min-height: 44px;
-  border-bottom: 1px solid var(--color-surface-tint);
+  border-bottom: 0.5px solid var(--color-surface-tint-dark);
   cursor: pointer;
   text-decoration: none;
   width: 100%;
@@ -65,9 +65,10 @@ function gravatarUrl(email) {
 
 .activity-list-item:hover {
   background-color: var(--color-surface-tint);
+  border-color: transparent;
 }
 
-.activity-datetime {
+.datetime {
   font-size: var(--font-size-s);
   color: var(--color-chrome-fg-tertiary);
   width: 120px;
@@ -75,24 +76,23 @@ function gravatarUrl(email) {
   flex: 0 0 auto;
 }
 
-.activity-customer {
+.customer {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  flex: 1;
 }
 
-.activity-gravatar {
+.gravatar {
   border-radius: var(--radius-s);
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
   vertical-align: middle;
 }
 
-.activity-event {
+.event {
   flex: 0 0 auto;
 }
 
-.activity-summary {
+.summary {
   color: var(--color-chrome-fg-secondary);
   white-space: nowrap;
   overflow: hidden;
