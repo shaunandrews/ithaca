@@ -5,16 +5,54 @@ alwaysApply: false
 ---
 # Lucide Icon Usage Rule
 
-All icons in this project should use the Lucide icon set. Icons should be imported from `lucide-vue-next` and used as Vue components. For example:
+All icons in this project should use the Lucide icon set. Icons should be imported from `lucide-vue-next` and used as Vue components.
+
+## Import Pattern
+Import icons individually from `lucide-vue-next`:
 
 ```js
-import { XIcon } from 'lucide-vue-next';
+import { XIcon, ArrowBigLeft, Plus, Play } from 'lucide-vue-next';
 ```
 
-Then in the template:
+## Usage in Templates
+Use icons as Vue components:
 
 ```vue
 <XIcon />
+<button class="close-btn" @click="closePanel"><XIcon /></button>
 ```
+
+## Common Icons Used in This Project
+- `XIcon` - Close buttons and dismiss actions
+- `ArrowBigLeft` - Back navigation
+- `Plus` - Add/create actions
+- `Play` - Start/run actions
+- `Command` - Keyboard shortcuts
+- `CornerDownLeft` - Send/submit actions
+- `Send` - Message sending
+- `Check` - Success/confirmation
+- `ThumbsUp` / `ThumbsDown` - Rating/feedback
+- `Pencil` - Edit actions
+- `Link` - External links
+- `PanelLeft` / `PanelLeftOpen` - Sidebar toggle
+- `Calendar` - Date/time related
+- `Email` - Email related actions
+
+## Styling
+Icons inherit the current text color by default. For custom styling, target the icon component directly:
+
+```css
+.close-btn svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-text-subtle);
+}
+```
+
+## Best Practices
+1. Import only the icons you need to keep bundle size minimal
+2. Use semantic icon names that clearly represent their purpose
+3. Maintain consistent sizing across similar UI elements
+4. Consider accessibility - icons should have appropriate alt text or be accompanied by text labels when needed
 
 Do not use inline SVGs or other icon libraries unless there is a specific exception documented in the codebase.

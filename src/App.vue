@@ -29,7 +29,6 @@ main {
   flex: 1;
   max-width: calc(100dvw - var(--sidebar-width));
   overflow-x: auto;
-  transition: max-width 0.2s ease-in-out;
 }
 
 /* Mobile responsive */

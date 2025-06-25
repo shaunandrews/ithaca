@@ -7,53 +7,57 @@
       <h1>Conversation</h1>
     </div>
 
-    <div v-if="conversation">
-      <div class="conversation-meta">
-        <div class="conversation-link"><a href="#"><Link class="link-icon" />#3923</a></div>
-        <div class="conversation-zendesk"><a href="#">Zendesk #123456</a></div>
-      </div>
-      
-      <div class="summary">
-        <h2>AI Summary</h2>
-        <p>The customer does not know who hosts their website. We have little information about them, so the assistant responded with instructions for using the WordPress.com Site Profiler tool.</p>
+    <div v-if="conversation" class="conversation-container">
+      <div class="conversation-main" :class="{ 'panel-open': selectedMessage }">
+        <ConversationMeta conversation-id="3923" zendesk-id="123456" />
+        
+        <ConversationSummary summary="The customer does not know who hosts their website. We have little information about them, so the assistant responded with instructions for using the WordPress.com Site Profiler tool." />
+        
+        <div class="messages">
+          <Message
+            v-for="(msg, idx) in conversation.messages"
+            :key="idx"
+            :message="msg"
+            :index="idx"
+            :datetime="conversationItem.datetime"
+            :customer="conversationItem.customer"
+            :is-selected="selectedIdx === idx"
+            @select="selectMessage"
+          />
+        </div>
       </div>
 
-      <div class="customer">
-        <div class="customer-avatar">
-          <img :src="gravatarUrl(conversationItem.customer)" alt="Customer avatar" height="32" width="32" />
-        </div>
-        <div class="customer-name">{{ conversationItem.customer }}</div>
-      </div>
-      
-      <div class="messages">
-        <template v-for="(msg, idx) in conversation.messages" :key="idx">
-          <div v-if="msg.role === 'agent' && msg.meta" class="agent-meta-container">
-            <div class="thinking-time">Thought for {{ msg.meta.thinkingTime }}ms...</div>
-            <div class="agent-meta">
-              <div class="sources">
-                <div class="meta-title">{{ msg.meta.sources.length }} sources used</div>
-                <ul>
-                  <SourceRating v-for="source in msg.meta.sources" :key="source.name" :source="source" />
-                </ul>
-              </div>
-              <div class="classifiers">
-                <div class="meta-title">Classifiers</div>
-                <ul>
-                  <ClassifierRating v-for="classifier in msg.meta.classifiers" :key="classifier.name" :classifier="classifier" />
-                </ul>
-              </div>
+      <div v-if="selectedMessage" class="details-panel">
+        <button class="close-btn" @click="closePanel"><XIcon /></button>
+        <template v-if="selectedMessage.role === 'agent'">
+          <div class="panel-section">
+            <h3>Message Details</h3>
+            <div class="author-role">Agent</div>
+            <div class="thinking-time">Thought for {{ selectedMessage.meta?.thinkingTime }}ms...</div>
+            <div class="sources">
+              <div class="meta-title">Sources ({{ selectedMessage.meta?.sources?.length || 0 }})</div>
+              <ul>
+                <SourceRating v-for="source in selectedMessage.meta?.sources || []" :key="source.name" :source="source" />
+              </ul>
+            </div>
+            <div class="classifiers">
+              <div class="meta-title">Classifiers</div>
+              <ul>
+                <ClassifierRating v-for="classifier in selectedMessage.meta?.classifiers || []" :key="classifier.name" :classifier="classifier" />
+              </ul>
             </div>
           </div>
-          <div :class="['message', msg.role]" :id="`message-${idx}`">
-            <div class="meta-row">
-              <a :href="`#message-${idx}`" class="message-link">{{ formatDate(conversationItem.datetime) }}</a>
-            </div>
-            <div v-if="msg.role === 'user'" class="user-info">
-              <img :src="gravatarUrl(conversationItem.customer)" alt="User avatar" height="24" width="24" class="user-avatar" />
-              <span class="user-email">{{ conversationItem.customer }}</span>
-            </div>
-            <span v-else class="role">{{ msg.role }}</span>
-            <span class="text">{{ msg.text }}</span>
+        </template>
+        <template v-else>
+          <div class="panel-section">
+            <h3>Message Details</h3>
+            <div class="author-role">Customer</div>
+            <div class="meta-title">Personal Context</div>
+            <div class="placeholder">(Personal context details will appear here.)</div>
+            <div class="meta-title">Purchase History</div>
+            <div class="placeholder">(Purchase history will appear here.)</div>
+            <div class="meta-title">Support History</div>
+            <div class="placeholder">(Support history will appear here.)</div>
           </div>
         </template>
       </div>
@@ -65,199 +69,191 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
-import { agents } from '@/data/agents.js';
-import { conversations } from '@/data/conversations.js';
-import { ArrowBigLeft, Link } from 'lucide-vue-next';
-import SourceRating from '@/components/SourceRating.vue';
-import ClassifierRating from '@/components/ClassifierRating.vue';
-import CryptoJS from 'crypto-js';
+  import { computed, ref } from 'vue';
+  import { useRoute } from 'vue-router';
+  import { agents } from '@/data/agents.js';
+  import { conversations } from '@/data/conversations.js';
+  import { ArrowBigLeft, XIcon } from 'lucide-vue-next';
+  import SourceRating from '@/components/SourceRating.vue';
+  import ClassifierRating from '@/components/ClassifierRating.vue';
+  import ConversationSummary from '@/components/ConversationSummary.vue';
+  import ConversationMeta from '@/components/ConversationMeta.vue';
+  import Message from '@/components/Message.vue';
 
-const route = useRoute();
-const agentId = computed(() => Number(route.params.id));
-const activityId = computed(() => Number(route.params.activityId));
+  const route = useRoute();
+  const agentId = computed(() => Number(route.params.id));
+  const activityId = computed(() => Number(route.params.activityId));
 
-const agent = computed(() => agents.find(a => a.id === agentId.value));
-const conversationItem = computed(() => agent.value?.activity.find(a => a.id === activityId.value));
-const conversation = computed(() => {
-  const convId = conversationItem.value?.conversationId;
-  return conversations.find(c => c.id === convId);
-});
+  const agent = computed(() => agents.find(a => a.id === agentId.value));
+  const conversationItem = computed(() => agent.value?.activity.find(a => a.id === activityId.value));
+  const conversation = computed(() => {
+    const convId = conversationItem.value?.conversationId;
+    return conversations.find(c => c.id === convId);
+  });
 
-function formatDate(datetime) {
-  const date = new Date(datetime);
-  return date.toLocaleString();
-}
+  const selectedMessage = ref(null);
+  const selectedIdx = ref(null);
 
-function gravatarUrl(email) {
-  if (!email) return '';
-  const hash = CryptoJS.SHA256(email.trim().toLowerCase()).toString(CryptoJS.enc.Hex);
-  return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
-}
+  function selectMessage(msg, idx) {
+    if (selectedIdx.value === idx) {
+      closePanel();
+    } else {
+      selectedMessage.value = msg;
+      selectedIdx.value = idx;
+    }
+  }
+
+  function closePanel() {
+    selectedMessage.value = null;
+    selectedIdx.value = null;
+  }
 </script>
 
 <style scoped>
-* {
-  outline: 1px dashed rgba(255, 0, 0, 0.1);
-}
+  .conversation-view {
+    padding: var(--space-m);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+  }
 
-.conversation-view {
-  padding: var(--space-m);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-m);
-}
+  .conversation-header {
+    margin-bottom: var(--space-s);
+  }
 
-.conversation-header {
-  margin-bottom: var(--space-s);
-}
+  .back-link {
+    text-decoration: none;
+    font-size: var(--font-size-s);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
 
-.back-link {
-  text-decoration: none;
-  font-size: var(--font-size-s);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-xs);
-}
+  .back-link:hover {
+    text-decoration: underline;
+  }
 
-.back-link:hover {
-  text-decoration: underline;
-}
+  .messages {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
 
-.messages {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-s);
-}
+  .agent-meta-container {
+    padding: var(--space-m) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+    font-size: var(--font-size-s);
+  }
 
-.message {
-  padding: var(--space-s);
-  border-radius: var(--radius);
-  border: 0.5px solid var(--color-surface-tint-dark);
-}
+  .thinking-time {
+    color: var(--color-text-subtle);
+  }
 
-.message.agent {
-  background-color: var(--color-accent);
-  color: var(--color-accent-fg);
-}
+  .agent-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
 
-.role {
-  font-weight: bold;
-  margin-right: var(--space-xs);
-  text-transform: capitalize;
-}
+  .meta-title {
+    font-weight: 500;
+    margin-bottom: var(--space-xxs);
+  }
 
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-xs);
-}
+  .meta-subtitle {
+    color: var(--color-text-subtle);
+    margin-bottom: var(--space-s);
+  }
 
-.user-avatar {
-  border-radius: 50%;
-}
+  .sources ul,
+  .classifiers ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
 
-.user-email {
-  font-weight: 500;
-  color: var(--color-text);
-}
+  .classifiers li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.message-link {
-  color: var(--color-text-subtle);
-  text-decoration: none;
-  font-size: var(--font-size-s);
-}
+  .item-details {
+    display: flex;
+    flex-direction: column;
+  }
 
-.message-link:hover {
-  color: var(--color-text);
-  text-decoration: underline;
-}
+  .item-name {
+    font-weight: 500;
+  }
 
-.agent-meta-container {
-  padding: var(--space-m) 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-m);
-  font-size: var(--font-size-s);
-}
+  .item-description {
+    color: var(--color-text-subtle);
+  }
 
-.thinking-time {
-  color: var(--color-text-subtle);
-}
+  .item-actions {
+    display: flex;
+    gap: var(--space-xs);
+  }
 
-.agent-meta {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-xl);
-  align-items: start;
-}
+  .item-actions button {
+    background: transparent;
+    border: 1px solid var(--color-surface-tint);
+    color: var(--color-text);
+    padding: var(--space-xs);
+    border-radius: var(--radius);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
 
-.meta-title {
-  font-weight: 500;
-  margin-bottom: var(--space-xxs);
-}
+  .item-actions button:hover {
+    background: var(--color-surface-tint);
+  }
 
-.meta-subtitle {
-  color: var(--color-text-subtle);
-  margin-bottom: var(--space-s);
-}
+  .classifiers li .item-actions button {
+    background: var(--color-surface-tint);
+  }
 
-.sources ul,
-.classifiers ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-s);
-}
+  .classifiers li .item-actions button:hover {
+    background: var(--color-surface);
+  }
 
-.classifiers li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  .conversation-container {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-m);
+    position: relative;
+  }
 
-.item-details {
-  display: flex;
-  flex-direction: column;
-}
+  .details-panel {
+    width: 340px;
+    background: var(--color-surface);
+    border-left: 1px solid var(--color-surface-tint-dark);
+    padding: var(--space-m);
+    position: relative;
+    box-shadow: -2px 0 8px rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+    z-index: 2;
+  }
 
-.item-name {
-  font-weight: 500;
-}
-
-.item-description {
-  color: var(--color-text-subtle);
-}
-
-.item-actions {
-  display: flex;
-  gap: var(--space-xs);
-}
-
-.item-actions button {
-  background: transparent;
-  border: 1px solid var(--color-surface-tint);
-  color: var(--color-text);
-  padding: var(--space-xs);
-  border-radius: var(--radius);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.item-actions button:hover {
-  background: var(--color-surface-tint);
-}
-
-.classifiers li .item-actions button {
-  background: var(--color-surface-tint);
-}
-
-.classifiers li .item-actions button:hover {
-  background: var(--color-surface);
-}
+  .close-btn {
+    position: absolute;
+    top: var(--space-m);
+    right: var(--space-m);
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--color-text-subtle);
+    z-index: 3;
+  }
 </style>
