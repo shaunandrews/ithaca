@@ -4,15 +4,27 @@
       <router-link :to="`/agent/${agentId}/activity`" class="back-link">
         <ArrowBigLeft /> All activity
       </router-link>
+      <h1>Conversation</h1>
     </div>
-    
+
     <div v-if="conversation">
+      <div class="conversation-meta">
+        <div class="conversation-link"><a href="#"><Link class="link-icon" />#3923</a></div>
+        <div class="conversation-zendesk"><a href="#">Zendesk #123456</a></div>
+      </div>
+      
+      <div class="summary">
+        <h2>AI Summary</h2>
+        <p>The customer does not know who hosts their website. We have little information about them, so the assistant responded with instructions for using the WordPress.com Site Profiler tool.</p>
+      </div>
+
       <div class="customer">
         <div class="customer-avatar">
-          <img src="/images/avatar-apeatling.png" alt="Customer avatar" height="32" width="32" />
+          <img :src="gravatarUrl(conversationItem.customer)" alt="Customer avatar" height="32" width="32" />
         </div>
         <div class="customer-name">{{ conversationItem.customer }}</div>
       </div>
+      
       <div class="messages">
         <template v-for="(msg, idx) in conversation.messages" :key="idx">
           <div v-if="msg.role === 'agent' && msg.meta" class="agent-meta-container">
@@ -32,9 +44,15 @@
               </div>
             </div>
           </div>
-          <div :class="['message', msg.role]">
-            <div class="meta-row">{{ formatDate(conversationItem.datetime) }}</div>
-            <span class="role">{{ msg.role }}</span>
+          <div :class="['message', msg.role]" :id="`message-${idx}`">
+            <div class="meta-row">
+              <a :href="`#message-${idx}`" class="message-link">{{ formatDate(conversationItem.datetime) }}</a>
+            </div>
+            <div v-if="msg.role === 'user'" class="user-info">
+              <img :src="gravatarUrl(conversationItem.customer)" alt="User avatar" height="24" width="24" class="user-avatar" />
+              <span class="user-email">{{ conversationItem.customer }}</span>
+            </div>
+            <span v-else class="role">{{ msg.role }}</span>
             <span class="text">{{ msg.text }}</span>
           </div>
         </template>
@@ -51,9 +69,10 @@ import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { agents } from '@/data/agents.js';
 import { conversations } from '@/data/conversations.js';
-import { ArrowBigLeft } from 'lucide-vue-next';
+import { ArrowBigLeft, Link } from 'lucide-vue-next';
 import SourceRating from '@/components/SourceRating.vue';
 import ClassifierRating from '@/components/ClassifierRating.vue';
+import CryptoJS from 'crypto-js';
 
 const route = useRoute();
 const agentId = computed(() => Number(route.params.id));
@@ -70,9 +89,19 @@ function formatDate(datetime) {
   const date = new Date(datetime);
   return date.toLocaleString();
 }
+
+function gravatarUrl(email) {
+  if (!email) return '';
+  const hash = CryptoJS.SHA256(email.trim().toLowerCase()).toString(CryptoJS.enc.Hex);
+  return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
+}
 </script>
 
 <style scoped>
+* {
+  outline: 1px dashed rgba(255, 0, 0, 0.1);
+}
+
 .conversation-view {
   padding: var(--space-m);
   display: flex;
@@ -117,6 +146,33 @@ function formatDate(datetime) {
   font-weight: bold;
   margin-right: var(--space-xs);
   text-transform: capitalize;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xs);
+}
+
+.user-avatar {
+  border-radius: 50%;
+}
+
+.user-email {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.message-link {
+  color: var(--color-text-subtle);
+  text-decoration: none;
+  font-size: var(--font-size-s);
+}
+
+.message-link:hover {
+  color: var(--color-text);
+  text-decoration: underline;
 }
 
 .agent-meta-container {

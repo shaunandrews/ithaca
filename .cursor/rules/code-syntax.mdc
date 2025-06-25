@@ -1,0 +1,154 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Code Syntax Guidelines
+
+## Vue Template Structure
+
+### Basic Indentation
+- Use **2 spaces** for indentation throughout all Vue files
+- Maintain consistent indentation levels for nested elements
+- Align closing tags with their opening tags
+
+### Template Organization
+```vue
+<template>
+  <div class="component-name">
+    <header class="header">
+      <h1>Title</h1>
+    </header>
+    
+    <main class="main-content">
+      <section class="section">
+        <div class="content">
+          <!-- Content here -->
+        </div>
+      </section>
+    </main>
+  </div>
+</template>
+```
+
+### Conditional Rendering
+- Use consistent indentation for `v-if`, `v-else`, and `v-else-if` blocks
+- Align the conditional content with the directive
+
+```vue
+<div v-if="condition" class="conditional-block">
+  <p>Content when condition is true</p>
+</div>
+<div v-else class="else-block">
+  <p>Content when condition is false</p>
+</div>
+```
+
+### List Rendering
+- Maintain proper indentation for `v-for` loops
+- Align template content within the loop
+
+```vue
+<template v-for="(item, index) in items" :key="index">
+  <div class="item">
+    <span class="item-name">{{ item.name }}</span>
+  </div>
+</template>
+```
+
+## Script Section
+
+### Import Statements
+- Group imports logically with consistent spacing
+- Use single blank line between import groups
+
+```javascript
+import { computed, ref } from 'vue';
+import { useRoute } from 'vue-router';
+
+import { agents } from '@/data/agents.js';
+import { conversations } from '@/data/conversations.js';
+
+import { ArrowBigLeft, Link } from 'lucide-vue-next';
+import SourceRating from '@/components/SourceRating.vue';
+```
+
+### Computed Properties and Functions
+- Use consistent spacing around computed properties
+- Maintain 2-space indentation for function bodies
+
+```javascript
+const route = useRoute();
+const agentId = computed(() => Number(route.params.id));
+
+const agent = computed(() => agents.find(a => a.id === agentId.value));
+
+function formatDate(datetime) {
+  const date = new Date(datetime);
+  return date.toLocaleString();
+}
+```
+
+## Style Section
+
+### CSS Organization
+- Use consistent indentation for CSS rules
+- Group related properties together
+- Use single blank line between rule blocks
+
+```css
+.component-name {
+  padding: var(--space-m);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+}
+
+.component-header {
+  margin-bottom: var(--space-s);
+}
+
+.component-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+```
+
+### Nested Selectors
+- Maintain proper indentation for nested CSS selectors
+- Use consistent spacing for pseudo-classes and pseudo-elements
+
+```css
+.button {
+  background: var(--color-primary);
+  color: var(--color-primary-fg);
+  padding: var(--space-s);
+  border-radius: var(--radius);
+}
+
+.button:hover {
+  background: var(--color-primary-hover);
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+```
+
+## General Spacing Rules
+
+### Between Sections
+- Use single blank lines to separate major sections in templates
+- Use single blank lines between import groups in scripts
+- Use single blank lines between CSS rule blocks
+
+### Within Elements
+- Use consistent spacing around attributes
+- Maintain readable line lengths (prefer breaking long lines)
+- Use proper spacing in template expressions
+
+### File Structure
+- Keep consistent spacing patterns across all Vue components
+- Follow the established patterns in [Conversation.vue](mdc:src/views/Conversation.vue) and other components
+- Maintain readability and consistency as the primary goals
