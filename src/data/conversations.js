@@ -14,8 +14,14 @@ export const conversations = [
             { name: 'Password Reset', description: 'How to reset your password' }
           ],
           classifiers: [
-            { name: 'Login Issue', description: 'Category' },
-            { name: 'Technical Support', description: 'Type' }
+            { name: 'Inquiry type', description: 'Help' },
+            { name: 'Is legal inquiry', description: 'False' },
+            { name: 'Is wpengine inquiry', description: 'False' },
+            { name: 'Is ai data sharing question', description: 'False' },
+            { name: 'Is very frustrated with wordpress com', description: 'False' },
+            { name: 'Language', description: 'En' },
+            { name: 'Product', description: 'Wordpress.com' },
+            { name: 'Category', description: 'Creating & editing the site (includes design, using Gutenberg/block editor, customizing theme, etc)' }
           ]
         }
       }
@@ -25,39 +31,35 @@ export const conversations = [
     id: 2,
     agentId: 1,
     messages: [
-      { role: 'user', text: 'How do I upgrade my plan?' },
+      { role: 'user', text: 'I worked on some editing for my header and now when I go to the website I can\'t click any of the pages. Nothing happens. I suspect I have something covering it, but I can see anything obvious in the list view.' },
       {
         role: 'agent',
-        text: 'Sure! You can upgrade your plan from your billing settings. Here is a link with more details: https://wordpress.com/support/plans/',
+        text: 'I\'m sorry to hear you\'re having trouble with your header navigation. It sounds like there might be an invisible element blocking your menu links.\n\nLet\'s try to fix this by editing your header template part. Go to your dashboard, then Appearance → Editor, open List View (the icon with three horizontal lines), and select your Header template part. Look for any blocks that might be overlapping your navigation menu - sometimes a transparent Group block or Button block could be causing this issue.\n\nWould you like me to provide more specific steps for troubleshooting this header navigation problem?',
         meta: {
           thinkingTime: 9541,
           sources: [
             {
-              name: 'Choose a Host',
-              description: 'I Don\'t Know Which Host to Choose'
+              name: 'Arrange content in your site\'s header',
+              description: 'Make your header full width'
             },
             {
-              name: 'Change a Domain\'s Name Servers',
-              description: 'Change Name Servers Away from WordPress.com'
+              name: 'Edit the header',
+              description: 'The header is the top part of a website that typically shows the site title, a logo, and a navigation menu. Our guides will show you how to customize your website\'s header.'
             },
             {
-              name: 'Troubleshooting Domain Errors',
-              description: 'Where is my Domain Registered?'
-            },
-            {
-              name: 'Choose Your Site\'s Primary Data Center',
-              description: 'Frequently Asked Questions'
-            },
-            { name: 'cPanel', description: 'WordPress.com Hosting Features' },
-            { name: 'Why Is My Site Down?', description: 'Check With Your Host' },
-            { name: 'Server Settings', description: 'Access Your Server Settings' }
+              name: 'Edit the page template',
+              description: 'The Page template is used for standard pages on your site, such as an About or Contact page. Pages using this template will have the same overall layout, ensuring a consistent experience for visitors browsing through your site. This guide will show you how to edit the page template.'
+            }
           ],
           classifiers: [
-            { name: 'Refund', description: 'Type' },
-            { name: 'False', description: 'Legal Inquiry' },
-            { name: 'English (en)', description: 'Language' },
-            { name: 'Unknown', description: 'Product', editable: true },
-            { name: 'Plan cancelation / Refund request', description: 'Category' }
+            { name: 'Inquiry type', description: 'Help' },
+            { name: 'Is legal inquiry', description: 'False' },
+            { name: 'Is wpengine inquiry', description: 'False' },
+            { name: 'Is ai data sharing question', description: 'False' },
+            { name: 'Is very frustrated with wordpress com', description: 'False' },
+            { name: 'Language', description: 'En' },
+            { name: 'Product', description: 'WordPress.com' },
+            { name: 'Category', description: 'Creating & editing the site (includes design, using Gutenberg/block editor, customizing theme, etc)' }
           ]
         }
       }
@@ -78,8 +80,14 @@ export const conversations = [
             { name: 'Turn Automatic Renewal On or Off', description: 'Auto-renew helps ensure your website remains online without needing to track the expiry date. This guide explains how to enable and disable automatic renewal and make a payment for your site\'s purchases.' }
           ],
           classifiers: [
-            { name: 'Billing', description: 'Category', editable: true },
-            { name: 'Escalate', description: 'Action' }
+            { name: 'Inquiry type', description: 'Help' },
+            { name: 'Is legal inquiry', description: 'False' },
+            { name: 'Is wpengine inquiry', description: 'False' },
+            { name: 'Is ai data sharing question', description: 'False' },
+            { name: 'Is very frustrated with wordpress com', description: 'False' },
+            { name: 'Language', description: 'En' },
+            { name: 'Product', description: 'Wordpress.com' },
+            { name: 'Category', description: 'Creating & editing the site (includes design, using Gutenberg/block editor, customizing theme, etc)' }
           ]
         }
       }

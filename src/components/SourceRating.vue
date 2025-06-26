@@ -101,6 +101,7 @@ function toggleIncorrect() {
 
 .item-description {
   color: var(--color-chrome-fg-secondary);
+  font-size: var(--font-size-s);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

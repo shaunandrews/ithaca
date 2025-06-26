@@ -1,6 +1,5 @@
 <template>
   <div class="summary">
-    <h2>AI Summary</h2>
     <p>{{ summary }}</p>
   </div>
 </template>
@@ -19,12 +18,8 @@ defineProps({
   margin-bottom: var(--space-m);
 }
 
-.summary h2 {
-  margin-bottom: var(--space-s);
-}
-
 .summary p {
-  color: var(--color-text-subtle);
-  line-height: 1.5;
+  color: var(--color-chrome-fg-secondary);
+  line-height: var(--line-height-tight);
 }
 </style> 

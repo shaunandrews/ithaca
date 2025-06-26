@@ -40,6 +40,7 @@
             </div>
             <div class="sources">
               <h4>Sources ({{ selectedMessage.meta?.sources?.length || 0 }})</h4>
+              <p>Judge the relevance of each source to the conversation. Click a source to view the full content.</p>
               <ul>
                 <SourceRating 
                   v-for="source in selectedMessage.meta?.sources || []" 
@@ -51,6 +52,7 @@
             </div>
             <div class="classifiers">
               <h4>Classifiers</h4>
+              <p>Confirm the agents response to each classifier, or edit the value if it's incorrect.</p>
               <ul>
                 <ClassifierRating v-for="classifier in selectedMessage.meta?.classifiers || []" :key="classifier.name" :classifier="classifier" />
               </ul>
@@ -289,6 +291,19 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-m);
+  }
+
+  .panel-section h4 {
+    font-size: var(--font-size-s);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--space-xxs);
+  }
+
+  .panel-section p {
+    font-size: var(--font-size-s);
+    color: var(--color-chrome-fg-secondary);
+    line-height: var(--line-height-tight);
+    margin-bottom: var(--space-s);
   }
 
   .thinking-time {
