@@ -64,11 +64,7 @@
         background-color: var(--color-surface);
         border: 0.5px solid var(--color-surface-tint-dark);
         max-width: 840px;
-    }
-
-    .message.agent {
-        /* background-color: var(--color-accent);
-        color: var(--color-accent-fg); */
+        transition: background-color 0.1s ease-in-out;
     }
 
     .message.selected {

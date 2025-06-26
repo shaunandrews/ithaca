@@ -67,15 +67,15 @@ export const conversations = [
     id: 3,
     agentId: 1,
     messages: [
-      { role: 'user', text: 'I have a billing issue that I need help with.' },
+      { role: 'user', text: 'I was charged twice for my plan this month. I need a refund, and can someone look into why this happened?' },
       {
         role: 'agent',
-        text: 'I am not able to resolve this. I will escalate this to a human agent for further assistance.',
+        text: 'Absolutely. I can see that you have two sites with monthly subscriptions. Did you mean to create a new site? It seems like it may have been accidental.',
         meta: {
           thinkingTime: 4567,
           sources: [
-            { name: 'Billing', description: 'Billing FAQs' },
-            { name: 'Escalation', description: 'When to escalate to a human' }
+            { name: 'Managing purchases', description: 'You can view, renew, or cancel your subscriptions and update payment methods directly from your WordPress.com account. In this guide, you\'ll learn how to manage all your purchases without contacting support.' },
+            { name: 'Turn Automatic Renewal On or Off', description: 'Auto-renew helps ensure your website remains online without needing to track the expiry date. This guide explains how to enable and disable automatic renewal and make a payment for your site\'s purchases.' }
           ],
           classifiers: [
             { name: 'Billing', description: 'Category', editable: true },
