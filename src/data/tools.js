@@ -49,7 +49,6 @@ export const tools = [
     icon: '/images/icon-input.png',
     value: 'e.g. HTML, Requested block',
   },
-  // Additional plausible tools
   {
     title: 'Zendesk',
     description: 'Manage support tickets and customer requests in Zendesk.',

@@ -1,15 +1,15 @@
 <template>
   <div class="conversation-view">
-    <div class="conversation-header">
+    <div class="conversation-header hstack">
       <router-link :to="`/agent/${agentId}/activity`" class="back-link">
         <ArrowBigLeft /> All activity
       </router-link>
       <h1>Conversation</h1>
+      <ConversationMeta conversation-id="3923" zendesk-id="123456" />
     </div>
 
     <div v-if="conversation" class="conversation-container">
       <div class="conversation-main" :class="{ 'panel-open': selectedMessage }">
-        <ConversationMeta conversation-id="3923" zendesk-id="123456" />
         
         <ConversationSummary summary="The customer does not know who hosts their website. We have little information about them, so the assistant responded with instructions for using the WordPress.com Site Profiler tool." />
         
@@ -62,6 +62,7 @@
         </template>
       </div>
     </div>
+
     <div v-else>
       <p>Conversation not found.</p>
     </div>
@@ -111,14 +112,17 @@
 
 <style scoped>
   .conversation-view {
-    padding: var(--space-m);
     display: flex;
     flex-direction: column;
-    gap: var(--space-m);
+    height: 100%;
   }
 
   .conversation-header {
-    margin-bottom: var(--space-s);
+    gap: var(--space-s);
+    padding: var(--space-xxs) var(--space-m) var(--space-xxs) var(--space-s);
+    border-bottom: 0.5px solid var(--color-surface-tint);
+    align-items: center;
+    justify-content: space-between;
   }
 
   .back-link {
@@ -133,39 +137,26 @@
     text-decoration: underline;
   }
 
+  .conversation-header h1 {
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-semibold);
+  }
+
   .messages {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
-  }
-
-  .agent-meta-container {
-    padding: var(--space-m) 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-m);
-    font-size: var(--font-size-s);
+    max-width: 840px;
+    margin: 0 auto;
   }
 
   .thinking-time {
     color: var(--color-text-subtle);
   }
 
-  .agent-meta {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-xl);
-    align-items: start;
-  }
-
   .meta-title {
     font-weight: 500;
     margin-bottom: var(--space-xxs);
-  }
-
-  .meta-subtitle {
-    color: var(--color-text-subtle);
-    margin-bottom: var(--space-s);
   }
 
   .sources ul,
@@ -184,76 +175,18 @@
     align-items: center;
   }
 
-  .item-details {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .item-name {
-    font-weight: 500;
-  }
-
-  .item-description {
-    color: var(--color-text-subtle);
-  }
-
-  .item-actions {
-    display: flex;
-    gap: var(--space-xs);
-  }
-
-  .item-actions button {
-    background: transparent;
-    border: 1px solid var(--color-surface-tint);
-    color: var(--color-text);
-    padding: var(--space-xs);
-    border-radius: var(--radius);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-  }
-
-  .item-actions button:hover {
-    background: var(--color-surface-tint);
-  }
-
-  .classifiers li .item-actions button {
-    background: var(--color-surface-tint);
-  }
-
-  .classifiers li .item-actions button:hover {
-    background: var(--color-surface);
-  }
-
   .conversation-container {
     display: flex;
     flex-direction: row;
     gap: var(--space-m);
-    position: relative;
   }
 
   .details-panel {
     width: 340px;
-    background: var(--color-surface);
-    border-left: 1px solid var(--color-surface-tint-dark);
+    border-left: 0.5px solid var(--color-surface-tint);
     padding: var(--space-m);
-    position: relative;
-    box-shadow: -2px 0 8px rgba(0,0,0,0.04);
     display: flex;
     flex-direction: column;
     gap: var(--space-m);
-    z-index: 2;
-  }
-
-  .close-btn {
-    position: absolute;
-    top: var(--space-m);
-    right: var(--space-m);
-    background: none;
-    border: none;
-    font-size: 2rem;
-    cursor: pointer;
-    color: var(--color-text-subtle);
-    z-index: 3;
   }
 </style>
