@@ -1,19 +1,22 @@
 <template>
   <div
-    :class="['message', message.role, { selected: isSelected }]"
+    :class="['message vstack', message.role, { selected: isSelected }]"
     :id="`message-${index}`"
     @click="$emit('select', message, index)"
     tabindex="0"
     style="cursor: pointer;"
   >
-    <div class="meta-row">
-      <a :href="`#message-${index}`" class="message-link">{{ formatDate(datetime) }}</a>
+    <div class="text">
+        <div v-if="message.role === 'user'" class="author">
+            <img :src="gravatarUrl(customer)" alt="User avatar" height="32" width="32" class="avatar" />
+            <span class="email">{{ customer }}</span>
+        </div>
+        <div class="content">{{ message.text }}</div>
     </div>
-    <div v-if="message.role === 'user'" class="user-info">
-      <img :src="gravatarUrl(customer)" alt="User avatar" height="24" width="24" class="user-avatar" />
-      <span class="user-email">{{ customer }}</span>
+    <div class="meta">
+        <div class="timestamp">{{ formatDate(datetime) }}</div>
+        <div v-if="message.role === 'agent'" class="agent-info">WP.com Support Chat • v1.02 • <a>Regenerate</a></div>
     </div>
-    <span class="text">{{ message.text }}</span>
   </div>
 </template>
 
@@ -59,43 +62,57 @@
 
 <style scoped>
     .message {
-        padding: var(--space-s);
-        border-radius: var(--radius);
-        background-color: var(--color-surface);
-        border: 0.5px solid var(--color-surface-tint-dark);
-        max-width: 840px;
-        transition: background-color 0.1s ease-in-out;
+        gap: var(--space-xxs);
+        cursor: default;
     }
 
-    .message.selected {
+    .text {
+        padding: var(--space-s) var(--space-m);
+        /* box-shadow: 0 2px 12px 0 var(--color-surface-tint-dark); */
+        border-radius: var(--radius-l);
+        max-width: 840px;
+        transition: all 0.1s ease-in-out;
+    }
+
+    .message.user .text {
+        background: var(--color-surface);
+        color: var(--color-surface-fg);
+        border: 0.5px solid var(--color-surface-tint-dark);
+    }
+
+    .message.agent .text {
+        background: var(--color-surface);
+        color: var(--color-surface-fg);
+        border: 0.5px solid var(--color-surface-tint-dark);
+    }
+
+    .message.selected .text {
         border-color: var(--color-accent);
         box-shadow: 0 0 0 1.5px var(--color-accent);
     }
 
-    .user-info {
+    .meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        /* flex-direction: row-reverse; */
+        padding: 0 var(--space-m);
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-medium);
+        text-transform: uppercase;
+        color: var(--color-chrome-fg-tertiary);
+    }
+
+    .author {
         display: flex;
         align-items: center;
         gap: var(--space-xs);
         margin-bottom: var(--space-xs);
+        font-weight: var(--font-weight-semibold);
     }
 
-    .user-avatar {
-        border-radius: 50%;
-    }
-
-    .user-email {
-        font-weight: 500;
-        color: var(--color-text);
-    }
-
-    .message-link {
-    color: var(--color-text-subtle);
-    text-decoration: none;
-    font-size: var(--font-size-s);
-    }
-
-    .message-link:hover {
-    color: var(--color-text);
-    text-decoration: underline;
+    .avatar {
+        border-radius: var(--radius-s);
+        border: 0.5px solid var(--color-surface-tint-dark);
     }
 </style> 

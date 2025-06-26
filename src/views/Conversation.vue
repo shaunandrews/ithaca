@@ -8,7 +8,7 @@
       <ConversationMeta conversation-id="3923" zendesk-id="123456" />
     </div>
 
-    <div v-if="conversation" class="hstack">
+    <div v-if="conversation" class="columns hstack">
       <div class="conversation-main" :class="{ 'panel-open': selectedMessage }">
         <ConversationSummary summary="The customer does not know who hosts their website. We have little information about them, so the assistant responded with instructions for using the WordPress.com Site Profiler tool." />
         
@@ -33,7 +33,9 @@
         </header>
         <template v-if="selectedMessage.role === 'agent'">
           <div class="panel-section">
-            <Badge variant="agent">Agent</Badge>
+            <div>
+              <Badge variant="agent">Agent</Badge>
+            </div>
             <div class="thinking-time hstack">
               <Hourglass height="16" width="16" />
               <span>Thought for {{ selectedMessage.meta?.thinkingTime }}ms...</span>
@@ -61,13 +63,7 @@
         </template>
         <template v-else>
           <div class="panel-section">
-            <Badge variant="customer">Customer</Badge>
-            <h4>Personal Context</h4>
-            <div class="placeholder">(Personal context details will appear here.)</div>
-            <h4>Purchase History</h4>
-            <div class="placeholder">(Purchase history will appear here.)</div>
-            <h4>Support History</h4>
-            <div class="placeholder">(Support history will appear here.)</div>
+            <CustomerDetails />
           </div>
         </template>
       </div>
@@ -133,6 +129,7 @@
   import Message from '@/components/Message.vue';
   import Badge from '@/components/Badge.vue';
   import Modal from '@/components/Modal.vue';
+  import CustomerDetails from '@/components/CustomerDetails.vue';
 
   const route = useRoute();
   const router = useRouter();
@@ -206,12 +203,11 @@
   .conversation-view {
     display: flex;
     flex-direction: column;
-    height: 100%;
   }
 
   .conversation-header {
     gap: var(--space-s);
-    padding: var(--space-xxs) var(--space-m) var(--space-xxs) var(--space-s);
+    padding: var(--space-s) var(--space-m) var(--space-s) var(--space-s);
     border-bottom: 0.5px solid var(--color-surface-tint);
     align-items: center;
     justify-content: space-between;
@@ -237,18 +233,9 @@
   .messages {
     display: flex;
     flex-direction: column;
-    gap: var(--space-s);
+    gap: var(--space-l);
     max-width: 840px;
     margin: 0 auto;
-  }
-
-  .thinking-time {
-    color: var(--color-text-subtle);
-  }
-
-  .meta-title {
-    font-weight: 500;
-    margin-bottom: var(--space-xxs);
   }
 
   .sources ul,
@@ -261,21 +248,20 @@
     gap: var(--space-s);
   }
 
-  .classifiers li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .columns {
+    /* height: calc(100vh - 58px);
+    overflow: hidden; */
   }
 
   .conversation-main {
     padding: var(--space-m);
-    max-width: 840px;
     margin: 0 auto;
   }
 
   .details-panel {
     min-width: 420px;
     max-width: 420px;
+    background: var(--color-surface-tint);
     border-left: 0.5px solid var(--color-surface-tint);
     padding: var(--space-m);
     display: flex;

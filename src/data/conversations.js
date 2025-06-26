@@ -62,6 +62,39 @@ export const conversations = [
             { name: 'Category', description: 'Creating & editing the site (includes design, using Gutenberg/block editor, customizing theme, etc)' }
           ]
         }
+      },
+      {
+        role: 'user',
+        text: 'I tried that, but it didn\'t work. I still can\'t click any of the pages. There was nothing obvious in the way.'
+      },
+      {
+        role: 'agent',
+        text: 'That can be frustrating when the issue isn\'t immediately visible. Let\'s try a different approach to troubleshoot your header.\n\nWhen in the Site Editor looking at your header template part, try selecting different areas by clicking around your header - sometimes this can reveal invisible blocks. Also, check if you have any Group blocks that might have their height set to 100% or any blocks with absolute positioning that could be covering your navigation links.\n\nWould it help if I walked you through how to reset your header to the theme default, which might be a quicker solution if you can\'t identify the problematic element?',
+        meta: {
+          thinkingTime: 9541,
+        }
+      },
+      {
+        role: 'user',
+        text: 'is there a way to undo any changes I did like at a given time'
+      },
+      {
+        role: 'agent',
+        text: 'Yes, there are a few ways to undo changes you\'ve made to your site!\n\nYou can restore a previous version of your header template part by going to Editor → Templates → Template Parts, selecting your header, and then clicking on "Revisions" in the right sidebar. This will show you previously saved versions that you can load.\n\nAlternatively, since you have a Personal plan, you can restore your entire site to a previous point using Jetpack Backup. Go to your dashboard, then Jetpack → Backup, select a date before you made the problematic changes, and click "Restore to this point."\n\nWould you like more details on either of these options?',
+        meta: {
+          thinkingTime: 4567,
+        }
+      },
+      {
+        role: 'user',
+        text: 'it tells me that I need to upgrade to a business plan'
+      },
+      {
+        role: 'agent',
+        text: 'I see the confusion now. You\'re right - the full backup and restore feature is only available on Business and Commerce plans, not the Personal plan you currently have. In this case, your best option is to use the template revisions feature. Go to Appearance → Editor → Templates → Template Parts, select your header, then look for "Revisions" in the right sidebar settings panel. This should allow you to restore a previous version of just your header template.\n\nWould you like me to explain how to use the template revisions feature in more detail?',
+        meta: {
+          thinkingTime: 9541,
+        }
       }
     ]
   },

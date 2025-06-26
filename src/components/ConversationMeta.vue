@@ -30,7 +30,6 @@ defineProps({
 .conversation-meta {
   display: flex;
   gap: var(--space-m);
-  margin-bottom: var(--space-m);
   font-size: var(--font-size-s);
 }
 
