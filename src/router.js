@@ -8,6 +8,11 @@ import AgentInsights from './views/AgentInsights.vue';
 import AgentActivity from './views/AgentActivity.vue';
 import Conversation from './views/Conversation.vue';
 import Experts from './views/Experts.vue';
+import ExpertLayout from './views/ExpertLayout.vue';
+import ExpertActivity from './views/ExpertActivity.vue';
+import ExpertConfiguration from './views/ExpertConfiguration.vue';
+import ExpertInsights from './views/ExpertInsights.vue';
+import ExpertVersions from './views/ExpertVersions.vue';
 
 const routes = [
   {
@@ -61,6 +66,37 @@ const routes = [
     path: '/experts',
     name: 'Experts',
     component: Experts,
+  },
+  {
+    path: '/expert/:id',
+    component: ExpertLayout,
+    children: [
+      {
+        path: '',
+        name: 'ExpertActivityDefault',
+        component: ExpertActivity,
+      },
+      {
+        path: 'activity',
+        name: 'ExpertActivity',
+        component: ExpertActivity,
+      },
+      {
+        path: 'configuration',
+        name: 'ExpertConfiguration',
+        component: ExpertConfiguration,
+      },
+      {
+        path: 'insights',
+        name: 'ExpertInsights',
+        component: ExpertInsights,
+      },
+      {
+        path: 'versions',
+        name: 'ExpertVersions',
+        component: ExpertVersions,
+      },
+    ],
   },
 ];
 

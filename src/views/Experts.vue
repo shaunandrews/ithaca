@@ -9,9 +9,10 @@
   </div>
 
   <div class="expert-list">
-    <div
+    <router-link
       v-for="expert in experts"
       :key="expert.id"
+      :to="`/expert/${expert.id}/activity`"
       class="expert-item"
     >
       <div class="expert-header">
@@ -28,7 +29,7 @@
           :subtitle="tool.subtitle"
         />
       </div>
-    </div>
+    </router-link>
   </div>
 </template>
 
@@ -59,6 +60,14 @@ import { experts } from '@/data/experts.js';
   border-radius: var(--radius);
   padding: var(--space-m);
   border: 1px solid var(--color-surface-tint-dark);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.expert-item:hover {
+  border-color: var(--color-primary);
+  cursor: pointer;
 }
 
 .expert-header {
