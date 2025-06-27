@@ -2,25 +2,22 @@
   <div class="conversation-view">
     <div v-if="conversation" class="columns hstack">
       <div class="conversation-main" :class="{ 'panel-open': selectedMessage }">
-        <div class="conversation-content">
-          <ButtonBack :to="`/agent/${agentId}/activity`" text="All activity" />
-          <h1>Conversation</h1>
-          <ConversationMeta conversation-id="3923" zendesk-id="123456" />
-
-          <ConversationSummary summary="The customer does not know who hosts their website. We have little information about them, so the assistant responded with instructions for using the WordPress.com Site Profiler tool." />
-          
-          <div class="messages">
-            <Message
-              v-for="(msg, idx) in conversation.messages"
-              :key="idx"
-              :message="msg"
-              :index="idx"
-              :datetime="conversation.datetime"
-              :customer="conversation.customer"
-              :is-selected="selectedIdx === idx"
-              @select="selectMessage"
-            />
-          </div>
+        <ButtonBack :to="`/agent/${agentId}/activity`" text="All activity" />
+        <h1>Conversation</h1>
+        <ConversationMeta conversation-id="3923" zendesk-id="123456" />
+        <ConversationSummary summary="The customer does not know who hosts their website. We have little information about them, so the assistant responded with instructions for using the WordPress.com Site Profiler tool." />
+        
+        <div class="messages">
+          <Message
+            v-for="(msg, idx) in conversation.messages"
+            :key="idx"
+            :message="msg"
+            :index="idx"
+            :datetime="conversation.datetime"
+            :customer="conversation.customer"
+            :is-selected="selectedIdx === idx"
+            @select="selectMessage"
+          />
         </div>
       </div>
 
@@ -222,14 +219,9 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-  }
-
-  .conversation-content {
     padding: var(--space-m);
     margin: 0 auto;
     overflow-y: auto;
-    height: 100%;
   }
 
   .details-panel {
@@ -269,7 +261,7 @@
   .messages {
     display: flex;
     flex-direction: column;
-    gap: var(--space-l);
+    gap: var(--space-s);
     margin: 0 auto;
   }
 

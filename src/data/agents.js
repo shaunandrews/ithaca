@@ -124,74 +124,7 @@ export const agents = [
       { loading: 'Connecting to email...', done: 'Connected to email', delay: 1000 },
     ],
   },
-  {
-    id: 3,
-    title: 'Gravatar Overdue Projects',
-    description: 'Daily Slack reminders for overdue projects',
-    owner: "Lighthouse",
-    ownerIcon: 'icon-teamlighthouse.png',
-    tags: ['gravatar', 'linear', 'slack', 'project-management', 'reminders', 'automation', 'scheduled', 'overdue'],
-    tools: [
-      { ...tools.find(t => t.id === 9), subtitle: 'Team Gravatar' },
-      { ...tools.find(t => t.id === 1) },
-    ],
-    stats: {
-      totalConversations: 156,
-      qualityScore: 4.8,
-      flagRate: 1.2,
-      correctionPercentage: 3.4,
-      avgResponseTime: 5, // seconds (very fast for automated tasks)
-      escalationRate: 0.6,
-      agentVersion: '3.2.1',
-      satisfactionRating: 4.7,
-      resolutionRate: 96.8,
-      firstContactResolution: 94.2,
-      uptime: 99.8,
-      commonFeedbackThemes: [
-        'Very reliable for reminders',
-        'Excellent at finding project owners',
-        'Helpful project summaries',
-        'Never misses scheduled runs'
-      ],
-      performanceTrend: 'excellent',
-      lastUpdated: '2024-06-10T08:30:00Z'
-    },
-    instructions: `
-    Find any overdue projects for the [tool title="Linear" value="Team Gravatar"]
-    If there hasn't been an update in the last week, determine the owner of the project. If no owner is listed, find the last person to update the project.
-    Find the owner in [tool title="Slack"]. If multiple people are found, message the most likely one.
-    The Slack message should inform them that the project is overdue, and should include a summary of the project (and its last update) with a link to Linear.
-    `,
-    conversationIds: [7, 8, 9],
-    trigger: 'scheduled',
-    previewEvents: [
-      {
-        loading: 'Connecting to Linear',
-        done: 'Connected to Linear',
-        delay: 1000,
-      },
-      {
-        loading: 'Reviewing 23 Gravatar projects',
-        done: 'Found 3 overdue projects',
-        delay: 1200,
-        details: [
-          'Profile Color Scheme, Owner: Shaun Andrews • 1 day overdue',
-          'Gravatar for Teams, Owner: Jack Smith • 2 days overdue',
-          'Combined Design Controls, Owner: Katie Genovese • 3 days overdue',
-        ],
-      },
-      {
-        loading: 'Searching Slack for project owners',
-        done: 'Found 3 project owners and sent each a message',
-        delay: 1000,
-        details: [
-          'Shaun Andrews: "Hey Shaun, the Profile Color Scheme is 1 day overdue. Can you take a look? linear.app/s/profile-color-scheme"',
-          'Jack Smith: "Hey Jack, the Gravatar for Teams is 2 days overdue. Can you take a look? linear.app/s/gravatar-for-teams"',
-          'Katie Genovese: "Hey Katie, the Combined Design Controls is 3 days overdue. Can you take a look? linear.app/s/combined-design-controls"',
-        ],
-      },
-    ],
-  },
+
   {
     id: 4,
     title: 'Big Sky',

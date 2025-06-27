@@ -13,6 +13,7 @@
     --radius-s: 4px;
     --radius-m: 6px;
     --radius-l: 8px;
+    --radius-xl: 18px;
   
     /* Default radius */
     --radius: var(--radius-m);
