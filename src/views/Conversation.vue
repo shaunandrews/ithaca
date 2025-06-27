@@ -5,7 +5,7 @@
         <ButtonBack :to="`/agent/${agentId}/activity`" text="All activity" />
         <h1>Conversation</h1>
         <ConversationMeta conversation-id="3923" zendesk-id="123456" />
-        <ConversationSummary summary="The customer does not know who hosts their website. We have little information about them, so the assistant responded with instructions for using the WordPress.com Site Profiler tool." />
+        <ConversationSummary :summary="conversation.summary" :title="conversation.event" />
         
         <div class="messages">
           <Message

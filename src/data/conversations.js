@@ -35,9 +35,9 @@ export const conversations = [
     id: 2,
     agentId: 1,
     datetime: '2024-06-10T13:45:00Z',
-    event: 'Obscured header navigation',
+    event: 'Header Navigation Not Clickable After Edit',
     customer: 'shaun@shaunandrews.com',
-    summary: 'Accidentally obscured header navigation while editing their site. Provided initial troubleshooting steps.',
+    summary: 'Customer edited their site header and navigation links became unclickable. Troubleshooting steps like checking for overlapping or invisible blocks did not help. The customer asked about undoing changes but learned that full site restores require a Business plan. The agent explained that header template revisions are available and offered further instructions if needed.',
     messages: [
       { role: 'user', text: 'I worked on some editing for my header and now when I go to the website I can\'t click any of the pages. Nothing happens. I suspect I have something covering it, but I can see anything obvious in the list view.' },
       {

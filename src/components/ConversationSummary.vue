@@ -1,5 +1,6 @@
 <template>
   <div class="summary">
+    <h2 v-if="title">{{ title }}</h2>
     <p>{{ summary }}</p>
   </div>
 </template>
@@ -9,6 +10,10 @@ defineProps({
   summary: {
     type: String,
     required: true
+  },
+  title: {
+    type: String,
+    required: false
   }
 });
 </script>
@@ -18,7 +23,14 @@ defineProps({
   margin-bottom: var(--space-m);
 }
 
-.summary p {
+h2 {
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--space-xxs);
+}
+
+p {
+  font-size: var(--font-size-s);
   color: var(--color-chrome-fg-secondary);
   line-height: var(--line-height-tight);
 }
