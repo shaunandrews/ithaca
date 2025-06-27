@@ -1,6 +1,6 @@
 <template>
   <div class="agent-container">
-    <header v-if="agent">
+    <header v-if="agent" ref="headerRef">
       <div class="agent-header-start">
         <h2 class="agent-title">{{ agent.title }}</h2>
         <nav>
@@ -21,7 +21,7 @@
         </nav>
       </div>
       <div class="agent-header-end">
-        <button class="primary">Save</button>
+        
       </div>
     </header>
 
@@ -29,18 +29,36 @@
       <p>Agent not found.</p>
     </div>
 
-    <router-view v-if="agent" />
+    <div class="agent-content" :style="{ height: contentHeight }">
+      <router-view v-if="agent" />
+    </div>
   </div>
 </template>
 
 <script setup>
-  import { computed } from 'vue';
+  import { computed, ref, onMounted, onUnmounted, provide } from 'vue';
   import { useRoute } from 'vue-router';
   import { agents } from '@/data/agents.js';
 
   const route = useRoute();
   const agentId = computed(() => Number(route.params.id));
   const agent = computed(() => agents.find(a => a.id === agentId.value));
+
+  const headerRef = ref(null);
+  const headerHeight = ref(0);
+
+  const contentHeight = computed(() => {
+    return headerHeight.value > 0 ? `calc(100vh - ${headerHeight.value}px)` : '100%';
+  });
+
+  // Provide header height to child components
+  provide('headerHeight', headerHeight);
+
+  function updateHeaderHeight() {
+    if (headerRef.value) {
+      headerHeight.value = headerRef.value.offsetHeight;
+    }
+  }
 
   function isActiveTab(tabName) {
     const currentPath = route.path;
@@ -55,13 +73,27 @@
     }
     return currentPath === expectedPath;
   }
+
+  onMounted(() => {
+    updateHeaderHeight();
+    window.addEventListener('resize', updateHeaderHeight);
+  });
+
+  onUnmounted(() => {
+    window.removeEventListener('resize', updateHeaderHeight);
+  });
 </script>
 
 <style scoped>
 .agent-container {
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.agent-content {
+  flex: 1;
+  overflow: hidden;
 }
 
 header {

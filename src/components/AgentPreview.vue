@@ -1,31 +1,37 @@
 <template>
   <div class="agent-preview">
-    <div class="section-header">
-      <h4 class="section-title">Preview</h4>
-      <p class="section-description">See how this agent behaves and chat with it.</p>
+    <div class="preview-header">
+      <div class="section-header">
+        <h4 class="section-title">Preview</h4>
+        <p class="section-description">See how this agent behaves and chat with it.</p>
+      </div>
     </div>
-    <div class="preview-start" v-if="!started">
-      <button @click="startPreview"><Play :size="18" />Start preview <span class="shortcut"><Command :size="12" /> <CornerDownLeft :size="12" /></span></button>
+    
+    <div class="preview-content">
+      <div class="preview-start" v-if="!started">
+        <button @click="startPreview"><Play :size="18" />Start preview <span class="shortcut"><Command :size="12" /> <CornerDownLeft :size="12" /></span></button>
+      </div>
+      <ol class="events" v-else>
+        <li v-for="(event, idx) in revealedEvents" :key="idx">
+          <template v-if="event.state === 'loading'">
+            <span class="spinner"></span> {{ event.loading }}
+          </template>
+          <template v-else-if="event.state === 'done'">
+            <Check :size="18" class="done-icon" /> {{ event.done }}
+            <ul v-if="event.details">
+              <li v-for="(detail, dIdx) in event.details" :key="dIdx">{{ detail }}</li>
+            </ul>
+          </template>
+          <template v-else-if="event.state === 'question'">
+            <span class="bot-question">{{ event.question }}</span>
+          </template>
+          <template v-else-if="event.user">
+            <span class="user-message">{{ event.message }}</span>
+          </template>
+        </li>
+      </ol>
     </div>
-    <ol class="events" v-else>
-      <li v-for="(event, idx) in revealedEvents" :key="idx">
-        <template v-if="event.state === 'loading'">
-          <span class="spinner"></span> {{ event.loading }}
-        </template>
-        <template v-else-if="event.state === 'done'">
-          <Check :size="18" class="done-icon" /> {{ event.done }}
-          <ul v-if="event.details">
-            <li v-for="(detail, dIdx) in event.details" :key="dIdx">{{ detail }}</li>
-          </ul>
-        </template>
-        <template v-else-if="event.state === 'question'">
-          <span class="bot-question">{{ event.question }}</span>
-        </template>
-        <template v-else-if="event.user">
-          <span class="user-message">{{ event.message }}</span>
-        </template>
-      </li>
-    </ol>
+    
     <div class="preview-chat hstack">
       <input
         type="text"
@@ -124,12 +130,25 @@ watch(
 
 <style scoped>
 .agent-preview {
-  width: 40%;
+  height: 100%;
   border-left: 1px solid var(--color-surface-tint);
-  padding: var(--space-m);
   display: flex;
   flex-direction: column;
-  gap: var(--space-s);
+  overflow: hidden;
+}
+
+.preview-header {
+  padding: var(--space-m);
+  border-bottom: 1px solid var(--color-surface-tint);
+  flex-shrink: 0;
+}
+
+.preview-content {
+  flex: 1;
+  padding: var(--space-m);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .preview-start {
@@ -158,7 +177,10 @@ watch(
   color: var(--color-surface-fg-tertiary);
 }
 
-.preview-chat.hstack {
+.preview-chat {
+  padding: var(--space-m);
+  border-top: 1px solid var(--color-surface-tint);
+  flex-shrink: 0;
   display: flex;
   flex-direction: row;
   gap: var(--space-xs);
@@ -173,6 +195,7 @@ watch(
   gap: var(--space-s);
   justify-content: flex-end;
   align-items: flex-end;
+  min-height: 0;
 }
 
 .spinner {

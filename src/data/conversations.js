@@ -2,6 +2,10 @@ export const conversations = [
   {
     id: 1,
     agentId: 1,
+    datetime: '2024-06-10T14:12:00Z',
+    event: 'Troubleshooting login issue',
+    customer: 'koalababy3@gmail.com',
+    summary: 'Reviewed support history and provided a fix for a recurring login issue. Sent a link to the support article.',
     messages: [
       { role: 'user', text: "I'm still having trouble logging in." },
       {
@@ -30,6 +34,10 @@ export const conversations = [
   {
     id: 2,
     agentId: 1,
+    datetime: '2024-06-10T13:45:00Z',
+    event: 'Obscured header navigation',
+    customer: 'shaun@shaunandrews.com',
+    summary: 'Accidentally obscured header navigation while editing their site. Provided initial troubleshooting steps.',
     messages: [
       { role: 'user', text: 'I worked on some editing for my header and now when I go to the website I can\'t click any of the pages. Nothing happens. I suspect I have something covering it, but I can see anything obvious in the list view.' },
       {
@@ -101,6 +109,10 @@ export const conversations = [
   {
     id: 3,
     agentId: 1,
+    datetime: '2024-06-09T17:30:00Z',
+    event: 'Charged twice',
+    customer: 'cain@automattic.com',
+    summary: 'Customer appears to have accidentally created two sites. Requested confirmation about new site before refunding and cancelling the subscription.',
     messages: [
       { role: 'user', text: 'I was charged twice for my plan this month. I need a refund, and can someone look into why this happened?' },
       {
@@ -129,6 +141,10 @@ export const conversations = [
   {
     id: 4,
     agentId: 2,
+    datetime: '2024-06-10T09:00:00Z',
+    event: 'New email received',
+    customer: 'shaun@shaunandrews.com',
+    summary: 'Triaged a user email about password reset. Sent automated response with instructions and flagged for follow-up.',
     messages: [
       { role: 'user', text: 'Please help me reset my Tumblr password.' },
       {
@@ -150,6 +166,10 @@ export const conversations = [
   {
     id: 5,
     agentId: 2,
+    datetime: '2024-06-09T16:20:00Z',
+    event: 'Reference lookup',
+    customer: 'tumblruser@example.com',
+    summary: 'Provided a support article link for a user asking about Tumblr blog customization.',
     messages: [
       { role: 'user', text: 'How do I customize my blog theme?' },
       {
@@ -171,6 +191,10 @@ export const conversations = [
   {
     id: 6,
     agentId: 2,
+    datetime: '2024-06-08T11:05:00Z',
+    event: 'Escalation',
+    customer: 'techsupport@tumblr.com',
+    summary: 'Escalated a technical issue to a human agent after automated troubleshooting failed.',
     messages: [
       { role: 'user', text: 'Something went wrong with my account.' },
       {
@@ -193,6 +217,10 @@ export const conversations = [
   {
     id: 7,
     agentId: 3,
+    datetime: '2024-06-10T08:30:00Z',
+    event: 'Scheduled check',
+    customer: 'shaun.andrews@automattic.com',
+    summary: 'Identified 2 overdue projects in Linear. Sent Slack reminders to project owners.',
     messages: [
       { role: 'system', text: 'Daily check detected overdue projects.' },
       {
@@ -214,6 +242,10 @@ export const conversations = [
   {
     id: 8,
     agentId: 3,
+    datetime: '2024-06-09T08:30:00Z',
+    event: 'Scheduled check',
+    customer: 'jack.smith@automattic.com',
+    summary: 'No overdue projects found during daily check.',
     messages: [
       { role: 'system', text: 'Daily check completed.' },
       {
@@ -235,6 +267,10 @@ export const conversations = [
   {
     id: 9,
     agentId: 3,
+    datetime: '2024-06-08T08:30:00Z',
+    event: 'Slack notification',
+    customer: 'katie.genovese@automattic.com',
+    summary: 'Sent a reminder to the last updater of an overdue project after no owner was listed.',
     messages: [
       {
         role: 'agent',
@@ -255,6 +291,10 @@ export const conversations = [
   {
     id: 10,
     agentId: 4,
+    datetime: '2024-06-10T15:00:00Z',
+    event: 'Creating a new site',
+    customer: 'developer@wordpress.org',
+    summary: 'A new customer wants a site for their coffee shop. They have an Instagram account and want a site that matches the look and feel of their account.',
     messages: [
       { role: 'user', text: 'Can you find the cover block in this HTML snippet?' },
       {
@@ -276,6 +316,10 @@ export const conversations = [
   {
     id: 11,
     agentId: 4,
+    datetime: '2024-06-09T12:10:00Z',
+    event: 'Block customization',
+    customer: 'designer@example.com',
+    summary: 'Client requested custom styling for their portfolio gallery. Needed to modify the grid layout and add hover effects to match their brand colors.',
     messages: [
       { role: 'user', text: 'Find the gallery block.' },
       {
@@ -297,6 +341,10 @@ export const conversations = [
   {
     id: 12,
     agentId: 4,
+    datetime: '2024-06-08T10:45:00Z',
+    event: 'Layout optimization',
+    customer: 'frontend@startup.com',
+    summary: 'Startup needed responsive design improvements for their landing page. Optimized mobile layout and fixed spacing issues across different screen sizes.',
     messages: [
       { role: 'user', text: 'Here is some messy HTML, find the heading.' },
       {
@@ -315,71 +363,14 @@ export const conversations = [
       }
     ]
   },
-  {
-    id: 13,
-    agentId: 5,
-    messages: [
-      { role: 'user', text: 'Can we schedule a meeting with everyone tomorrow?' },
-      {
-        role: 'agent',
-        text: 'I found a time at 2:00pm that works for everyone. Sending invites now.',
-        meta: {
-          thinkingTime: 7777,
-          sources: [
-            { name: 'Calendar API', description: 'Access to calendars' }
-          ],
-          classifiers: [
-            { name: 'Scheduling', description: 'Category' },
-            { name: 'Success', description: 'Result' }
-          ]
-        }
-      }
-    ]
-  },
-  {
-    id: 14,
-    agentId: 5,
-    messages: [
-      { role: 'system', text: 'Checked calendars.' },
-      {
-        role: 'agent',
-        text: 'Created event and invited participants.',
-        meta: {
-          thinkingTime: 8888,
-          sources: [
-            { name: 'Calendar API', description: 'Access to calendars' }
-          ],
-          classifiers: [
-            { name: 'Scheduling', description: 'Category' },
-            { name: 'Automation', description: 'Type' }
-          ]
-        }
-      }
-    ]
-  },
-  {
-    id: 15,
-    agentId: 5,
-    messages: [
-      {
-        role: 'agent',
-        text: 'Sent Slack message with meeting details.',
-        meta: {
-          thinkingTime: 9999,
-          sources: [
-            { name: 'Slack API', description: 'Access to send messages' }
-          ],
-          classifiers: [
-            { name: 'Communication', description: 'Category' },
-            { name: 'Automation', description: 'Type' }
-          ]
-        }
-      }
-    ]
-  },
+
   {
     id: 16,
     agentId: 6,
+    datetime: '2024-06-12T09:00:00Z',
+    event: 'Slack message',
+    customer: 'new.employee@automattic.com',
+    summary: 'Helped a user find the DRI for a new project by searching P2 sites.',
     messages: [
       { role: 'user', text: 'Who is the DRI for the new project?' },
       {
@@ -401,6 +392,10 @@ export const conversations = [
   {
     id: 17,
     agentId: 6,
+    datetime: '2024-06-11T16:30:00Z',
+    event: 'Insight search',
+    customer: 'product.manager@automattic.com',
+    summary: 'Provided a summary of recent discussions about a product launch from multiple P2s.',
     messages: [
       { role: 'user', text: 'What are people saying about the product launch?' },
       {
@@ -422,6 +417,10 @@ export const conversations = [
   {
     id: 18,
     agentId: 6,
+    datetime: '2024-06-10T14:45:00Z',
+    event: 'Resource location',
+    customer: 'hr.team@automattic.com',
+    summary: 'Directed a user to the correct P2 for onboarding documentation.',
     messages: [
       { role: 'user', text: 'Where can I find onboarding docs?' },
       {

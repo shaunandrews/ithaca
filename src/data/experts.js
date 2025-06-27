@@ -6,7 +6,7 @@ export const experts = [
     title: 'HTML Block Finder',
     description: 'Returns requested blocks from user-provided HTML snippets.',
     tools: [
-      { ...tools.find(t => t.title === 'Input'), subtitle: 'HTML' }
+      { ...tools.find(t => t.id === 10), subtitle: 'HTML' }
     ],
     usage: 'Daily',
   },
@@ -15,7 +15,7 @@ export const experts = [
     title: 'Billing Lookup',
     description: 'Retrieves customer billing info from Zendesk.',
     tools: [
-      { ...tools.find(t => t.title === 'Zendesk') }
+      { ...tools.find(t => t.id === 11) }
     ],
     usage: 'Daily',
   },
@@ -24,7 +24,7 @@ export const experts = [
     title: 'Docs Answer Bot',
     description: 'Finds helpful articles for common questions.',
     tools: [
-      { ...tools.find(t => t.title === 'Reference'), subtitle: 'support.wordpress.com' }
+      { ...tools.find(t => t.id === 7), subtitle: 'support.wordpress.com' }
     ],
     usage: 'High',
   },
@@ -33,8 +33,8 @@ export const experts = [
     title: 'Meeting Time Finder',
     description: 'Suggests meeting times based on participants calendars.',
     tools: [
-      { ...tools.find(t => t.title === 'Slack') },
-      { ...tools.find(t => t.title === 'Calendar') }
+      { ...tools.find(t => t.id === 1) },
+      { ...tools.find(t => t.id === 2) }
     ],
     usage: 'Medium',
   },

@@ -1,43 +1,47 @@
 <template>
-  <div class="agent-workbench hstack">
-    <div class="agent-config vstack">
-      <div class="instructions">
-        <div class="section-header">
-          <h4 class="section-title">Instructions</h4>
-          <p class="section-description">Tell your agent what to do. Add tools by typing @tool.</p>
-        </div>
-        <InstructionsField
-          :parsedInstructions="parsedInstructions"
-          :autocomplete="autocomplete"
-          :tools="tools"
-          @input="onTextFieldInput"
-          @keydown="onTextFieldKeydown"
-          @select-tool="selectTool"
-        />
-      </div>
-
-      <hr />
-
-      <div class="tools">
-        <div class="section-header">
-          <h4 class="section-title">Tools</h4>
-          <p class="section-description">Configure the tools available to your agent.</p>
-        </div>
-        <div class="tools-list hstack">
-          <ToolListItem
-            v-for="(tool, idx) in agent.tools"
-            :key="idx"
-            :icon="tool.icon"
-            :title="tool.title"
-            :subtitle="tool.subtitle"
-            @click="openToolModal(tool)"
+  <div class="agent-workbench">
+    <div class="agent-config">
+      <div class="agent-config-content">
+        <div class="instructions">
+          <div class="section-header">
+            <h4 class="section-title">Instructions</h4>
+            <p class="section-description">Tell your agent what to do. Add tools by typing @tool.</p>
+          </div>
+          <InstructionsField
+            :parsedInstructions="parsedInstructions"
+            :autocomplete="autocomplete"
+            :tools="tools"
+            @input="onTextFieldInput"
+            @keydown="onTextFieldKeydown"
+            @select-tool="selectTool"
           />
-          <button class="add-tool"><Plus :size="18" /></button>
+        </div>
+
+        <hr />
+
+        <div class="tools">
+          <div class="section-header">
+            <h4 class="section-title">Tools</h4>
+            <p class="section-description">Configure the tools available to your agent.</p>
+          </div>
+          <div class="tools-list hstack">
+            <ToolListItem
+              v-for="(tool, idx) in agent.tools"
+              :key="idx"
+              :icon="tool.icon"
+              :title="tool.title"
+              :subtitle="tool.subtitle"
+              @click="openToolModal(tool)"
+            />
+            <button class="add-tool"><Plus :size="18" /></button>
+          </div>
         </div>
       </div>
     </div>
 
-    <AgentPreview :agent="agent" />
+    <div class="agent-preview-panel">
+      <AgentPreview :agent="agent" />
+    </div>
   </div>
 
   <Modal :isOpen="isToolModalOpen" @close="closeToolModal">
@@ -167,7 +171,32 @@ function closeToolModal() {
 
 <style scoped>
 .agent-workbench {
-  flex: 1;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+}
+
+.agent-config {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.agent-config-content {
+  padding: var(--space-m);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  height: 100%;
+  overflow-y: auto;
+}
+
+.agent-preview-panel {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 hr {
@@ -175,12 +204,6 @@ hr {
   height: 1px;
   background-color: var(--color-surface-tint);
   margin: 0 calc(-1 * var(--space-m));
-}
-
-.agent-config {
-  gap: var(--space-m);
-  width: 60%;
-  padding: var(--space-m);
 }
 
 .section-header {

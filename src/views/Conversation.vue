@@ -1,28 +1,26 @@
 <template>
   <div class="conversation-view">
-    <div class="conversation-header hstack">
-      <router-link :to="`/agent/${agentId}/activity`" class="back-link">
-        <ArrowLeft stroke-width="1.5" height="18" width="18" /> All activity
-      </router-link>
-      <h1>Conversation</h1>
-      <ConversationMeta conversation-id="3923" zendesk-id="123456" />
-    </div>
-
     <div v-if="conversation" class="columns hstack">
       <div class="conversation-main" :class="{ 'panel-open': selectedMessage }">
-        <ConversationSummary summary="The customer does not know who hosts their website. We have little information about them, so the assistant responded with instructions for using the WordPress.com Site Profiler tool." />
-        
-        <div class="messages">
-          <Message
-            v-for="(msg, idx) in conversation.messages"
-            :key="idx"
-            :message="msg"
-            :index="idx"
-            :datetime="conversationItem.datetime"
-            :customer="conversationItem.customer"
-            :is-selected="selectedIdx === idx"
-            @select="selectMessage"
-          />
+        <div class="conversation-content">
+          <ButtonBack :to="`/agent/${agentId}/activity`" text="All activity" />
+          <h1>Conversation</h1>
+          <ConversationMeta conversation-id="3923" zendesk-id="123456" />
+
+          <ConversationSummary summary="The customer does not know who hosts their website. We have little information about them, so the assistant responded with instructions for using the WordPress.com Site Profiler tool." />
+          
+          <div class="messages">
+            <Message
+              v-for="(msg, idx) in conversation.messages"
+              :key="idx"
+              :message="msg"
+              :index="idx"
+              :datetime="conversation.datetime"
+              :customer="conversation.customer"
+              :is-selected="selectedIdx === idx"
+              @select="selectMessage"
+            />
+          </div>
         </div>
       </div>
 
@@ -31,46 +29,50 @@
           <h3>Message Details</h3>
           <button class="small" @click="closePanel"><XIcon /></button>
         </header>
-        <template v-if="selectedMessage.role === 'agent'">
-          <div class="panel-section">
-            <div>
-              <Badge variant="agent">Agent</Badge>
+        <div class="panel-content">
+          <template v-if="selectedMessage.role === 'agent'">
+            <div class="panel-section">
+              <div>
+                <Badge variant="agent">Agent</Badge>
+              </div>
+              <div class="thinking-time hstack">
+                <Hourglass height="16" width="16" />
+                <span>Thought for {{ selectedMessage.meta?.thinkingTime }}ms...</span>
+              </div>
+              <div class="sources">
+                <h4>Sources ({{ selectedMessage.meta?.sources?.length || 0 }})</h4>
+                <p>Judge the relevance of each source to the conversation. Click a source to view the full content.</p>
+                <ul>
+                  <SourceRating 
+                    v-for="source in selectedMessage.meta?.sources || []" 
+                    :key="source.name" 
+                    :source="source" 
+                    @view-source="openSourceModal"
+                  />
+                </ul>
+              </div>
+              <div class="classifiers">
+                <h4>Classifiers</h4>
+                <p>Confirm the agents response to each classifier, or edit the value if it's incorrect.</p>
+                <ul>
+                  <ClassifierRating v-for="classifier in selectedMessage.meta?.classifiers || []" :key="classifier.name" :classifier="classifier" />
+                </ul>
+              </div>
             </div>
-            <div class="thinking-time hstack">
-              <Hourglass height="16" width="16" />
-              <span>Thought for {{ selectedMessage.meta?.thinkingTime }}ms...</span>
+          </template>
+          <template v-else>
+            <div class="panel-section">
+              <CustomerDetails />
             </div>
-            <div class="sources">
-              <h4>Sources ({{ selectedMessage.meta?.sources?.length || 0 }})</h4>
-              <p>Judge the relevance of each source to the conversation. Click a source to view the full content.</p>
-              <ul>
-                <SourceRating 
-                  v-for="source in selectedMessage.meta?.sources || []" 
-                  :key="source.name" 
-                  :source="source" 
-                  @view-source="openSourceModal"
-                />
-              </ul>
-            </div>
-            <div class="classifiers">
-              <h4>Classifiers</h4>
-              <p>Confirm the agents response to each classifier, or edit the value if it's incorrect.</p>
-              <ul>
-                <ClassifierRating v-for="classifier in selectedMessage.meta?.classifiers || []" :key="classifier.name" :classifier="classifier" />
-              </ul>
-            </div>
-          </div>
-        </template>
-        <template v-else>
-          <div class="panel-section">
-            <CustomerDetails />
-          </div>
-        </template>
+          </template>
+        </div>
       </div>
     </div>
 
-    <div v-else>
-      <p>Conversation not found.</p>
+    <div v-else class="empty vstack">
+      <h1>Conversation not found.</h1>
+      <p>Uh oh, I wasn't able to find that conversation.</p>
+      <p>Try going back to the <router-link :to="`/agent/${agentId}/activity`">activity page</router-link> and selecting a different conversation.</p>
     </div>
 
     <!-- Source Modal -->
@@ -117,11 +119,11 @@
 </template>
 
 <script setup>
-  import { computed, ref, watch, onMounted } from 'vue';
+  import { computed, ref, watch, onMounted, inject } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
   import { agents } from '@/data/agents.js';
   import { conversations } from '@/data/conversations.js';
-  import { ArrowLeft, XIcon, Hourglass } from 'lucide-vue-next';
+  import { XIcon, Hourglass } from 'lucide-vue-next';
   import SourceRating from '@/components/SourceRating.vue';
   import ClassifierRating from '@/components/ClassifierRating.vue';
   import ConversationSummary from '@/components/ConversationSummary.vue';
@@ -130,17 +132,20 @@
   import Badge from '@/components/Badge.vue';
   import Modal from '@/components/Modal.vue';
   import CustomerDetails from '@/components/CustomerDetails.vue';
+  import ButtonBack from '@/components/ButtonBack.vue';
 
   const route = useRoute();
   const router = useRouter();
   const agentId = computed(() => Number(route.params.id));
   const activityId = computed(() => Number(route.params.activityId));
 
+  // Inject header height from parent
+  const headerHeight = inject('headerHeight', ref(0));
+
   const agent = computed(() => agents.find(a => a.id === agentId.value));
-  const conversationItem = computed(() => agent.value?.activity.find(a => a.id === activityId.value));
   const conversation = computed(() => {
-    const convId = conversationItem.value?.conversationId;
-    return conversations.find(c => c.id === convId);
+    // The activityId now directly corresponds to the conversation id
+    return conversations.find(c => c.id === activityId.value);
   });
 
   const selectedMessage = ref(null);
@@ -201,40 +206,70 @@
 
 <style scoped>
   .conversation-view {
+    height: 100%;
     display: flex;
     flex-direction: column;
   }
 
-  .conversation-header {
-    gap: var(--space-s);
-    padding: var(--space-s) var(--space-m) var(--space-s) var(--space-s);
-    border-bottom: 1px solid var(--color-surface-tint);
-    align-items: center;
+  .columns {
+    height: 100%;
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .conversation-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .conversation-content {
+    padding: var(--space-m);
+    margin: 0 auto;
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  .details-panel {
+    min-width: 420px;
+    max-width: 420px;
+    border-left: 1px solid var(--color-surface-tint);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .details-panel header {
+    padding: var(--space-m);
     justify-content: space-between;
-  }
-
-  .back-link {
-    text-decoration: none;
-    font-size: var(--font-size-s);
-    display: inline-flex;
     align-items: center;
-    gap: var(--space-xs);
+    background-color: var(--color-chrome-transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-surface-tint);
+    flex-shrink: 0;
   }
 
-  .back-link:hover {
-    text-decoration: underline;
+  .panel-content {
+    padding: var(--space-m);
+    overflow-y: auto;
+    flex: 1;
   }
 
-  .conversation-header h1 {
+  .empty {
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: var(--space-l);
     font-size: var(--font-size-m);
-    font-weight: var(--font-weight-semibold);
   }
 
   .messages {
     display: flex;
     flex-direction: column;
     gap: var(--space-l);
-    max-width: 840px;
     margin: 0 auto;
   }
 
@@ -246,31 +281,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
-  }
-
-  .columns {
-    /* height: calc(100vh - 58px);
-    overflow: hidden; */
-  }
-
-  .conversation-main {
-    padding: var(--space-m);
-    margin: 0 auto;
-  }
-
-  .details-panel {
-    min-width: 420px;
-    max-width: 420px;
-    background: var(--color-surface-tint);
-    border-left: 1px solid var(--color-surface-tint);
-    padding: var(--space-m);
-    display: flex;
-    flex-direction: column;
-  }
-
-  .details-panel header {
-    justify-content: space-between;
-    align-items: center;
   }
 
   .panel-section {

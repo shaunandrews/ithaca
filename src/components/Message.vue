@@ -14,8 +14,14 @@
         <div class="content">{{ message.text }}</div>
     </div>
     <div class="meta">
-        <div class="timestamp">{{ formatDate(datetime) }}</div>
-        <div v-if="message.role === 'agent'" class="agent-info">WP.com Support Chat • v1.02 • <a>Regenerate</a></div>
+        <div class="meta-item timestamp">{{ formatDate(datetime) }}</div>
+        <div v-if="message.role === 'agent'" class="agent-info">
+            <div class="meta-item agent-name">WP.com Support Chat</div>
+            <div class="meta-item agent-version">v1.02</div>
+            <div class="meta-item agent-actions">
+                <a>Regenerate</a>
+            </div>
+        </div>
     </div>
   </div>
 </template>
@@ -68,18 +74,10 @@
         flex-direction: column;
     }
 
-    .message.user {
-        align-items: flex-end;
-    }
-
-    .message.agent {
-        align-items: flex-start;
-    }
-
     .text {
         padding: var(--space-s) var(--space-m);
-        /* box-shadow: 0 2px 12px 0 var(--color-surface-tint-dark); */
         border-radius: var(--radius-l);
+        border: 1px solid var(--color-surface-tint-dark);
         transition: all 0.1s ease-in-out;
     }
 
@@ -87,39 +85,37 @@
         max-width: 600px;
         background: var(--color-surface-tint);
         color: var(--color-surface-fg);
-        /* border: 0.5px solid var(--color-surface-tint-dark); */
     }
 
     .message.agent .text {
         background: var(--color-surface);
         color: var(--color-surface-fg);
-        border: 1px solid var(--color-surface-tint-dark);
     }
 
     .message.selected .text {
         border-color: var(--color-accent);
-        box-shadow: 0 0 0 1.5px var(--color-accent);
+        box-shadow: 0 0 0 0.5px var(--color-accent);
     }
 
     .meta {
         display: flex;
-        justify-content: space-between;
         align-items: start;
-        /* flex-direction: row-reverse; */
-        padding: 0 var(--space-m);
         font-size: var(--font-size-xs);
         font-weight: var(--font-weight-medium);
         text-transform: uppercase;
+        padding: 0 var(--space-xs);
         color: var(--color-chrome-fg-tertiary);
-        max-width: 840px;
+        gap: var(--space-xs);
     }
 
-    .message.user .meta {
-        align-self: flex-end;
+    .meta .agent-info {
+        display: contents;
     }
 
-    .message.agent .meta {
-        align-self: flex-start;
+    .meta-item:not(:last-child):after {
+        display: inline-block;
+        content: '•';
+        margin-left: var(--space-xs);
     }
 
     .author {
