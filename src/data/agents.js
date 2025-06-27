@@ -44,7 +44,7 @@ export const agents = [
         If you don't have the information to answer the user's question, say you don't know and escalate to a human agent.
         Be friendly, concise, and professional in all responses.
     `,
-    conversationIds: [1, 2, 3],
+    conversationIds: [1, 2, 3, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
     trigger: 'chat-message',
     previewEvents: [
       {

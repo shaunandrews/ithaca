@@ -1,14 +1,16 @@
 <template>
-  <div class="agent-activity vstack">
-    <AgentSummary :agent="agent" />
-    <h2>Conversations</h2>
-    <div class="activity-list vstack">
-      <ActivityListItem
-        v-for="conversation in agentConversations"
-        :key="conversation.id"
-        :item="conversation"
-        :to="`/agent/${agent.id}/activity/${conversation.id}`"
-        />
+  <div class="agent-activity">
+    <div class="activity-content">
+      <AgentSummary :agent="agent" />
+      <h2>Conversations</h2>
+      <div class="activity-list vstack">
+        <ActivityListItem
+          v-for="conversation in agentConversations"
+          :key="conversation.id"
+          :item="conversation"
+          :to="`/agent/${agent.id}/activity/${conversation.id}`"
+          />
+      </div>
     </div>
   </div>
 </template>
@@ -37,13 +39,23 @@ const agentConversations = computed(() => {
 
 <style scoped>
 .agent-activity {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.activity-content {
   padding: var(--space-m);
+  display: flex;
+  flex-direction: column;
   gap: var(--space-l);
+  height: 100%;
+  overflow-y: auto;
 }
 
 .activity-list {
   border: 1px solid var(--color-surface-tint-dark);
   border-radius: var(--radius-l);
-  overflow: hidden;
 }
 </style> 
