@@ -58,7 +58,7 @@ import { experts } from '@/data/experts.js';
   background: var(--color-surface);
   border-radius: var(--radius);
   padding: var(--space-m);
-  border: 0.5px solid var(--color-surface-tint-dark);
+  border: 1px solid var(--color-surface-tint-dark);
 }
 
 .expert-header {

@@ -71,7 +71,7 @@ header {
   gap: var(--space-m);
   padding: var(--space-s) var(--space-m);
   background-color: var(--color-chrome-transparent);
-  border-bottom: 0.5px solid var(--color-surface-tint);
+  border-bottom: 1px solid var(--color-surface-tint);
   position: sticky;
   top: 0;
   backdrop-filter: blur(12px);

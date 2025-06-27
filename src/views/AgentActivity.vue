@@ -32,7 +32,7 @@ const agent = computed(() => agents.find(a => a.id === agentId.value));
 }
 
 .activity-list {
-  border: 0.5px solid var(--color-surface-tint-dark);
+  border: 1px solid var(--color-surface-tint-dark);
   border-radius: var(--radius-l);
   overflow: hidden;
 }

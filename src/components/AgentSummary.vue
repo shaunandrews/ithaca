@@ -187,7 +187,7 @@
   .stat {
     flex: 1;
     background-color: var(--color-surface);
-    border: 0.5px solid var(--color-surface-tint-dark);
+    border: 1px solid var(--color-surface-tint-dark);
     border-radius: var(--radius-l);
     padding: var(--space-s) var(--space-m);
   }
@@ -263,7 +263,7 @@
 
   .theme-item {
     padding: var(--space-xxs) var(--space-xs);
-    border: 0.5px solid var(--color-surface-tint-dark);
+    border: 1px solid var(--color-surface-tint-dark);
     border-radius: var(--radius-s);
     font-size: var(--font-size-s);
     color: var(--color-chrome-fg-secondary);

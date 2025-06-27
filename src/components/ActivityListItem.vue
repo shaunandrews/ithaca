@@ -52,7 +52,7 @@ function gravatarUrl(email) {
   background-color: var(--color-surface);
   padding: var(--space-xs);
   min-height: 44px;
-  border-bottom: 0.5px solid var(--color-surface-tint-dark);
+  border-bottom: 1px solid var(--color-surface-tint-dark);
   cursor: pointer;
   text-decoration: none;
   width: 100%;
