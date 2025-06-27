@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import Insights from './views/Insights.vue';
 import Agents from './views/Agents.vue';
 import Tools from './views/Tools.vue';
 import AgentLayout from './views/AgentLayout.vue';
@@ -15,6 +16,11 @@ import ExpertInsights from './views/ExpertInsights.vue';
 import ExpertVersions from './views/ExpertVersions.vue';
 
 const routes = [
+  {
+    path: '/insights',
+    name: 'Insights',
+    component: Insights,
+  },
   {
     path: '/',
     name: 'Agents',

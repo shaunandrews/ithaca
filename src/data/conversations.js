@@ -6,6 +6,7 @@ export const conversations = [
     event: 'Troubleshooting login issue',
     customer: 'koalababy3@gmail.com',
     summary: 'Reviewed support history and provided a fix for a recurring login issue. Sent a link to the support article.',
+    tags: ['login', 'troubleshooting', 'support-history', 'password-reset', 'cookies'],
     messages: [
       { role: 'user', text: "I'm still having trouble logging in." },
       {
@@ -38,6 +39,7 @@ export const conversations = [
     event: 'Header Navigation Not Clickable After Edit',
     customer: 'shaun@shaunandrews.com',
     summary: 'Customer edited their site header and navigation links became unclickable. Troubleshooting steps like checking for overlapping or invisible blocks did not help. The customer asked about undoing changes but learned that full site restores require a Business plan. The agent explained that header template revisions are available and offered further instructions if needed.',
+    tags: ['header', 'navigation', 'template-editing', 'revisions', 'gutenberg', 'troubleshooting', 'site-editor'],
     messages: [
       { role: 'user', text: 'I worked on some editing for my header and now when I go to the website I can\'t click any of the pages. Nothing happens. I suspect I have something covering it, but I can see anything obvious in the list view.' },
       {
@@ -113,6 +115,7 @@ export const conversations = [
     event: 'Charged twice',
     customer: 'cain@automattic.com',
     summary: 'Customer appears to have accidentally created two sites. Requested confirmation about new site before refunding and cancelling the subscription.',
+    tags: ['billing', 'refund', 'duplicate-charge', 'account-management', 'subscription'],
     messages: [
       { role: 'user', text: 'I was charged twice for my plan this month. I need a refund, and can someone look into why this happened?' },
       {
@@ -145,6 +148,7 @@ export const conversations = [
     event: 'New email received',
     customer: 'shaun@shaunandrews.com',
     summary: 'Triaged a user email about password reset. Sent automated response with instructions and flagged for follow-up.',
+    tags: ['password-reset', 'tumblr', 'account-access', 'email-triage'],
     messages: [
       { role: 'user', text: 'Please help me reset my Tumblr password.' },
       {
@@ -170,6 +174,7 @@ export const conversations = [
     event: 'Reference lookup',
     customer: 'tumblruser@example.com',
     summary: 'Provided a support article link for a user asking about Tumblr blog customization.',
+    tags: ['theme-customization', 'tumblr', 'design', 'support-articles'],
     messages: [
       { role: 'user', text: 'How do I customize my blog theme?' },
       {
@@ -195,6 +200,7 @@ export const conversations = [
     event: 'Escalation',
     customer: 'techsupport@tumblr.com',
     summary: 'Escalated a technical issue to a human agent after automated troubleshooting failed.',
+    tags: ['escalation', 'account-issue', 'tumblr', 'technical-support', 'human-handoff'],
     messages: [
       { role: 'user', text: 'Something went wrong with my account.' },
       {
@@ -222,6 +228,7 @@ export const conversations = [
     event: 'Creating a new site',
     customer: 'developer@wordpress.org',
     summary: 'A new customer wants a site for their coffee shop. They have an Instagram account and want a site that matches the look and feel of their account.',
+    tags: ['html-parsing', 'code-analysis', 'cover-block', 'development', 'wordpress-blocks'],
     messages: [
       { role: 'user', text: 'Can you find the cover block in this HTML snippet?' },
       {
@@ -247,6 +254,7 @@ export const conversations = [
     event: 'Block customization',
     customer: 'designer@example.com',
     summary: 'Client requested custom styling for their portfolio gallery. Needed to modify the grid layout and add hover effects to match their brand colors.',
+    tags: ['html-parsing', 'gallery-block', 'code-analysis', 'development', 'portfolio'],
     messages: [
       { role: 'user', text: 'Find the gallery block.' },
       {
@@ -272,6 +280,7 @@ export const conversations = [
     event: 'Layout optimization',
     customer: 'frontend@startup.com',
     summary: 'Startup needed responsive design improvements for their landing page. Optimized mobile layout and fixed spacing issues across different screen sizes.',
+    tags: ['html-parsing', 'heading', 'code-analysis', 'development', 'responsive-design'],
     messages: [
       { role: 'user', text: 'Here is some messy HTML, find the heading.' },
       {
@@ -298,6 +307,7 @@ export const conversations = [
     event: 'Slack message',
     customer: 'new.employee@automattic.com',
     summary: 'Helped a user find the DRI for a new project by searching P2 sites.',
+    tags: ['project-management', 'p2', 'dri', 'information-retrieval', 'slack'],
     messages: [
       { role: 'user', text: 'Who is the DRI for the new project?' },
       {
@@ -323,6 +333,7 @@ export const conversations = [
     event: 'Insight search',
     customer: 'product.manager@automattic.com',
     summary: 'Provided a summary of recent discussions about a product launch from multiple P2s.',
+    tags: ['product-launch', 'p2', 'summarization', 'information-retrieval', 'insights'],
     messages: [
       { role: 'user', text: 'What are people saying about the product launch?' },
       {
@@ -348,6 +359,7 @@ export const conversations = [
     event: 'Resource location',
     customer: 'hr.team@automattic.com',
     summary: 'Directed a user to the correct P2 for onboarding documentation.',
+    tags: ['onboarding', 'documentation', 'p2', 'information-retrieval', 'hr'],
     messages: [
       { role: 'user', text: 'Where can I find onboarding docs?' },
       {
@@ -373,6 +385,7 @@ export const conversations = [
     event: 'Domain connection issues',
     customer: 'webmaster@example.com',
     summary: 'Customer having trouble connecting their custom domain to WordPress.com. Walked through DNS settings and provided nameserver configuration steps.',
+    tags: ['domain-connection', 'dns', 'nameservers', 'technical-setup', 'godaddy'],
     messages: [
       { role: 'user', text: 'I bought a domain from GoDaddy but it\'s not working with my WordPress.com site. Can you help me connect it?' },
       {
@@ -405,6 +418,7 @@ export const conversations = [
     event: 'Comment moderation help',
     customer: 'blogger@lifestyle.com',
     summary: 'Customer needed help setting up comment moderation and dealing with spam comments. Explained moderation settings and recommended Akismet.',
+    tags: ['comments', 'moderation', 'spam', 'akismet', 'settings', 'blog-management'],
     messages: [
       { role: 'user', text: 'I keep getting spam comments on my blog. How can I stop them or at least moderate them before they appear?' },
       {
@@ -437,6 +451,7 @@ export const conversations = [
     event: 'Publishing problems',
     customer: 'author@writingblog.com',
     summary: 'Customer unable to publish posts, getting error messages. Identified browser cache issue and provided troubleshooting steps.',
+    tags: ['publishing', 'editor-issues', 'troubleshooting', 'browser-cache', 'connectivity'],
     messages: [
       { role: 'user', text: 'I can\'t publish my blog post. When I click "Publish" nothing happens, and sometimes I get an error message that says something went wrong.' },
       {
@@ -469,6 +484,7 @@ export const conversations = [
     event: 'Theme customization',
     customer: 'creative@artportfolio.com',
     summary: 'Customer wanted to customize their theme colors and fonts. Explained the difference between theme customization and site editing, provided guidance on both.',
+    tags: ['theme-customization', 'colors', 'fonts', 'design', 'global-styles', 'customization'],
     messages: [
       { role: 'user', text: 'How can I change the colors and fonts on my website? I want to make it more personal but I don\'t know where to start.' },
       {
@@ -501,6 +517,7 @@ export const conversations = [
     event: 'SEO and site visibility',
     customer: 'business@localbakery.com',
     summary: 'Small business owner asking about SEO and why their site isn\'t showing up in Google searches. Provided SEO basics and site visibility settings.',
+    tags: ['seo', 'google-search', 'site-visibility', 'search-console', 'local-business', 'indexing'],
     messages: [
       { role: 'user', text: 'My bakery website has been live for 2 months but I can\'t find it on Google. What am I doing wrong?' },
       {
@@ -533,6 +550,7 @@ export const conversations = [
     event: 'Mobile responsiveness',
     customer: 'photographer@portraits.com',
     summary: 'Customer concerned about how their photography site looks on mobile devices. Explained responsive design and provided mobile optimization tips.',
+    tags: ['mobile', 'responsive-design', 'photography', 'optimization', 'mobile-preview'],
     messages: [
       { role: 'user', text: 'My photography website looks great on desktop but terrible on mobile phones. How can I fix this?' },
       {
@@ -565,6 +583,7 @@ export const conversations = [
     event: 'Plugin installation inquiry',
     customer: 'ecommerce@smallshop.com',
     summary: 'Customer wanted to install specific plugins for their online store. Explained plugin limitations on different plans and suggested alternatives.',
+    tags: ['plugins', 'contact-forms', 'booking-system', 'plan-limitations', 'ecommerce'],
     messages: [
       { role: 'user', text: 'I want to add a contact form plugin and a booking system to my site. How do I install plugins?' },
       {
@@ -597,6 +616,7 @@ export const conversations = [
     event: 'Email forwarding setup',
     customer: 'professional@consultingfirm.com',
     summary: 'Customer wanted to set up professional email with their domain. Explained email forwarding options and G Suite integration.',
+    tags: ['email', 'domain', 'forwarding', 'g-suite', 'professional-email', 'mx-records'],
     messages: [
       { role: 'user', text: 'I have a custom domain and want email like info@mydomain.com. How do I set this up?' },
       {
@@ -629,6 +649,7 @@ export const conversations = [
     event: 'Site migration help',
     customer: 'migrating@olddomain.com',
     summary: 'Customer wanted to import content from another WordPress site. Guided through the import process and explained what transfers and what doesn\'t.',
+    tags: ['migration', 'import', 'content-transfer', 'wordpress-org', 'site-migration'],
     messages: [
       { role: 'user', text: 'I want to move my old WordPress blog to WordPress.com. How do I transfer all my posts and pages?' },
       {
@@ -661,6 +682,7 @@ export const conversations = [
     event: 'Storage limit reached',
     customer: 'photographer@wildlife.com',
     summary: 'Customer hit their storage limit and couldn\'t upload more photos. Explained storage limits by plan and provided optimization tips.',
+    tags: ['storage', 'limits', 'photography', 'media-optimization', 'plan-upgrade', 'image-optimization'],
     messages: [
       { role: 'user', text: 'I keep getting an error that I\'ve reached my storage limit. I can\'t upload any more photos to my wildlife photography blog.' },
       {
@@ -693,6 +715,7 @@ export const conversations = [
     event: 'SSL certificate questions',
     customer: 'security@techstartup.com',
     summary: 'Customer asking about HTTPS and SSL certificates for their site. Explained that SSL is automatic on WordPress.com and provided security best practices.',
+    tags: ['ssl', 'https', 'security', 'certificates', 'encryption', 'automatic-ssl'],
     messages: [
       { role: 'user', text: 'Do I need to install an SSL certificate for my site? I want to make sure it\'s secure and shows https://' },
       {
@@ -725,6 +748,7 @@ export const conversations = [
     event: 'Social media integration',
     customer: 'marketing@brandagency.com',
     summary: 'Customer wanted to connect their social media accounts and add sharing buttons. Provided guidance on social integrations and Jetpack Social features.',
+    tags: ['social-media', 'auto-sharing', 'instagram', 'twitter', 'jetpack-social', 'social-buttons'],
     messages: [
       { role: 'user', text: 'How can I connect my Instagram and Twitter accounts to my blog? I want posts to automatically share and want social buttons on my site.' },
       {

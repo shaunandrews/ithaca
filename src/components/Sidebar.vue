@@ -6,6 +6,13 @@
       </h1>
       <nav>
         <NavItem 
+          to="/insights" 
+          label="Insights" 
+          :active-routes="['Insights']"
+          icon="Microscope"
+          :mini="mini"
+        />
+        <NavItem 
           to="/" 
           label="Agents" 
           :active-routes="['Agents', 'Agent', '/agent']"
@@ -46,7 +53,7 @@
 
 <script setup>
 import { defineProps, defineEmits } from 'vue';
-import { PanelLeft, PanelLeftOpen } from 'lucide-vue-next';
+import { PanelLeft, PanelLeftOpen, Microscope } from 'lucide-vue-next';
 import NavItem from './NavItem.vue';
 
 const props = defineProps({

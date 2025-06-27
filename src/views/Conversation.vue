@@ -4,7 +4,11 @@
       <div class="conversation-main" :class="{ 'panel-open': selectedMessage }">
         <ButtonBack :to="`/agent/${agentId}/activity`" text="All activity" />
         <h1>Conversation</h1>
-        <ConversationMeta conversation-id="3923" zendesk-id="123456" />
+        <ConversationMeta 
+          :conversation-id="conversation.id.toString()" 
+          :zendesk-id="`ZD-${conversation.id + 10000}`" 
+          :tags="conversation.tags"
+        />
         <ConversationSummary :summary="conversation.summary" :title="conversation.event" />
         
         <div class="messages">
