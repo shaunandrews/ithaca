@@ -61,7 +61,7 @@ const emit = defineEmits(['toggle']);
 .sidebar {
   width: var(--sidebar-width);
   min-width: var(--sidebar-width);
-  border-right: 0.5px solid var(--color-surface-tint);
+  border-right: 1px solid var(--color-surface-tint);
   padding: var(--space-s);
   display: flex;
   flex-direction: column;

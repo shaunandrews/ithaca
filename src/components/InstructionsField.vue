@@ -110,7 +110,7 @@ function hideToolPreview() {
   border-radius: 3px;
   cursor: pointer;
   background-color: var(--color-highlight-tint);
-  border: 0.5px solid var(--color-highlight);
+  border: 1px solid var(--color-highlight);
   white-space: nowrap;
   padding: 2px 3px;
 }

@@ -152,7 +152,7 @@ function onDoubleClick() {
   justify-content: space-between;
   align-items: center;
   background: var(--color-surface);
-  border: 0.5px solid var(--color-surface-tint-dark);
+  border: 1px solid var(--color-surface-tint-dark);
   border-radius: var(--radius-l);
   padding: var(--space-xxs);
   padding-left: var(--space-m);

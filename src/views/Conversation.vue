@@ -208,7 +208,7 @@
   .conversation-header {
     gap: var(--space-s);
     padding: var(--space-s) var(--space-m) var(--space-s) var(--space-s);
-    border-bottom: 0.5px solid var(--color-surface-tint);
+    border-bottom: 1px solid var(--color-surface-tint);
     align-items: center;
     justify-content: space-between;
   }
@@ -262,7 +262,7 @@
     min-width: 420px;
     max-width: 420px;
     background: var(--color-surface-tint);
-    border-left: 0.5px solid var(--color-surface-tint);
+    border-left: 1px solid var(--color-surface-tint);
     padding: var(--space-m);
     display: flex;
     flex-direction: column;
