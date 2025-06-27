@@ -64,20 +64,30 @@
     .message {
         gap: var(--space-xxs);
         cursor: default;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .message.user {
+        align-items: flex-end;
+    }
+
+    .message.agent {
+        align-items: flex-start;
     }
 
     .text {
         padding: var(--space-s) var(--space-m);
         /* box-shadow: 0 2px 12px 0 var(--color-surface-tint-dark); */
         border-radius: var(--radius-l);
-        max-width: 840px;
         transition: all 0.1s ease-in-out;
     }
 
     .message.user .text {
-        background: var(--color-surface);
+        max-width: 600px;
+        background: var(--color-surface-tint);
         color: var(--color-surface-fg);
-        border: 1px solid var(--color-surface-tint-dark);
+        /* border: 0.5px solid var(--color-surface-tint-dark); */
     }
 
     .message.agent .text {
@@ -101,6 +111,15 @@
         font-weight: var(--font-weight-medium);
         text-transform: uppercase;
         color: var(--color-chrome-fg-tertiary);
+        max-width: 840px;
+    }
+
+    .message.user .meta {
+        align-self: flex-end;
+    }
+
+    .message.agent .meta {
+        align-self: flex-start;
     }
 
     .author {
