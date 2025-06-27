@@ -3,21 +3,25 @@
 ## Personas
 
 ### 1. Happiness Engineer (Customer Support Rep, NOT an engineer)
+
 - **Role**: Monitors agent responses in customer conversations.
 - **Goals**: Ensure quality and correctness of AI replies; flag and correct issues.
 - **Technical Skill**: Low to moderate.
 
 ### 2. Team Lead / Manager
+
 - **Role**: Oversees agent behavior, performance, and alignment with team goals.
 - **Goals**: Deploy helpful agents, review trends, support team workflows.
 - **Technical Skill**: Moderate.
 
 ### 3. Developer
+
 - **Role**: Builds, configures, and deploys agents, tools, and experts.
 - **Goals**: Implement robust, extensible systems; integrate with external APIs or internal services.
 - **Technical Skill**: High.
 
 ### 4. Reviewer
+
 - **Role**: Audits specific conversations and provides structured feedback.
 - **Goals**: Maintain high quality by closing the loop between issues and improvements.
 - **Technical Skill**: Low.
@@ -39,12 +43,14 @@
 Here’s a high-level description of how users interact with Odie to accomplish their goals:
 
 ### 1. Discover or Access an Agent
+
 Users begin in the **Agent List** view, where they can browse, search, and sort agents. They may be looking to review an existing agent or start from scratch.
 
 - **Support leads** might click “Create New Agent” to define a new AI workflow.
 - **Reviewers or managers** might dive into a specific live agent for auditing.
 
 ### 2. Configure or Review an Agent
+
 Inside the **Agent Detail**, users land on the **Workbench** screen:
 
 - They can update instructions, assign Experts and Tools, or preview responses.
@@ -52,12 +58,14 @@ Inside the **Agent Detail**, users land on the **Workbench** screen:
 - Permissions and access rules can be adjusted here.
 
 ### 3. Monitor Performance or Audit Activity
+
 Next, users may navigate to:
 
 - **Insights**, to evaluate performance metrics, trends, and user satisfaction.
 - **Activity**, to review a chronological list of chats/emails and jump into specific transcripts.
 
 ### 4. Conduct Review and Submit Feedback
+
 When viewing an individual conversation:
 
 - **Reviewers** evaluate the exchange for accuracy and helpfulness.
@@ -66,12 +74,14 @@ When viewing an individual conversation:
 This feedback is stored and used to improve the agent over time.
 
 ### 5. Iterate via Versioning or A/B Testing
+
 If changes are needed:
 
 - Users can visit the **Versions** section to compare or roll back configurations.
 - Developers or managers may use built-in A/B testing to experiment with different instructions or behaviors in production.
 
 ### 6. Manage Dependencies
+
 For more advanced workflows:
 
 - **Experts** and **Tools** are configured or reviewed in their respective sections.

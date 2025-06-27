@@ -1,158 +1,170 @@
 <template>
-  <div class="agent-container">
-    <header v-if="agent" ref="headerRef">
-      <div class="agent-header-start">
-        <h2 class="agent-title">{{ agent.title }}</h2>
-        <nav>
-          <ul>
-            <li :class="{ active: isActiveTab('activity') }">
-              <router-link :to="`/agent/${agent.id}/activity`">Activity</router-link>
-            </li>
-            <li :class="{ active: isActiveTab('insights') }">
-              <router-link :to="`/agent/${agent.id}/insights`">Insights</router-link>
-            </li>
-            <li :class="{ active: isActiveTab('workbench') }">
-              <router-link :to="`/agent/${agent.id}/workbench`">Workbench</router-link>
-            </li>
-            <li :class="{ active: isActiveTab('versions') }">
-              <router-link :to="`/agent/${agent.id}/versions`">Versions</router-link>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      <div class="agent-header-end">
-        
-      </div>
-    </header>
+    <div class="agent-container">
+        <header v-if="agent" ref="headerRef">
+            <div class="agent-header-start">
+                <h2 class="agent-title">{{ agent.title }}</h2>
+                <nav>
+                    <ul>
+                        <li :class="{ active: isActiveTab('activity') }">
+                            <router-link :to="`/agent/${agent.id}/activity`"
+                                >Activity</router-link
+                            >
+                        </li>
+                        <li :class="{ active: isActiveTab('insights') }">
+                            <router-link :to="`/agent/${agent.id}/insights`"
+                                >Insights</router-link
+                            >
+                        </li>
+                        <li :class="{ active: isActiveTab('workbench') }">
+                            <router-link :to="`/agent/${agent.id}/workbench`"
+                                >Workbench</router-link
+                            >
+                        </li>
+                        <li :class="{ active: isActiveTab('versions') }">
+                            <router-link :to="`/agent/${agent.id}/versions`"
+                                >Versions</router-link
+                            >
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="agent-header-end"></div>
+        </header>
 
-    <div v-else class="agent-not-found">
-      <p>Agent not found.</p>
-    </div>
+        <div v-else class="agent-not-found">
+            <p>Agent not found.</p>
+        </div>
 
-    <div class="agent-content" :style="{ height: contentHeight }">
-      <router-view v-if="agent" />
+        <div class="agent-content" :style="{ height: contentHeight }">
+            <router-view v-if="agent" />
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup>
-  import { computed, ref, onMounted, onUnmounted, provide } from 'vue';
-  import { useRoute } from 'vue-router';
-  import { agents } from '@/data/agents.js';
+    import { computed, ref, onMounted, onUnmounted, provide } from 'vue';
+    import { useRoute } from 'vue-router';
+    import { agents } from '@/data/agents.js';
 
-  const route = useRoute();
-  const agentId = computed(() => Number(route.params.id));
-  const agent = computed(() => agents.find(a => a.id === agentId.value));
+    const route = useRoute();
+    const agentId = computed(() => Number(route.params.id));
+    const agent = computed(() => agents.find((a) => a.id === agentId.value));
 
-  const headerRef = ref(null);
-  const headerHeight = ref(0);
+    const headerRef = ref(null);
+    const headerHeight = ref(0);
 
-  const contentHeight = computed(() => {
-    return headerHeight.value > 0 ? `calc(100vh - ${headerHeight.value}px)` : '100%';
-  });
+    const contentHeight = computed(() => {
+        return headerHeight.value > 0
+            ? `calc(100vh - ${headerHeight.value}px)`
+            : '100%';
+    });
 
-  // Provide header height to child components
-  provide('headerHeight', headerHeight);
+    // Provide header height to child components
+    provide('headerHeight', headerHeight);
 
-  function updateHeaderHeight() {
-    if (headerRef.value) {
-      headerHeight.value = headerRef.value.offsetHeight;
+    function updateHeaderHeight() {
+        if (headerRef.value) {
+            headerHeight.value = headerRef.value.offsetHeight;
+        }
     }
-  }
 
-  function isActiveTab(tabName) {
-    const currentPath = route.path;
-    const expectedPath = `/agent/${agentId.value}/${tabName}`;
-    const defaultPath = `/agent/${agentId.value}`;
-    
-    if (tabName === 'activity') {
-      return currentPath === expectedPath || currentPath === defaultPath || currentPath.startsWith(`/agent/${agentId.value}/activity`);
+    function isActiveTab(tabName) {
+        const currentPath = route.path;
+        const expectedPath = `/agent/${agentId.value}/${tabName}`;
+        const defaultPath = `/agent/${agentId.value}`;
+
+        if (tabName === 'activity') {
+            return (
+                currentPath === expectedPath ||
+                currentPath === defaultPath ||
+                currentPath.startsWith(`/agent/${agentId.value}/activity`)
+            );
+        }
+        if (tabName === 'workbench') {
+            return currentPath === expectedPath;
+        }
+        return currentPath === expectedPath;
     }
-    if (tabName === 'workbench') {
-      return currentPath === expectedPath;
-    }
-    return currentPath === expectedPath;
-  }
 
-  onMounted(() => {
-    updateHeaderHeight();
-    window.addEventListener('resize', updateHeaderHeight);
-  });
+    onMounted(() => {
+        updateHeaderHeight();
+        window.addEventListener('resize', updateHeaderHeight);
+    });
 
-  onUnmounted(() => {
-    window.removeEventListener('resize', updateHeaderHeight);
-  });
+    onUnmounted(() => {
+        window.removeEventListener('resize', updateHeaderHeight);
+    });
 </script>
 
 <style scoped>
-.agent-container {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+    .agent-container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
 
-.agent-content {
-  flex: 1;
-  overflow: hidden;
-}
+    .agent-content {
+        flex: 1;
+        overflow: hidden;
+    }
 
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-m);
-  padding: var(--space-s) var(--space-m);
-  background-color: var(--color-chrome-transparent);
-  border-bottom: 1px solid var(--color-surface-tint);
-  position: sticky;
-  top: 0;
-  backdrop-filter: blur(12px);
-}
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-m);
+        padding: var(--space-s) var(--space-m);
+        background-color: var(--color-chrome-transparent);
+        border-bottom: 1px solid var(--color-surface-tint);
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(12px);
+    }
 
-.agent-header-start,
-.agent-header-end {
-  display: flex;
-  align-items: center;
-  gap: var(--space-m);
-}
+    .agent-header-start,
+    .agent-header-end {
+        display: flex;
+        align-items: center;
+        gap: var(--space-m);
+    }
 
-header h2 {
-  font-size: var(--font-size-m);
-  font-weight: var(--font-weight-semibold);
-}
+    header h2 {
+        font-size: var(--font-size-m);
+        font-weight: var(--font-weight-semibold);
+    }
 
-nav ul {
-  display: flex;
-  gap: var(--space-xxs);
-  padding: 0;
-  margin: 0;
-}
+    nav ul {
+        display: flex;
+        gap: var(--space-xxs);
+        padding: 0;
+        margin: 0;
+    }
 
-nav li {
-  list-style: none;
-}
+    nav li {
+        list-style: none;
+    }
 
-nav li a {
-  text-decoration: none;
-  color: var(--color-chrome-fg-secondary);
-  font-size: var(--font-size-s);
-  font-weight: var(--font-weight-medium);
-  padding: var(--space-xxs) var(--space-xs);
-  border-radius: var(--radius);
-  display: block;
-}
+    nav li a {
+        text-decoration: none;
+        color: var(--color-chrome-fg-secondary);
+        font-size: var(--font-size-s);
+        font-weight: var(--font-weight-medium);
+        padding: var(--space-xxs) var(--space-xs);
+        border-radius: var(--radius);
+        display: block;
+    }
 
-nav li.active a {
-  color: var(--color-chrome-fg);
-  background-color: var(--color-surface-tint-dark);
-}
+    nav li.active a {
+        color: var(--color-chrome-fg);
+        background-color: var(--color-surface-tint-dark);
+    }
 
-nav li a:hover:not(.active) {
-  background-color: var(--color-surface-tint);
-}
+    nav li a:hover:not(.active) {
+        background-color: var(--color-surface-tint);
+    }
 
-.agent-not-found {
-  padding: var(--space-m);
-  text-align: center;
-}
-</style> 
+    .agent-not-found {
+        padding: var(--space-m);
+        text-align: center;
+    }
+</style>

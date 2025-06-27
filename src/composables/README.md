@@ -37,4 +37,4 @@ const { isMini, isMobile, sidebarWidth, toggleSidebar } = useSidebar();
 
 - **Desktop**: User can toggle between mini and full modes
 - **Mobile**: Auto-collapses to mini mode, prevents expansion
-- **Breakpoint**: 768px 
+- **Breakpoint**: 768px

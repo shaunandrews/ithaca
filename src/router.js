@@ -20,125 +20,125 @@ import ExpertInsights from './views/ExpertInsights.vue';
 import ExpertVersions from './views/ExpertVersions.vue';
 
 const routes = [
-  {
-    path: '/insights',
-    component: InsightsLayout,
-    children: [
-      {
-        path: '',
-        name: 'InsightsTopicsDefault',
-        component: InsightsTopics,
-      },
-      {
-        path: 'topics',
-        name: 'InsightsTopics',
-        component: InsightsTopics,
-      },
-      {
-        path: 'sentiment',
-        name: 'InsightsSentiment',
-        component: InsightsSentiment,
-      },
-      {
-        path: 'performance',
-        name: 'InsightsPerformance',
-        component: InsightsPerformance,
-      },
-      {
-        path: 'activity',
-        name: 'InsightsActivity',
-        component: InsightsActivity,
-      },
-    ],
-  },
-  {
-    path: '/',
-    name: 'Agents',
-    component: Agents,
-  },
-  {
-    path: '/tools',
-    name: 'Tools',
-    component: Tools,
-  },
-  {
-    path: '/agent/:id',
-    component: AgentLayout,
-    children: [
-      {
-        path: '',
-        name: 'AgentActivityDefault',
-        component: AgentActivity,
-      },
-      {
-        path: 'workbench',
-        name: 'AgentWorkbench',
-        component: AgentWorkbench,
-      },
-      {
-        path: 'versions',
-        name: 'AgentVersions',
-        component: AgentVersions,
-      },
-      {
-        path: 'insights',
-        name: 'AgentInsights',
-        component: AgentInsights,
-      },
-      {
-        path: 'activity',
-        name: 'AgentActivity',
-        component: AgentActivity,
-      },
-      {
-        path: 'activity/:activityId',
-        name: 'Conversation',
-        component: Conversation,
-        props: true,
-      },
-    ],
-  },
-  {
-    path: '/experts',
-    name: 'Experts',
-    component: Experts,
-  },
-  {
-    path: '/expert/:id',
-    component: ExpertLayout,
-    children: [
-      {
-        path: '',
-        name: 'ExpertActivityDefault',
-        component: ExpertActivity,
-      },
-      {
-        path: 'activity',
-        name: 'ExpertActivity',
-        component: ExpertActivity,
-      },
-      {
-        path: 'configuration',
-        name: 'ExpertConfiguration',
-        component: ExpertConfiguration,
-      },
-      {
-        path: 'insights',
-        name: 'ExpertInsights',
-        component: ExpertInsights,
-      },
-      {
-        path: 'versions',
-        name: 'ExpertVersions',
-        component: ExpertVersions,
-      },
-    ],
-  },
+    {
+        path: '/insights',
+        component: InsightsLayout,
+        children: [
+            {
+                path: '',
+                name: 'InsightsTopicsDefault',
+                component: InsightsTopics,
+            },
+            {
+                path: 'topics',
+                name: 'InsightsTopics',
+                component: InsightsTopics,
+            },
+            {
+                path: 'sentiment',
+                name: 'InsightsSentiment',
+                component: InsightsSentiment,
+            },
+            {
+                path: 'performance',
+                name: 'InsightsPerformance',
+                component: InsightsPerformance,
+            },
+            {
+                path: 'activity',
+                name: 'InsightsActivity',
+                component: InsightsActivity,
+            },
+        ],
+    },
+    {
+        path: '/',
+        name: 'Agents',
+        component: Agents,
+    },
+    {
+        path: '/tools',
+        name: 'Tools',
+        component: Tools,
+    },
+    {
+        path: '/agent/:id',
+        component: AgentLayout,
+        children: [
+            {
+                path: '',
+                name: 'AgentActivityDefault',
+                component: AgentActivity,
+            },
+            {
+                path: 'workbench',
+                name: 'AgentWorkbench',
+                component: AgentWorkbench,
+            },
+            {
+                path: 'versions',
+                name: 'AgentVersions',
+                component: AgentVersions,
+            },
+            {
+                path: 'insights',
+                name: 'AgentInsights',
+                component: AgentInsights,
+            },
+            {
+                path: 'activity',
+                name: 'AgentActivity',
+                component: AgentActivity,
+            },
+            {
+                path: 'activity/:activityId',
+                name: 'Conversation',
+                component: Conversation,
+                props: true,
+            },
+        ],
+    },
+    {
+        path: '/experts',
+        name: 'Experts',
+        component: Experts,
+    },
+    {
+        path: '/expert/:id',
+        component: ExpertLayout,
+        children: [
+            {
+                path: '',
+                name: 'ExpertActivityDefault',
+                component: ExpertActivity,
+            },
+            {
+                path: 'activity',
+                name: 'ExpertActivity',
+                component: ExpertActivity,
+            },
+            {
+                path: 'configuration',
+                name: 'ExpertConfiguration',
+                component: ExpertConfiguration,
+            },
+            {
+                path: 'insights',
+                name: 'ExpertInsights',
+                component: ExpertInsights,
+            },
+            {
+                path: 'versions',
+                name: 'ExpertVersions',
+                component: ExpertVersions,
+            },
+        ],
+    },
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes,
+    history: createWebHistory(),
+    routes,
 });
 
-export default router; 
+export default router;

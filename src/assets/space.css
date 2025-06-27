@@ -8,19 +8,17 @@
     --space-xl: 32px;
     --space-xxl: 48px;
     --space-xxxl: 64px;
-  
+
     /* Radius */
     --radius-s: 4px;
     --radius-m: 6px;
     --radius-l: 8px;
     --radius-xl: 18px;
-  
+
     /* Default radius */
     --radius: var(--radius-m);
 
     /* Sidebar */
     --sidebar-width-full: 220px;
     --sidebar-width-mini: 60px;
-  }
-  
-  
+}

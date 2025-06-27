@@ -1,115 +1,115 @@
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
-  margin: 0;
+    box-sizing: border-box;
+    margin: 0;
 }
 
 body {
-  min-height: 100vh;
-  color: var(--color-chrome-fg);
-  background: var(--color-chrome);
+    min-height: 100vh;
+    color: var(--color-chrome-fg);
+    background: var(--color-chrome);
 }
 
 /* Links */
 a {
-  color: var(--color-accent);
+    color: var(--color-accent);
 }
 
-/* Buttons */ 
+/* Buttons */
 button {
-  color: var(--color-surface-fg);
-  background: var(--color-surface);
-  border: 1px solid var(--color-surface-tint-dark);
-  padding: var(--space-xs) var(--space-s);
-  font-size: var(--font-size-s);
-  font-weight: var(--font-weight-semibold);
-  border-radius: var(--radius);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    color: var(--color-surface-fg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-surface-tint-dark);
+    padding: var(--space-xs) var(--space-s);
+    font-size: var(--font-size-s);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 button.small {
-  padding: var(--space-xxs) var(--space-xs);
+    padding: var(--space-xxs) var(--space-xs);
 }
 
 button .shortcut {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  opacity: 0.5;
-  margin-left: var(--space-s);
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    opacity: 0.5;
+    margin-left: var(--space-s);
 }
 
 button.primary {
-  background: var(--color-accent);
-  color: var(--color-accent-fg);
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
 }
 
 button:hover {
-  background: var(--color-surface-tint);
+    background: var(--color-surface-tint);
 }
 
 button.primary:hover {
-  background: var(--color-accent-dark);
+    background: var(--color-accent-dark);
 }
 
 /* Inputs */
 input {
-  border: none;
-  display: block;
-  width: 100%;
-  background: var(--color-surface-tint);
-  border-radius: var(--radius);
-  padding: var(--space-xs) var(--space-s);
-  font-size: var(--font-size-s);
-  color: var(--color-surface-fg);
+    border: none;
+    display: block;
+    width: 100%;
+    background: var(--color-surface-tint);
+    border-radius: var(--radius);
+    padding: var(--space-xs) var(--space-s);
+    font-size: var(--font-size-s);
+    color: var(--color-surface-fg);
 }
 
 input::placeholder {
-  color: var(--color-surface-fg-tertiary);
+    color: var(--color-surface-fg-tertiary);
 }
 
 input:hover {
-  background: var(--color-surface-tint-dark);
+    background: var(--color-surface-tint-dark);
 }
 
 input:focus,
 select:focus {
-  background: var(--color-surface-tint-dark);
-  outline: 2px solid var(--color-accent);
+    background: var(--color-surface-tint-dark);
+    outline: 2px solid var(--color-accent);
 }
 
 select {
-  border: none;
-  display: block;
-  width: 100%;
-  background: var(--color-surface-tint);
-  border-radius: var(--radius);
-  padding: var(--space-xs) var(--space-m);
-  font-size: var(--font-size-s);
-  color: var(--color-surface-fg);
+    border: none;
+    display: block;
+    width: 100%;
+    background: var(--color-surface-tint);
+    border-radius: var(--radius);
+    padding: var(--space-xs) var(--space-m);
+    font-size: var(--font-size-s);
+    color: var(--color-surface-fg);
 }
 
 /* Layout */
 #app {
-  /* height: 100vh; */
+    /* height: 100vh; */
 }
 
 .hstack,
 .vstack {
-  display: flex;
+    display: flex;
 }
 
 .hstack {
-  flex-direction: row;
+    flex-direction: row;
 }
 
 .vstack {
-  flex-direction: column;
+    flex-direction: column;
 }

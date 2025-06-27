@@ -1,43 +1,45 @@
 <template>
-  <div
-    :class="['message vstack', message.role, { selected: isSelected }]"
-    :id="`message-${index}`"
-  >
-    <div 
-      class="text"
-      @click="handleTextClick"
-      tabindex="0"
+    <div
+        :class="['message vstack', message.role, { selected: isSelected }]"
+        :id="`message-${index}`"
     >
-        <div v-if="message.role === 'user'" class="author">
-            <img :src="gravatarUrl(customer)" alt="User avatar" height="32" width="32" class="avatar" />
-            <span class="email">{{ customer }}</span>
-        </div>
-        <div class="content">{{ message.text }}</div>
-        <div v-if="message.role === 'agent'" class="meta">
-            <!-- <div class="meta-item timestamp">{{ formatDate(datetime) }}</div> -->
-            <div class="agent-info">
-                <div class="meta-item agent-name">WP.com Support Chat</div>
-                <div class="meta-item agent-version">v1.02</div>
-                <div class="meta-item agent-actions">
-                    <button 
-                        class="action-button" 
-                        @click.stop="copyText"
-                        title="Copy message text"
-                    >
-                        <Copy :size="14" />
-                    </button>
-                    <button 
-                        class="action-button" 
-                        @click.stop="copyLink"
-                        title="Copy link to message"
-                    >
-                        <Link :size="14" />
-                    </button>
+        <div class="text" @click="handleTextClick" tabindex="0">
+            <div v-if="message.role === 'user'" class="author">
+                <img
+                    :src="gravatarUrl(customer)"
+                    alt="User avatar"
+                    height="32"
+                    width="32"
+                    class="avatar"
+                />
+                <span class="email">{{ customer }}</span>
+            </div>
+            <div class="content">{{ message.text }}</div>
+            <div v-if="message.role === 'agent'" class="meta">
+                <!-- <div class="meta-item timestamp">{{ formatDate(datetime) }}</div> -->
+                <div class="agent-info">
+                    <div class="meta-item agent-name">WP.com Support Chat</div>
+                    <div class="meta-item agent-version">v1.02</div>
+                    <div class="meta-item agent-actions">
+                        <button
+                            class="action-button"
+                            @click.stop="copyText"
+                            title="Copy message text"
+                        >
+                            <Copy :size="14" />
+                        </button>
+                        <button
+                            class="action-button"
+                            @click.stop="copyLink"
+                            title="Copy link to message"
+                        >
+                            <Link :size="14" />
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-  </div>
 </template>
 
 <script setup>
@@ -45,39 +47,41 @@
     import { Copy, Link } from 'lucide-vue-next';
 
     const props = defineProps({
-    message: {
-        type: Object,
-        required: true
-    },
-    index: {
-        type: Number,
-        required: true
-    },
-    datetime: {
-        type: String,
-        required: true
-    },
-    customer: {
-        type: String,
-        required: true
-    },
-    isSelected: {
-        type: Boolean,
-        default: false
-    }
+        message: {
+            type: Object,
+            required: true,
+        },
+        index: {
+            type: Number,
+            required: true,
+        },
+        datetime: {
+            type: String,
+            required: true,
+        },
+        customer: {
+            type: String,
+            required: true,
+        },
+        isSelected: {
+            type: Boolean,
+            default: false,
+        },
     });
 
     const emit = defineEmits(['select']);
 
     function formatDate(datetime) {
-    const date = new Date(datetime);
-    return date.toLocaleString();
+        const date = new Date(datetime);
+        return date.toLocaleString();
     }
 
     function gravatarUrl(email) {
-    if (!email) return '';
-    const hash = CryptoJS.SHA256(email.trim().toLowerCase()).toString(CryptoJS.enc.Hex);
-    return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
+        if (!email) return '';
+        const hash = CryptoJS.SHA256(email.trim().toLowerCase()).toString(
+            CryptoJS.enc.Hex
+        );
+        return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
     }
 
     function handleTextClick() {
@@ -86,7 +90,7 @@
         if (selection && selection.toString().length > 0) {
             return;
         }
-        
+
         // No text selection, so trigger the panel toggle
         emit('select', props.message, props.index);
     }
@@ -203,4 +207,4 @@
         border-radius: var(--radius);
         border: 1px solid var(--color-surface-tint-dark);
     }
-</style> 
+</style>

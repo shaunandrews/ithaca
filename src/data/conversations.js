@@ -1,369 +1,383 @@
 export const conversations = [
-  {
-    "id": 1,
-    "agentId": 1,
-    "datetime": "2024-06-10T14:12:00Z",
-    "event": "Troubleshooting login issue",
-    "customer": "koalababy3@gmail.com",
-    "summary": "Reviewed support history and provided a fix for a recurring login issue. Sent a link to the support article.",
-    "tags": [
-      "login",
-      "troubleshooting",
-      "support-history",
-      "password-reset",
-      "cookies"
-    ]
-  },
-  {
-    "id": 2,
-    "agentId": 1,
-    "datetime": "2024-06-10T13:45:00Z",
-    "event": "Header Navigation Not Clickable After Edit",
-    "customer": "shaun@shaunandrews.com",
-    "summary": "Customer edited their site header and navigation links became unclickable. Troubleshooting steps like checking for overlapping or invisible blocks did not help. The customer asked about undoing changes but learned that full site restores require a Business plan. The agent explained that header template revisions are available and offered further instructions if needed.",
-    "tags": [
-      "header",
-      "navigation",
-      "template-editing",
-      "revisions",
-      "gutenberg",
-      "troubleshooting",
-      "site-editor"
-    ]
-  },
-  {
-    "id": 3,
-    "agentId": 1,
-    "datetime": "2024-06-09T17:30:00Z",
-    "event": "Charged twice",
-    "customer": "cain@automattic.com",
-    "summary": "Customer appears to have accidentally created two sites. Requested confirmation about new site before refunding and cancelling the subscription.",
-    "tags": [
-      "billing",
-      "refund",
-      "duplicate-charge",
-      "account-management",
-      "subscription"
-    ]
-  },
-  {
-    "id": 4,
-    "agentId": 2,
-    "datetime": "2024-06-10T09:00:00Z",
-    "event": "New email received",
-    "customer": "shaun@shaunandrews.com",
-    "summary": "Triaged a user email about password reset. Sent automated response with instructions and flagged for follow-up.",
-    "tags": [
-      "password-reset",
-      "tumblr",
-      "account-access",
-      "email-triage"
-    ]
-  },
-  {
-    "id": 5,
-    "agentId": 2,
-    "datetime": "2024-06-09T16:20:00Z",
-    "event": "Reference lookup",
-    "customer": "tumblruser@example.com",
-    "summary": "Provided a support article link for a user asking about Tumblr blog customization.",
-    "tags": [
-      "theme-customization",
-      "tumblr",
-      "design",
-      "support-articles"
-    ]
-  },
-  {
-    "id": 6,
-    "agentId": 2,
-    "datetime": "2024-06-08T11:05:00Z",
-    "event": "Escalation",
-    "customer": "techsupport@tumblr.com",
-    "summary": "Escalated a technical issue to a human agent after automated troubleshooting failed.",
-    "tags": [
-      "escalation",
-      "account-issue",
-      "tumblr",
-      "technical-support",
-      "human-handoff"
-    ]
-  },
-  {
-    "id": 10,
-    "agentId": 4,
-    "datetime": "2024-06-10T15:00:00Z",
-    "event": "Creating a new site",
-    "customer": "developer@wordpress.org",
-    "summary": "A new customer wants a site for their coffee shop. They have an Instagram account and want a site that matches the look and feel of their account.",
-    "tags": [
-      "html-parsing",
-      "code-analysis",
-      "cover-block",
-      "development",
-      "wordpress-blocks"
-    ]
-  },
-  {
-    "id": 11,
-    "agentId": 4,
-    "datetime": "2024-06-09T12:10:00Z",
-    "event": "Block customization",
-    "customer": "designer@example.com",
-    "summary": "Client requested custom styling for their portfolio gallery. Needed to modify the grid layout and add hover effects to match their brand colors.",
-    "tags": [
-      "html-parsing",
-      "gallery-block",
-      "code-analysis",
-      "development",
-      "portfolio"
-    ]
-  },
-  {
-    "id": 12,
-    "agentId": 4,
-    "datetime": "2024-06-08T10:45:00Z",
-    "event": "Layout optimization",
-    "customer": "frontend@startup.com",
-    "summary": "Startup needed responsive design improvements for their landing page. Optimized mobile layout and fixed spacing issues across different screen sizes.",
-    "tags": [
-      "html-parsing",
-      "heading",
-      "code-analysis",
-      "development",
-      "responsive-design"
-    ]
-  },
-  {
-    "id": 16,
-    "agentId": 6,
-    "datetime": "2024-06-12T09:00:00Z",
-    "event": "Slack message",
-    "customer": "new.employee@automattic.com",
-    "summary": "Helped a user find the DRI for a new project by searching P2 sites.",
-    "tags": [
-      "project-management",
-      "p2",
-      "dri",
-      "information-retrieval",
-      "slack"
-    ]
-  },
-  {
-    "id": 17,
-    "agentId": 6,
-    "datetime": "2024-06-11T16:30:00Z",
-    "event": "Insight search",
-    "customer": "product.manager@automattic.com",
-    "summary": "Provided a summary of recent discussions about a product launch from multiple P2s.",
-    "tags": [
-      "product-launch",
-      "p2",
-      "summarization",
-      "information-retrieval",
-      "insights"
-    ]
-  },
-  {
-    "id": 18,
-    "agentId": 6,
-    "datetime": "2024-06-10T14:45:00Z",
-    "event": "Resource location",
-    "customer": "hr.team@automattic.com",
-    "summary": "Directed a user to the correct P2 for onboarding documentation.",
-    "tags": [
-      "onboarding",
-      "documentation",
-      "p2",
-      "information-retrieval",
-      "hr"
-    ]
-  },
-  {
-    "id": 19,
-    "agentId": 1,
-    "datetime": "2024-06-11T10:30:00Z",
-    "event": "Domain connection issues",
-    "customer": "webmaster@example.com",
-    "summary": "Customer having trouble connecting their custom domain to WordPress.com. Walked through DNS settings and provided nameserver configuration steps.",
-    "tags": [
-      "domain-connection",
-      "dns",
-      "nameservers",
-      "technical-setup",
-      "godaddy"
-    ]
-  },
-  {
-    "id": 20,
-    "agentId": 1,
-    "datetime": "2024-06-11T14:15:00Z",
-    "event": "Comment moderation help",
-    "customer": "blogger@lifestyle.com",
-    "summary": "Customer needed help setting up comment moderation and dealing with spam comments. Explained moderation settings and recommended Akismet.",
-    "tags": [
-      "comments",
-      "moderation",
-      "spam",
-      "akismet",
-      "settings",
-      "blog-management"
-    ]
-  },
-  {
-    "id": 21,
-    "agentId": 1,
-    "datetime": "2024-06-10T16:45:00Z",
-    "event": "Publishing problems",
-    "customer": "author@writingblog.com",
-    "summary": "Customer unable to publish posts, getting error messages. Identified browser cache issue and provided troubleshooting steps.",
-    "tags": [
-      "publishing",
-      "editor-issues",
-      "troubleshooting",
-      "browser-cache",
-      "connectivity"
-    ]
-  },
-  {
-    "id": 22,
-    "agentId": 1,
-    "datetime": "2024-06-09T13:20:00Z",
-    "event": "Theme customization",
-    "customer": "creative@artportfolio.com",
-    "summary": "Customer wanted to customize their theme colors and fonts. Explained the difference between theme customization and site editing, provided guidance on both.",
-    "tags": [
-      "theme-customization",
-      "colors",
-      "fonts",
-      "design",
-      "global-styles",
-      "customization"
-    ]
-  },
-  {
-    "id": 23,
-    "agentId": 1,
-    "datetime": "2024-06-08T11:30:00Z",
-    "event": "SEO and site visibility",
-    "customer": "business@localbakery.com",
-    "summary": "Small business owner asking about SEO and why their site isn't showing up in Google searches. Provided SEO basics and site visibility settings.",
-    "tags": [
-      "seo",
-      "google-search",
-      "site-visibility",
-      "search-console",
-      "local-business",
-      "indexing"
-    ]
-  },
-  {
-    "id": 24,
-    "agentId": 1,
-    "datetime": "2024-06-07T15:00:00Z",
-    "event": "Mobile responsiveness",
-    "customer": "photographer@portraits.com",
-    "summary": "Customer concerned about how their photography site looks on mobile devices. Explained responsive design and provided mobile optimization tips.",
-    "tags": [
-      "mobile",
-      "responsive-design",
-      "photography",
-      "optimization",
-      "mobile-preview"
-    ]
-  },
-  {
-    "id": 25,
-    "agentId": 1,
-    "datetime": "2024-06-06T12:45:00Z",
-    "event": "Plugin installation inquiry",
-    "customer": "ecommerce@smallshop.com",
-    "summary": "Customer wanted to install specific plugins for their online store. Explained plugin limitations on different plans and suggested alternatives.",
-    "tags": [
-      "plugins",
-      "contact-forms",
-      "booking-system",
-      "plan-limitations",
-      "ecommerce"
-    ]
-  },
-  {
-    "id": 26,
-    "agentId": 1,
-    "datetime": "2024-06-05T09:15:00Z",
-    "event": "Email forwarding setup",
-    "customer": "professional@consultingfirm.com",
-    "summary": "Customer wanted to set up professional email with their domain. Explained email forwarding options and G Suite integration.",
-    "tags": [
-      "email",
-      "domain",
-      "forwarding",
-      "g-suite",
-      "professional-email",
-      "mx-records"
-    ]
-  },
-  {
-    "id": 27,
-    "agentId": 1,
-    "datetime": "2024-06-04T14:30:00Z",
-    "event": "Site migration help",
-    "customer": "migrating@olddomain.com",
-    "summary": "Customer wanted to import content from another WordPress site. Guided through the import process and explained what transfers and what doesn't.",
-    "tags": [
-      "migration",
-      "import",
-      "content-transfer",
-      "wordpress-org",
-      "site-migration"
-    ]
-  },
-  {
-    "id": 28,
-    "agentId": 1,
-    "datetime": "2024-06-03T16:20:00Z",
-    "event": "Storage limit reached",
-    "customer": "photographer@wildlife.com",
-    "summary": "Customer hit their storage limit and couldn't upload more photos. Explained storage limits by plan and provided optimization tips.",
-    "tags": [
-      "storage",
-      "limits",
-      "photography",
-      "media-optimization",
-      "plan-upgrade",
-      "image-optimization"
-    ]
-  },
-  {
-    "id": 29,
-    "agentId": 1,
-    "datetime": "2024-06-02T10:00:00Z",
-    "event": "SSL certificate questions",
-    "customer": "security@techstartup.com",
-    "summary": "Customer asking about HTTPS and SSL certificates for their site. Explained that SSL is automatic on WordPress.com and provided security best practices.",
-    "tags": [
-      "ssl",
-      "https",
-      "security",
-      "certificates",
-      "encryption",
-      "automatic-ssl"
-    ]
-  },
-  {
-    "id": 30,
-    "agentId": 1,
-    "datetime": "2024-06-01T13:45:00Z",
-    "event": "Social media integration",
-    "customer": "marketing@brandagency.com",
-    "summary": "Customer wanted to connect their social media accounts and add sharing buttons. Provided guidance on social integrations and Jetpack Social features.",
-    "tags": [
-      "social-media",
-      "auto-sharing",
-      "instagram",
-      "twitter",
-      "jetpack-social",
-      "social-buttons"
-    ]
-  }
+    {
+        id: 1,
+        agentId: 1,
+        datetime: '2024-06-10T14:12:00Z',
+        event: 'Troubleshooting login issue',
+        customer: 'koalababy3@gmail.com',
+        summary:
+            'Reviewed support history and provided a fix for a recurring login issue. Sent a link to the support article.',
+        tags: [
+            'login',
+            'troubleshooting',
+            'support-history',
+            'password-reset',
+            'cookies',
+        ],
+    },
+    {
+        id: 2,
+        agentId: 1,
+        datetime: '2024-06-10T13:45:00Z',
+        event: 'Header Navigation Not Clickable After Edit',
+        customer: 'shaun@shaunandrews.com',
+        summary:
+            'Customer edited their site header and navigation links became unclickable. Troubleshooting steps like checking for overlapping or invisible blocks did not help. The customer asked about undoing changes but learned that full site restores require a Business plan. The agent explained that header template revisions are available and offered further instructions if needed.',
+        tags: [
+            'header',
+            'navigation',
+            'template-editing',
+            'revisions',
+            'gutenberg',
+            'troubleshooting',
+            'site-editor',
+        ],
+    },
+    {
+        id: 3,
+        agentId: 1,
+        datetime: '2024-06-09T17:30:00Z',
+        event: 'Charged twice',
+        customer: 'cain@automattic.com',
+        summary:
+            'Customer appears to have accidentally created two sites. Requested confirmation about new site before refunding and cancelling the subscription.',
+        tags: [
+            'billing',
+            'refund',
+            'duplicate-charge',
+            'account-management',
+            'subscription',
+        ],
+    },
+    {
+        id: 4,
+        agentId: 2,
+        datetime: '2024-06-10T09:00:00Z',
+        event: 'New email received',
+        customer: 'shaun@shaunandrews.com',
+        summary:
+            'Triaged a user email about password reset. Sent automated response with instructions and flagged for follow-up.',
+        tags: ['password-reset', 'tumblr', 'account-access', 'email-triage'],
+    },
+    {
+        id: 5,
+        agentId: 2,
+        datetime: '2024-06-09T16:20:00Z',
+        event: 'Reference lookup',
+        customer: 'tumblruser@example.com',
+        summary:
+            'Provided a support article link for a user asking about Tumblr blog customization.',
+        tags: ['theme-customization', 'tumblr', 'design', 'support-articles'],
+    },
+    {
+        id: 6,
+        agentId: 2,
+        datetime: '2024-06-08T11:05:00Z',
+        event: 'Escalation',
+        customer: 'techsupport@tumblr.com',
+        summary:
+            'Escalated a technical issue to a human agent after automated troubleshooting failed.',
+        tags: [
+            'escalation',
+            'account-issue',
+            'tumblr',
+            'technical-support',
+            'human-handoff',
+        ],
+    },
+    {
+        id: 10,
+        agentId: 4,
+        datetime: '2024-06-10T15:00:00Z',
+        event: 'Creating a new site',
+        customer: 'developer@wordpress.org',
+        summary:
+            'A new customer wants a site for their coffee shop. They have an Instagram account and want a site that matches the look and feel of their account.',
+        tags: [
+            'html-parsing',
+            'code-analysis',
+            'cover-block',
+            'development',
+            'wordpress-blocks',
+        ],
+    },
+    {
+        id: 11,
+        agentId: 4,
+        datetime: '2024-06-09T12:10:00Z',
+        event: 'Block customization',
+        customer: 'designer@example.com',
+        summary:
+            'Client requested custom styling for their portfolio gallery. Needed to modify the grid layout and add hover effects to match their brand colors.',
+        tags: [
+            'html-parsing',
+            'gallery-block',
+            'code-analysis',
+            'development',
+            'portfolio',
+        ],
+    },
+    {
+        id: 12,
+        agentId: 4,
+        datetime: '2024-06-08T10:45:00Z',
+        event: 'Layout optimization',
+        customer: 'frontend@startup.com',
+        summary:
+            'Startup needed responsive design improvements for their landing page. Optimized mobile layout and fixed spacing issues across different screen sizes.',
+        tags: [
+            'html-parsing',
+            'heading',
+            'code-analysis',
+            'development',
+            'responsive-design',
+        ],
+    },
+    {
+        id: 16,
+        agentId: 6,
+        datetime: '2024-06-12T09:00:00Z',
+        event: 'Slack message',
+        customer: 'new.employee@automattic.com',
+        summary:
+            'Helped a user find the DRI for a new project by searching P2 sites.',
+        tags: [
+            'project-management',
+            'p2',
+            'dri',
+            'information-retrieval',
+            'slack',
+        ],
+    },
+    {
+        id: 17,
+        agentId: 6,
+        datetime: '2024-06-11T16:30:00Z',
+        event: 'Insight search',
+        customer: 'product.manager@automattic.com',
+        summary:
+            'Provided a summary of recent discussions about a product launch from multiple P2s.',
+        tags: [
+            'product-launch',
+            'p2',
+            'summarization',
+            'information-retrieval',
+            'insights',
+        ],
+    },
+    {
+        id: 18,
+        agentId: 6,
+        datetime: '2024-06-10T14:45:00Z',
+        event: 'Resource location',
+        customer: 'hr.team@automattic.com',
+        summary:
+            'Directed a user to the correct P2 for onboarding documentation.',
+        tags: [
+            'onboarding',
+            'documentation',
+            'p2',
+            'information-retrieval',
+            'hr',
+        ],
+    },
+    {
+        id: 19,
+        agentId: 1,
+        datetime: '2024-06-11T10:30:00Z',
+        event: 'Domain connection issues',
+        customer: 'webmaster@example.com',
+        summary:
+            'Customer having trouble connecting their custom domain to WordPress.com. Walked through DNS settings and provided nameserver configuration steps.',
+        tags: [
+            'domain-connection',
+            'dns',
+            'nameservers',
+            'technical-setup',
+            'godaddy',
+        ],
+    },
+    {
+        id: 20,
+        agentId: 1,
+        datetime: '2024-06-11T14:15:00Z',
+        event: 'Comment moderation help',
+        customer: 'blogger@lifestyle.com',
+        summary:
+            'Customer needed help setting up comment moderation and dealing with spam comments. Explained moderation settings and recommended Akismet.',
+        tags: [
+            'comments',
+            'moderation',
+            'spam',
+            'akismet',
+            'settings',
+            'blog-management',
+        ],
+    },
+    {
+        id: 21,
+        agentId: 1,
+        datetime: '2024-06-10T16:45:00Z',
+        event: 'Publishing problems',
+        customer: 'author@writingblog.com',
+        summary:
+            'Customer unable to publish posts, getting error messages. Identified browser cache issue and provided troubleshooting steps.',
+        tags: [
+            'publishing',
+            'editor-issues',
+            'troubleshooting',
+            'browser-cache',
+            'connectivity',
+        ],
+    },
+    {
+        id: 22,
+        agentId: 1,
+        datetime: '2024-06-09T13:20:00Z',
+        event: 'Theme customization',
+        customer: 'creative@artportfolio.com',
+        summary:
+            'Customer wanted to customize their theme colors and fonts. Explained the difference between theme customization and site editing, provided guidance on both.',
+        tags: [
+            'theme-customization',
+            'colors',
+            'fonts',
+            'design',
+            'global-styles',
+            'customization',
+        ],
+    },
+    {
+        id: 23,
+        agentId: 1,
+        datetime: '2024-06-08T11:30:00Z',
+        event: 'SEO and site visibility',
+        customer: 'business@localbakery.com',
+        summary:
+            "Small business owner asking about SEO and why their site isn't showing up in Google searches. Provided SEO basics and site visibility settings.",
+        tags: [
+            'seo',
+            'google-search',
+            'site-visibility',
+            'search-console',
+            'local-business',
+            'indexing',
+        ],
+    },
+    {
+        id: 24,
+        agentId: 1,
+        datetime: '2024-06-07T15:00:00Z',
+        event: 'Mobile responsiveness',
+        customer: 'photographer@portraits.com',
+        summary:
+            'Customer concerned about how their photography site looks on mobile devices. Explained responsive design and provided mobile optimization tips.',
+        tags: [
+            'mobile',
+            'responsive-design',
+            'photography',
+            'optimization',
+            'mobile-preview',
+        ],
+    },
+    {
+        id: 25,
+        agentId: 1,
+        datetime: '2024-06-06T12:45:00Z',
+        event: 'Plugin installation inquiry',
+        customer: 'ecommerce@smallshop.com',
+        summary:
+            'Customer wanted to install specific plugins for their online store. Explained plugin limitations on different plans and suggested alternatives.',
+        tags: [
+            'plugins',
+            'contact-forms',
+            'booking-system',
+            'plan-limitations',
+            'ecommerce',
+        ],
+    },
+    {
+        id: 26,
+        agentId: 1,
+        datetime: '2024-06-05T09:15:00Z',
+        event: 'Email forwarding setup',
+        customer: 'professional@consultingfirm.com',
+        summary:
+            'Customer wanted to set up professional email with their domain. Explained email forwarding options and G Suite integration.',
+        tags: [
+            'email',
+            'domain',
+            'forwarding',
+            'g-suite',
+            'professional-email',
+            'mx-records',
+        ],
+    },
+    {
+        id: 27,
+        agentId: 1,
+        datetime: '2024-06-04T14:30:00Z',
+        event: 'Site migration help',
+        customer: 'migrating@olddomain.com',
+        summary:
+            "Customer wanted to import content from another WordPress site. Guided through the import process and explained what transfers and what doesn't.",
+        tags: [
+            'migration',
+            'import',
+            'content-transfer',
+            'wordpress-org',
+            'site-migration',
+        ],
+    },
+    {
+        id: 28,
+        agentId: 1,
+        datetime: '2024-06-03T16:20:00Z',
+        event: 'Storage limit reached',
+        customer: 'photographer@wildlife.com',
+        summary:
+            "Customer hit their storage limit and couldn't upload more photos. Explained storage limits by plan and provided optimization tips.",
+        tags: [
+            'storage',
+            'limits',
+            'photography',
+            'media-optimization',
+            'plan-upgrade',
+            'image-optimization',
+        ],
+    },
+    {
+        id: 29,
+        agentId: 1,
+        datetime: '2024-06-02T10:00:00Z',
+        event: 'SSL certificate questions',
+        customer: 'security@techstartup.com',
+        summary:
+            'Customer asking about HTTPS and SSL certificates for their site. Explained that SSL is automatic on WordPress.com and provided security best practices.',
+        tags: [
+            'ssl',
+            'https',
+            'security',
+            'certificates',
+            'encryption',
+            'automatic-ssl',
+        ],
+    },
+    {
+        id: 30,
+        agentId: 1,
+        datetime: '2024-06-01T13:45:00Z',
+        event: 'Social media integration',
+        customer: 'marketing@brandagency.com',
+        summary:
+            'Customer wanted to connect their social media accounts and add sharing buttons. Provided guidance on social integrations and Jetpack Social features.',
+        tags: [
+            'social-media',
+            'auto-sharing',
+            'instagram',
+            'twitter',
+            'jetpack-social',
+            'social-buttons',
+        ],
+    },
 ];
