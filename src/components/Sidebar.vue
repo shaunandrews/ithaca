@@ -8,7 +8,7 @@
         <NavItem 
           to="/insights" 
           label="Insights" 
-          :active-routes="['Insights']"
+          :active-routes="['Insights', 'InsightsTopicsDefault', 'InsightsTopics', 'InsightsSentiment', 'InsightsPerformance', 'InsightsActivity']"
           icon="Microscope"
           :mini="mini"
         />

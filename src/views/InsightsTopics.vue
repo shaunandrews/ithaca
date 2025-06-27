@@ -1,19 +1,5 @@
 <template>
-  <div class="insights-toolbar">
-    <div class="toolbar-start">
-      <h1>Insights</h1>
-      <p>Analytics and performance data across your agents, experts, and tools</p>
-    </div>
-    <div class="toolbar-end">
-      <select v-model="timeRange">
-        <option value="7d">Last 7 days</option>
-        <option value="30d">Last 30 days</option>
-        <option value="90d">Last 90 days</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="insights-content">
+  <div class="insights-topics">
     <div class="insight-section">
       <h2>Most Common Tags</h2>
       <p class="section-description">Top conversation tags across all interactions</p>
@@ -50,14 +36,23 @@
         </div>
       </div>
     </div>
+
+    <div class="insight-section">
+      <h2>Tag Trends</h2>
+      <p class="section-description">How conversation topics have evolved over time</p>
+      
+      <div class="trend-placeholder">
+        <p>Tag trend visualization will be displayed here</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, inject } from 'vue';
 import { conversations } from '../data/conversations.js';
 
-const timeRange = ref('30d');
+const timeRange = inject('timeRange', ref('30d'));
 
 // Filter conversations based on time range
 const filteredConversations = computed(() => {
@@ -73,17 +68,6 @@ const filteredConversations = computed(() => {
   // For now, return all conversations to show the demo working
   // You can enable proper date filtering later
   return conversations;
-  
-  /* Original date filtering logic (commented out for demo):
-  const now = new Date();
-  const days = parseInt(timeRange.value.replace('d', ''));
-  const cutoffDate = new Date(now.getTime() - (days * 24 * 60 * 60 * 1000));
-  
-  return conversations.filter(conv => {
-    const convDate = new Date(conv.datetime);
-    return convDate >= cutoffDate;
-  });
-  */
 });
 
 // Calculate tag statistics
@@ -120,39 +104,10 @@ const totalUniqueTags = computed(() => {
 </script>
 
 <style scoped>
-.insights-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: var(--space-s);
-  padding: var(--space-s) var(--space-m);
-  border-bottom: 1px solid var(--color-surface-tint);
-  margin-bottom: var(--space-m);
-}
-
-.toolbar-start h1 {
-  margin: 0 0 var(--space-xs) 0;
-  font-size: var(--font-size-xl);
-  font-weight: 600;
-  color: var(--color-surface-fg);
-}
-
-.toolbar-start p {
-  margin: 0;
-  color: var(--color-surface-fg-secondary);
-  font-size: var(--font-size-s);
-}
-
-.toolbar-end select {
-  padding: var(--space-xs) var(--space-s);
-  border: 1px solid var(--color-surface-tint);
-  border-radius: var(--radius);
-  background-color: var(--color-surface);
-  color: var(--color-surface-fg);
-}
-
-.insights-content {
-  padding: 0 var(--space-m) var(--space-m);
+.insights-topics {
+  padding: var(--space-m);
+  height: 100%;
+  overflow-y: auto;
 }
 
 .insight-section {
@@ -277,13 +232,20 @@ const totalUniqueTags = computed(() => {
   color: var(--color-surface-fg);
 }
 
+.trend-placeholder {
+  padding: var(--space-xl) var(--space-m);
+  text-align: center;
+  background: var(--color-surface-secondary);
+  border-radius: var(--radius);
+  border: 2px dashed var(--color-surface-tint);
+}
+
+.trend-placeholder p {
+  color: var(--color-surface-fg-secondary);
+  font-style: italic;
+}
+
 @media (max-width: 768px) {
-  .insights-toolbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-s);
-  }
-  
   .tag-summary {
     flex-direction: column;
     gap: var(--space-s);
