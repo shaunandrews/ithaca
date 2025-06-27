@@ -13,7 +13,7 @@
         
         <div class="messages">
           <Message
-            v-for="(msg, idx) in conversation.messages"
+            v-for="(msg, idx) in conversationMessages"
             :key="idx"
             :message="msg"
             :index="idx"
@@ -124,6 +124,7 @@
   import { useRoute, useRouter } from 'vue-router';
   import { agents } from '@/data/agents.js';
   import { conversations } from '@/data/conversations.js';
+  import { messages } from '@/data/messages.js';
   import { XIcon, Hourglass } from 'lucide-vue-next';
   import SourceRating from '@/components/SourceRating.vue';
   import ClassifierRating from '@/components/ClassifierRating.vue';
@@ -148,6 +149,7 @@
     // The activityId now directly corresponds to the conversation id
     return conversations.find(c => c.id === activityId.value);
   });
+  const conversationMessages = computed(() => messages[activityId.value] || []);
 
   const selectedMessage = ref(null);
   const selectedIdx = ref(null);
@@ -161,8 +163,8 @@
     const selectedParam = route.query.selected;
     if (selectedParam !== undefined && conversation.value) {
       const idx = Number(selectedParam);
-      if (idx >= 0 && idx < conversation.value.messages.length) {
-        selectedMessage.value = conversation.value.messages[idx];
+      if (idx >= 0 && idx < conversationMessages.value.length) {
+        selectedMessage.value = conversationMessages.value[idx];
         selectedIdx.value = idx;
       }
     }
