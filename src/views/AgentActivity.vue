@@ -61,7 +61,7 @@
         justify-content: space-between;
         align-items: center;
         position: relative;
-        padding: var(--space-m);
+        padding: var(--space-s) var(--space-m);
     }
 
     header > * {
@@ -74,10 +74,5 @@
         transform: translateX(-50%);
         font-size: var(--font-size-m);
         font-weight: var(--font-weight-semibold);
-    }
-
-    .activity-list {
-        /* border: 1px solid var(--color-surface-tint-dark);
-        border-radius: var(--radius-l); */
     }
 </style>

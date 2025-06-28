@@ -891,6 +891,552 @@ export const messages = {
                 ],
             },
         },
+        {
+            role: 'user',
+            text: 'oh awesome, thanks! could you show me how to actually set up the contact form? i have a small business and really need this working',
+        },
+        {
+            role: 'agent',
+            text: 'Absolutely! The built-in contact form is perfect for small businesses. Here\'s how to set it up:\n\n**Step 1: Add the Form Block**\n1. Go to the page where you want the form (usually "Contact" page)\n2. Click the **+ (Add Block)** button\n3. Search for "Form" and select the **Form block**\n4. Choose a form layout (simple contact form works great)\n\n**Step 2: Customize Your Form**\n• **Add fields**: Name, Email, Subject, Message (these are standard)\n• **Optional fields**: Phone, Company, Website\n• **Required fields**: Mark essential fields as required\n\n**Step 3: Configure Settings**\n• Set the **submit button text** (e.g., "Send Message")\n• Add a **confirmation message** for after submission\n• Choose email notification settings\n\nThe form automatically includes spam protection and works on all devices. Would you like me to explain the email notification setup next?',
+            meta: {
+                thinkingTime: 4321,
+                sources: [
+                    {
+                        name: 'Contact form setup',
+                        description: 'Step-by-step guide to creating contact forms',
+                    },
+                    {
+                        name: 'Form block customization',
+                        description: 'How to customize form fields and settings',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Inquiry type',
+                        description: 'Help',
+                    },
+                    {
+                        name: 'Is legal inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is wpengine inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is ai data sharing question',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is very frustrated with wordpress com',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Language',
+                        description: 'En',
+                    },
+                    {
+                        name: 'Product',
+                        description: 'WordPress.com',
+                    },
+                    {
+                        name: 'Category',
+                        description: 'Contact forms and communication',
+                    },
+                ],
+            },
+        },
+        {
+            role: 'user',
+            text: 'yeah definitely! so when someone fills out the form, where does it actually go? like do I get an email or what?',
+        },
+        {
+            role: 'agent',
+            text: 'Great question! Here\'s how email notifications work with the contact form:\n\n**Default Email Settings:**\n• Form submissions go to your **WordPress.com account email**\n• You\'ll get an email notification for each submission\n• The sender\'s reply-to address is automatically set to their email\n\n**To customize email settings:**\n1. Click on your Form block\n2. In the block settings sidebar, find **"Email Settings"**\n3. You can change:\n   • **To email address** (where submissions go)\n   • **From name** (how it appears in your inbox)\n   • **Subject line** (customize the email subject)\n\n**Email format includes:**\n• All form field responses\n• Timestamp of submission\n• Sender\'s information\n• Sometimes IP address (for security)\n\n**Pro tip:** Set up a dedicated email like contact@yourbusiness.com using email forwarding, then point form notifications there for a more professional setup.\n\nDo you need help setting up email forwarding for your business?',
+            meta: {
+                thinkingTime: 3567,
+                sources: [
+                    {
+                        name: 'Form email notifications',
+                        description: 'How contact form emails work and customization options',
+                    },
+                    {
+                        name: 'Email management',
+                        description: 'Managing business email with WordPress.com',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Inquiry type',
+                        description: 'Help',
+                    },
+                    {
+                        name: 'Is legal inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is wpengine inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is ai data sharing question',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is very frustrated with wordpress com',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Language',
+                        description: 'En',
+                    },
+                    {
+                        name: 'Product',
+                        description: 'WordPress.com',
+                    },
+                    {
+                        name: 'Category',
+                        description: 'Contact forms and communication',
+                    },
+                ],
+            },
+        },
+        {
+            role: 'user',
+            text: 'ok cool that makes sense for the contact form. now about the booking thing - you mentioned calendly? can you tell me more about that stuff?',
+        },
+        {
+            role: 'agent',
+            text: 'Absolutely! External booking services are often the best solution, even better than plugins in many cases. Here are the top options:\n\n**Calendly (Most Popular)**\n• **Free plan**: 1 event type, unlimited bookings\n• **Paid plans**: Start at $8/month for multiple event types\n• **Features**: Calendar sync, automated emails, timezone detection\n• **Integration**: Easy embed code for WordPress.com\n\n**Acuity Scheduling**\n• **Free plan**: Limited features\n• **Paid plans**: Start at $14/month\n• **Features**: Advanced customization, intake forms, packages\n\n**SimplyBook.me**\n• **Free plan**: Up to 50 bookings/month\n• **Features**: Great for service businesses, payment integration\n\n**How to embed in WordPress.com:**\n1. Get your booking widget code from the service\n2. Add an **HTML block** to your page\n3. Paste the embed code\n4. Save and preview\n\nCalendly tends to work best for most small businesses. Would you like me to walk you through setting up a Calendly integration?',
+            meta: {
+                thinkingTime: 5678,
+                sources: [
+                    {
+                        name: 'Third-party booking services',
+                        description: 'Comparison of external booking and scheduling tools',
+                    },
+                    {
+                        name: 'Embedding external widgets',
+                        description: 'How to integrate third-party services into WordPress.com',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Inquiry type',
+                        description: 'Help',
+                    },
+                    {
+                        name: 'Is legal inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is wpengine inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is ai data sharing question',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is very frustrated with wordpress com',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Language',
+                        description: 'En',
+                    },
+                    {
+                        name: 'Product',
+                        description: 'WordPress.com',
+                    },
+                    {
+                        name: 'Category',
+                        description: 'Booking systems and integrations',
+                    },
+                ],
+            },
+        },
+        {
+            role: 'user',
+            text: 'yes! calendly sounds perfect actually. can you walk me through how to get it on my site? i do consulting so this would be huge for me',
+        },
+        {
+            role: 'agent',
+            text: 'Perfect choice for a consulting business! Calendly integrates beautifully with WordPress.com. Here\'s the complete setup:\n\n**Step 1: Set up your Calendly account**\n1. Go to calendly.com and create a free account\n2. Connect your Google/Outlook calendar\n3. Create your first event type (e.g., "30-minute consultation")\n4. Set your availability and preferences\n\n**Step 2: Get your embed code**\n1. In Calendly, go to your event type\n2. Click **"Share"** → **"Embed"**\n3. Choose **"Inline Embed"** for best results\n4. Copy the provided HTML code\n\n**Step 3: Add to your WordPress.com site**\n1. Edit the page where you want booking (e.g., "Book a Call")\n2. Add an **HTML block** (+  → search "HTML")\n3. Paste your Calendly embed code\n4. **Preview** to test, then **Publish**\n\n**Pro tip:** You can also use Calendly\'s popup or redirect options if you prefer those over inline embedding.\n\nThe setup takes about 10 minutes total. Need help with any specific part?',
+            meta: {
+                thinkingTime: 4444,
+                sources: [
+                    {
+                        name: 'Calendly integration guide',
+                        description: 'Step-by-step Calendly setup and embedding',
+                    },
+                    {
+                        name: 'HTML block usage',
+                        description: 'How to use HTML blocks for external integrations',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Inquiry type',
+                        description: 'Help',
+                    },
+                    {
+                        name: 'Is legal inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is wpengine inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is ai data sharing question',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is very frustrated with wordpress com',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Language',
+                        description: 'En',
+                    },
+                    {
+                        name: 'Product',
+                        description: 'WordPress.com',
+                    },
+                    {
+                        name: 'Category',
+                        description: 'Booking systems and integrations',
+                    },
+                ],
+            },
+        },
+        {
+            role: 'user',
+            text: 'this is super helpful btw! but wait, you mentioned something about a business plan earlier? what kind of booking plugins could i actually install with that?',
+        },
+        {
+            role: 'agent',
+            text: 'Great question! The Business plan ($25/month) opens up the entire WordPress.org plugin repository. Here are the top booking plugins you\'d gain access to:\n\n**Popular Booking Plugins:**\n\n**Bookly** (Premium)\n• Advanced appointment booking\n• Multiple staff members\n• Payment integration (PayPal, Stripe)\n• SMS notifications\n\n**WooCommerce Bookings** (Premium)\n• Perfect if you sell products + services\n• Integrates with WooCommerce for payments\n• Great for events, rentals, appointments\n\n**Amelia** (Premium)\n• Beautiful interface\n• Employee management\n• Package bookings\n• WhatsApp notifications\n\n**Easy Appointments** (Free)\n• Simple booking system\n• Google Calendar sync\n• Email notifications\n\n**Business Plan Benefits Beyond Plugins:**\n• 200GB storage\n• Advanced SEO tools\n• Google Analytics integration\n• Remove WordPress.com branding\n• Custom themes and unlimited customization\n\nHonestly, for most consultants, Calendly + Contact Form handles 90% of needs. But if you need advanced features like multiple staff, packages, or integrated payments, the Business plan might be worth it.\n\nWhat specific features are most important for your consulting business?',
+            meta: {
+                thinkingTime: 6789,
+                sources: [
+                    {
+                        name: 'WordPress Business plan features',
+                        description: 'Complete overview of Business plan capabilities and plugins',
+                    },
+                    {
+                        name: 'Booking plugin comparison',
+                        description: 'Popular booking and appointment plugins for WordPress',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Inquiry type',
+                        description: 'Help',
+                    },
+                    {
+                        name: 'Is legal inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is wpengine inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is ai data sharing question',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is very frustrated with wordpress com',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Language',
+                        description: 'En',
+                    },
+                    {
+                        name: 'Product',
+                        description: 'WordPress.com',
+                    },
+                    {
+                        name: 'Category',
+                        description: 'Plans and upgrades',
+                    },
+                ],
+            },
+        },
+        {
+            role: 'user',
+            text: 'hmm $25/month seems kinda steep though. how much does calendly cost compared to upgrading? trying to figure out what makes the most sense financially',
+        },
+        {
+            role: 'agent',
+            text: 'Smart thinking! Let me break down the costs so you can make an informed decision:\n\n**Calendly Pricing:**\n• **Free**: 1 event type, unlimited bookings, basic features\n• **Essentials**: $8/month - Multiple event types, integrations\n• **Professional**: $12/month - Advanced features, workflows\n• **Teams**: $16/month per user - Team scheduling, admin features\n\n**WordPress.com Business Plan:**\n• **$25/month** ($300/year) - Includes everything plus plugins\n\n**Cost Comparison Scenarios:**\n\n**Option 1: Current Plan + Calendly Free**\n• Cost: Your current plan + $0 = Most affordable\n• Good for: Simple consultation booking\n\n**Option 2: Current Plan + Calendly Paid**\n• Cost: Your current plan + $8-12/month\n• Good for: Professional booking with multiple services\n\n**Option 3: Business Plan**\n• Cost: $25/month\n• Good for: If you need advanced booking + other Business plan features\n\n**My recommendation:** Start with Calendly free or Essentials ($8). You can always upgrade later if you need more features. The Business plan makes sense if you also want:\n• Advanced SEO tools\n• Custom themes\n• Multiple plugins\n• Integrated payments\n\nDoes this help with your decision?',
+            meta: {
+                thinkingTime: 5555,
+                sources: [
+                    {
+                        name: 'WordPress.com pricing',
+                        description: 'Current pricing for all WordPress.com plans',
+                    },
+                    {
+                        name: 'Third-party service costs',
+                        description: 'Comparison of external booking service pricing',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Inquiry type',
+                        description: 'Help',
+                    },
+                    {
+                        name: 'Is legal inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is wpengine inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is ai data sharing question',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is very frustrated with wordpress com',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Language',
+                        description: 'En',
+                    },
+                    {
+                        name: 'Product',
+                        description: 'WordPress.com',
+                    },
+                    {
+                        name: 'Category',
+                        description: 'Pricing and plan comparison',
+                    },
+                ],
+            },
+        },
+        {
+            role: 'user',
+            text: 'gotcha, that makes sense. if i wanted to upgrade later though, is it like a pain to do or pretty straightforward?',
+        },
+        {
+            role: 'agent',
+            text: 'The upgrade process is very straightforward! Here\'s exactly how it works:\n\n**Upgrading Steps:**\n1. Go to your WordPress.com dashboard\n2. Click **Plans** in the sidebar\n3. Select **Business plan** and click **"Upgrade"**\n4. Choose billing cycle (monthly or annual for savings)\n5. Complete payment - upgrade is instant!\n\n**What happens immediately:**\n• All Business plan features activate instantly\n• Plugin installation becomes available\n• Storage increases to 200GB\n• Advanced customization tools unlock\n\n**No downtime or disruption:**\n• Your site stays online during upgrade\n• All content and settings remain exactly the same\n• Existing Calendly integration keeps working\n\n**Pro-rated billing:**\n• You only pay the difference for the current billing period\n• Next renewal will be at the new plan rate\n\n**Money-saving tip:**\n• Annual billing gives you 2 months free\n• Business annual = $25 × 10 months = $250 vs $300 monthly\n\n**You can also downgrade later** if you find you don\'t need all the features, though you\'ll lose plugin access.\n\nSo you can definitely start with your current plan + Calendly and upgrade anytime if your needs grow!',
+            meta: {
+                thinkingTime: 4321,
+                sources: [
+                    {
+                        name: 'Plan upgrade process',
+                        description: 'How to upgrade WordPress.com plans and what to expect',
+                    },
+                    {
+                        name: 'Billing and pricing',
+                        description: 'WordPress.com billing cycles and upgrade pricing',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Inquiry type',
+                        description: 'Help',
+                    },
+                    {
+                        name: 'Is legal inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is wpengine inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is ai data sharing question',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is very frustrated with wordpress com',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Language',
+                        description: 'En',
+                    },
+                    {
+                        name: 'Product',
+                        description: 'WordPress.com',
+                    },
+                    {
+                        name: 'Category',
+                        description: 'Plan upgrades and billing',
+                    },
+                ],
+            },
+        },
+        {
+            role: 'user',
+            text: 'perfect! ok so im thinking contact form first, then calendly. can you just give me like a quick rundown of what i need to do?',
+        },
+        {
+            role: 'agent',
+            text: 'Excellent plan! Here\'s your step-by-step action plan:\n\n**Phase 1: Contact Form Setup (10 minutes)**\n1. Go to your Contact page (or create one)\n2. Add **Form block** (+ button → search "Form")\n3. Customize fields: Name, Email, Subject, Message\n4. Set up email notifications to go to your business email\n5. Add confirmation message\n6. Test the form by submitting it yourself\n\n**Phase 2: Calendly Integration (15 minutes)**\n1. Sign up for free Calendly account at calendly.com\n2. Connect your calendar (Google/Outlook)\n3. Create your consultation event type\n4. Get embed code (Share → Embed → Inline)\n5. Create "Book a Call" page on your site\n6. Add **HTML block** and paste Calendly code\n7. Preview and publish\n\n**Phase 3: Test Everything**\n• Submit a test contact form\n• Book a test appointment through Calendly\n• Check that emails are working correctly\n\n**Total time:** About 30 minutes for both!\n\nThis gives you a professional contact + booking system without any monthly fees to start. You can always add premium features later as your business grows.\n\nReady to get started?',
+            meta: {
+                thinkingTime: 3333,
+                sources: [
+                    {
+                        name: 'Implementation planning',
+                        description: 'Best practices for setting up contact and booking systems',
+                    },
+                    {
+                        name: 'Small business setup guide',
+                        description: 'Essential website features for consulting businesses',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Inquiry type',
+                        description: 'Help',
+                    },
+                    {
+                        name: 'Is legal inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is wpengine inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is ai data sharing question',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is very frustrated with wordpress com',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Language',
+                        description: 'En',
+                    },
+                    {
+                        name: 'Product',
+                        description: 'WordPress.com',
+                    },
+                    {
+                        name: 'Category',
+                        description: 'Implementation and setup',
+                    },
+                ],
+            },
+        },
+        {
+            role: 'user',
+            text: 'dude this has been so helpful! one more thing though - is there anything else i should definitely have on my consulting site? like am i missing something obvious?',
+        },
+        {
+            role: 'agent',
+            text: 'So glad I could help! For a consulting website, you\'ve got the essentials covered with contact forms and booking. Here are a few more features that can really enhance your professional presence:\n\n**Essential Additions:**\n\n**Testimonials Section**\n• Use "Quote" blocks or "Columns" block with client quotes\n• Add client photos for credibility\n• Include client names and companies\n\n**About Page with Professional Bio**\n• Your expertise and background\n• Professional headshot\n• Client success stories\n\n**Services/Pricing Page**\n• Clear description of what you offer\n• Transparent pricing (builds trust)\n• Package options if applicable\n\n**Blog for Content Marketing**\n• Share your expertise\n• Improve SEO\n• Build authority in your field\n\n**Social Proof Elements**\n• Client logos\n• Certifications\n• Case studies\n\n**Professional Email**\n• Consider yourname@yourdomain.com\n• Use email forwarding (included with domain)\n\n**Analytics** (Premium+ plans)\n• Track visitor behavior\n• See which pages convert best\n\nYour current plan + these content additions will create a powerful consulting website. The contact form and Calendly booking will handle the conversion side perfectly!\n\nNeed help with any of these additional features?',
+            meta: {
+                thinkingTime: 6666,
+                sources: [
+                    {
+                        name: 'Consulting website best practices',
+                        description: 'Essential features for professional service websites',
+                    },
+                    {
+                        name: 'Website conversion optimization',
+                        description: 'Features that improve client acquisition for consultants',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Inquiry type',
+                        description: 'Help',
+                    },
+                    {
+                        name: 'Is legal inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is wpengine inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is ai data sharing question',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is very frustrated with wordpress com',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Language',
+                        description: 'En',
+                    },
+                    {
+                        name: 'Product',
+                        description: 'WordPress.com',
+                    },
+                    {
+                        name: 'Category',
+                        description: 'Website optimization and features',
+                    },
+                ],
+            },
+        },
+        {
+            role: 'user',
+            text: 'omg thank you SO much! you basically gave me a whole game plan. i actually feel like i can do this now lol',
+        },
+        {
+            role: 'agent',
+            text: 'You\'re so welcome! I\'m thrilled I could help you create a clear plan for your consulting website. You\'ve got all the pieces you need:\n\n✅ **Contact form** - Professional communication\n✅ **Calendly booking** - Streamlined scheduling\n✅ **Upgrade path** - Room to grow when needed\n✅ **Additional features** - To enhance your professional presence\n\n**Remember:**\n• Start simple with the contact form and free Calendly\n• Test everything before going live\n• You can always add features as your business grows\n• Don\'t hesitate to reach out if you run into any setup questions\n\n**Quick tip:** Once you get the contact form and Calendly working, focus on creating great content for your About and Services pages. That\'s what will really convert visitors into clients!\n\nBest of luck with your consulting business! Your professional website setup is going to make a great impression on potential clients. 🚀',
+            meta: {
+                thinkingTime: 2222,
+                sources: [
+                    {
+                        name: 'Customer success',
+                        description: 'Best practices for helping clients succeed with their websites',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Inquiry type',
+                        description: 'Help',
+                    },
+                    {
+                        name: 'Is legal inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is wpengine inquiry',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is ai data sharing question',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Is very frustrated with wordpress com',
+                        description: 'False',
+                    },
+                    {
+                        name: 'Language',
+                        description: 'En',
+                    },
+                    {
+                        name: 'Product',
+                        description: 'WordPress.com',
+                    },
+                    {
+                        name: 'Category',
+                        description: 'Customer success and support',
+                    },
+                ],
+            },
+        },
     ],
     26: [
         {

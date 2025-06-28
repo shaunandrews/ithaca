@@ -158,7 +158,7 @@
     }
 
     .activity-list-item:hover .gravatar {
-        transform: scale(1.3) rotate(3deg);
+        transform: scale(1.1) rotate(3deg);
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
 

@@ -26,7 +26,7 @@
     .summary {
         padding: var(--space-s) var(--space-l);
         gap: var(--space-xs);
-        border: 1.5px solid var(--color-surface-tint-light);
+        border: 1.5px solid var(--color-surface-tint);
         border-radius: var(--radius-xl);
         background: repeating-linear-gradient(
             45deg,
@@ -55,5 +55,6 @@
 
     p {
         line-height: var(--line-height-relaxed);
+        text-shadow: 0 3px 1px var(--color-surface);
     }
 </style>
