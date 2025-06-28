@@ -1,113 +1,60 @@
 <template>
-    <div class="agents-summary vstack">
-        <div class="summary-header">
-            <h3>All Agents Performance</h3>
-            <p>
-                Summary of performance metrics across {{ totalAgents }} active
-                agents
-            </p>
+    <div class="agents-summary hstack">
+        <div class="stat hstack">
+            <div class="stat-value">
+                <TrendingUp size="16" stroke-width="1.5" />
+                {{ totalConversations.toLocaleString() }}
+            </div>
+            <label>Total conversations</label>
         </div>
-
-        <div class="stats hstack">
-            <div class="stat vstack">
-                <div class="stat-primary hstack">
-                    <label>Total conversations</label>
-                    <div class="stat-primary-value">
-                        {{ totalConversations.toLocaleString() }}
-                    </div>
-                </div>
-
-                <div class="stat-secondary hstack">
-                    <label>Avg. response time</label>
-                    <div class="stat-secondary-value">
-                        {{ formatResponseTime(avgResponseTime) }}
-                    </div>
-                </div>
-                <div class="stat-secondary hstack">
-                    <label>Avg. uptime</label>
-                    <div class="stat-secondary-value">{{ avgUptime }}%</div>
-                </div>
+        <div class="stat hstack">
+            <div class="stat-value">
+                <TrendingUp size="16" stroke-width="1.5" />
+                {{ formatResponseTime(avgResponseTime) }}
             </div>
-
-            <div class="stat vstack">
-                <div class="stat-primary hstack">
-                    <label>Avg. resolution rate</label>
-                    <div class="stat-primary-value">
-                        {{ avgResolutionRate }}%
-                    </div>
-                </div>
-                <div class="stat-secondary hstack">
-                    <label>Avg. first contact resolution</label>
-                    <div class="stat-secondary-value">
-                        {{ avgFirstContactResolution }}%
-                    </div>
-                </div>
-                <div class="stat-secondary hstack">
-                    <label>Avg. flag rate</label>
-                    <div class="stat-secondary-value">{{ avgFlagRate }}%</div>
-                </div>
-            </div>
-
-            <div class="stat vstack">
-                <div class="stat-primary hstack">
-                    <label>Avg. quality score</label>
-                    <div class="stat-primary-value">
-                        {{ avgQualityScore }}/5
-                    </div>
-                </div>
-                <div class="stat-secondary hstack">
-                    <label>Avg. satisfaction rating</label>
-                    <div class="stat-secondary-value">
-                        {{ avgSatisfactionRating }}/5
-                    </div>
-                </div>
-                <div class="stat-secondary hstack">
-                    <label>Avg. correction rate</label>
-                    <div class="stat-secondary-value">
-                        {{ avgCorrectionRate }}%
-                    </div>
-                </div>
-            </div>
+            <label>Avg. response time</label>
         </div>
-
-        <div class="insights hstack">
-            <div class="insight-card vstack">
-                <h4>Top Performer</h4>
-                <div class="insight-content">
-                    <div class="agent-name">{{ topPerformer?.title }}</div>
-                    <div class="metric">
-                        {{ topPerformer?.stats?.qualityScore }}/5 quality score
-                    </div>
-                </div>
+        <div class="stat hstack">
+            <div class="stat-value">
+                <TrendingDown size="16" stroke-width="1.5" />
+                {{ avgUptime }}%
             </div>
-
-            <div class="insight-card vstack">
-                <h4>Most Active</h4>
-                <div class="insight-content">
-                    <div class="agent-name">{{ mostActive?.title }}</div>
-                    <div class="metric">
-                        {{
-                            mostActive?.stats?.totalConversations?.toLocaleString()
-                        }}
-                        conversations
-                    </div>
-                </div>
+            <label>Avg. uptime</label>
+        </div>
+        <div class="stat hstack">
+            <div class="stat-value">
+                <TrendingUp size="16" stroke-width="1.5" />
+                {{ avgResolutionRate }}%
             </div>
-
-            <div class="insight-card vstack">
-                <h4>Fastest Response</h4>
-                <div class="insight-content">
-                    <div class="agent-name">{{ fastestResponse?.title }}</div>
-                    <div class="metric">
-                        {{
-                            formatResponseTime(
-                                fastestResponse?.stats?.avgResponseTime
-                            )
-                        }}
-                        avg
-                    </div>
-                </div>
+            <label>Avg. resolution rate</label>
+        </div>
+        <div class="stat hstack">
+            <div class="stat-value">
+                <TrendingUp size="16" stroke-width="1.5" />
+                {{ avgFirstContactResolution }}%
             </div>
+            <label>Avg. first contact resolution</label>
+        </div>
+        <div class="stat hstack">
+            <div class="stat-value">
+                <TrendingUp size="16" stroke-width="1.5" />
+                {{ avgQualityScore }}/5
+            </div>
+            <label>Avg. quality score</label>
+        </div>
+        <div class="stat hstack">
+            <div class="stat-value">
+                <TrendingUp size="16" stroke-width="1.5" />
+                {{ avgSatisfactionRating }}/5
+            </div>
+            <label>Avg. satisfaction rating</label>
+        </div>
+        <div class="stat hstack">
+            <div class="stat-value">
+                <TrendingUp size="16" stroke-width="1.5" />
+                {{ avgCorrectionRate }}%
+            </div>
+            <label>Avg. correction rate</label>
         </div>
     </div>
 </template>
@@ -115,7 +62,7 @@
 <script setup>
     import { computed } from 'vue';
     import { agents } from '@/data/agents.js';
-
+    import { TrendingUp, TrendingDown } from 'lucide-vue-next';
     const totalAgents = computed(() => agents.length);
 
     const totalConversations = computed(() => {
@@ -225,98 +172,28 @@
 
 <style scoped>
     .agents-summary {
-        gap: var(--space-l);
-        background-color: var(--color-surface);
-        border: 1px solid var(--color-surface-tint-dark);
-        border-radius: var(--radius-l);
-        padding: var(--space-m);
+        flex-wrap: wrap;
     }
-
-    .summary-header h3 {
-        font-size: var(--font-size-l);
-        font-weight: var(--font-weight-semibold);
-        margin: 0;
-    }
-
-    .summary-header p {
-        color: var(--color-chrome-fg-secondary);
-        margin: var(--space-xxs) 0 0 0;
-    }
-
-    .stats {
-        gap: var(--space-m);
-    }
-
     .stat {
-        flex: 1;
-        background-color: var(--color-surface-tint);
-        border: 1px solid var(--color-surface-tint-dark);
-        border-radius: var(--radius-l);
-        padding: var(--space-s) var(--space-m);
-    }
-
-    .stat-primary {
-        justify-content: space-between;
-        margin-bottom: var(--space-xs);
-    }
-
-    .stat-primary label {
-        font-size: var(--font-size-m);
-        font-weight: var(--font-weight-semibold);
-    }
-
-    .stat-primary-value {
-        font-size: var(--font-size-l);
-        font-weight: var(--font-weight-bold);
-    }
-
-    .stat-secondary {
-        font-size: var(--font-size-s);
-        padding: var(--space-xxs) 0;
-        justify-content: space-between;
-    }
-
-    .stat-secondary label {
-        color: var(--color-chrome-fg-secondary);
-    }
-
-    .stat-secondary-value {
-        font-weight: var(--font-weight-semibold);
-        color: var(--color-chrome-fg-secondary);
-    }
-
-    .insights {
-        gap: var(--space-m);
-    }
-
-    .insight-card {
-        flex: 1;
-        background-color: var(--color-surface-tint);
-        border: 1px solid var(--color-surface-tint-dark);
-        border-radius: var(--radius-l);
-        padding: var(--space-s) var(--space-m);
+        flex: 1 1 calc(25% - var(--space-xs) * 3 / 4);
+        min-width: calc(25% - var(--space-xs) * 3 / 4);
+        max-width: calc(25% - var(--space-xs) * 3 / 4);
+        padding-bottom: var(--space-xxs);
         gap: var(--space-xs);
-    }
-
-    .insight-card h4 {
         font-size: var(--font-size-s);
-        color: var(--color-chrome-fg-secondary);
-        font-weight: var(--font-weight-medium);
-        margin: 0;
+        color: var(--color-surface-fg-tertiary);
     }
 
-    .insight-content {
+    .stat:hover {
+        color: var(--color-chrome-fg);
+    }
+
+    .stat-value {
         display: flex;
-        flex-direction: column;
         gap: var(--space-xxs);
-    }
-
-    .agent-name {
+        align-items: center;
+        justify-content: flex-end;
+        min-width: 60px;
         font-weight: var(--font-weight-semibold);
-    }
-
-    .metric {
-        font-size: var(--font-size-s);
-        color: var(--color-chrome-fg-secondary);
     }
 </style>

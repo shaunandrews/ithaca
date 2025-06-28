@@ -20,6 +20,8 @@
                 <div class="agent-info">
                     <div class="meta-item agent-name">WP.com Support Chat</div>
                     <div class="meta-item agent-version">v1.02</div>
+                    <div class="meta-item sources-count">{{ message.meta?.sources?.length || 0 }} sources</div>
+                    <div class="meta-item classifiers-count">{{ message.meta?.classifiers?.length || 0 }} classifiers</div>
                     <div class="meta-item agent-actions">
                         <button
                             class="action-button"

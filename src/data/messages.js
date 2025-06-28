@@ -1730,4 +1730,653 @@ export const messages = {
             },
         },
     ],
+    31: [
+        {
+            role: 'user',
+            text: "I run a food blog and I'm feeling stuck. I need ideas for summer content but everything feels repetitive. Can you help me brainstorm?",
+        },
+        {
+            role: 'agent',
+            text: "I'd love to help refresh your food blog content for summer! Let me analyze your blog style and create some exciting seasonal ideas.\n\n**Summer Food Content Ideas:**\n\n🥗 **\"5-Minute Cold Soups for Hot Days\"** - Perfect for busy summer schedules\n🍉 **\"Unexpected Fruit & Herb Combinations\"** - Watermelon basil, peach thyme, etc.\n🔥 **\"Grilling Beyond Burgers: Surprising Foods to BBQ\"** - Grilled fruit, cheese, bread\n🧊 **\"No-Churn Ice Cream Flavors You Haven't Tried\"** - Lavender honey, brown butter, etc.\n🥤 **\"Homemade Electrolyte Drinks\"** - Natural sports drinks with coconut water\n\n**Content Calendar Suggestion:**\n- Monday: Quick recipes (5-min theme)\n- Wednesday: Seasonal produce spotlights\n- Friday: Weekend project recipes (ferments, preserves)\n\n**SEO tip:** Target \"summer + [ingredient]\" keywords - they peak in June-August!\n\nWhich direction excites you most? I can dive deeper into any of these!",
+            meta: {
+                thinkingTime: 2345,
+                sources: [
+                    {
+                        name: 'Food Blog Best Practices',
+                        description: 'Seasonal content strategies',
+                    },
+                    {
+                        name: 'SEO for Food Blogs',
+                        description: 'Keyword research and optimization',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Content Type',
+                        description: 'Food Blog',
+                    },
+                    {
+                        name: 'Season',
+                        description: 'Summer',
+                    },
+                ],
+            },
+        },
+        {
+            role: 'user',
+            text: 'I love the grilling idea! Most food bloggers just do burgers and hot dogs. Can you help me plan out a whole series?',
+        },
+        {
+            role: 'agent',
+            text: '**"Grilling Beyond Burgers" Series - 6 Week Plan:**\n\n**Week 1: "Grilled Breakfast Revolution"**\n• Grilled French toast with berry compote\n• BBQ breakfast hash in cast iron\n• SEO: "grilled breakfast recipes"\n\n**Week 2: "Surprising Vegetables"** \n• Grilled romaine Caesar salad\n• BBQ corn 3 ways (Mexican, Asian, Mediterranean)\n• SEO: "grilled vegetable ideas"\n\n**Week 3: "Fruits Get Fired Up"**\n• Grilled peach & burrata salad\n• BBQ pineapple with chili lime\n• SEO: "grilled fruit desserts"\n\n**Week 4: "Cheese Please"**\n• Grilled halloumi with herbs\n• BBQ brie with honey and nuts\n• SEO: "grilled cheese recipes" (different than sandwiches!)\n\n**Week 5: "Bread & Beyond"**\n• Grilled naan pizza\n• BBQ garlic bread variations\n• SEO: "grilled bread recipes"\n\n**Week 6: "Sweet Finale"**\n• Grilled pound cake s\'mores\n• BBQ banana boats\n• SEO: "grilled desserts summer"\n\n**Publishing Schedule:** Every Tuesday at 10 AM (prime food blog traffic time)\n\nWant me to detail any specific week?',
+            meta: {
+                thinkingTime: 3456,
+                sources: [
+                    {
+                        name: 'Content Series Planning',
+                        description: 'Multi-week blog series strategy',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Content Planning',
+                        description: 'Series',
+                    },
+                ],
+            },
+        },
+    ],
+    32: [
+        {
+            role: 'user',
+            text: 'I wrote this post about sustainable tourism but it feels boring. How can I make this more engaging for my travel blog readers?',
+        },
+        {
+            role: 'agent',
+            text: "Let me help you transform that sustainable tourism post into something captivating! Here are some engagement strategies:\n\n**Hook Improvements:**\n❌ \"Sustainable tourism is important\"\n✅ \"I accidentally destroyed a coral reef with sunscreen (and how you can avoid my mistake)\"\n\n**Structure Makeover:**\n• **Start with a story** - Your worst/best sustainable travel moment\n• **Use the rule of 3** - 3 easy swaps, 3 destinations doing it right\n• **Add interactive elements** - \"Calculate your travel footprint\" section\n\n**Content Enhancements:**\n🏝️ **Destination spotlights** - \"3 Places That Made Me Rethink Travel\"\n💡 **Actionable tips** - \"Pack these 5 items to cut waste in half\"\n📱 **Modern examples** - Apps, websites, brands travelers actually use\n\n**Engagement Boosters:**\n• Ask readers: \"What's your biggest sustainable travel challenge?\"\n• Create a checklist they can download\n• Share specific costs: \"This eco-lodge costs $40 less than...\"\n\nCan you share your current intro? I'll show you exactly how to punch it up!",
+            meta: {
+                thinkingTime: 4567,
+                sources: [
+                    {
+                        name: 'Travel Blog Engagement',
+                        description: 'Writing techniques for travel content',
+                    },
+                    {
+                        name: 'Sustainable Tourism Content',
+                        description: 'Making environmental content compelling',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Content Type',
+                        description: 'Travel Blog',
+                    },
+                    {
+                        name: 'Writing Help',
+                        description: 'Engagement',
+                    },
+                ],
+            },
+        },
+        {
+            role: 'user',
+            text: 'Here\'s my intro: "Sustainable tourism is becoming increasingly important as more travelers become aware of their environmental impact. This post will discuss ways to travel more responsibly."',
+        },
+        {
+            role: 'agent',
+            text: "That intro is very informative but lacks the emotional hook that makes readers want to keep reading! Let me show you some rewrite options:\n\n**Option 1: Story-driven**\n\"Three years ago, I thought I was being an eco-conscious traveler. I used reef-safe sunscreen, carried a reusable water bottle, and even chose eco-labeled hotels. Then I learned my 'sustainable' resort was dumping waste into the ocean every night. That wake-up call changed everything about how I travel—and I'm about to share the 7 game-changing discoveries that transformed me from fake eco-tourist to genuine responsible traveler.\"\n\n**Option 2: Problem/Solution**\n\"Want to travel responsibly but tired of articles telling you to 'just offset your flights'? After visiting 30+ countries and making every sustainable travel mistake in the book, I've figured out what actually works (and what's just greenwashing). Here's the honest guide to sustainable tourism that no one else is talking about.\"\n\n**Option 3: Curiosity-driven**\n\"The most 'sustainable' hotel I ever stayed at had no hot water, composting toilets, and cost $300/night. The least sustainable one had every amenity imaginable for $50. Guess which one I'd choose again? The answer might surprise you...\"\n\n**Key changes:**\n• Personal stakes/experience\n• Specific details (numbers, examples)\n• Promise of unique value\n• Conversational tone\n\nWhich style feels most like your voice?",
+            meta: {
+                thinkingTime: 5678,
+                sources: [
+                    {
+                        name: 'Blog Intro Writing',
+                        description: 'Hook techniques and rewriting strategies',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Writing Improvement',
+                        description: 'Introduction',
+                    },
+                ],
+            },
+        },
+    ],
+    33: [
+        {
+            role: 'user',
+            text: 'I write about tech but my blog posts aren\'t getting much traffic. I feel like I\'m writing into the void. What am I doing wrong with SEO?',
+        },
+        {
+            role: 'agent',
+            text: "Tech blogs face unique SEO challenges! Let me audit your approach and give you specific improvements:\n\n**Common Tech Blog SEO Mistakes:**\n\n🔍 **Keyword Problems:**\n• Writing about \"AI\" instead of \"AI tools for small business 2024\"\n• Targeting super competitive terms like \"best programming language\"\n• Ignoring long-tail keywords your audience actually searches\n\n📝 **Content Structure Issues:**\n• No clear problem/solution framework\n• Missing practical examples/code snippets\n• Too much jargon without explanation\n\n🔗 **Technical SEO Gaps:**\n• No internal linking between related posts\n• Missing meta descriptions\n• Images without descriptive alt text\n• No featured snippets optimization\n\n**Quick Wins for Tech Blogs:**\n1. **Target specific tools/versions** - \"React 18 vs React 17\" gets more traffic than \"React updates\"\n2. **Answer developer questions** - \"How to fix [specific error message]\"\n3. **Create comparison posts** - \"X vs Y\" performs incredibly well\n4. **Add code examples** - Google loves practical content\n\n**Can you share:**\n• Your last 3 post titles?\n• Your main topic focus?\n\nI'll give you specific keyword suggestions and optimization tips!",
+            meta: {
+                thinkingTime: 3456,
+                sources: [
+                    {
+                        name: 'Tech Blog SEO',
+                        description: 'SEO strategies for technical content',
+                    },
+                    {
+                        name: 'Keyword Research',
+                        description: 'Finding low-competition tech keywords',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Content Type',
+                        description: 'Tech Blog',
+                    },
+                    {
+                        name: 'SEO Help',
+                        description: 'Traffic Growth',
+                    },
+                ],
+            },
+        },
+    ],
+    34: [
+        {
+            role: 'user',
+            text: 'BUY CHEAP FOLLOWERS NOW!!! GET 10K INSTAGRAM FOLLOWERS FOR $5!!! CLICK HERE: spam-link.fake',
+        },
+        {
+            role: 'agent',
+            text: "**Post Removed - Community Guidelines Violation**\n\nThis post has been automatically removed for violating our community guidelines regarding:\n• Spam and promotional content\n• Unrelated commercial advertising\n• Suspicious external links\n\n**Account Status:** Temporary posting restrictions applied\n**Review Process:** This action will be reviewed by our moderation team\n\n**Next Steps:**\nIf you believe this was an error, please contact our support team. Future violations may result in permanent account restrictions.\n\n**Community Guidelines Reminder:**\nOur forums are for WordPress.com-related discussions and support. Please keep posts relevant and helpful to the community.\n\n---\n*This is an automated response. Do not reply to this message.*",
+            meta: {
+                thinkingTime: 1234,
+                sources: [
+                    {
+                        name: 'Community Guidelines',
+                        description: 'WordPress.com forum posting rules',
+                    },
+                    {
+                        name: 'Spam Detection',
+                        description: 'Automated moderation system',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Moderation Action',
+                        description: 'Spam Removal',
+                    },
+                    {
+                        name: 'Policy Violation',
+                        description: 'Commercial Spam',
+                    },
+                ],
+            },
+        },
+    ],
+    35: [
+        {
+            role: 'user',
+            text: 'Hi everyone! I just bought a domain from GoDaddy and I want to connect it to my WordPress.com site. How do I do this? I\'m pretty new to all this website stuff.',
+        },
+        {
+            role: 'agent',
+            text: "Welcome to the WordPress.com community! Connecting a custom domain is a great step for your website. Here's exactly how to do it:\n\n**Step-by-Step Domain Connection:**\n\n1. **In your WordPress.com dashboard:**\n   • Go to **Settings → Domains**\n   • Click **\"Add a domain\"**\n   • Enter your GoDaddy domain name\n\n2. **Choose connection method (I recommend nameservers):**\n   • Update your GoDaddy nameservers to:\n     - `ns1.wordpress.com`\n     - `ns2.wordpress.com`\n     - `ns3.wordpress.com`\n\n3. **In your GoDaddy account:**\n   • Find your domain settings\n   • Look for \"Nameservers\" or \"DNS\"\n   • Replace the current nameservers with the WordPress.com ones above\n\n**Wait time:** Changes take 24-48 hours to fully propagate\n\n**📖 Official Guide:** [Connecting Your Domain - WordPress.com Support](https://wordpress.com/support/domains/connect-existing-domain/)\n\n**Need help with the GoDaddy part?** They have a helpful guide for changing nameservers in their knowledge base.\n\nLet me know if you get stuck at any step - we're here to help! 🙂",
+            meta: {
+                thinkingTime: 2345,
+                sources: [
+                    {
+                        name: 'Domain Connection Guide',
+                        description: 'Official WordPress.com domain setup documentation',
+                    },
+                    {
+                        name: 'GoDaddy Integration',
+                        description: 'Nameserver configuration steps',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Support Type',
+                        description: 'Domain Setup',
+                    },
+                    {
+                        name: 'User Level',
+                        description: 'Beginner',
+                    },
+                ],
+            },
+        },
+        {
+            role: 'user',
+            text: 'Thanks! I found the nameserver section in GoDaddy. Should I delete the old nameservers first or just replace them?',
+        },
+        {
+            role: 'agent',
+            text: "Great question! You'll want to **replace** the existing nameservers, not just add to them.\n\n**In GoDaddy:**\n1. **Remove all existing nameservers** (usually 2-4 entries like `ns1.godaddy.com`)\n2. **Add the 3 WordPress.com nameservers:**\n   - `ns1.wordpress.com`\n   - `ns2.wordpress.com` \n   - `ns3.wordpress.com`\n3. **Save the changes**\n\n**Important:** Don't worry if your site goes offline briefly during the transition - this is normal!\n\n**Pro tip:** Take a screenshot of your current GoDaddy nameservers before changing them, just in case you need to revert for any reason.\n\nOnce you save the changes in GoDaddy, head back to your WordPress.com dashboard and complete the domain addition process there. The system will verify the connection automatically.\n\nHow's it going so far? Any other questions about the setup process?",
+            meta: {
+                thinkingTime: 1234,
+                sources: [
+                    {
+                        name: 'Nameserver Management',
+                        description: 'Best practices for DNS changes',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Follow-up Support',
+                        description: 'Technical clarification',
+                    },
+                ],
+            },
+        },
+    ],
+    36: [
+        {
+            role: 'user',
+            text: 'Why can\'t I change my theme colors? I\'ve been trying for hours and nothing is working. This is so frustrating!',
+        },
+        {
+            role: 'agent',
+            text: "I understand your frustration! Theme customization can be tricky. This is actually a very common question, and we have some great existing discussions that should help you out.\n\n**This topic has been covered extensively here:**\n\n🎨 **[Comprehensive Theme Customization Guide](https://wordpress.com/forums/topic/theme-colors-complete-guide)** *(146 replies, last updated today)*\n- Covers all plan types and theme variations\n- Step-by-step screenshots\n- Troubleshooting for common issues\n\n🔧 **[\"Colors Not Changing\" Troubleshooting](https://wordpress.com/forums/topic/theme-colors-not-working-solutions)** *(89 replies)*\n- Specific solutions for the most common problems\n- Plan-specific limitations explained\n\n**Quick answer:** The method depends on your plan and theme type. Most issues are related to:\n• Plan limitations (Custom CSS requires Premium+)\n• Block themes vs classic themes (different customization methods)\n• Browser caching\n\n**I'd recommend starting with the first thread above** - it has the most comprehensive solutions and recent updates.\n\nIf you still have issues after checking those resources, feel free to start a new thread with your specific theme name and plan type!",
+            meta: {
+                thinkingTime: 1567,
+                sources: [
+                    {
+                        name: 'Forum Search',
+                        description: 'Existing theme customization discussions',
+                    },
+                    {
+                        name: 'Duplicate Topic Policy',
+                        description: 'Community guidelines for redundant posts',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Topic Redirect',
+                        description: 'Duplicate Question',
+                    },
+                    {
+                        name: 'Community Management',
+                        description: 'Resource Direction',
+                    },
+                ],
+            },
+        },
+    ],
+    37: [
+        {
+            role: 'user',
+            text: 'HELP! My WooCommerce site is completely broken after I installed a new plugin. Everything is showing errors and I can\'t access my admin. I have customers trying to order and I\'m losing money every minute this is down!',
+        },
+        {
+            role: 'agent',
+            text: "I understand this is urgent and stressful! Let's get your site back online immediately using your Jetpack backup.\n\n**Emergency Restoration Steps:**\n\n1. **Access Jetpack Cloud:**\n   • Go to [cloud.jetpack.com](https://cloud.jetpack.com)\n   • Log in with your WordPress.com account\n   • Select your broken site\n\n2. **Find Your Last Good Backup:**\n   • Click **\"Backup\"** in the menu\n   • Look for a backup from **before** you installed the plugin\n   • I recommend yesterday's backup if available\n\n3. **Restore Your Site:**\n   • Click **\"Restore to this point\"**\n   • **IMPORTANT:** This will revert everything to that backup point\n   • The process takes 5-15 minutes\n\n**While it restores:**\n• Your site may show a maintenance message\n• Don't make any changes during restoration\n• You'll get an email when it's complete\n\n**After restoration:**\n• Test your checkout process\n• Check that orders are working\n• Review what plugin caused the issue\n\n**⚠️ Note:** Any content/orders added since the backup point will be lost, but this gets you back online fastest.\n\nNeed help finding the backup section, or do you want me to walk you through any of these steps?",
+            meta: {
+                thinkingTime: 4567,
+                sources: [
+                    {
+                        name: 'Jetpack Backup Restoration',
+                        description: 'Emergency site recovery procedures',
+                    },
+                    {
+                        name: 'WooCommerce Recovery',
+                        description: 'E-commerce site emergency protocols',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Support Type',
+                        description: 'Emergency Site Recovery',
+                    },
+                    {
+                        name: 'Product',
+                        description: 'Jetpack Backup',
+                    },
+                ],
+            },
+        },
+        {
+            role: 'user',
+            text: 'Okay I found the backup section and I can see backups from yesterday. Should I definitely restore to yesterday or is there a more recent one that might be safer?',
+        },
+        {
+            role: 'agent',
+            text: "Smart question! Let's look at this strategically:\n\n**Check Your Backup Timeline:**\n• **When exactly** did you install the problematic plugin?\n• **What time today** did the errors start?\n\n**Backup Strategy:**\n\n**If the plugin was installed TODAY:**\n✅ **Restore to yesterday's backup** (safest choice)\n• Guaranteed to be before the problem\n• You'll lose today's work, but site will be stable\n\n**If you see a backup from early TODAY (before plugin install):**\n⚠️ **Could use today's early backup** (if you're certain about timing)\n• Less data loss\n• Only if you're 100% sure when the plugin was installed\n\n**I recommend yesterday's backup because:**\n• It's definitely before the problem occurred\n• Better safe than sorry with customer orders at stake\n• You can always re-add content, but broken checkout = lost revenue\n\n**Before you restore:**\n• Take note of any orders/content from today that you'll need to manually re-enter\n• Consider downloading today's backup file as reference\n\n**Ready to proceed with yesterday's backup?** Click that \"Restore to this point\" button and let's get your store back online!",
+            meta: {
+                thinkingTime: 3456,
+                sources: [
+                    {
+                        name: 'Backup Selection Strategy',
+                        description: 'Choosing the right restore point',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Technical Guidance',
+                        description: 'Risk Assessment',
+                    },
+                ],
+            },
+        },
+    ],
+    38: [
+        {
+            role: 'user',
+            text: 'I want to secure my blog better. I keep hearing about all these security breaches and I\'m worried about hackers. What can Jetpack do to help protect me?',
+        },
+        {
+            role: 'agent',
+            text: "Great question! Security is super important, and Jetpack has excellent tools to protect your blog. Let me walk you through the key security features:\n\n**🛡️ Core Jetpack Security Features:**\n\n**1. Brute Force Protection** (Already active!)\n• Blocks repeated login attempts\n• Automatically protects against password attacks\n• No setup required - works in the background\n\n**2. Malware Scanning** \n• Daily automatic scans for malicious code\n• Alerts you immediately if anything suspicious is found\n• Available with Jetpack Security plans\n\n**3. Two-Factor Authentication (2FA)**\n• Adds extra security layer to your login\n• Works with apps like Google Authenticator\n• Even if password is compromised, site stays secure\n\n**4. Security Monitoring**\n• Real-time monitoring of your site\n• Instant notifications of security issues\n• Detailed security reports\n\n**Quick Setup Recommendations:**\n1. **Enable 2FA** (5 minutes) - biggest security impact\n2. **Review your security dashboard** in Jetpack\n3. **Set up security notifications** via email\n\n**Want me to help you set up 2FA right now?** It's the single best thing you can do for blog security!\n\nWhat specific security concerns do you have? I can tailor my recommendations to your situation.",
+            meta: {
+                thinkingTime: 3456,
+                sources: [
+                    {
+                        name: 'Jetpack Security Features',
+                        description: 'Complete security feature overview',
+                    },
+                    {
+                        name: 'Blog Security Best Practices',
+                        description: 'Essential security measures for bloggers',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Support Type',
+                        description: 'Security Setup',
+                    },
+                    {
+                        name: 'User Intent',
+                        description: 'Prevention/Education',
+                    },
+                ],
+            },
+        },
+        {
+            role: 'user',
+            text: 'Yes! I definitely want to set up the two-factor authentication. How do I do that? I have an iPhone if that matters.',
+        },
+        {
+            role: 'agent',
+            text: "Perfect! iPhone works great for 2FA. Here's exactly how to set it up:\n\n**Step 1: Download an Authenticator App**\n📱 **Recommended for iPhone:**\n• **Google Authenticator** (free, most popular)\n• **Authy** (free, with cloud backup)\n• **1Password** (if you use their password manager)\n\n**Step 2: Enable 2FA in WordPress.com**\n1. Go to your **WordPress.com account settings**\n2. Click **\"Security\"** in the sidebar\n3. Find **\"Two-Step Authentication\"**\n4. Click **\"Set up Two-Step Authentication\"**\n\n**Step 3: Connect Your Phone**\n1. WordPress.com will show you a **QR code**\n2. Open your authenticator app\n3. Tap **\"Add account\"** or **\"+\"**\n4. **Scan the QR code** with your iPhone camera\n5. Your app will generate a 6-digit code\n6. **Enter that code** back in WordPress.com\n\n**Step 4: Save Backup Codes**\n• WordPress.com will give you backup codes\n• **Screenshot these** and store them safely\n• These let you log in if you lose your phone\n\n**That's it!** From now on, you'll need both your password AND the code from your iPhone app to log in.\n\n**Ready to start?** Download Google Authenticator from the App Store and let me know when you're ready for step 2!",
+            meta: {
+                thinkingTime: 2345,
+                sources: [
+                    {
+                        name: 'Two-Factor Authentication Setup',
+                        description: 'Step-by-step 2FA configuration guide',
+                    },
+                    {
+                        name: 'iPhone Security Apps',
+                        description: 'Recommended authenticator apps for iOS',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Setup Guide',
+                        description: 'Two-Factor Authentication',
+                    },
+                    {
+                        name: 'Device Specific',
+                        description: 'iPhone',
+                    },
+                ],
+            },
+        },
+    ],
+    39: [
+        {
+            role: 'user',
+            text: 'My photography portfolio site is loading really slowly, especially the images. People are probably leaving before they even see my work! Can Jetpack help speed things up?',
+        },
+        {
+            role: 'agent',
+            text: "Absolutely! Slow-loading images are a photography site's worst enemy, but Jetpack has fantastic tools specifically for this. Let's speed up your portfolio!\n\n**🚀 Jetpack Performance Features for Photography Sites:**\n\n**1. Site Accelerator (Free!)**\n• Serves images from Jetpack's global CDN\n• Automatically resizes images for different devices\n• Can reduce load times by 50-80%\n• **Perfect for photographers!**\n\n**2. Lazy Loading (Free!)**\n• Images only load when visitors scroll to them\n• Huge improvement for portfolio pages with many images\n• Works automatically once enabled\n\n**3. Image Optimization**\n• Compresses images without quality loss\n• Converts to modern formats (WebP) when supported\n• Reduces file sizes by 30-60%\n\n**Let's enable these right now:**\n\n1. **Go to Jetpack → Settings in your dashboard**\n2. **Click the \"Performance\" tab**\n3. **Enable these features:**\n   ✅ Site Accelerator for images\n   ✅ Site Accelerator for static files\n   ✅ Lazy load images\n\n**Bonus tip for photographers:**\nJetpack also offers **unlimited photo storage** with higher-tier plans, plus beautiful gallery displays optimized for mobile.\n\n**Want me to walk you through enabling these features?** The improvements should be noticeable within minutes!",
+            meta: {
+                thinkingTime: 4567,
+                sources: [
+                    {
+                        name: 'Jetpack Performance Features',
+                        description: 'Site Accelerator and optimization tools',
+                    },
+                    {
+                        name: 'Photography Site Optimization',
+                        description: 'Best practices for image-heavy websites',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Support Type',
+                        description: 'Performance Optimization',
+                    },
+                    {
+                        name: 'Site Type',
+                        description: 'Photography Portfolio',
+                    },
+                ],
+            },
+        },
+        {
+            role: 'user',
+            text: 'This sounds perfect! I found the Performance tab in Jetpack settings. I can see Site Accelerator and Lazy Loading options. Should I enable all of them or start with just some?',
+        },
+        {
+            role: 'agent',
+            text: "Great! You're in the right place. For a photography site, I recommend enabling **all** the performance features - they work beautifully together and won't cause any conflicts.\n\n**Enable these immediately:**\n\n✅ **\"Enable Site Accelerator for images\"**\n• This is the big one for photographers!\n• Your images will load from fast global servers\n\n✅ **\"Enable Site Accelerator for static files\"** \n• Speeds up CSS, JavaScript, fonts\n• Makes the whole site feel snappier\n\n✅ **\"Lazy load images\"**\n• Perfect for portfolio galleries\n• Only loads images as visitors scroll\n\n**After you enable them:**\n1. **Click \"Save Settings\"**\n2. **Clear any caching** (if you use caching plugins)\n3. **Test your site** in a new browser tab\n4. **Check a gallery page** - you should see images loading as you scroll\n\n**Performance testing tip:**\nUse [Google PageSpeed Insights](https://pagespeed.web.dev) to test your site before and after. You should see noticeable improvements in the \"Core Web Vitals\" scores!\n\n**Ready to flip those switches?** The changes take effect immediately, and your visitors will definitely notice the difference. Let me know how it goes!",
+            meta: {
+                thinkingTime: 2345,
+                sources: [
+                    {
+                        name: 'Jetpack Performance Configuration',
+                        description: 'Optimal settings for image-heavy sites',
+                    },
+                    {
+                        name: 'Performance Testing',
+                        description: 'Tools for measuring site speed improvements',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Configuration Guide',
+                        description: 'Performance Settings',
+                    },
+                ],
+            },
+        },
+    ],
+    40: [
+        {
+            role: 'user',
+            text: 'How do I backup my entire site? I want to make some major changes but I\'m worried about breaking something.',
+        },
+        {
+            role: 'agent',
+            text: 'Smart thinking! Making a backup before major changes is always a good practice. Here are your backup options on WordPress.com:\n\n**Built-in Export Tool (All Plans):**\n• Go to **Tools → Export** in your dashboard\n• Downloads your content (posts, pages, comments) as an XML file\n• **What it includes:** Text content, images, settings\n• **What it doesn\'t include:** Theme customizations, plugins\n\n**Jetpack Backup (Premium+ Plans):**\n• **Real-time backups** of your entire site\n• Includes themes, plugins, uploads, database\n• **One-click restore** functionality\n• **30-day backup history** \n\n**Before Major Changes:**\n1. **Export your content** using the built-in tool\n2. **Screenshot your current design** for reference\n3. **Document your current settings** (themes, widgets, etc.)\n\n**Pro tip:** If you have a Premium plan or higher, Jetpack Backup is your best option. It captures everything and makes restoration super easy.\n\nWhat type of changes are you planning to make? I can provide more specific guidance!',
+            meta: {
+                thinkingTime: 3456,
+                sources: [
+                    {
+                        name: 'WordPress Export Tool',
+                        description: 'How to export your site content',
+                    },
+                    {
+                        name: 'Jetpack Backup',
+                        description: 'Complete site backup and restore',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Inquiry type',
+                        description: 'Help',
+                    },
+                    {
+                        name: 'Category',
+                        description: 'Site Management',
+                    },
+                ],
+            },
+        },
+    ],
+    41: [
+        {
+            role: 'user',
+            text: 'How can my team collaborate on this site? We\'re a design studio and need multiple people to be able to edit and manage our client\'s WordPress.com site.',
+        },
+        {
+            role: 'agent',
+            text: 'Great question! WordPress.com has excellent collaboration features for teams. Here\'s how to set up multi-user access:\n\n**Adding Team Members:**\n1. Go to **Users → Add New** in your dashboard\n2. Enter their email address\n3. Choose the appropriate **user role**\n4. They\'ll receive an invitation email\n\n**User Roles Explained:**\n• **Administrator:** Full access (careful who gets this!)\n• **Editor:** Can publish/edit all posts and pages\n• **Author:** Can publish/edit their own posts\n• **Contributor:** Can write posts but needs approval to publish\n• **Subscriber:** Can only view and comment\n\n**Collaboration Features:**\n• **Real-time editing** - Multiple people can work simultaneously\n• **Revision history** - Track changes and restore previous versions\n• **Comment workflows** - Internal team communication\n• **Draft sharing** - Preview content before publishing\n\n**Pro Tips for Design Teams:**\n• Give designers **Editor** role for full creative control\n• Use **Author** role for content creators\n• Keep **Administrator** access limited to 1-2 key people\n\n**Plan Requirements:**\nMost collaboration features work on all plans, but some advanced user management features require Premium or higher.\n\nHow many team members do you need to add?',
+            meta: {
+                thinkingTime: 4567,
+                sources: [
+                    {
+                        name: 'User Management',
+                        description: 'Adding and managing site users',
+                    },
+                    {
+                        name: 'User Roles and Permissions',
+                        description: 'Understanding WordPress user capabilities',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Inquiry type',
+                        description: 'Help',
+                    },
+                    {
+                        name: 'Category',
+                        description: 'User Management',
+                    },
+                ],
+            },
+        },
+    ],
+    42: [
+        {
+            role: 'user',
+            text: 'My site is too slow and customers are leaving before it even loads! This is killing my online store sales. How can I speed it up?',
+        },
+        {
+            role: 'agent',
+            text: 'I completely understand your frustration - site speed is crucial for e-commerce success! Let\'s get your store running faster immediately.\n\n**Quick Wins (Do These First):**\n\n**1. Optimize Your Images**\n• **Compress before uploading** - Use tools like TinyPNG\n• **Right-size your images** - Don\'t upload 3000px images for 300px spaces\n• **Use WebP format** when possible\n\n**2. Enable Built-in Speed Features**\n• Go to **Jetpack → Performance**\n• Enable **Site Accelerator** (serves images from global CDN)\n• Turn on **Lazy Loading** (images load as users scroll)\n\n**3. Choose a Fast Theme**\n• Some themes are naturally faster than others\n• Consider switching to a performance-optimized theme\n\n**Advanced Solutions:**\n**Business Plan Benefits:**\n• **Advanced caching** and performance tools\n• **CDN for all files** (not just images)\n• **Plugin access** for additional optimization\n\n**Immediate Action Plan:**\n1. **Test your current speed:** Use Google PageSpeed Insights\n2. **Enable Jetpack performance features** (5 minutes)\n3. **Audit your largest images** and compress them\n\nWhat\'s your current plan level? I can recommend specific optimizations based on your available features!',
+            meta: {
+                thinkingTime: 5678,
+                sources: [
+                    {
+                        name: 'Site Performance',
+                        description: 'WordPress.com speed optimization guide',
+                    },
+                    {
+                        name: 'E-commerce Optimization',
+                        description: 'Speed tips for online stores',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Inquiry type',
+                        description: 'Help',
+                    },
+                    {
+                        name: 'Urgency',
+                        description: 'High',
+                    },
+                    {
+                        name: 'Category',
+                        description: 'Performance',
+                    },
+                ],
+            },
+        },
+    ],
+    43: [
+        {
+            role: 'user',
+            text: 'I want to change the font and add custom styles to make my art gallery site look more unique. How do I add custom CSS?',
+        },
+        {
+            role: 'agent',
+            text: 'Perfect! Custom CSS is a great way to make your art gallery stand out. Here\'s how to add your own styles:\n\n**CSS Customization Options:**\n\n**For Premium Plans and Higher:**\n1. Go to **Appearance → Customize**\n2. Click **Additional CSS**\n3. Add your custom styles here\n4. **Preview changes** in real-time\n5. Click **Publish** when ready\n\n**For Block Themes (Newer Themes):**\n• Use **Appearance → Editor → Global Styles**\n• More visual customization options\n• Typography and color controls built-in\n\n**Custom Font Examples:**\n```css\n/* Change site title font */\n.site-title {\n    font-family: \'Georgia\', serif;\n    font-size: 2.5em;\n}\n\n/* Change body text font */\nbody {\n    font-family: \'Helvetica\', sans-serif;\n}\n```\n\n**Art Gallery Specific Tips:**\n• **Minimize distractions** - Let your art be the focus\n• **Choose readable fonts** for descriptions\n• **Consider serif fonts** for elegance\n• **Use web-safe fonts** or Google Fonts\n\n**Plan Requirements:**\n• **Free/Personal:** Limited customization options\n• **Premium+:** Full CSS customization access\n\n**Need help with specific CSS?** I can provide code examples for common customizations!\n\nWhat specific styling changes do you want to make?',
+            meta: {
+                thinkingTime: 3456,
+                sources: [
+                    {
+                        name: 'Custom CSS',
+                        description: 'Adding custom styles to your site',
+                    },
+                    {
+                        name: 'Typography Customization',
+                        description: 'Changing fonts and text styling',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Inquiry type',
+                        description: 'Help',
+                    },
+                    {
+                        name: 'Category',
+                        description: 'Design Customization',
+                    },
+                ],
+            },
+        },
+    ],
+    44: [
+        {
+            role: 'user',
+            text: 'How do I start selling products on my site? I have a new business and want to set up an online store.',
+        },
+        {
+            role: 'agent',
+            text: 'Congratulations on your new business! Setting up an online store on WordPress.com is definitely possible. Here\'s your complete setup guide:\n\n**E-commerce Requirements:**\n• **Business Plan** ($25/month) - Required for selling products\n• **WooCommerce plugin** - Automatically available with Business plan\n• **Payment processor** - PayPal, Stripe, etc.\n\n**Step-by-Step Setup:**\n\n**1. Upgrade to Business Plan**\n• Go to **Plans** in your dashboard\n• Select **Business** plan\n• Complete payment\n\n**2. Install WooCommerce**\n• Go to **Plugins → Add New**\n• Search for "WooCommerce"\n• Install and activate\n\n**3. WooCommerce Setup Wizard**\n• Set your store location and currency\n• Choose payment methods (PayPal/Stripe recommended)\n• Configure shipping options\n• Add your first product\n\n**4. Essential Pages**\nWooCommerce creates these automatically:\n• Shop page\n• Cart and checkout\n• My Account page\n\n**Payment Options:**\n• **PayPal** - Easy setup, widely trusted\n• **Stripe** - Credit card processing\n• **Bank transfers** - For larger purchases\n\n**Pro Tips:**\n• Start with 5-10 products to test everything\n• Set up **SSL** (automatic on WordPress.com)\n• Create clear **shipping and return policies**\n\nWhat type of products are you planning to sell? I can provide more specific guidance!',
+            meta: {
+                thinkingTime: 4567,
+                sources: [
+                    {
+                        name: 'WooCommerce Setup',
+                        description: 'Setting up an online store',
+                    },
+                    {
+                        name: 'E-commerce Best Practices',
+                        description: 'Starting an online business',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Inquiry type',
+                        description: 'Help',
+                    },
+                    {
+                        name: 'Category',
+                        description: 'E-commerce Setup',
+                    },
+                ],
+            },
+        },
+    ],
+    45: [
+        {
+            role: 'user',
+            text: 'I want to move my Wix site to WordPress.com. Is this possible and how complicated is it?',
+        },
+        {
+            role: 'agent',
+            text: 'Absolutely! Moving from Wix to WordPress.com is definitely possible, and I\'ll help make it as smooth as possible. Here\'s what you need to know:\n\n**Migration Overview:**\n\n**What Transfers Easily:**\n• **Text content** (blog posts, page content)\n• **Images** (with some manual work)\n• **Basic site structure**\n\n**What Requires Recreation:**\n• **Design/layout** (Wix designs don\'t directly transfer)\n• **Custom apps/widgets** (need WordPress equivalents)\n• **Forms** (can rebuild with WordPress.com form blocks)\n\n**Migration Steps:**\n\n**1. Export from Wix**\n• Go to your Wix dashboard\n• Look for **export** or **backup** options\n• Download any available content files\n\n**2. Manual Content Transfer**\n• **Copy/paste text content** from old site to new\n• **Download and re-upload images**\n• **Recreate pages** using WordPress blocks\n\n**3. Choose a WordPress Theme**\n• Pick something similar to your current design\n• Customize to match your brand\n\n**4. Redirect Your Domain**\n• Point your domain to WordPress.com\n• Set up redirects from old URLs (if needed)\n\n**Time Investment:**\n• Small site (5-10 pages): 1-2 days\n• Larger site: 1-2 weeks\n\n**Pro Tip:** Start by recreating your most important pages first (homepage, about, contact).\n\nHow many pages does your current Wix site have? This will help me give you a more accurate timeline!',
+            meta: {
+                thinkingTime: 5678,
+                sources: [
+                    {
+                        name: 'Site Migration',
+                        description: 'Moving from other platforms to WordPress.com',
+                    },
+                    {
+                        name: 'Wix to WordPress',
+                        description: 'Platform migration guide',
+                    },
+                ],
+                classifiers: [
+                    {
+                        name: 'Inquiry type',
+                        description: 'Help',
+                    },
+                    {
+                        name: 'Category',
+                        description: 'Site Migration',
+                    },
+                ],
+            },
+        },
+    ],
 };

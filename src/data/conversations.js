@@ -428,4 +428,275 @@ export const conversations = [
             'social-buttons',
         ],
     },
+    {
+        id: 31,
+        agentId: 7,
+        datetime: '2025-06-28T16:30:00Z',
+        event: 'Blog content strategy session',
+        customer: 'foodie@example.com',
+        summary:
+            'Helped a food blogger plan a series of seasonal recipe posts for summer. Created content calendar with SEO-optimized titles and scheduling recommendations.',
+        quote: "...need ideas for summer content...",
+        sentiment: 2, // smile
+        tags: [
+            'content-planning',
+            'food-blog',
+            'seasonal-content',
+            'seo-optimization',
+            'content-calendar',
+        ],
+    },
+    {
+        id: 32,
+        agentId: 7,
+        datetime: '2025-06-28T11:45:00Z',
+        event: 'Writing assistance for travel blog',
+        customer: 'wanderlust@travels.com',
+        summary:
+            'Provided writing guidance and structure improvements for a travel blog post about sustainable tourism. Suggested engaging headlines and call-to-action improvements.',
+        quote: "How can I make this more engaging?",
+        sentiment: 3, // meh
+        tags: [
+            'writing-assistance',
+            'travel-blog',
+            'sustainable-tourism',
+            'engagement',
+            'post-structure',
+        ],
+    },
+    {
+        id: 33,
+        agentId: 7,
+        datetime: '2025-06-27T14:20:00Z',
+        event: 'SEO optimization consultation',
+        customer: 'tech.blogger@startup.com',
+        summary:
+            'Reviewed a tech blog post and provided specific SEO recommendations including keyword optimization, meta descriptions, and internal linking strategies.',
+        quote: "...not getting much traffic...",
+        sentiment: 4, // annoyed
+        tags: [
+            'seo-optimization',
+            'tech-blog',
+            'keyword-research',
+            'traffic-growth',
+            'meta-descriptions',
+        ],
+    },
+    {
+        id: 34,
+        agentId: 8,
+        datetime: '2025-06-28T09:15:00Z',
+        event: 'Forum spam moderation',
+        customer: 'spammer@fake.com',
+        summary:
+            'Detected and removed multiple spam posts advertising unrelated services. User account flagged for review and temporary posting restrictions applied.',
+        quote: "BUY CHEAP FOLLOWERS NOW!!!",
+        sentiment: 6, // angry
+        tags: [
+            'spam-detection',
+            'moderation',
+            'account-restrictions',
+            'community-guidelines',
+            'automated-removal',
+        ],
+    },
+    {
+        id: 35,
+        agentId: 8,
+        datetime: '2025-06-28T12:00:00Z',
+        event: 'FAQ response about custom domains',
+        customer: 'newbie@wordpress.user',
+        summary:
+            'Answered common question about connecting custom domains to WordPress.com sites. Provided link to official documentation and step-by-step guidance.',
+        quote: "How do I connect my domain?",
+        sentiment: 3, // meh
+        tags: [
+            'faq-response',
+            'custom-domains',
+            'documentation',
+            'beginner-help',
+            'domain-connection',
+        ],
+    },
+    {
+        id: 36,
+        agentId: 8,
+        datetime: '2025-06-27T19:30:00Z',
+        event: 'Duplicate topic redirect',
+        customer: 'confused@user.com',
+        summary:
+            'User posted question about theme customization that had been addressed multiple times. Politely redirected to existing comprehensive discussion thread.',
+        quote: "Why can't I change my theme colors?",
+        sentiment: 3, // meh
+        tags: [
+            'duplicate-topic',
+            'theme-customization',
+            'forum-navigation',
+            'existing-solutions',
+            'community-management',
+        ],
+    },
+    {
+        id: 37,
+        agentId: 9,
+        datetime: '2025-06-28T15:45:00Z',
+        event: 'Jetpack backup restoration',
+        customer: 'businessowner@shop.com',
+        summary:
+            'Guided customer through restoring their WooCommerce site from a Jetpack backup after a plugin conflict caused issues. Explained backup scheduling options.',
+        quote: "...site is completely broken...",
+        sentiment: 5, // frown
+        tags: [
+            'backup-restoration',
+            'woocommerce',
+            'plugin-conflict',
+            'site-recovery',
+            'jetpack-backup',
+        ],
+    },
+    {
+        id: 38,
+        agentId: 9,
+        datetime: '2025-06-28T08:30:00Z',
+        event: 'Jetpack security setup',
+        customer: 'security.conscious@blogger.com',
+        summary:
+            'Helped configure Jetpack security features including brute force protection, malware scanning, and two-factor authentication. Explained security monitoring dashboard.',
+        quote: "Want to secure my blog better",
+        sentiment: 2, // smile
+        tags: [
+            'security-setup',
+            'brute-force-protection',
+            'malware-scanning',
+            'two-factor-auth',
+            'security-monitoring',
+        ],
+    },
+    {
+        id: 39,
+        agentId: 9,
+        datetime: '2025-06-27T13:10:00Z',
+        event: 'Site performance optimization',
+        customer: 'photographer@portfolio.com',
+        summary:
+            'Optimized image loading performance using Jetpack Site Accelerator and lazy loading features. Explained how these features improve page speed for photography sites.',
+        quote: "...images loading very slowly...",
+        sentiment: 4, // annoyed
+        tags: [
+            'performance-optimization',
+            'site-accelerator',
+            'lazy-loading',
+            'image-optimization',
+            'page-speed',
+        ],
+    },
+    {
+        id: 40,
+        agentId: 1,
+        datetime: '2025-06-18T09:30:00Z',
+        event: 'Site backup and export',
+        customer: 'business@localbakery.com',
+        summary: 'Customer wanted to backup their site before making major changes. Explained WordPress.com export options and Jetpack backup features available by plan level.',
+        quote: "How do I backup my entire site?",
+        sentiment: 3, // meh
+        tags: [
+            'backup',
+            'export',
+            'site-management',
+            'jetpack',
+            'data-protection',
+            'plan-features',
+        ],
+    },
+    {
+        id: 41,
+        agentId: 1,
+        datetime: '2025-06-18T15:45:00Z',
+        event: 'Multiple user access setup',
+        customer: 'team@designstudio.com',
+        summary: 'Design agency needed to add multiple team members to manage their client site. Walked through user roles, permissions, and collaboration features available on different plans.',
+        quote: "How can my team collaborate on this site?",
+        sentiment: 2, // smile
+        tags: [
+            'user-management',
+            'collaboration',
+            'team-access',
+            'user-roles',
+            'permissions',
+            'business-features',
+        ],
+    },
+    {
+        id: 42,
+        agentId: 1,
+        datetime: '2025-06-17T11:20:00Z',
+        event: 'Site speed optimization',
+        customer: 'ecommerce@onlinestore.com',
+        summary: 'E-commerce site owner concerned about slow loading times affecting sales. Provided optimization tips including image compression, caching, and plan upgrade recommendations for better performance.',
+        quote: "My site is too slow and customers are leaving",
+        sentiment: 5, // frown
+        tags: [
+            'site-speed',
+            'performance',
+            'optimization',
+            'ecommerce',
+            'image-compression',
+            'caching',
+            'plan-upgrade',
+        ],
+    },
+    {
+        id: 43,
+        agentId: 1,
+        datetime: '2025-06-17T14:10:00Z',
+        event: 'Custom CSS and styling help',
+        customer: 'creative@artgallery.com',
+        summary: 'Art gallery wanted to customize their site appearance beyond theme options. Explained CSS customization features, plan requirements, and provided basic styling guidance.',
+        quote: "I want to change the font and add custom styles",
+        sentiment: 3, // meh
+        tags: [
+            'custom-css',
+            'styling',
+            'theme-customization',
+            'premium-features',
+            'design',
+            'fonts',
+        ],
+    },
+    {
+        id: 44,
+        agentId: 1,
+        datetime: '2025-06-16T10:15:00Z',
+        event: 'E-commerce setup guidance',
+        customer: 'startup@newbusiness.com',
+        summary: 'New business owner wanted to sell products online. Explained WooCommerce integration, payment processing, plan requirements, and provided setup guidance for their online store.',
+        quote: "How do I start selling products on my site?",
+        sentiment: 2, // smile
+        tags: [
+            'ecommerce',
+            'woocommerce',
+            'online-store',
+            'payment-processing',
+            'business-plan',
+            'product-sales',
+        ],
+    },
+    {
+        id: 45,
+        agentId: 1,
+        datetime: '2025-06-16T16:50:00Z',
+        event: 'Site migration from competitor',
+        customer: 'migrating@fromwix.com',
+        summary: 'Customer wanted to move their existing website from Wix to WordPress.com. Explained migration options, content import limitations, and provided step-by-step guidance for the transition.',
+        quote: "I want to move my Wix site to WordPress.com",
+        sentiment: 3, // meh
+        tags: [
+            'migration',
+            'wix-import',
+            'platform-switch',
+            'content-transfer',
+            'site-transition',
+            'import-limitations',
+        ],
+    },
 ];
