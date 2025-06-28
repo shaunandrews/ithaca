@@ -122,8 +122,9 @@
         border-radius: var(--radius-xl);
         border: 1px solid transparent;
         line-height: var(--line-height-relaxed);
-        transition: all 0.1s ease-in-out;
+        transition: all 0.15s ease-in-out;
         cursor: pointer;
+        max-width: 840px;
     }
 
     .message.user .text {

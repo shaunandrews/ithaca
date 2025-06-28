@@ -1,6 +1,6 @@
 <template>
     <div class="customer-details">
-        <div class="customer-header">
+        <div class="customer-header vstack">
             <img
                 :src="gravatarUrl('sarah.jones@example.com')"
                 alt="Customer avatar"
@@ -8,10 +8,7 @@
                 width="40"
                 class="customer-avatar"
             />
-            <div class="customer-info">
-                <Badge variant="customer">Customer</Badge>
-                <span class="customer-name">Sarah Jones</span>
-            </div>
+            <h3 class="customer-name">Sarah Jones</h3>
         </div>
 
         <div class="details-section">
@@ -168,7 +165,6 @@
 </template>
 
 <script setup>
-    import Badge from './Badge.vue';
     import CryptoJS from 'crypto-js';
 
     function gravatarUrl(email) {
@@ -185,12 +181,6 @@
         display: flex;
         flex-direction: column;
         gap: var(--space-m);
-    }
-
-    .customer-header {
-        display: flex;
-        align-items: center;
-        gap: var(--space-s);
     }
 
     .customer-avatar {

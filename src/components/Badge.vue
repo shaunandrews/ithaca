@@ -24,6 +24,7 @@
 <style scoped>
     .badge {
         display: inline-flex;
+        width: fit-content;
         align-items: center;
         padding: var(--space-xxs) var(--space-xs);
         border-radius: 4px;
