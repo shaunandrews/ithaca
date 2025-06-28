@@ -119,6 +119,7 @@
         position: sticky;
         top: 0;
         backdrop-filter: blur(12px);
+        min-height: var(--toolbar-height);
     }
 
     .agent-header-start,

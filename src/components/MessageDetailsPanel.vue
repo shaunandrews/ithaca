@@ -125,7 +125,8 @@
     }
 
     header {
-        padding: var(--space-xs) var(--space-m);
+        padding: var(--space-s) var(--space-m);
+        min-height: var(--toolbar-height);
         justify-content: space-between;
         align-items: center;
         background-color: var(--color-chrome-transparent);

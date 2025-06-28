@@ -328,6 +328,7 @@
         background-color: var(--color-chrome-transparent);
         backdrop-filter: blur(12px);
         z-index: 100;
+        min-height: var(--toolbar-height);
     }
 
     .conversation-stats {

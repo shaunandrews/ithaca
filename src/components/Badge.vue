@@ -27,7 +27,7 @@
         width: fit-content;
         align-items: center;
         padding: var(--space-xxs) var(--space-xs);
-        border-radius: 4px;
+        border-radius: var(--radius-xl);
         font-size: var(--font-size-xs);
         font-weight: var(--font-weight-medium);
         text-transform: uppercase;

@@ -6,7 +6,7 @@ export const messages = {
         },
         {
             role: 'agent',
-            text: 'I checked your support history and it looks like clearing your cookies often helps. Can you try that and reset your password again?',
+            text: 'I checked your support history and it looks like **clearing your cookies** often helps. Can you try that and reset your password again?\n\n**Steps to try:**\n1. Clear your browser cookies\n2. Reset your password\n3. Try logging in again',
             meta: {
                 thinkingTime: 1234,
                 sources: [
@@ -64,7 +64,7 @@ export const messages = {
         },
         {
             role: 'agent',
-            text: "I'm sorry to hear you're having trouble with your header navigation. It sounds like there might be an invisible element blocking your menu links.\n\nLet's try to fix this by editing your header template part. Go to your dashboard, then Appearance → Editor, open List View (the icon with three horizontal lines), and select your Header template part. Look for any blocks that might be overlapping your navigation menu - sometimes a transparent Group block or Button block could be causing this issue.\n\nWould you like me to provide more specific steps for troubleshooting this header navigation problem?",
+            text: "I'm sorry to hear you're having trouble with your header navigation. It sounds like there might be an **invisible element** blocking your menu links.\n\n## Here's how to fix this:\n\n### Step 1: Access the Header Editor\n1. Go to your **dashboard**\n2. Navigate to **Appearance → Editor**\n3. Open **List View** (the icon with three horizontal lines)\n4. Select your **Header template part**\n\n### Step 2: Look for Overlapping Elements\n- Check for transparent **Group blocks**\n- Look for **Button blocks** that might be covering the menu\n- Watch for elements with absolute positioning\n\n> **Tip:** Sometimes clicking around different areas in the header can reveal invisible blocks\n\nWould you like me to provide more specific steps for troubleshooting this header navigation problem?",
             meta: {
                 thinkingTime: 9541,
                 sources: [
@@ -486,7 +486,7 @@ export const messages = {
         },
         {
             role: 'agent',
-            text: "I'd be happy to help you connect your custom domain! There are two main ways to do this: you can either point your domain to WordPress.com using nameservers, or update your DNS records.\n\nFor the easiest setup, I recommend using nameservers. In your GoDaddy account, go to your domain settings and change the nameservers to:\nns1.wordpress.com\nns2.wordpress.com\nns3.wordpress.com\n\nAfter that, come back to your WordPress.com dashboard and add your domain under Settings → Domains. The changes can take up to 24 hours to take effect.\n\nWould you like me to walk you through the step-by-step process?",
+            text: "I'd be happy to help you connect your custom domain! There are **two main ways** to do this:\n\n- Point your domain to WordPress.com using **nameservers** (recommended)\n- Update your **DNS records** manually\n\n## Recommended: Using Nameservers\n\nFor the easiest setup, I recommend using nameservers. In your [GoDaddy account](https://godaddy.com), go to your domain settings and change the nameservers to:\n\n```\nns1.wordpress.com\nns2.wordpress.com\nns3.wordpress.com\n```\n\n### Next Steps:\n1. Come back to your WordPress.com dashboard\n2. Add your domain under **Settings → Domains**\n3. Wait up to **24 hours** for changes to take effect\n\n*Note: DNS propagation can sometimes take longer depending on your location.*\n\nWould you like me to walk you through the step-by-step process?",
             meta: {
                 thinkingTime: 3456,
                 sources: [
@@ -545,7 +545,7 @@ export const messages = {
         },
         {
             role: 'agent',
-            text: "Great question! WordPress.com has several built-in tools to help manage comments and reduce spam.\n\nFirst, go to Settings → Discussion in your dashboard. Here you can:\n• Require comments to be approved before appearing\n• Require users to fill out name and email\n• Hold comments with multiple links for moderation\n• Automatically close comments on posts older than a certain number of days\n\nFor spam protection, Akismet comes free with all WordPress.com sites and automatically filters spam comments. Make sure it's activated under Plugins → Installed Plugins.\n\nYou can also manage comments by going to Comments in your dashboard sidebar, where you can approve, spam, or delete comments in bulk.\n\nWould you like me to explain any of these settings in more detail?",
+            text: "Great question! WordPress.com has several **built-in tools** to help manage comments and reduce spam.\n\n## Comment Moderation Settings\n\nFirst, go to **Settings → Discussion** in your dashboard. Here you can:\n\n- Require comments to be **approved before appearing**\n- Require users to fill out **name and email**\n- Hold comments with multiple links for moderation\n- Automatically close comments on posts older than a certain number of days\n\n## Spam Protection\n\nFor spam protection, **Akismet** comes free with all WordPress.com sites and automatically filters spam comments. Make sure it's activated under `Plugins → Installed Plugins`.\n\n> **Pro tip:** Akismet learns from your spam/ham decisions, so the more you moderate, the better it gets!\n\n## Managing Comments\n\nYou can also manage comments by going to **Comments** in your dashboard sidebar, where you can:\n\n1. **Approve** legitimate comments\n2. Mark **spam** for suspicious content  \n3. **Delete** unwanted comments\n4. Use **bulk actions** for efficiency\n\nWould you like me to explain any of these settings in more detail?",
             meta: {
                 thinkingTime: 4567,
                 sources: [
