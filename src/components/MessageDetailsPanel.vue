@@ -37,6 +37,7 @@
                 </div>
                 <div class="sources">
                     <h4>
+                        <Book strokeWidth="1.5" height="16" width="16" />
                         Sources ({{
                             selectedMessage.meta?.sources?.length || 0
                         }})
@@ -52,7 +53,12 @@
                     </ul>
                 </div>
                 <div class="classifiers">
-                    <h4>Classifiers</h4>
+                    <h4>
+                        <ListChecks strokeWidth="1.5" height="16" width="16" />
+                        Classifiers ({{
+                            selectedMessage.meta?.classifiers?.length || 0
+                        }})
+                    </h4>
                     <ul>
                         <ClassifierRating
                             v-for="classifier in selectedMessage.meta
@@ -165,6 +171,9 @@
         font-size: var(--font-size-s);
         font-weight: var(--font-weight-medium);
         margin: var(--space-xs);
+        display: flex;
+        align-items: center;
+        gap: var(--space-xs);
     }
 
     p {
@@ -178,6 +187,7 @@
         gap: var(--space-s);
         color: var(--color-chrome-fg-secondary);
         font-size: var(--font-size-s);
+        position: relative;
     }
 
     .thought {

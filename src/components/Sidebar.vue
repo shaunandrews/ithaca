@@ -118,6 +118,7 @@
         gap: var(--space-xs);
         height: 56px;
         width: 56px;
+        margin: 0 auto;
         transition: all 0.2s ease-in-out;
     }
 

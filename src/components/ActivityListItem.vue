@@ -84,9 +84,9 @@
     .activity-list-item {
         display: flex;
         align-items: center;
-        gap: var(--space-s);
+        gap: var(--space-xs);
         background-color: var(--color-surface);
-        padding: var(--space-xs);
+        padding: var(--space-m);
         min-height: 44px;
         border-bottom: 1px solid var(--color-surface-tint-light);
         cursor: pointer;
@@ -104,10 +104,7 @@
     }
 
     .datetime {
-        font-size: var(--font-size-s);
         color: var(--color-chrome-fg-tertiary);
-        /* width: 120px; */
-        /* text-align: right; */
         flex: 0 0 auto;
     }
 
@@ -141,7 +138,6 @@
         align-items: center;
         gap: var(--space-xxs);
         color: var(--color-chrome-fg-tertiary);
-        font-size: var(--font-size-s);
         flex: 0 0 auto;
     }
 </style>
