@@ -2,15 +2,71 @@
     <div class="details-panel" ref="detailsPanel">
         <header class="hstack" :class="{ 'has-border': isScrolled }">
             <div class="hstack header-start">
-                <h3>Message Details</h3>
-                <Badge :variant="selectedMessage.role === 'agent' ? 'agent' : 'customer'">
+                <h3>{{ conversation ? 'Conversation Details' : 'Message Details' }}</h3>
+                <Badge v-if="selectedMessage" :variant="selectedMessage.role === 'agent' ? 'agent' : 'customer'">
                     {{ selectedMessage.role === 'agent' ? 'Agent' : 'Customer' }}
+                </Badge>
+                <Badge v-else-if="conversation" variant="conversation">
+                    Conversation
                 </Badge>
             </div>
             <button class="small" @click="$emit('close')"><XIcon size="18" stroke-width="1.5" /></button>
         </header>
         <div class="panel-content vstack" ref="panelContent">
-            <template v-if="selectedMessage.role === 'agent'">
+            <template v-if="conversation">
+                <div class="conversation-details">
+                    <h4>
+                        <MessageSquare strokeWidth="1.5" height="16" width="16" />
+                        Event
+                    </h4>
+                    <p>{{ conversation.event }}</p>
+                </div>
+                
+                <div class="conversation-details">
+                    <h4>
+                        <User strokeWidth="1.5" height="16" width="16" />
+                        Customer
+                    </h4>
+                    <p>{{ conversation.customer }}</p>
+                </div>
+                
+                <div class="conversation-details">
+                    <h4>
+                        <Calendar strokeWidth="1.5" height="16" width="16" />
+                        Date & Time
+                    </h4>
+                    <p>{{ new Date(conversation.datetime).toLocaleString() }}</p>
+                </div>
+                
+                <div class="conversation-details">
+                    <h4>
+                        <component :is="sentimentIcon" strokeWidth="1.5" height="16" width="16" />
+                        Sentiment
+                    </h4>
+                    <p>{{ sentimentLabel }}</p>
+                </div>
+                
+                <div v-if="conversation.tags && conversation.tags.length > 0" class="conversation-details">
+                    <h4>
+                        <Tags strokeWidth="1.5" height="16" width="16" />
+                        Tags ({{ conversation.tags.length }})
+                    </h4>
+                    <div class="tags-list">
+                        <span v-for="tag in conversation.tags" :key="tag" class="tag">
+                            {{ tag }}
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="conversation-details">
+                    <h4>
+                        <Quote strokeWidth="1.5" height="16" width="16" />
+                        Key Quote
+                    </h4>
+                    <p class="quote-text">"{{ conversation.quote }}"</p>
+                </div>
+            </template>
+            <template v-else-if="selectedMessage && selectedMessage.role === 'agent'">
                 <div class="thoughts vstack">
                     <div class="thought thinking-time hstack" @click="toggleThoughts" :class="{ 'is-expanded': isThoughtsExpanded }">
                         <Hourglass height="16" width="16" class="hourglass-icon" />
@@ -77,17 +133,21 @@
 </template>
 
 <script setup>
-    import { ref, onMounted, onUnmounted } from 'vue';
-    import { XIcon, Hourglass, ListChecks, Book, Hammer, ChevronDown } from 'lucide-vue-next';
+    import { ref, onMounted, onUnmounted, computed } from 'vue';
+    import { XIcon, Hourglass, ListChecks, Book, Hammer, ChevronDown, MessageSquare, User, Calendar, Tags, Quote, Laugh, Smile, Meh, Annoyed, Frown, Angry } from 'lucide-vue-next';
     import SourceRating from '@/components/SourceRating.vue';
     import ClassifierRating from '@/components/ClassifierRating.vue';
     import Badge from '@/components/Badge.vue';
     import CustomerDetails from '@/components/CustomerDetails.vue';
 
-    defineProps({
+    const props = defineProps({
         selectedMessage: {
             type: Object,
-            required: true,
+            required: false,
+        },
+        conversation: {
+            type: Object,
+            required: false,
         },
     });
 
@@ -97,6 +157,37 @@
     const detailsPanel = ref(null);
     const isScrolled = ref(false);
     const isThoughtsExpanded = ref(false);
+
+    // Sentiment icon mapping for conversation details
+    const sentimentIcon = computed(() => {
+        if (!props.conversation) return Frown;
+        
+        const sentimentMap = {
+            1: Laugh,    // laugh
+            2: Smile,    // smile
+            3: Meh,      // meh
+            4: Annoyed,  // annoyed
+            5: Frown,    // frown
+            6: Angry     // angry
+        };
+        
+        return sentimentMap[props.conversation.sentiment] || Frown;
+    });
+
+    const sentimentLabel = computed(() => {
+        if (!props.conversation) return 'Unknown';
+        
+        const sentimentLabels = {
+            1: 'Very Happy',
+            2: 'Happy',
+            3: 'Neutral',
+            4: 'Annoyed',
+            5: 'Unhappy',
+            6: 'Angry'
+        };
+        
+        return sentimentLabels[props.conversation.sentiment] || 'Unknown';
+    });
 
     const handleScroll = () => {
         if (detailsPanel.value) {
@@ -244,5 +335,44 @@
         margin: 0;
         display: flex;
         flex-direction: column;
+    }
+
+    .conversation-details {
+        border-radius: var(--radius-l);
+        border: 1px solid var(--color-surface-tint);
+        padding: var(--space-m);
+    }
+
+    .conversation-details h4 {
+        margin-top: 0;
+        margin-bottom: var(--space-s);
+    }
+
+    .conversation-details p {
+        margin: 0;
+        color: var(--color-chrome-fg);
+    }
+
+    .tags-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+    }
+
+    .tag {
+        background: var(--color-surface);
+        padding: var(--space-xxs) var(--space-s);
+        border-radius: var(--radius-s);
+        font-size: var(--font-size-s);
+        border: 1px solid var(--color-surface-tint);
+    }
+
+    .quote-text {
+        font-style: italic;
+        color: var(--color-chrome-fg) !important;
+        background: var(--color-surface-tint);
+        padding: var(--space-s);
+        border-radius: var(--radius-s);
+        border-left: 3px solid var(--color-accent);
     }
 </style>

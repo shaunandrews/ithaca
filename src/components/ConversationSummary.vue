@@ -1,5 +1,5 @@
 <template>
-    <div class="summary vstack">
+    <div class="summary vstack" :class="{ 'selected': isSelected }" @click="$emit('click')">
         <!-- <div class="summary-header hstack">
             <h2 v-if="title">{{ title }}</h2>
         </div> -->
@@ -19,7 +19,13 @@
             type: String,
             required: false,
         },
+        isSelected: {
+            type: Boolean,
+            default: false,
+        },
     });
+
+    defineEmits(['click']);
 </script>
 
 <style scoped>
@@ -34,6 +40,25 @@
             transparent 8px,
             var(--color-surface-tint-light) 8px,
             var(--color-surface-tint-light) 10px
+        );
+        cursor: pointer;
+        color: var(--color-chrome-fg-secondary);
+        transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .summary:hover {
+        color: var(--color-chrome-fg);
+    }
+
+    .summary.selected {
+        border-color: var(--color-accent);
+        color: var(--color-chrome-fg);
+        background: repeating-linear-gradient(
+            45deg,
+            var(--color-surface-tint-light),
+            var(--color-surface-tint-light) 8px,
+            var(--color-surface-tint) 8px,
+            var(--color-surface-tint) 10px
         );
     }
 

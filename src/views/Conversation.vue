@@ -23,6 +23,8 @@
                         <ConversationSummary
                             :summary="conversation.summary"
                             :title="conversation.event"
+                            @click="selectConversationSummary"
+                            :is-selected="isConversationSummarySelected"
                         />
 
                         <Message
@@ -62,8 +64,9 @@
             </div>
 
             <MessageDetailsPanel
-                v-if="selectedMessage"
+                v-if="selectedMessage || isConversationSummarySelected"
                 :selected-message="selectedMessage"
+                :conversation="isConversationSummarySelected ? conversation : null"
                 @close="closePanel"
                 @view-source="openSourceModal"
             />
@@ -187,6 +190,7 @@
 
     const selectedMessage = ref(null);
     const selectedIdx = ref(null);
+    const isConversationSummarySelected = ref(false);
 
     // Source modal state
     const isSourceModalOpen = ref(false);
@@ -219,7 +223,11 @@
     // Initialize selected message from URL query parameter
     onMounted(() => {
         const selectedParam = route.query.selected;
-        if (selectedParam !== undefined && conversation.value) {
+        const summarySelectedParam = route.query.summarySelected;
+        
+        if (summarySelectedParam === 'true') {
+            isConversationSummarySelected.value = true;
+        } else if (selectedParam !== undefined && conversation.value) {
             const idx = Number(selectedParam);
             if (idx >= 0 && idx < conversationMessages.value.length) {
                 selectedMessage.value = conversationMessages.value[idx];
@@ -249,12 +257,30 @@
         if (selectedIdx.value === idx) {
             closePanel();
         } else {
+            // Close conversation summary selection if switching to message
+            isConversationSummarySelected.value = false;
             selectedMessage.value = msg;
             selectedIdx.value = idx;
             // Update URL to remember selection
             router.replace({
                 ...route,
-                query: { ...route.query, selected: idx.toString() },
+                query: { ...route.query, selected: idx.toString(), summarySelected: undefined },
+            });
+        }
+    }
+
+    function selectConversationSummary() {
+        if (isConversationSummarySelected.value) {
+            closePanel();
+        } else {
+            // Close message selection if switching to conversation summary
+            selectedMessage.value = null;
+            selectedIdx.value = null;
+            isConversationSummarySelected.value = true;
+            // Update URL to remember selection
+            router.replace({
+                ...route,
+                query: { ...route.query, summarySelected: 'true', selected: undefined },
             });
         }
     }
@@ -262,9 +288,11 @@
     function closePanel() {
         selectedMessage.value = null;
         selectedIdx.value = null;
-        // Remove selected parameter from URL
+        isConversationSummarySelected.value = false;
+        // Remove selected parameters from URL
         const newQuery = { ...route.query };
         delete newQuery.selected;
+        delete newQuery.summarySelected;
         router.replace({
             ...route,
             query: newQuery,

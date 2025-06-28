@@ -12,7 +12,7 @@
             type: String,
             default: 'default',
             validator: (value) =>
-                ['default', 'agent', 'customer'].includes(value),
+                ['default', 'agent', 'customer', 'conversation'].includes(value),
         },
     });
 
@@ -49,5 +49,11 @@
         background-color: rgba(16, 185, 129, 0.1);
         border: 1px solid rgba(16, 185, 129, 0.2);
         color: rgb(16, 185, 129);
+    }
+
+    .badge--conversation {
+        background-color: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        color: rgb(59, 130, 246);
     }
 </style>
