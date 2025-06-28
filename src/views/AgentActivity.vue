@@ -1,8 +1,15 @@
 <template>
     <div class="agent-activity">
-        <div class="activity-content">
-            <AgentSummary :agent="agent" />
-            <h2>Conversations</h2>
+        <div class="activity-content vstack">
+            <header class="hstack">
+                <h2>Conversations</h2>
+                <select>
+                    <option value="newest" selected>Newest</option>
+                    <option value="oldest">Oldest</option>
+                </select>
+                <input type="search" v-model="search" placeholder="Search conversations" />
+            </header>
+
             <div class="activity-list vstack">
                 <ActivityListItem
                     v-for="conversation in agentConversations"
@@ -21,7 +28,6 @@
     import { agents } from '@/data/agents.js';
     import { conversations } from '@/data/conversations.js';
     import ActivityListItem from '@/components/ActivityListItem.vue';
-    import AgentSummary from '@/components/AgentSummary.vue';
 
     const route = useRoute();
     const agentId = computed(() => Number(route.params.id));
@@ -46,16 +52,32 @@
     }
 
     .activity-content {
-        padding: var(--space-m);
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-l);
         height: 100%;
         overflow-y: auto;
     }
 
+    header {
+        gap: var(--space-s);
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        padding: var(--space-m);
+    }
+
+    header > * {
+        width: fit-content;
+    }
+
+    header h2 {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: var(--font-size-m);
+        font-weight: var(--font-weight-semibold);
+    }
+
     .activity-list {
-        border: 1px solid var(--color-surface-tint-dark);
-        border-radius: var(--radius-l);
+        /* border: 1px solid var(--color-surface-tint-dark);
+        border-radius: var(--radius-l); */
     }
 </style>

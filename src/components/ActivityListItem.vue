@@ -4,8 +4,8 @@
             <img
                 :src="gravatarUrl(item.customer)"
                 alt="Gravatar"
-                width="24"
-                height="24"
+                width="20"
+                height="20"
                 class="gravatar"
                 :title="item.customer"
             />
@@ -17,13 +17,16 @@
             <MessagesSquare size="16" stroke-width="1.5" />
             {{ messageCount }}
         </div>
+        <div class="sentiment" :class="sentimentClass">
+            <component :is="sentimentIcon" stroke-width="2" size="20" />
+        </div>
     </RouterLink>
 </template>
 
 <script setup>
     import CryptoJS from 'crypto-js';
     import { RouterLink } from 'vue-router';
-    import { MessagesSquare } from 'lucide-vue-next';
+    import { MessagesSquare, Laugh, Smile, Meh, Annoyed, Frown, Angry } from 'lucide-vue-next';
     import { messages } from '@/data/messages.js';
     import { computed } from 'vue';
 
@@ -40,6 +43,38 @@
 
     const messageCount = computed(() => {
         return messages[props.item.id]?.length || 0;
+    });
+
+    // Sentiment icon mapping
+    const sentimentIcon = computed(() => {
+        if (!props.item) return Frown;
+        
+        const sentimentMap = {
+            1: Laugh,    // laugh
+            2: Smile,    // smile
+            3: Meh,      // meh
+            4: Annoyed,  // annoyed
+            5: Frown,    // frown
+            6: Angry     // angry
+        };
+        
+        return sentimentMap[props.item.sentiment] || Frown;
+    });
+
+    // Sentiment color class mapping
+    const sentimentClass = computed(() => {
+        if (!props.item) return 'sentiment-negative';
+        
+        const classMap = {
+            1: 'sentiment-positive',    // laugh - green
+            2: 'sentiment-positive',    // smile - green
+            3: 'sentiment-neutral',     // meh - yellow
+            4: 'sentiment-warning',     // annoyed - orange
+            5: 'sentiment-negative',    // frown - red
+            6: 'sentiment-negative'     // angry - red
+        };
+        
+        return classMap[props.item.sentiment] || 'sentiment-negative';
     });
 
     function formatDate(datetime) {
@@ -84,11 +119,11 @@
     .activity-list-item {
         display: flex;
         align-items: center;
-        gap: var(--space-xs);
-        background-color: var(--color-surface);
-        padding: var(--space-m);
+        gap: var(--space-s);
+        color: var(--color-chrome-fg-tertiary);
+        padding: var(--space-s) var(--space-l) var(--space-s) var(--space-m);
         min-height: 44px;
-        border-bottom: 1px solid var(--color-surface-tint-light);
+        border-top: 1px solid var(--color-surface-tint);
         cursor: pointer;
         text-decoration: none;
         width: 100%;
@@ -96,15 +131,15 @@
     }
 
     .activity-list-item:last-child {
-        border-bottom: none;
+        border-bottom: 1px solid var(--color-surface-tint);
     }
 
     .activity-list-item:hover {
-        background-color: var(--color-surface-tint);
+        background-color: var(--color-surface-tint-light);
+        color: var(--color-chrome-fg-secondary);
     }
 
     .datetime {
-        color: var(--color-chrome-fg-tertiary);
         flex: 0 0 auto;
     }
 
@@ -115,17 +150,29 @@
     }
 
     .gravatar {
-        border-radius: var(--radius);
-        border: 1px solid var(--color-surface-tint);
+        border-radius: var(--radius-s);
         vertical-align: middle;
+        margin-right: var(--space-xxs);
+        transition: transform 0.1s ease-in-out;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .activity-list-item:hover .gravatar {
+        transform: scale(1.3) rotate(3deg);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
 
     .event {
         flex: 0 0 auto;
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-accent);
+    }
+
+    .activity-list-item:hover .event {
+        text-decoration: underline;
     }
 
     .summary {
-        color: var(--color-chrome-fg-secondary);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -133,11 +180,32 @@
         min-width: 0;
     }
 
+    .sentiment {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+    }
+
+    .sentiment.sentiment-positive {
+        color: #22c55e; /* green */
+    }
+
+    .sentiment.sentiment-neutral {
+        color: #eab308; /* yellow */
+    }
+
+    .sentiment.sentiment-warning {
+        color: #f97316; /* orange */
+    }
+
+    .sentiment.sentiment-negative {
+        color: #ef4444; /* red */
+    }
+
     .message-count {
         display: flex;
         align-items: center;
         gap: var(--space-xxs);
-        color: var(--color-chrome-fg-tertiary);
         flex: 0 0 auto;
     }
 </style>
