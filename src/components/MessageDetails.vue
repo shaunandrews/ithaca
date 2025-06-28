@@ -12,14 +12,15 @@
         <div class="panel-content vstack" ref="panelContent">
             <template v-if="selectedMessage.role === 'agent'">
                 <div class="thoughts vstack">
-                    <div class="thought thinking-time hstack">
-                        <Hourglass height="16" width="16" />
+                    <div class="thought thinking-time hstack" @click="toggleThoughts" :class="{ 'is-expanded': isThoughtsExpanded }">
+                        <Hourglass height="16" width="16" class="hourglass-icon" />
+                        <ChevronDown height="16" width="16" class="chevron-icon" />
                         <span
                             >Thought for
                             {{ selectedMessage.meta?.thinkingTime }}ms...</span
                         >
                     </div>
-                    <div class="thoughts-list vstack">
+                    <div class="thoughts-list vstack" v-show="isThoughtsExpanded">
                         <div class="thought hstack">
                             <ListChecks strokeWidth="1.5" height="16" width="16" />
                             Completed 7 classifiers
@@ -80,7 +81,7 @@
 
 <script setup>
     import { ref, onMounted, onUnmounted } from 'vue';
-    import { XIcon, Hourglass, ListChecks, Book, Hammer } from 'lucide-vue-next';
+    import { XIcon, Hourglass, ListChecks, Book, Hammer, ChevronDown } from 'lucide-vue-next';
     import SourceRating from '@/components/SourceRating.vue';
     import ClassifierRating from '@/components/ClassifierRating.vue';
     import Badge from '@/components/Badge.vue';
@@ -97,11 +98,16 @@
 
     const panelContent = ref(null);
     const isScrolled = ref(false);
+    const isThoughtsExpanded = ref(false);
 
     const handleScroll = () => {
         if (panelContent.value) {
             isScrolled.value = panelContent.value.scrollTop > 0;
         }
+    };
+
+    const toggleThoughts = () => {
+        isThoughtsExpanded.value = !isThoughtsExpanded.value;
     };
 
     onMounted(() => {
@@ -184,8 +190,39 @@
     }
 
     .thoughts-list {
-        gap: var(--space-s);
+        gap: var(--space-xs);
         margin-left: var(--space-l);
+    }
+
+    .thinking-time {
+        cursor: pointer;
+        width: fit-content;
+        border-radius: var(--border-radius-s);
+        transition: background-color 0.15s ease;
+    }
+
+    .hourglass-icon {
+        transition: opacity 0.2s ease;
+    }
+
+    .chevron-icon {
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        opacity: 0;
+        position: absolute;
+    }
+
+    .thinking-time:hover .hourglass-icon,
+    .thinking-time.is-expanded .hourglass-icon {
+        opacity: 0;
+    }
+
+    .thinking-time:hover .chevron-icon,
+    .thinking-time.is-expanded .chevron-icon {
+        opacity: 1;
+    }
+
+    .thinking-time.is-expanded .chevron-icon {
+        transform: rotate(180deg);
     }
 
     .sources ul,
