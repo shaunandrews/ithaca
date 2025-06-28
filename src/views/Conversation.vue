@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <MessageDetails
+            <MessageDetailsPanel
                 v-if="selectedMessage"
                 :selected-message="selectedMessage"
                 @close="closePanel"
@@ -138,7 +138,7 @@
     import Message from '@/components/Message.vue';
     import Modal from '@/components/Modal.vue';
     import ButtonBack from '@/components/ButtonBack.vue';
-    import MessageDetails from '@/components/MessageDetails.vue';
+    import MessageDetailsPanel from '@/components/MessageDetailsPanel.vue';
 
     const route = useRoute();
     const router = useRouter();
