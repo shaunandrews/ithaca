@@ -14,7 +14,6 @@
                     <ConversationMeta
                         :conversation-id="conversation.id.toString()"
                         :zendesk-id="`ZD-${conversation.id + 10000}`"
-                        :tags="conversation.tags"
                     />
                 </header>
 
@@ -23,6 +22,29 @@
                         :summary="conversation.summary"
                         :title="conversation.event"
                     />
+
+                    <div class="conversation-stats hstack">
+                        <div class="stats-item quote"><component :is="sentimentIcon" stroke-width="1.5" size="18" /> "{{ conversation.quote }}"</div>
+                        <div class="stats-item">{{ conversationMessages.length }} message{{ conversationMessages.length === 1 ? '' : 's' }}</div>
+                        <div class="stats-item"><Timer size="18" stroke-width="1.5" /> 90 mins</div>
+                        <div class="stats-item">Unresolved</div>
+                        <div
+                            v-if="conversation.tags && conversation.tags.length > 0"
+                            class="stats-item tags-item"
+                            ref="tagsContainer"
+                            @click.prevent="toggleTagsPopover"
+                        >
+                            <Tags stroke-width="1.5" size="18" />
+                            {{ conversation.tags.length }} tag{{ conversation.tags.length === 1 ? '' : 's' }}
+                            <div v-if="showTagsPopover" class="tags-popover">
+                                <div class="tags-list vstack">
+                                    <div v-for="tag in conversation.tags" :key="tag" class="tag-item">
+                                        {{ tag }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="messages">
                         <Message
@@ -133,8 +155,9 @@
 </template>
 
 <script setup>
-    import { computed, ref, onMounted, inject } from 'vue';
+    import { computed, ref, onMounted, onUnmounted, inject } from 'vue';
     import { useRoute, useRouter } from 'vue-router';
+    import { Laugh, Smile, Meh, Annoyed, Frown, Angry, Timer, Tags } from 'lucide-vue-next';
     import { agents } from '@/data/agents.js';
     import { conversations } from '@/data/conversations.js';
     import { messages } from '@/data/messages.js';
@@ -169,6 +192,26 @@
     const isSourceModalOpen = ref(false);
     const selectedSource = ref(null);
 
+    // Tags popover state
+    const showTagsPopover = ref(false);
+    const tagsContainer = ref(null);
+
+    // Sentiment icon mapping
+    const sentimentIcon = computed(() => {
+        if (!conversation.value) return Frown;
+        
+        const sentimentMap = {
+            1: Laugh,    // laugh
+            2: Smile,    // smile
+            3: Meh,      // meh
+            4: Annoyed,  // annoyed
+            5: Frown,    // frown
+            6: Angry     // angry
+        };
+        
+        return sentimentMap[conversation.value.sentiment] || Frown;
+    });
+
     // Initialize selected message from URL query parameter
     onMounted(() => {
         const selectedParam = route.query.selected;
@@ -179,6 +222,13 @@
                 selectedIdx.value = idx;
             }
         }
+        
+        // Add click outside listener for tags popover
+        document.addEventListener('click', handleClickOutside);
+    });
+
+    onUnmounted(() => {
+        document.removeEventListener('click', handleClickOutside);
     });
 
     function selectMessage(msg, idx) {
@@ -216,6 +266,19 @@
         isSourceModalOpen.value = false;
         selectedSource.value = null;
     }
+
+    function toggleTagsPopover() {
+        showTagsPopover.value = !showTagsPopover.value;
+    }
+
+    function handleClickOutside(event) {
+        if (
+            tagsContainer.value &&
+            !tagsContainer.value.contains(event.target)
+        ) {
+            showTagsPopover.value = false;
+        }
+    }
 </script>
 
 <style scoped>
@@ -240,8 +303,6 @@
 
     .conversation-main {
         padding: var(--space-l);
-        margin: 0 auto;
-        max-width: 840px;
     }
 
     .empty {
@@ -269,6 +330,33 @@
         z-index: 100;
     }
 
+    .conversation-stats {
+        font-size: var(--font-size-s);
+        align-items: center;
+        margin-bottom: var(--space-m);
+        padding-right: var(--space-xs);
+        border-radius: var(--radius-xl);
+        border: 1px solid var(--color-surface-tint);
+        background: var(--color-tooltip);
+        color: var(--color-tooltip-fg);
+    }
+
+    .stats-item {
+        display: flex;
+        align-items: center;
+        gap: var(--space-xs);
+        padding: var(--space-xs) var(--space-s);
+        border-right: 1px solid var(--color-surface-tint);
+    }
+
+    .stats-item.quote {
+        flex: 1;
+    }
+
+    .stats-item:last-child {
+        border-right: none;
+    }
+
     h1 {
         font-size: var(--font-size-m);
         position: absolute;
@@ -281,6 +369,7 @@
         flex-direction: column;
         gap: var(--space-s);
         margin: 0 auto;
+        max-width: 840px;
     }
 
     .source-modal-content {
@@ -338,5 +427,38 @@
         border-radius: var(--radius-s);
         font-size: var(--font-size-s);
         border: 1px solid var(--color-surface-tint);
+    }
+
+    .tags-item {
+        position: relative;
+    }
+
+    .tags-item a {
+        color: var(--color-tooltip-fg);
+        text-decoration: none;
+    }
+
+    .tags-item a:hover {
+        text-decoration: underline;
+    }
+
+    .tags-popover {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: var(--color-tooltip);
+        backdrop-filter: blur(12px);
+        color: var(--color-tooltip-fg);
+        border-radius: var(--radius-m);
+        z-index: 1000;
+        width: 180px;
+        margin-top: var(--space-xxs);
+    }
+
+    .tags-list {
+        gap: var(--space-xs);
+        padding: var(--space-s);
+        max-height: 280px;
+        overflow-y: auto;
     }
 </style>

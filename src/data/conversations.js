@@ -7,6 +7,8 @@ export const conversations = [
         customer: 'koalababy3@gmail.com',
         summary:
             'Reviewed support history and provided a fix for a recurring login issue. Sent a link to the support article.',
+        quote: "...still having trouble logging in",
+        sentiment: 5, // frown
         tags: [
             'login',
             'troubleshooting',
@@ -23,6 +25,8 @@ export const conversations = [
         customer: 'shaun@shaunandrews.com',
         summary:
             'Customer edited their site header and navigation links became unclickable. Troubleshooting steps like checking for overlapping or invisible blocks did not help. The customer asked about undoing changes but learned that full site restores require a Business plan. The agent explained that header template revisions are available and offered further instructions if needed.',
+        quote: "...can't click any of the pages",
+        sentiment: 5, // frown
         tags: [
             'header',
             'navigation',
@@ -41,6 +45,8 @@ export const conversations = [
         customer: 'cain@automattic.com',
         summary:
             'Customer appears to have accidentally created two sites. Requested confirmation about new site before refunding and cancelling the subscription.',
+        quote: "...charged twice...need a refund",
+        sentiment: 6, // angry
         tags: [
             'billing',
             'refund',
@@ -57,6 +63,8 @@ export const conversations = [
         customer: 'shaun@shaunandrews.com',
         summary:
             'Triaged a user email about password reset. Sent automated response with instructions and flagged for follow-up.',
+        quote: "...help me reset my password",
+        sentiment: 3, // meh
         tags: ['password-reset', 'tumblr', 'account-access', 'email-triage'],
     },
     {
@@ -67,6 +75,8 @@ export const conversations = [
         customer: 'tumblruser@example.com',
         summary:
             'Provided a support article link for a user asking about Tumblr blog customization.',
+        quote: "How do I customize...?",
+        sentiment: 2, // smile
         tags: ['theme-customization', 'tumblr', 'design', 'support-articles'],
     },
     {
@@ -77,6 +87,8 @@ export const conversations = [
         customer: 'techsupport@tumblr.com',
         summary:
             'Escalated a technical issue to a human agent after automated troubleshooting failed.',
+        quote: "Something went wrong...",
+        sentiment: 4, // annoyed
         tags: [
             'escalation',
             'account-issue',
@@ -93,6 +105,8 @@ export const conversations = [
         customer: 'developer@wordpress.org',
         summary:
             'A new customer wants a site for their coffee shop. They have an Instagram account and want a site that matches the look and feel of their account.',
+        quote: "...find the cover block...",
+        sentiment: 3, // meh
         tags: [
             'html-parsing',
             'code-analysis',
@@ -109,6 +123,8 @@ export const conversations = [
         customer: 'designer@example.com',
         summary:
             'Client requested custom styling for their portfolio gallery. Needed to modify the grid layout and add hover effects to match their brand colors.',
+        quote: "Find the gallery block",
+        sentiment: 3, // meh
         tags: [
             'html-parsing',
             'gallery-block',
@@ -125,6 +141,8 @@ export const conversations = [
         customer: 'frontend@startup.com',
         summary:
             'Startup needed responsive design improvements for their landing page. Optimized mobile layout and fixed spacing issues across different screen sizes.',
+        quote: "...messy HTML...",
+        sentiment: 3, // meh
         tags: [
             'html-parsing',
             'heading',
@@ -141,6 +159,8 @@ export const conversations = [
         customer: 'new.employee@automattic.com',
         summary:
             'Helped a user find the DRI for a new project by searching P2 sites.',
+        quote: "Who is the DRI...?",
+        sentiment: 3, // meh
         tags: [
             'project-management',
             'p2',
@@ -157,6 +177,8 @@ export const conversations = [
         customer: 'product.manager@automattic.com',
         summary:
             'Provided a summary of recent discussions about a product launch from multiple P2s.',
+        quote: "...about the product launch?",
+        sentiment: 3, // meh
         tags: [
             'product-launch',
             'p2',
@@ -173,6 +195,8 @@ export const conversations = [
         customer: 'hr.team@automattic.com',
         summary:
             'Directed a user to the correct P2 for onboarding documentation.',
+        quote: "Where can I find...docs?",
+        sentiment: 3, // meh
         tags: [
             'onboarding',
             'documentation',
@@ -189,6 +213,8 @@ export const conversations = [
         customer: 'webmaster@example.com',
         summary:
             'Customer having trouble connecting their custom domain to WordPress.com. Walked through DNS settings and provided nameserver configuration steps.',
+        quote: "...domain...not working...",
+        sentiment: 4, // annoyed
         tags: [
             'domain-connection',
             'dns',
@@ -205,6 +231,8 @@ export const conversations = [
         customer: 'blogger@lifestyle.com',
         summary:
             'Customer needed help setting up comment moderation and dealing with spam comments. Explained moderation settings and recommended Akismet.',
+        quote: "...keep getting spam comments...",
+        sentiment: 4, // annoyed
         tags: [
             'comments',
             'moderation',
@@ -222,6 +250,8 @@ export const conversations = [
         customer: 'author@writingblog.com',
         summary:
             'Customer unable to publish posts, getting error messages. Identified browser cache issue and provided troubleshooting steps.',
+        quote: "...can't publish...nothing happens",
+        sentiment: 5, // frown
         tags: [
             'publishing',
             'editor-issues',
@@ -238,6 +268,8 @@ export const conversations = [
         customer: 'creative@artportfolio.com',
         summary:
             'Customer wanted to customize their theme colors and fonts. Explained the difference between theme customization and site editing, provided guidance on both.',
+        quote: "...don't know where to start",
+        sentiment: 3, // meh
         tags: [
             'theme-customization',
             'colors',
@@ -255,6 +287,8 @@ export const conversations = [
         customer: 'business@localbakery.com',
         summary:
             "Small business owner asking about SEO and why their site isn't showing up in Google searches. Provided SEO basics and site visibility settings.",
+        quote: "...can't find it on Google...",
+        sentiment: 4, // annoyed
         tags: [
             'seo',
             'google-search',
@@ -272,6 +306,8 @@ export const conversations = [
         customer: 'photographer@portraits.com',
         summary:
             'Customer concerned about how their photography site looks on mobile devices. Explained responsive design and provided mobile optimization tips.',
+        quote: "...terrible on mobile phones",
+        sentiment: 4, // annoyed
         tags: [
             'mobile',
             'responsive-design',
@@ -288,6 +324,8 @@ export const conversations = [
         customer: 'ecommerce@smallshop.com',
         summary:
             'Customer wanted to install specific plugins for their online store. Explained plugin limitations on different plans and suggested alternatives.',
+        quote: "How do I install plugins?",
+        sentiment: 3, // meh
         tags: [
             'plugins',
             'contact-forms',
@@ -304,6 +342,8 @@ export const conversations = [
         customer: 'professional@consultingfirm.com',
         summary:
             'Customer wanted to set up professional email with their domain. Explained email forwarding options and G Suite integration.',
+        quote: "How do I set this up?",
+        sentiment: 3, // meh
         tags: [
             'email',
             'domain',
@@ -321,6 +361,8 @@ export const conversations = [
         customer: 'migrating@olddomain.com',
         summary:
             "Customer wanted to import content from another WordPress site. Guided through the import process and explained what transfers and what doesn't.",
+        quote: "How do I transfer...posts?",
+        sentiment: 3, // meh
         tags: [
             'migration',
             'import',
@@ -337,6 +379,8 @@ export const conversations = [
         customer: 'photographer@wildlife.com',
         summary:
             "Customer hit their storage limit and couldn't upload more photos. Explained storage limits by plan and provided optimization tips.",
+        quote: "...reached my storage limit...",
+        sentiment: 5, // frown
         tags: [
             'storage',
             'limits',
@@ -354,6 +398,8 @@ export const conversations = [
         customer: 'security@techstartup.com',
         summary:
             'Customer asking about HTTPS and SSL certificates for their site. Explained that SSL is automatic on WordPress.com and provided security best practices.',
+        quote: "...want to make sure it's secure",
+        sentiment: 2, // smile
         tags: [
             'ssl',
             'https',
@@ -371,6 +417,8 @@ export const conversations = [
         customer: 'marketing@brandagency.com',
         summary:
             'Customer wanted to connect their social media accounts and add sharing buttons. Provided guidance on social integrations and Jetpack Social features.',
+        quote: "How can I connect...accounts?",
+        sentiment: 3, // meh
         tags: [
             'social-media',
             'auto-sharing',

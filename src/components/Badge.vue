@@ -40,12 +40,14 @@
     }
 
     .badge--agent {
-        background-color: rgba(59, 130, 246, 0.1);
-        color: rgb(59, 130, 246);
+        background-color: rgba(221, 15, 183, 0.1);
+        border: 1px solid rgba(221, 15, 183, 0.2);
+        color: rgb(221, 15, 183);
     }
 
     .badge--customer {
         background-color: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.2);
         color: rgb(16, 185, 129);
     }
 </style>
