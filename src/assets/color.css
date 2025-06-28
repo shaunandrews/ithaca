@@ -10,6 +10,7 @@
     --color-surface-fg-secondary: #404040;
     --color-surface-fg-tertiary: #606060;
     --color-surface-tint: rgba(0, 0, 0, 0.05);
+    --color-surface-tint-light: rgba(0,0,0,0.02);
     --color-surface-tint-dark: rgba(0, 0, 0, 0.1);
 
     --color-accent: #0640e0;
@@ -21,7 +22,7 @@
     --color-highlight-tint: rgba(221, 15, 183, 0.1);
     --color-highlight-fg: #ffffff;
 
-    --color-tooltip: rgba(0, 0, 0, 0.85);
+    --color-tooltip: rgba(0, 0, 0, 0.8);
     --color-tooltip-fg: #ffffff;
 }
 
@@ -38,7 +39,8 @@
         --color-surface-fg-secondary: #828282;
         --color-surface-fg-tertiary: #656565;
         --color-surface-tint: rgba(255, 255, 255, 0.05);
-        --color-surface-tint-dark: rgba(0, 0, 0, 0.1);
+        --color-surface-tint-light: rgba(255, 255, 255, 0.02);
+        --color-surface-tint-dark: rgba(255, 255, 255, 0.1);
 
         --color-accent: #5494fb;
         --color-accent-dark: #4078c0;

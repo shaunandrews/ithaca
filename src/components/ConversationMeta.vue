@@ -1,15 +1,17 @@
 <template>
     <div class="conversation-meta">
         <div class="conversation-link">
-            <a href="#"> #{{ conversationId }} </a>
+            <button class="small"><Link size="16" stroke-width="1.5" /></button>
         </div>
-        <div class="conversation-zendesk">
+        <!-- <div class="conversation-zendesk">
             <a href="#">Zendesk #{{ zendeskId }}</a>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script setup>
+    import { Link } from 'lucide-vue-next';
+
     defineProps({
         conversationId: {
             type: String,

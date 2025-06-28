@@ -1,9 +1,8 @@
 <template>
     <div class="summary vstack">
-        <div class="summary-header hstack">
-            <BotMessageSquare class="summary-icon" stroke-width="1.5" />
+        <!-- <div class="summary-header hstack">
             <h2 v-if="title">{{ title }}</h2>
-        </div>
+        </div> -->
         <p>{{ summary }}</p>
     </div>
 </template>
@@ -25,9 +24,17 @@
 
 <style scoped>
     .summary {
-        padding: var(--space-l);
-        padding-top: 0;
+        padding: var(--space-s) var(--space-l);
         gap: var(--space-xs);
+        border: 1.5px solid var(--color-surface-tint-light);
+        border-radius: var(--radius-xl);
+        background: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 8px,
+            var(--color-surface-tint-light) 8px,
+            var(--color-surface-tint-light) 10px
+        );
     }
 
     .summary-header {
@@ -47,7 +54,6 @@
     }
 
     p {
-        font-size: var(--font-size-m);
-        color: var(--color-chrome-fg-secondary);
+        line-height: var(--line-height-relaxed);
     }
 </style>

@@ -4,30 +4,43 @@
             <div
                 class="conversation"
                 :class="{ 'panel-open': selectedMessage }"
+                ref="conversationContainer"
             >
-                <header class="conversation-header hstack">
+                <header class="conversation-header hstack" :class="{ 'has-border': isScrolled }">
                     <ButtonBack
                         :to="`/agent/${agentId}/activity`"
                         text="All activity"
                     />
-                    <h1>Conversation</h1>
+                    <h1>{{ conversation.event }}</h1>
                     <ConversationMeta
                         :conversation-id="conversation.id.toString()"
                         :zendesk-id="`ZD-${conversation.id + 10000}`"
                     />
                 </header>
 
-                <div class="conversation-main">
-                    <ConversationSummary
-                        :summary="conversation.summary"
-                        :title="conversation.event"
-                    />
+                <div class="conversation-main vstack">
+                    <div class="messages ">
+                        <ConversationSummary
+                            :summary="conversation.summary"
+                            :title="conversation.event"
+                        />
+
+                        <Message
+                            v-for="(msg, idx) in conversationMessages"
+                            :key="idx"
+                            :message="msg"
+                            :index="idx"
+                            :datetime="conversation.datetime"
+                            :customer="conversation.customer"
+                            :is-selected="selectedIdx === idx"
+                            @select="selectMessage"
+                        />
+                    </div>
 
                     <div class="conversation-stats hstack">
                         <div class="stats-item quote"><component :is="sentimentIcon" stroke-width="1.5" size="18" /> "{{ conversation.quote }}"</div>
-                        <div class="stats-item">{{ conversationMessages.length }} message{{ conversationMessages.length === 1 ? '' : 's' }}</div>
+                        <div class="stats-item"><MessagesSquare size="18" stroke-width="1.5" /> {{ conversationMessages.length }} message{{ conversationMessages.length === 1 ? '' : 's' }}</div>
                         <div class="stats-item"><Timer size="18" stroke-width="1.5" /> 90 mins</div>
-                        <div class="stats-item">Unresolved</div>
                         <div
                             v-if="conversation.tags && conversation.tags.length > 0"
                             class="stats-item tags-item"
@@ -44,19 +57,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="messages">
-                        <Message
-                            v-for="(msg, idx) in conversationMessages"
-                            :key="idx"
-                            :message="msg"
-                            :index="idx"
-                            :datetime="conversation.datetime"
-                            :customer="conversation.customer"
-                            :is-selected="selectedIdx === idx"
-                            @select="selectMessage"
-                        />
                     </div>
                 </div>
             </div>
@@ -157,7 +157,7 @@
 <script setup>
     import { computed, ref, onMounted, onUnmounted, inject } from 'vue';
     import { useRoute, useRouter } from 'vue-router';
-    import { Laugh, Smile, Meh, Annoyed, Frown, Angry, Timer, Tags } from 'lucide-vue-next';
+    import { Laugh, Smile, Meh, Annoyed, Frown, Angry, Timer, Tags, MessagesSquare } from 'lucide-vue-next';
     import { agents } from '@/data/agents.js';
     import { conversations } from '@/data/conversations.js';
     import { messages } from '@/data/messages.js';
@@ -196,6 +196,10 @@
     const showTagsPopover = ref(false);
     const tagsContainer = ref(null);
 
+    // Scroll state for header border
+    const isScrolled = ref(false);
+    const conversationContainer = ref(null);
+
     // Sentiment icon mapping
     const sentimentIcon = computed(() => {
         if (!conversation.value) return Frown;
@@ -225,10 +229,20 @@
         
         // Add click outside listener for tags popover
         document.addEventListener('click', handleClickOutside);
+        
+        // Add scroll listener for header border
+        if (conversationContainer.value) {
+            conversationContainer.value.addEventListener('scroll', handleScroll);
+        }
     });
 
     onUnmounted(() => {
         document.removeEventListener('click', handleClickOutside);
+        
+        // Remove scroll listener
+        if (conversationContainer.value) {
+            conversationContainer.value.removeEventListener('scroll', handleScroll);
+        }
     });
 
     function selectMessage(msg, idx) {
@@ -279,6 +293,12 @@
             showTagsPopover.value = false;
         }
     }
+
+    function handleScroll() {
+        if (conversationContainer.value) {
+            isScrolled.value = conversationContainer.value.scrollTop > 0;
+        }
+    }
 </script>
 
 <style scoped>
@@ -302,7 +322,9 @@
     }
 
     .conversation-main {
-        padding: var(--space-l);
+        padding: var(--space-s);
+        padding-top: 0;
+        gap: var(--space-m);
     }
 
     .empty {
@@ -319,7 +341,7 @@
         gap: var(--space-xs);
         align-items: center;
         justify-content: space-between;
-        border-bottom: 1px solid var(--color-surface-tint);
+        border-bottom: 1px solid transparent;
         margin: 0 auto;
         text-align: center;
         position: sticky;
@@ -329,17 +351,27 @@
         backdrop-filter: blur(12px);
         z-index: 100;
         min-height: var(--toolbar-height);
+        transition: border-bottom-color 0.15s ease;
+    }
+
+    .conversation-header.has-border {
+        border-bottom-color: var(--color-surface-tint);
     }
 
     .conversation-stats {
         font-size: var(--font-size-s);
         align-items: center;
-        margin-bottom: var(--space-m);
         padding-right: var(--space-xs);
         border-radius: var(--radius-xl);
         border: 1px solid var(--color-surface-tint);
         background: var(--color-tooltip);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+        border-top: 1px solid rgba(255,255,255, 0.1);
         color: var(--color-tooltip-fg);
+        position: sticky;
+        bottom: var(--space-s);
+        z-index: 100;
     }
 
     .stats-item {
@@ -368,7 +400,7 @@
     .messages {
         display: flex;
         flex-direction: column;
-        gap: var(--space-s);
+        gap: var(--space-m);
         margin: 0 auto;
         max-width: 840px;
     }
@@ -445,15 +477,15 @@
 
     .tags-popover {
         position: absolute;
-        top: 100%;
-        right: 0;
+        bottom: 100%;
+        right: calc(var(--space-xs) * -1);
         background: var(--color-tooltip);
         backdrop-filter: blur(12px);
         color: var(--color-tooltip-fg);
         border-radius: var(--radius-m);
         z-index: 1000;
         width: 180px;
-        margin-top: var(--space-xxs);
+        margin-bottom: var(--space-xxs);
     }
 
     .tags-list {

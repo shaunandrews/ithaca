@@ -1,5 +1,5 @@
 <template>
-    <div class="details-panel">
+    <div class="details-panel" ref="detailsPanel">
         <header class="hstack" :class="{ 'has-border': isScrolled }">
             <div class="hstack header-start">
                 <h3>Message Details</h3>
@@ -7,7 +7,7 @@
                     {{ selectedMessage.role === 'agent' ? 'Agent' : 'Customer' }}
                 </Badge>
             </div>
-            <button class="small" @click="$emit('close')"><XIcon /></button>
+            <button class="small" @click="$emit('close')"><XIcon size="18" stroke-width="1.5" /></button>
         </header>
         <div class="panel-content vstack" ref="panelContent">
             <template v-if="selectedMessage.role === 'agent'">
@@ -88,12 +88,13 @@
     defineEmits(['close', 'view-source']);
 
     const panelContent = ref(null);
+    const detailsPanel = ref(null);
     const isScrolled = ref(false);
     const isThoughtsExpanded = ref(false);
 
     const handleScroll = () => {
-        if (panelContent.value) {
-            isScrolled.value = panelContent.value.scrollTop > 0;
+        if (detailsPanel.value) {
+            isScrolled.value = detailsPanel.value.scrollTop > 0;
         }
     };
 
@@ -102,14 +103,14 @@
     };
 
     onMounted(() => {
-        if (panelContent.value) {
-            panelContent.value.addEventListener('scroll', handleScroll);
+        if (detailsPanel.value) {
+            detailsPanel.value.addEventListener('scroll', handleScroll);
         }
     });
 
     onUnmounted(() => {
-        if (panelContent.value) {
-            panelContent.value.removeEventListener('scroll', handleScroll);
+        if (detailsPanel.value) {
+            detailsPanel.value.removeEventListener('scroll', handleScroll);
         }
     });
 </script>
@@ -121,7 +122,8 @@
         border-left: 1px solid var(--color-surface-tint);
         display: flex;
         flex-direction: column;
-        overflow: hidden;
+        overflow-y: auto;
+        height: 100%;
     }
 
     header {
@@ -133,6 +135,9 @@
         border-bottom: 1px solid transparent;
         backdrop-filter: blur(12px);
         flex-shrink: 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
         transition: border-bottom-color 0.15s ease;
     }
 
@@ -143,7 +148,6 @@
     .panel-content {
         padding: var(--space-m);
         padding-top: 0;
-        overflow-y: auto;
         flex: 1;
         gap: var(--space-l);
     }
