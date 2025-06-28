@@ -2,35 +2,40 @@
     <div class="conversation-view">
         <div v-if="conversation" class="columns hstack">
             <div
-                class="conversation-main"
+                class="conversation"
                 :class="{ 'panel-open': selectedMessage }"
             >
-                <ButtonBack
-                    :to="`/agent/${agentId}/activity`"
-                    text="All activity"
-                />
-                <h1>Conversation</h1>
-                <ConversationMeta
-                    :conversation-id="conversation.id.toString()"
-                    :zendesk-id="`ZD-${conversation.id + 10000}`"
-                    :tags="conversation.tags"
-                />
-                <ConversationSummary
-                    :summary="conversation.summary"
-                    :title="conversation.event"
-                />
-
-                <div class="messages">
-                    <Message
-                        v-for="(msg, idx) in conversationMessages"
-                        :key="idx"
-                        :message="msg"
-                        :index="idx"
-                        :datetime="conversation.datetime"
-                        :customer="conversation.customer"
-                        :is-selected="selectedIdx === idx"
-                        @select="selectMessage"
+                <header class="conversation-header hstack">
+                    <ButtonBack
+                        :to="`/agent/${agentId}/activity`"
+                        text="All activity"
                     />
+                    <h1>Conversation</h1>
+                    <ConversationMeta
+                        :conversation-id="conversation.id.toString()"
+                        :zendesk-id="`ZD-${conversation.id + 10000}`"
+                        :tags="conversation.tags"
+                    />
+                </header>
+
+                <div class="conversation-main">
+                    <ConversationSummary
+                        :summary="conversation.summary"
+                        :title="conversation.event"
+                    />
+
+                    <div class="messages">
+                        <Message
+                            v-for="(msg, idx) in conversationMessages"
+                            :key="idx"
+                            :message="msg"
+                            :index="idx"
+                            :datetime="conversation.datetime"
+                            :customer="conversation.customer"
+                            :is-selected="selectedIdx === idx"
+                            @select="selectMessage"
+                        />
+                    </div>
                 </div>
             </div>
 
@@ -128,7 +133,7 @@
 </template>
 
 <script setup>
-    import { computed, ref, watch, onMounted, inject } from 'vue';
+    import { computed, ref, onMounted, inject } from 'vue';
     import { useRoute, useRouter } from 'vue-router';
     import { agents } from '@/data/agents.js';
     import { conversations } from '@/data/conversations.js';
@@ -222,18 +227,21 @@
 
     .columns {
         height: 100%;
-        display: flex;
         flex: 1;
         overflow: hidden;
     }
 
-    .conversation-main {
+    .conversation {
         flex: 1;
         display: flex;
         flex-direction: column;
-        padding: var(--space-m);
-        margin: 0 auto;
         overflow-y: auto;
+    }
+
+    .conversation-main {
+        padding: var(--space-l);
+        margin: 0 auto;
+        max-width: 840px;
     }
 
     .empty {
@@ -243,6 +251,29 @@
         width: 100%;
         padding: var(--space-l);
         font-size: var(--font-size-m);
+    }
+
+    .conversation-header {
+        padding: var(--space-m);
+        gap: var(--space-xs);
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--color-surface-tint);
+        margin: 0 auto;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        width: 100%;
+        background-color: var(--color-chrome-transparent);
+        backdrop-filter: blur(12px);
+        z-index: 100;
+    }
+
+    h1 {
+        font-size: var(--font-size-m);
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .messages {

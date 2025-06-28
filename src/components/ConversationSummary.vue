@@ -1,11 +1,16 @@
 <template>
-    <div class="summary">
-        <h2 v-if="title">{{ title }}</h2>
+    <div class="summary vstack">
+        <div class="summary-header hstack">
+            <BotMessageSquare class="summary-icon" stroke-width="1.5" />
+            <h2 v-if="title">{{ title }}</h2>
+        </div>
         <p>{{ summary }}</p>
     </div>
 </template>
 
 <script setup>
+    import { BotMessageSquare } from 'lucide-vue-next';
+
     defineProps({
         summary: {
             type: String,
@@ -20,18 +25,29 @@
 
 <style scoped>
     .summary {
-        margin-bottom: var(--space-m);
+        padding: var(--space-l);
+        padding-top: 0;
+        gap: var(--space-xs);
+    }
+
+    .summary-header {
+        gap: var(--space-xs);
+    }
+
+    .summary-icon {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
     }
 
     h2 {
-        font-size: var(--font-size-s);
-        font-weight: var(--font-weight-medium);
-        margin-bottom: var(--space-xxs);
+        font-size: var(--font-size-m);
+        font-weight: var(--font-weight-bold);
+        line-height: 20px;
     }
 
     p {
-        font-size: var(--font-size-s);
+        font-size: var(--font-size-m);
         color: var(--color-chrome-fg-secondary);
-        line-height: var(--line-height-tight);
     }
 </style>

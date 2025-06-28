@@ -41,11 +41,6 @@
                             selectedMessage.meta?.sources?.length || 0
                         }})
                     </h4>
-                    <p>
-                        Judge the relevance of each source to the
-                        conversation. Click a source to view the full
-                        content.
-                    </p>
                     <ul>
                         <SourceRating
                             v-for="source in selectedMessage.meta
@@ -58,10 +53,6 @@
                 </div>
                 <div class="classifiers">
                     <h4>Classifiers</h4>
-                    <p>
-                        Confirm the agents response to each classifier, or
-                        edit the value if it's incorrect.
-                    </p>
                     <ul>
                         <ClassifierRating
                             v-for="classifier in selectedMessage.meta
@@ -134,7 +125,7 @@
     }
 
     header {
-        padding: var(--space-m);
+        padding: var(--space-xs) var(--space-m);
         justify-content: space-between;
         align-items: center;
         background-color: var(--color-chrome-transparent);
@@ -168,7 +159,7 @@
     h4 {
         font-size: var(--font-size-s);
         font-weight: var(--font-weight-medium);
-        margin-bottom: var(--space-xxs);
+        margin: var(--space-xs);
     }
 
     p {
@@ -225,6 +216,12 @@
         transform: rotate(180deg);
     }
 
+    .sources,
+    .classifiers {
+        border-radius: var(--radius-l);
+        border: 1px solid var(--color-surface-tint);
+    }
+
     .sources ul,
     .classifiers ul {
         list-style: none;
@@ -232,6 +229,5 @@
         margin: 0;
         display: flex;
         flex-direction: column;
-        gap: var(--space-s);
     }
 </style>

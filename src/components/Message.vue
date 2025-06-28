@@ -8,8 +8,8 @@
                 <img
                     :src="gravatarUrl(customer)"
                     alt="User avatar"
-                    height="32"
-                    width="32"
+                    height="24"
+                    width="24"
                     class="avatar"
                 />
                 <span class="email">{{ customer }}</span>
@@ -202,6 +202,7 @@
         margin-bottom: var(--space-xs);
         font-weight: var(--font-weight-medium);
         margin-top: var(--space-xxs);
+        font-size: var(--font-size-m);
     }
 
     .avatar {

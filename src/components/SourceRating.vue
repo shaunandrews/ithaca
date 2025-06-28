@@ -4,6 +4,12 @@
         :class="ratingClass"
         @click="$emit('view-source', source)"
     >
+        <component 
+            :is="rating === 'neutral' ? CircleDashed : CircleSlash" 
+            :size="12"
+            stroke-width="2.5"
+            class="bullet"
+        />
         <div class="item-details vstack">
             <span class="item-name">{{ source.name }}</span>
             <span class="item-description">{{ source.description }}</span>
@@ -11,13 +17,13 @@
         <div class="item-actions vstack" @click.stop>
             <button
                 @click="toggleCorrect"
-                :class="['thumbsup', { active: rating === 'correct' }]"
+                :class="['thumbsup small', { active: rating === 'correct' }]"
             >
                 <ThumbsUp :size="16" />
             </button>
             <button
                 @click="toggleIncorrect"
-                :class="['thumbsdown', { active: rating === 'incorrect' }]"
+                :class="['thumbsdown small', { active: rating === 'incorrect' }]"
             >
                 <ThumbsDown :size="16" />
             </button>
@@ -27,7 +33,7 @@
 
 <script setup>
     import { ref, computed } from 'vue';
-    import { ThumbsUp, ThumbsDown } from 'lucide-vue-next';
+    import { ThumbsUp, ThumbsDown, CircleDashed, CircleSlash } from 'lucide-vue-next';
 
     defineProps({
         source: {
@@ -63,38 +69,24 @@
 <style scoped>
     .source-rating {
         justify-content: space-between;
-        align-items: center;
-        background: var(--color-surface);
-        border: 1px solid var(--color-surface-tint-dark);
-        border-radius: var(--radius-l);
-        padding: var(--space-xxs);
-        padding-left: var(--space-m);
-        gap: var(--space-s);
+        padding: var(--space-xs) var(--space-xs);
+        gap: var(--space-xs);
+        border-top: 1px solid var(--color-surface-tint);
         cursor: pointer;
-        min-height: 75px;
         transition: all 0.2s ease;
     }
 
-    .source-rating:hover {
-        background: var(--color-surface-tint);
+    .bullet {
+        color: var(--color-accent);
+        height: 24px;
     }
 
     .source-rating.rating-correct {
         background: rgba(34, 197, 94, 0.1);
-        border-color: rgba(34, 197, 94, 0.3);
-    }
-
-    .source-rating.rating-correct:hover {
-        background: rgba(34, 197, 94, 0.15);
     }
 
     .source-rating.rating-incorrect {
         background: rgba(239, 68, 68, 0.1);
-        border-color: rgba(239, 68, 68, 0.3);
-    }
-
-    .source-rating.rating-incorrect:hover {
-        background: rgba(239, 68, 68, 0.15);
     }
 
     .item-details {
@@ -103,10 +95,15 @@
     }
 
     .item-name {
-        font-weight: var(--font-weight-semibold);
+        color: var(--color-accent);
+        font-weight: var(--font-weight-medium);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    .source-rating:hover .item-name {
+        text-decoration: underline;
     }
 
     .item-description {
