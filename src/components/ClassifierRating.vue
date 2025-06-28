@@ -4,6 +4,12 @@
         :class="ratingClass"
         @dblclick="onDoubleClick"
     >
+        <component 
+            :is="rating === 'neutral' ? CircleDashed : CircleSlash" 
+            :size="12"
+            stroke-width="1.5"
+            class="bullet"
+        />
         <div class="item-details vstack">
             <span class="item-name">{{ classifier.name }}</span>
 
@@ -44,18 +50,18 @@
         <div class="item-actions vstack" @click.stop>
             <!-- Edit mode buttons -->
             <template v-if="isEditing">
-                <button @click="submitEdit" class="submit-btn">
-                    <CheckCheck :size="16" />
+                <button @click="submitEdit" class="small submit-btn">
+                    <CheckCheck :size="16" stroke-width="1.5" />
                 </button>
-                <button @click="cancelEdit" class="cancel-btn">
-                    <X :size="16" />
+                <button @click="cancelEdit" class="small cancel-btn">
+                    <X :size="16" stroke-width="1.5" />
                 </button>
             </template>
 
             <!-- Show undo button when edited -->
             <template v-else-if="rating === 'edited'">
-                <button @click="undoEdit" class="undo-btn">
-                    <Undo2 :size="16" />
+                <button @click="undoEdit" class="small undo-btn">
+                    <Undo2 :size="16" stroke-width="1.5" />
                 </button>
             </template>
 
@@ -63,16 +69,16 @@
             <template v-else>
                 <button
                     @click="toggleApproved"
-                    :class="['check-btn', { active: rating === 'approved' }]"
+                    :class="['small check-btn', { active: rating === 'approved' }]"
                 >
-                    <Check :size="16" />
+                    <Check :size="16" stroke-width="1.5" />
                 </button>
                 <button
                     v-if="rating !== 'approved'"
                     @click="startEdit"
-                    class="edit-btn"
+                    class="small edit-btn"
                 >
-                    <Pencil :size="16" />
+                    <Pencil :size="16" stroke-width="1.5" />
                 </button>
             </template>
         </div>
@@ -81,7 +87,7 @@
 
 <script setup>
     import { ref, computed, nextTick } from 'vue';
-    import { Check, Pencil, Undo2, X, CheckCheck } from 'lucide-vue-next';
+    import { Check, Pencil, Undo2, X, CheckCheck, CircleDashed, CircleSlash } from 'lucide-vue-next';
 
     const props = defineProps({
         classifier: {
@@ -169,29 +175,24 @@
     .classifier-rating {
         justify-content: space-between;
         align-items: center;
-        background: var(--color-surface);
-        border: 1px solid var(--color-surface-tint-dark);
-        border-radius: var(--radius-l);
         padding: var(--space-xxs);
         padding-left: var(--space-m);
         gap: var(--space-s);
         min-height: 75px;
+        border-top: 1px solid var(--color-surface-tint);
         transition: all 0.2s ease;
     }
 
     .classifier-rating.rating-approved {
         background: rgba(34, 197, 94, 0.1);
-        border-color: rgba(34, 197, 94, 0.3);
     }
 
     .classifier-rating.rating-edited {
         background: rgba(251, 191, 36, 0.1);
-        border-color: rgba(251, 191, 36, 0.3);
     }
 
     .classifier-rating.rating-editing {
         background: rgba(251, 191, 36, 0.1);
-        border-color: rgba(251, 191, 36, 0.3);
     }
 
     .item-details {
@@ -212,10 +213,6 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-    }
-
-    .rating-edited .item-description {
-        font-family: monospace;
     }
 
     .old-value {
@@ -241,13 +238,11 @@
     }
 
     .rating-approved .item-actions button.check-btn.active {
-        background: transparent;
         color: rgb(34, 197, 94);
         transform: scale(1.1);
     }
 
     .undo-btn {
-        background: transparent;
         color: rgb(251, 191, 36);
     }
 
@@ -277,20 +272,7 @@
     }
 
     .submit-btn {
-        background: var(--color-primary);
-        color: white;
-    }
-
-    .submit-btn:hover {
-        background: var(--color-primary-dark);
-    }
-
-    .cancel-btn {
-        background: var(--color-surface-tint);
-        color: var(--color-text);
-    }
-
-    .cancel-btn:hover {
-        background: var(--color-surface-tint-dark);
+        background: var(--color-accent);
+        color: var(--color-accent-fg);
     }
 </style>

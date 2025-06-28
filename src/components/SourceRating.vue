@@ -7,7 +7,7 @@
         <component 
             :is="rating === 'neutral' ? CircleDashed : CircleSlash" 
             :size="12"
-            stroke-width="2.5"
+            stroke-width="1.5"
             class="bullet"
         />
         <div class="item-details vstack">
@@ -19,32 +19,37 @@
                 @click="toggleCorrect"
                 :class="['thumbsup small', { active: rating === 'correct' }]"
             >
-                <ThumbsUp :size="16" />
+                <ThumbsUp :size="16" stroke-width="1.5" />
             </button>
             <button
                 @click="toggleIncorrect"
                 :class="['thumbsdown small', { active: rating === 'incorrect' }]"
             >
-                <ThumbsDown :size="16" />
+                <ThumbsDown :size="16" stroke-width="1.5" />
             </button>
         </div>
     </li>
 </template>
 
 <script setup>
-    import { ref, computed } from 'vue';
+    import { ref, computed, watch } from 'vue';
     import { ThumbsUp, ThumbsDown, CircleDashed, CircleSlash } from 'lucide-vue-next';
 
-    defineProps({
+    const props = defineProps({
         source: {
             type: Object,
             required: true,
+        },
+        rateAllTrigger: {
+            type: Number,
+            default: 0,
         },
     });
 
     defineEmits(['view-source']);
 
     const rating = ref('neutral'); // 'correct', 'incorrect', or 'neutral'
+    const wasAutoRated = ref(false); // Track if this was set by "rate all" button
 
     const ratingClass = computed(() => {
         switch (rating.value) {
@@ -59,11 +64,30 @@
 
     function toggleCorrect() {
         rating.value = rating.value === 'correct' ? 'neutral' : 'correct';
+        wasAutoRated.value = false; // Manual action, clear auto-rated flag
     }
 
     function toggleIncorrect() {
         rating.value = rating.value === 'incorrect' ? 'neutral' : 'incorrect';
+        wasAutoRated.value = false; // Manual action, clear auto-rated flag
     }
+
+    // Watch for rate all trigger
+    watch(() => props.rateAllTrigger, (newValue, oldValue) => {
+        if (newValue > oldValue) {
+            // Positive change: rate as correct, but only if currently neutral
+            if (rating.value === 'neutral') {
+                rating.value = 'correct';
+                wasAutoRated.value = true;
+            }
+        } else if (newValue < oldValue) {
+            // Negative change: reset to neutral, but only if it was auto-rated
+            if (wasAutoRated.value && rating.value === 'correct') {
+                rating.value = 'neutral';
+                wasAutoRated.value = false;
+            }
+        }
+    });
 </script>
 
 <style scoped>

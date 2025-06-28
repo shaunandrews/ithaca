@@ -92,18 +92,29 @@
                     </div>
                 </div>
                 <div class="sources">
-                    <h4>
-                        <Book strokeWidth="1.5" height="16" width="16" />
-                        Sources ({{
-                            selectedMessage.meta?.sources?.length || 0
-                        }})
-                    </h4>
+                    <div class="sources-header hstack">
+                        <h4>
+                            <Book strokeWidth="1.5" height="16" width="16" />
+                            Sources ({{
+                                selectedMessage.meta?.sources?.length || 0
+                            }})
+                        </h4>
+                        <button 
+                            class="rate-all-button small" 
+                            @click="rateAllSources"
+                            :disabled="!selectedMessage.meta?.sources?.length"
+                        >
+                            <component :is="allSourcesRated ? Undo2 : ThumbsUp" strokeWidth="1.5" height="16" width="16" />
+                            {{ allSourcesRated ? 'Reset' : 'All' }}
+                        </button>
+                    </div>
                     <ul>
                         <SourceRating
                             v-for="source in selectedMessage.meta
                                 ?.sources || []"
                             :key="source.name"
                             :source="source"
+                            :rate-all-trigger="rateAllTrigger"
                             @view-source="$emit('view-source', $event)"
                         />
                     </ul>
@@ -133,8 +144,8 @@
 </template>
 
 <script setup>
-    import { ref, onMounted, onUnmounted, computed } from 'vue';
-    import { XIcon, Hourglass, ListChecks, Book, Hammer, ChevronDown, MessageSquare, User, Calendar, Tags, Quote, Laugh, Smile, Meh, Annoyed, Frown, Angry } from 'lucide-vue-next';
+    import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
+    import { XIcon, Hourglass, ListChecks, Book, Hammer, ChevronDown, MessageSquare, User, Calendar, Tags, Quote, Laugh, Smile, Meh, Annoyed, Frown, Angry, ThumbsUp, Undo2 } from 'lucide-vue-next';
     import SourceRating from '@/components/SourceRating.vue';
     import ClassifierRating from '@/components/ClassifierRating.vue';
     import Badge from '@/components/Badge.vue';
@@ -157,6 +168,8 @@
     const detailsPanel = ref(null);
     const isScrolled = ref(false);
     const isThoughtsExpanded = ref(false);
+    const rateAllTrigger = ref(0);
+    const allSourcesRated = ref(false);
 
     // Sentiment icon mapping for conversation details
     const sentimentIcon = computed(() => {
@@ -198,6 +211,27 @@
     const toggleThoughts = () => {
         isThoughtsExpanded.value = !isThoughtsExpanded.value;
     };
+
+    const rateAllSources = () => {
+        // Toggle between rating all and undoing all
+        if (props.selectedMessage?.meta?.sources?.length) {
+            if (allSourcesRated.value) {
+                // Undo all ratings (set to neutral)
+                rateAllTrigger.value--;
+                allSourcesRated.value = false;
+            } else {
+                // Rate all sources (set to correct)
+                rateAllTrigger.value++;
+                allSourcesRated.value = true;
+            }
+        }
+    };
+
+    // Reset state when selected message changes
+    watch(() => props.selectedMessage, () => {
+        allSourcesRated.value = false;
+        rateAllTrigger.value = 0;
+    });
 
     onMounted(() => {
         if (detailsPanel.value) {
@@ -328,6 +362,13 @@
         border: 1px solid var(--color-surface-tint);
     }
 
+    .sources-header,
+    .classifiers-header {
+        justify-content: space-between;
+        align-items: center;
+        padding-right: var(--space-xxs);
+    }
+
     .sources ul,
     .classifiers ul {
         list-style: none;
@@ -374,5 +415,10 @@
         padding: var(--space-s);
         border-radius: var(--radius-s);
         border-left: 3px solid var(--color-accent);
+    }
+
+    .rate-all-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
     }
 </style>
