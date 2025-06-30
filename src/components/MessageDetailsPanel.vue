@@ -120,18 +120,29 @@
                     </ul>
                 </div>
                 <div class="classifiers">
-                    <h4>
-                        <ListChecks strokeWidth="1.5" height="16" width="16" />
-                        Classifiers ({{
-                            selectedMessage.meta?.classifiers?.length || 0
-                        }})
-                    </h4>
+                    <div class="classifiers-header hstack">
+                        <h4>
+                            <ListChecks strokeWidth="1.5" height="16" width="16" />
+                            Classifiers ({{
+                                selectedMessage.meta?.classifiers?.length || 0
+                            }})
+                        </h4>
+                        <button 
+                            class="rate-all-button small" 
+                            @click="approveAllClassifiers"
+                            :disabled="!selectedMessage.meta?.classifiers?.length"
+                        >
+                            <component :is="allClassifiersApproved ? Undo2 : Check" strokeWidth="1.5" height="16" width="16" />
+                            {{ allClassifiersApproved ? 'Reset' : 'All' }}
+                        </button>
+                    </div>
                     <ul>
                         <ClassifierRating
                             v-for="classifier in selectedMessage.meta
                                 ?.classifiers || []"
                             :key="classifier.name"
                             :classifier="classifier"
+                            :approve-all-trigger="approveAllTrigger"
                         />
                     </ul>
                 </div>
@@ -145,7 +156,7 @@
 
 <script setup>
     import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
-    import { XIcon, Hourglass, ListChecks, Book, Hammer, ChevronDown, MessageSquare, User, Calendar, Tags, Quote, Laugh, Smile, Meh, Annoyed, Frown, Angry, ThumbsUp, Undo2 } from 'lucide-vue-next';
+    import { XIcon, Hourglass, ListChecks, Book, Hammer, ChevronDown, MessageSquare, User, Calendar, Tags, Quote, Laugh, Smile, Meh, Annoyed, Frown, Angry, ThumbsUp, Undo2, Check } from 'lucide-vue-next';
     import SourceRating from '@/components/SourceRating.vue';
     import ClassifierRating from '@/components/ClassifierRating.vue';
     import Badge from '@/components/Badge.vue';
@@ -170,6 +181,8 @@
     const isThoughtsExpanded = ref(false);
     const rateAllTrigger = ref(0);
     const allSourcesRated = ref(false);
+    const approveAllTrigger = ref(0);
+    const allClassifiersApproved = ref(false);
 
     // Sentiment icon mapping for conversation details
     const sentimentIcon = computed(() => {
@@ -227,10 +240,27 @@
         }
     };
 
+    const approveAllClassifiers = () => {
+        // Toggle between approving all and undoing all
+        if (props.selectedMessage?.meta?.classifiers?.length) {
+            if (allClassifiersApproved.value) {
+                // Undo all approvals (set to neutral)
+                approveAllTrigger.value--;
+                allClassifiersApproved.value = false;
+            } else {
+                // Approve all classifiers (set to approved)
+                approveAllTrigger.value++;
+                allClassifiersApproved.value = true;
+            }
+        }
+    };
+
     // Reset state when selected message changes
     watch(() => props.selectedMessage, () => {
         allSourcesRated.value = false;
         rateAllTrigger.value = 0;
+        allClassifiersApproved.value = false;
+        approveAllTrigger.value = 0;
     });
 
     onMounted(() => {

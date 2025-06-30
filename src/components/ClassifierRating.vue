@@ -86,13 +86,17 @@
 </template>
 
 <script setup>
-    import { ref, computed, nextTick } from 'vue';
+    import { ref, computed, nextTick, watch } from 'vue';
     import { Check, Pencil, Undo2, X, CheckCheck, CircleDashed, CircleSlash } from 'lucide-vue-next';
 
     const props = defineProps({
         classifier: {
             type: Object,
             required: true,
+        },
+        approveAllTrigger: {
+            type: Number,
+            default: 0,
         },
     });
 
@@ -101,6 +105,7 @@
     const editValue = ref('');
     const editedValue = ref('');
     const editInput = ref(null);
+    const wasAutoApproved = ref(false); // Track if this was approved by "approve all" button
 
     const ratingClass = computed(() => {
         if (isEditing.value) {
@@ -132,6 +137,7 @@
 
     function toggleApproved() {
         rating.value = rating.value === 'approved' ? 'neutral' : 'approved';
+        wasAutoApproved.value = false; // Manual action, clear auto-approved flag
     }
 
     async function startEdit() {
@@ -169,6 +175,23 @@
             startEdit();
         }
     }
+
+    // Watch for approve all trigger
+    watch(() => props.approveAllTrigger, (newValue, oldValue) => {
+        if (newValue > oldValue) {
+            // Positive change: approve, but only if currently neutral
+            if (rating.value === 'neutral') {
+                rating.value = 'approved';
+                wasAutoApproved.value = true;
+            }
+        } else if (newValue < oldValue) {
+            // Negative change: reset to neutral, but only if it was auto-approved
+            if (wasAutoApproved.value && rating.value === 'approved') {
+                rating.value = 'neutral';
+                wasAutoApproved.value = false;
+            }
+        }
+    });
 </script>
 
 <style scoped>
