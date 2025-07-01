@@ -15,6 +15,7 @@
                 <span class="email">{{ customer }}</span>
             </div>
             <div class="content" v-html="renderedContent"></div>
+            
             <div v-if="message.role === 'agent'" class="meta">
                 <!-- <div class="meta-item timestamp">{{ formatDate(datetime) }}</div> -->
                 <div class="agent-info">
@@ -37,6 +38,19 @@
                         >
                             <Link :size="14" />
                         </button>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="message.role === 'agent' && message.suggestedReply" class="suggested-replies vstack">
+                <h5>Suggested replies</h5>
+                <div class="suggested-replies-list hstack">
+                    <div
+                        v-for="(reply, index) in message.suggestedReply"
+                        :key="index"
+                        class="suggested-reply-item"
+                    >
+                        {{ reply }}
                     </div>
                 </div>
             </div>
@@ -210,10 +224,6 @@
         transform: scale(0.95);
     }
 
-    .content {
-        /* Markdown styling */
-    }
-
     .content :deep(h1),
     .content :deep(h2),
     .content :deep(h3),
@@ -335,5 +345,27 @@
     .avatar {
         border-radius: var(--radius);
         border: 1px solid var(--color-surface-tint-dark);
+    }
+
+    .suggested-replies {
+        gap: var(--space-xs);
+    }
+
+    .suggested-replies h5 {
+        font-size: var(--font-size-s);
+        font-weight: var(--font-weight-normal);
+        color: var(--color-chrome-fg-tertiary);
+    }
+
+    .suggested-replies-list {
+        gap: var(--space-xs);
+    }
+
+    .suggested-reply-item {
+        font-size: var(--font-size-s);
+        padding: var(--space-xxs) var(--space-xs);
+        border-radius: var(--radius-s);
+        border: 1px dashed var(--color-surface-tint-dark);
+        color: var(--color-chrome-fg-secondary);
     }
 </style>

@@ -7,6 +7,11 @@ export const messages = {
         {
             role: 'agent',
             text: 'I checked your support history and it looks like **clearing your cookies** often helps. Can you try that and reset your password again?\n\n**Steps to try:**\n1. Clear your browser cookies\n2. Reset your password\n3. Try logging in again',
+            suggestedReply: [
+                "I'll try that now",
+                "Where do I find cookies?",
+                "That didn't work"
+            ],
             meta: {
                 thinkingTime: 1234,
                 sources: [
@@ -65,6 +70,11 @@ export const messages = {
         {
             role: 'agent',
             text: "I'm sorry to hear you're having trouble with your header navigation. It sounds like there might be an **invisible element** blocking your menu links.\n\n## Here's how to fix this:\n\n### Step 1: Access the Header Editor\n1. Go to your **dashboard**\n2. Navigate to **Appearance → Editor**\n3. Open **List View** (the icon with three horizontal lines)\n4. Select your **Header template part**\n\n### Step 2: Look for Overlapping Elements\n- Check for transparent **Group blocks**\n- Look for **Button blocks** that might be covering the menu\n- Watch for elements with absolute positioning\n\n> **Tip:** Sometimes clicking around different areas in the header can reveal invisible blocks\n\nWould you like me to provide more specific steps for troubleshooting this header navigation problem?",
+            suggestedReply: [
+                "Yes, more details please",
+                "What's List View?",
+                "I can't find it"
+            ],
             meta: {
                 thinkingTime: 9541,
                 sources: [
@@ -487,6 +497,11 @@ export const messages = {
         {
             role: 'agent',
             text: "I'd be happy to help you connect your custom domain! There are **two main ways** to do this:\n\n- Point your domain to WordPress.com using **nameservers** (recommended)\n- Update your **DNS records** manually\n\n## Recommended: Using Nameservers\n\nFor the easiest setup, I recommend using nameservers. In your [GoDaddy account](https://godaddy.com), go to your domain settings and change the nameservers to:\n\n```\nns1.wordpress.com\nns2.wordpress.com\nns3.wordpress.com\n```\n\n### Next Steps:\n1. Come back to your WordPress.com dashboard\n2. Add your domain under **Settings → Domains**\n3. Wait up to **24 hours** for changes to take effect\n\n*Note: DNS propagation can sometimes take longer depending on your location.*\n\nWould you like me to walk you through the step-by-step process?",
+            suggestedReply: [
+                "Yes, walk me through it",
+                "What are nameservers?",
+                "This seems too complicated"
+            ],
             meta: {
                 thinkingTime: 3456,
                 sources: [
@@ -723,6 +738,11 @@ export const messages = {
         {
             role: 'agent',
             text: 'Getting found on Google takes time and some optimization! Let me help you check a few important settings:\n\n**First, check your site visibility:**\nGo to Settings → General and make sure "Discourage search engines from indexing this site" is **unchecked**.\n\n**For better SEO:**\n• Add a site description under Settings → General\n• Use the built-in SEO features (available with all plans)\n• Write descriptive page titles and meta descriptions\n• Add alt text to your images\n• Create quality content regularly\n• Submit your sitemap to Google Search Console\n\n**Your sitemap URL is:** yourdomain.com/sitemap.xml\n\nGoogle typically takes 2-8 weeks to fully index new sites. With a Premium plan or higher, you get advanced SEO tools and can connect Google Analytics to track your progress.\n\nWould you like me to walk you through setting up Google Search Console?',
+            suggestedReply: [
+                "Yes, set up Search Console",
+                "How do I check indexing?",
+                "2 months seems too long"
+            ],
             meta: {
                 thinkingTime: 6789,
                 sources: [
@@ -898,6 +918,11 @@ export const messages = {
         {
             role: 'agent',
             text: 'Absolutely! The built-in contact form is perfect for small businesses. Here\'s how to set it up:\n\n**Step 1: Add the Form Block**\n1. Go to the page where you want the form (usually "Contact" page)\n2. Click the **+ (Add Block)** button\n3. Search for "Form" and select the **Form block**\n4. Choose a form layout (simple contact form works great)\n\n**Step 2: Customize Your Form**\n• **Add fields**: Name, Email, Subject, Message (these are standard)\n• **Optional fields**: Phone, Company, Website\n• **Required fields**: Mark essential fields as required\n\n**Step 3: Configure Settings**\n• Set the **submit button text** (e.g., "Send Message")\n• Add a **confirmation message** for after submission\n• Choose email notification settings\n\nThe form automatically includes spam protection and works on all devices. Would you like me to explain the email notification setup next?',
+            suggestedReply: [
+                "Yes, explain notifications",
+                "Where's the Form block?",
+                "I need custom fields"
+            ],
             meta: {
                 thinkingTime: 4321,
                 sources: [
@@ -2061,6 +2086,11 @@ export const messages = {
         {
             role: 'agent',
             text: "Great question! Security is super important, and Jetpack has excellent tools to protect your blog. Let me walk you through the key security features:\n\n**🛡️ Core Jetpack Security Features:**\n\n**1. Brute Force Protection** (Already active!)\n• Blocks repeated login attempts\n• Automatically protects against password attacks\n• No setup required - works in the background\n\n**2. Malware Scanning** \n• Daily automatic scans for malicious code\n• Alerts you immediately if anything suspicious is found\n• Available with Jetpack Security plans\n\n**3. Two-Factor Authentication (2FA)**\n• Adds extra security layer to your login\n• Works with apps like Google Authenticator\n• Even if password is compromised, site stays secure\n\n**4. Security Monitoring**\n• Real-time monitoring of your site\n• Instant notifications of security issues\n• Detailed security reports\n\n**Quick Setup Recommendations:**\n1. **Enable 2FA** (5 minutes) - biggest security impact\n2. **Review your security dashboard** in Jetpack\n3. **Set up security notifications** via email\n\n**Want me to help you set up 2FA right now?** It's the single best thing you can do for blog security!\n\nWhat specific security concerns do you have? I can tailor my recommendations to your situation.",
+            suggestedReply: [
+                "Yes, let's set up 2FA",
+                "Where's the dashboard?",
+                "This sounds complicated"
+            ],
             meta: {
                 thinkingTime: 3456,
                 sources: [
@@ -2321,6 +2351,11 @@ export const messages = {
         {
             role: 'agent',
             text: 'Congratulations on your new business! Setting up an online store on WordPress.com is definitely possible. Here\'s your complete setup guide:\n\n**E-commerce Requirements:**\n• **Business Plan** ($25/month) - Required for selling products\n• **WooCommerce plugin** - Automatically available with Business plan\n• **Payment processor** - PayPal, Stripe, etc.\n\n**Step-by-Step Setup:**\n\n**1. Upgrade to Business Plan**\n• Go to **Plans** in your dashboard\n• Select **Business** plan\n• Complete payment\n\n**2. Install WooCommerce**\n• Go to **Plugins → Add New**\n• Search for "WooCommerce"\n• Install and activate\n\n**3. WooCommerce Setup Wizard**\n• Set your store location and currency\n• Choose payment methods (PayPal/Stripe recommended)\n• Configure shipping options\n• Add your first product\n\n**4. Essential Pages**\nWooCommerce creates these automatically:\n• Shop page\n• Cart and checkout\n• My Account page\n\n**Payment Options:**\n• **PayPal** - Easy setup, widely trusted\n• **Stripe** - Credit card processing\n• **Bank transfers** - For larger purchases\n\n**Pro Tips:**\n• Start with 5-10 products to test everything\n• Set up **SSL** (automatic on WordPress.com)\n• Create clear **shipping and return policies**\n\nWhat type of products are you planning to sell? I can provide more specific guidance!',
+            suggestedReply: [
+                "Sounds great, let's do it",
+                "How much does this cost?",
+                "This seems like a lot"
+            ],
             meta: {
                 thinkingTime: 4567,
                 sources: [
