@@ -51,9 +51,11 @@
 <style scoped>
 .step {
     background-color: var(--color-chrome);
-    border: 1px solid var(--color-surface-tint);
-    border-radius: var(--radius-s);
+    border: 1px solid var(--color-surface-tint-dark);
+    box-shadow: var(--shadow-3);
+    border-radius: var(--radius-l);
     width: fit-content;
+    overflow: hidden;
 }
 
 header {

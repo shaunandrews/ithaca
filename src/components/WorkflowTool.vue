@@ -57,7 +57,7 @@
     .tool {
         background-color: var(--color-surface);
         border: 1px solid var(--color-surface-tint-dark);
-        box-shadow: var(--shadow-1);
+        /* box-shadow: var(--shadow-1); */
         color: var(--color-surface-fg);
         border-radius: var(--radius);
         padding: var(--space-m);
