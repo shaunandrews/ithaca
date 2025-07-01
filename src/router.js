@@ -18,6 +18,7 @@ import ExpertActivity from './views/ExpertActivity.vue';
 import ExpertWorkbench from './views/ExpertWorkbench.vue';
 import ExpertInsights from './views/ExpertInsights.vue';
 import ExpertVersions from './views/ExpertVersions.vue';
+import AgentCreation from './views/AgentCreation.vue';
 
 const routes = [
     {
@@ -55,6 +56,11 @@ const routes = [
         path: '/',
         name: 'Agents',
         component: Agents,
+    },
+    {
+        path: '/agents/new',
+        name: 'AgentCreation',
+        component: AgentCreation,
     },
     {
         path: '/tools',
