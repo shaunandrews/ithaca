@@ -10,10 +10,10 @@
                                 >Activity</router-link
                             >
                         </li>
-                        <li :class="{ active: isActiveTab('configuration') }">
+                        <li :class="{ active: isActiveTab('workbench') }">
                             <router-link
-                                :to="`/expert/${expert.id}/configuration`"
-                                >Configuration</router-link
+                                :to="`/expert/${expert.id}/workbench`"
+                                >Workbench</router-link
                             >
                         </li>
                         <li :class="{ active: isActiveTab('insights') }">

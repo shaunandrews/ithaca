@@ -15,7 +15,7 @@ import Conversation from './views/Conversation.vue';
 import Experts from './views/Experts.vue';
 import ExpertLayout from './views/ExpertLayout.vue';
 import ExpertActivity from './views/ExpertActivity.vue';
-import ExpertConfiguration from './views/ExpertConfiguration.vue';
+import ExpertWorkbench from './views/ExpertWorkbench.vue';
 import ExpertInsights from './views/ExpertInsights.vue';
 import ExpertVersions from './views/ExpertVersions.vue';
 
@@ -118,9 +118,9 @@ const routes = [
                 component: ExpertActivity,
             },
             {
-                path: 'configuration',
-                name: 'ExpertConfiguration',
-                component: ExpertConfiguration,
+                path: 'workbench',
+                name: 'ExpertWorkbench',
+                component: ExpertWorkbench,
             },
             {
                 path: 'insights',
