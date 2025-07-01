@@ -25,6 +25,8 @@ button {
     font-size: var(--font-size-s);
     font-weight: var(--font-weight-semibold);
     border-radius: var(--radius);
+    height: fit-content;
+    width: fit-content;
     cursor: pointer;
     display: flex;
     align-items: center;

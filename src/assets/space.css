@@ -14,6 +14,7 @@
     --radius-m: 6px;
     --radius-l: 8px;
     --radius-xl: 18px;
+    --radius-circle: 50%;
 
     /* Default radius */
     --radius: var(--radius-m);

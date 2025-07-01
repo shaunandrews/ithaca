@@ -58,36 +58,43 @@ alwaysApply: false
 
 ## Script Section
 
+### Script Tag Indentation
+- **CRITICAL**: Use proper 2-space indentation inside `<script>` tags for code folding to work correctly
+- All content inside `<script setup>` should be indented with 2 spaces
+- This enables proper code folding in editors like Cursor
+
+```javascript
+<script setup>
+  import { computed, ref } from 'vue';
+  import { useRoute } from 'vue-router';
+
+  import { agents } from '@/data/agents.js';
+  import { conversations } from '@/data/conversations.js';
+
+  import { ArrowBigLeft, Link } from 'lucide-vue-next';
+  import SourceRating from '@/components/SourceRating.vue';
+
+  const route = useRoute();
+  const agentId = computed(() => Number(route.params.id));
+
+  const agent = computed(() => agents.find(a => a.id === agentId.value));
+
+  function formatDate(datetime) {
+    const date = new Date(datetime);
+    return date.toLocaleString();
+  }
+</script>
+```
+
 ### Import Statements
 - Group imports logically with consistent spacing
 - Use single blank line between import groups
-
-```javascript
-import { computed, ref } from 'vue';
-import { useRoute } from 'vue-router';
-
-import { agents } from '@/data/agents.js';
-import { conversations } from '@/data/conversations.js';
-
-import { ArrowBigLeft, Link } from 'lucide-vue-next';
-import SourceRating from '@/components/SourceRating.vue';
-```
+- **Always indent imports with 2 spaces inside script tags**
 
 ### Computed Properties and Functions
 - Use consistent spacing around computed properties
 - Maintain 2-space indentation for function bodies
-
-```javascript
-const route = useRoute();
-const agentId = computed(() => Number(route.params.id));
-
-const agent = computed(() => agents.find(a => a.id === agentId.value));
-
-function formatDate(datetime) {
-  const date = new Date(datetime);
-  return date.toLocaleString();
-}
-```
+- **Ensure all script content is properly indented for code folding**
 
 ## Style Section
 
