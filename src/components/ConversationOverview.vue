@@ -38,13 +38,13 @@
         flex: 0 0 200px;
         max-width: 200px;
         overflow-y: auto;
-        border-right: 1px solid var(--color-surface-tint);
     }
 
     .overview-item {
-        padding: var(--space-xs) var(--space-s);
+        padding: var(--space-xxs) var(--space-xs);
         cursor: pointer;
-        font-size: var(--font-size-s);
+        border-radius: var(--radius-s);
+        font-size: var(--font-size-xs);
         color: var(--color-chrome-fg-tertiary);
         white-space: nowrap;
         overflow: hidden;

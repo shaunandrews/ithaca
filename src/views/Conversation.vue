@@ -15,25 +15,24 @@
                         text="All activity"
                     />
                     <h1>{{ conversation.event }}</h1>
-                    <ConversationMeta
-                        :conversation-id="conversation.id.toString()"
-                        :zendesk-id="`ZD-${conversation.id + 10000}`"
-                    />
+                    <div class="header-end hstack">
+                        <ConversationMeta
+                            :conversation-id="conversation.id.toString()"
+                            :zendesk-id="`ZD-${conversation.id + 10000}`"
+                        />
+                        <button
+                            class="small"
+                            @click="toggleOverview"
+                            :class="{ active: showOverview }"
+                            title="Toggle message overview"
+                        >
+                            <ListOrdered size="16" stroke-width="1.5" />
+                        </button>
+                    </div>
                 </header>
 
                 <div class="conversation-main vstack">
                     <div class="conversation-content hstack">
-                        <ConversationOverview
-                            :messages="conversationMessages"
-                            :selected-idx="selectedIdx"
-                            @select="
-                                (idx) =>
-                                    selectMessage(
-                                        conversationMessages[idx],
-                                        idx
-                                    )
-                            "
-                        />
                         <div class="messages">
                             <ConversationSummary
                                 :summary="conversation.summary"
@@ -53,6 +52,19 @@
                                 @select="selectMessage"
                             />
                         </div>
+
+                        <ConversationOverview
+                            v-if="showOverview"
+                            :messages="conversationMessages"
+                            :selected-idx="selectedIdx"
+                            @select="
+                                (idx) =>
+                                    selectMessage(
+                                        conversationMessages[idx],
+                                        idx
+                                    )
+                            "
+                        />
                     </div>
 
                     <div class="conversation-stats hstack">
@@ -211,6 +223,7 @@
         Timer,
         Tags,
         MessagesSquare,
+        ListOrdered,
     } from 'lucide-vue-next';
     import { agents } from '@/data/agents.js';
     import { conversations } from '@/data/conversations.js';
@@ -255,6 +268,9 @@
     // Scroll state for header border
     const isScrolled = ref(false);
     const conversationContainer = ref(null);
+
+    // Overview toggle state
+    const showOverview = ref(false);
 
     // Sentiment icon mapping
     const sentimentIcon = computed(() => {
@@ -392,6 +408,10 @@
         if (conversationContainer.value) {
             isScrolled.value = conversationContainer.value.scrollTop > 0;
         }
+    }
+
+    function toggleOverview() {
+        showOverview.value = !showOverview.value;
     }
 </script>
 

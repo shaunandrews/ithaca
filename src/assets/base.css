@@ -63,6 +63,11 @@ button.primary:hover {
     background: var(--color-accent-dark);
 }
 
+button.active {
+    background: var(--color-surface-fg);
+    color: var(--color-surface);
+}
+
 /* Inputs */
 input {
     border: none;
