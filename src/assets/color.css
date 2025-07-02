@@ -22,6 +22,16 @@
     --color-highlight-tint: rgba(221, 15, 183, 0.1);
     --color-highlight-fg: #ffffff;
 
+    --color-success: #00a32a;
+    --color-success-fg: #ffffff;
+    --color-success-rgb: 0, 163, 42;
+
+    --color-error: #d63638;
+    --color-error-fg: #ffffff;
+    --color-error-rgb: 214, 54, 56;
+
+    --color-accent-rgb: 6, 64, 224;
+
     --color-tooltip: rgba(0, 0, 0, 0.8);
     --color-tooltip-fg: #ffffff;
 }
@@ -45,7 +55,16 @@
         --color-accent: #5494fb;
         --color-accent-dark: #4078c0;
         --color-accent-fg: #000000;
+        --color-accent-rgb: 84, 148, 251;
 
         --color-highlight: #fc35d8;
+
+        --color-success: #00a32a;
+        --color-success-fg: #ffffff;
+        --color-success-rgb: 0, 163, 42;
+
+        --color-error: #d63638;
+        --color-error-fg: #ffffff;
+        --color-error-rgb: 214, 54, 56;
     }
 }
