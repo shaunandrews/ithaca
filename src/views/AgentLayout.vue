@@ -2,7 +2,17 @@
     <div class="agent-container">
         <header v-if="agent" ref="headerRef">
             <div class="agent-header-start">
-                <h2 class="agent-title">{{ agent.title }}</h2>
+                <select
+                    v-model.number="selectedAgentId"
+                    @change="goToAgent"
+                >
+                    <button>
+                        <selectedcontent />
+                    </button>
+                    <option v-for="a in agents" :key="a.id" :value="a.id">
+                        {{ a.title }}
+                    </option>
+                </select>
                 <nav>
                     <ul>
                         <li :class="{ active: isActiveTab('activity') }">
@@ -42,13 +52,19 @@
 </template>
 
 <script setup>
-    import { computed, ref, onMounted, onUnmounted, provide } from 'vue';
-    import { useRoute } from 'vue-router';
+    import { computed, ref, onMounted, onUnmounted, provide, watch } from 'vue';
+    import { useRoute, useRouter } from 'vue-router';
     import { agents } from '@/data/agents.js';
 
     const route = useRoute();
+    const router = useRouter();
     const agentId = computed(() => Number(route.params.id));
     const agent = computed(() => agents.find((a) => a.id === agentId.value));
+
+    const selectedAgentId = ref(agentId.value);
+    watch(agentId, (newVal) => {
+        selectedAgentId.value = newVal;
+    });
 
     const headerRef = ref(null);
     const headerHeight = ref(0);
@@ -84,6 +100,23 @@
             return currentPath === expectedPath;
         }
         return currentPath === expectedPath;
+    }
+
+    function goToAgent() {
+        // Check if we're currently viewing a conversation (has activityId parameter)
+        const isViewingConversation = route.params.activityId !== undefined;
+        
+        if (isViewingConversation) {
+            // If viewing a conversation, redirect to the activity screen for the new agent
+            router.push(`/agent/${selectedAgentId.value}/activity`);
+        } else {
+            // Otherwise, just replace the agent ID in the current path
+            const newPath = route.path.replace(
+                `/agent/${agentId.value}`,
+                `/agent/${selectedAgentId.value}`
+            );
+            router.push(newPath);
+        }
     }
 
     onMounted(() => {
@@ -127,11 +160,6 @@
         display: flex;
         align-items: center;
         gap: var(--space-m);
-    }
-
-    header h2 {
-        font-size: var(--font-size-m);
-        font-weight: var(--font-weight-semibold);
     }
 
     nav ul {

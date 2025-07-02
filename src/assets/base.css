@@ -88,21 +88,109 @@ input:hover {
     background: var(--color-surface-tint-dark);
 }
 
-input:focus,
-select:focus {
+input:focus {
     background: var(--color-surface-tint-dark);
     outline: 2px solid var(--color-accent);
 }
 
 select {
+    appearance: base-select;
     border: none;
     display: block;
-    width: 100%;
-    background: var(--color-surface-tint);
+    width: fit-content;
+    min-width: 80px;
+    max-width: 200px;
     border-radius: var(--radius);
-    padding: var(--space-xs) var(--space-m);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xxs);
+    font-size: var(--font-size-s);
+    border: 1px solid var(--color-surface-tint-dark);
+    color: var(--color-surface-fg);
+    transition: var(--transition-quick);
+}
+
+select:hover {
+    background: var(--color-surface-tint);
+}
+
+select:focus {
+    background: var(--color-surface-tint);
+    outline: 2px solid var(--color-accent);
+}
+
+/* The button that opens the dropdown */
+select button {
+    border: none;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: var(--font-size-s);
+}
+
+/* The dropdown icon */
+select::picker-icon {
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 3px;
+    transform-origin: 50% 5px;
+    transition: var(--transition-quick);
+}
+
+select:open::picker-icon {
+    transform: rotate(180deg);
+}
+
+/* The list of options that appears when the dropdown is open */
+::picker(select) {
+    top: 0;
+    appearance: base-select;
+    border: 1px solid var(--color-surface-tint-dark);
+    border-radius: var(--radius);
     font-size: var(--font-size-s);
     color: var(--color-surface-fg);
+    box-shadow: var(--shadow-3);
+    opacity: 0;
+    transition: var(--transition-quick);
+}
+
+::picker(select):popover-open {
+    top: var(--space-xxs);
+    opacity: 1;
+}
+
+@starting-style {
+    ::picker(select):popover-open {
+        top: 0;
+        opacity: 0;
+    }
+}
+
+option {
+    padding: var(--space-xs);
+    padding-right: var(--space-m);
+    border-top: 1px solid var(--color-surface-tint-light);
+    transition: var(--transition-quick);
+}
+
+option:hover {
+    background: var(--color-surface-tint-light);
+}
+
+option:focus {
+    outline: none;
+    border-radius: var(--radius-s);
+    margin: 1px;
+    box-shadow: inset 0 0 0 2px var(--color-accent);
+}
+
+option:first-of-type {
+    border-top: none;
 }
 
 /* Layout */
