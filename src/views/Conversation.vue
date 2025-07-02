@@ -6,7 +6,10 @@
                 :class="{ 'panel-open': selectedMessage }"
                 ref="conversationContainer"
             >
-                <header class="conversation-header hstack" :class="{ 'has-border': isScrolled }">
+                <header
+                    class="conversation-header hstack"
+                    :class="{ 'has-border': isScrolled }"
+                >
                     <ButtonBack
                         :to="`/agent/${agentId}/activity`"
                         text="All activity"
@@ -19,41 +22,77 @@
                 </header>
 
                 <div class="conversation-main vstack">
-                    <div class="messages ">
-                        <ConversationSummary
-                            :summary="conversation.summary"
-                            :title="conversation.event"
-                            @click="selectConversationSummary"
-                            :is-selected="isConversationSummarySelected"
+                    <div class="conversation-content hstack">
+                        <ConversationOverview
+                            :messages="conversationMessages"
+                            :selected-idx="selectedIdx"
+                            @select="
+                                (idx) =>
+                                    selectMessage(
+                                        conversationMessages[idx],
+                                        idx
+                                    )
+                            "
                         />
+                        <div class="messages">
+                            <ConversationSummary
+                                :summary="conversation.summary"
+                                :title="conversation.event"
+                                @click="selectConversationSummary"
+                                :is-selected="isConversationSummarySelected"
+                            />
 
-                        <Message
-                            v-for="(msg, idx) in conversationMessages"
-                            :key="idx"
-                            :message="msg"
-                            :index="idx"
-                            :datetime="conversation.datetime"
-                            :customer="conversation.customer"
-                            :is-selected="selectedIdx === idx"
-                            @select="selectMessage"
-                        />
+                            <Message
+                                v-for="(msg, idx) in conversationMessages"
+                                :key="idx"
+                                :message="msg"
+                                :index="idx"
+                                :datetime="conversation.datetime"
+                                :customer="conversation.customer"
+                                :is-selected="selectedIdx === idx"
+                                @select="selectMessage"
+                            />
+                        </div>
                     </div>
 
                     <div class="conversation-stats hstack">
-                        <div class="stats-item quote"><component :is="sentimentIcon" stroke-width="1.5" size="18" /> "{{ conversation.quote }}"</div>
-                        <div class="stats-item"><MessagesSquare size="18" stroke-width="1.5" /> {{ conversationMessages.length }} message{{ conversationMessages.length === 1 ? '' : 's' }}</div>
-                        <div class="stats-item"><Timer size="18" stroke-width="1.5" /> 90 mins</div>
+                        <div class="stats-item quote">
+                            <component
+                                :is="sentimentIcon"
+                                stroke-width="1.5"
+                                size="18"
+                            />
+                            "{{ conversation.quote }}"
+                        </div>
+                        <div class="stats-item">
+                            <MessagesSquare size="18" stroke-width="1.5" />
+                            {{ conversationMessages.length }} message{{
+                                conversationMessages.length === 1 ? '' : 's'
+                            }}
+                        </div>
+                        <div class="stats-item">
+                            <Timer size="18" stroke-width="1.5" /> 90 mins
+                        </div>
                         <div
-                            v-if="conversation.tags && conversation.tags.length > 0"
+                            v-if="
+                                conversation.tags &&
+                                conversation.tags.length > 0
+                            "
                             class="stats-item tags-item"
                             ref="tagsContainer"
                             @click.prevent="toggleTagsPopover"
                         >
                             <Tags stroke-width="1.5" size="18" />
-                            {{ conversation.tags.length }} tag{{ conversation.tags.length === 1 ? '' : 's' }}
+                            {{ conversation.tags.length }} tag{{
+                                conversation.tags.length === 1 ? '' : 's'
+                            }}
                             <div v-if="showTagsPopover" class="tags-popover">
                                 <div class="tags-list vstack">
-                                    <div v-for="tag in conversation.tags" :key="tag" class="tag-item">
+                                    <div
+                                        v-for="tag in conversation.tags"
+                                        :key="tag"
+                                        class="tag-item"
+                                    >
                                         {{ tag }}
                                     </div>
                                 </div>
@@ -66,7 +105,9 @@
             <MessageDetailsPanel
                 v-if="selectedMessage || isConversationSummarySelected"
                 :selected-message="selectedMessage"
-                :conversation="isConversationSummarySelected ? conversation : null"
+                :conversation="
+                    isConversationSummarySelected ? conversation : null
+                "
                 @close="closePanel"
                 @view-source="openSourceModal"
             />
@@ -160,13 +201,24 @@
 <script setup>
     import { computed, ref, onMounted, onUnmounted, inject } from 'vue';
     import { useRoute, useRouter } from 'vue-router';
-    import { Laugh, Smile, Meh, Annoyed, Frown, Angry, Timer, Tags, MessagesSquare } from 'lucide-vue-next';
+    import {
+        Laugh,
+        Smile,
+        Meh,
+        Annoyed,
+        Frown,
+        Angry,
+        Timer,
+        Tags,
+        MessagesSquare,
+    } from 'lucide-vue-next';
     import { agents } from '@/data/agents.js';
     import { conversations } from '@/data/conversations.js';
     import { messages } from '@/data/messages.js';
     import ConversationSummary from '@/components/ConversationSummary.vue';
     import ConversationMeta from '@/components/ConversationMeta.vue';
     import Message from '@/components/Message.vue';
+    import ConversationOverview from '@/components/ConversationOverview.vue';
     import Modal from '@/components/Modal.vue';
     import ButtonBack from '@/components/ButtonBack.vue';
     import MessageDetailsPanel from '@/components/MessageDetailsPanel.vue';
@@ -207,16 +259,16 @@
     // Sentiment icon mapping
     const sentimentIcon = computed(() => {
         if (!conversation.value) return Frown;
-        
+
         const sentimentMap = {
-            1: Laugh,    // laugh
-            2: Smile,    // smile
-            3: Meh,      // meh
-            4: Annoyed,  // annoyed
-            5: Frown,    // frown
-            6: Angry     // angry
+            1: Laugh, // laugh
+            2: Smile, // smile
+            3: Meh, // meh
+            4: Annoyed, // annoyed
+            5: Frown, // frown
+            6: Angry, // angry
         };
-        
+
         return sentimentMap[conversation.value.sentiment] || Frown;
     });
 
@@ -224,7 +276,7 @@
     onMounted(() => {
         const selectedParam = route.query.selected;
         const summarySelectedParam = route.query.summarySelected;
-        
+
         if (summarySelectedParam === 'true') {
             isConversationSummarySelected.value = true;
         } else if (selectedParam !== undefined && conversation.value) {
@@ -234,22 +286,28 @@
                 selectedIdx.value = idx;
             }
         }
-        
+
         // Add click outside listener for tags popover
         document.addEventListener('click', handleClickOutside);
-        
+
         // Add scroll listener for header border
         if (conversationContainer.value) {
-            conversationContainer.value.addEventListener('scroll', handleScroll);
+            conversationContainer.value.addEventListener(
+                'scroll',
+                handleScroll
+            );
         }
     });
 
     onUnmounted(() => {
         document.removeEventListener('click', handleClickOutside);
-        
+
         // Remove scroll listener
         if (conversationContainer.value) {
-            conversationContainer.value.removeEventListener('scroll', handleScroll);
+            conversationContainer.value.removeEventListener(
+                'scroll',
+                handleScroll
+            );
         }
     });
 
@@ -264,7 +322,11 @@
             // Update URL to remember selection
             router.replace({
                 ...route,
-                query: { ...route.query, selected: idx.toString(), summarySelected: undefined },
+                query: {
+                    ...route.query,
+                    selected: idx.toString(),
+                    summarySelected: undefined,
+                },
             });
         }
     }
@@ -280,7 +342,11 @@
             // Update URL to remember selection
             router.replace({
                 ...route,
-                query: { ...route.query, summarySelected: 'true', selected: undefined },
+                query: {
+                    ...route.query,
+                    summarySelected: 'true',
+                    selected: undefined,
+                },
             });
         }
     }
@@ -355,6 +421,11 @@
         gap: var(--space-m);
     }
 
+    .conversation-content {
+        display: flex;
+        gap: var(--space-m);
+    }
+
     .empty {
         justify-content: center;
         align-items: center;
@@ -395,7 +466,7 @@
         background: var(--color-tooltip);
         backdrop-filter: blur(12px);
         border-bottom: 1px solid rgba(0, 0, 0, 0.8);
-        border-top: 1px solid rgba(255,255,255, 0.1);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
         color: var(--color-tooltip-fg);
         position: sticky;
         bottom: var(--space-s);
