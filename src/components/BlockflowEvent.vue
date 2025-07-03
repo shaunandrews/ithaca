@@ -36,6 +36,10 @@
     import { ChevronRight, ChevronDown } from 'lucide-vue-next';
 
     const props = defineProps({
+        uid: {
+            type: String,
+            required: true
+        },
         title: {
             type: String,
             required: true
@@ -72,6 +76,7 @@
         event.stopPropagation();
         
         emit('select', {
+            uid: props.uid,
             title: props.title,
             type: props.type,
             description: props.description,
@@ -108,6 +113,7 @@
         background-color: transparent;
         border-color: transparent;
         outline: none;
+        border-radius: 0;
     }
 
     .event-item.flow:hover .event-header {
@@ -198,6 +204,7 @@
 
     .rules {
         padding: var(--space-xs);
+        padding-bottom: 0;
     }
 
     .rules-list {

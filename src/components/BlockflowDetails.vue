@@ -1,21 +1,23 @@
 <template>
     <div class="details">
-        <nav class="details-nav hstack">
-            <div 
-                class="details-nav-item" 
-                :class="{ active: activeTab === 'agent' }"
-                @click="activeTab = 'agent'"
-            >
-                Agent
-            </div>
-            <div 
-                class="details-nav-item" 
-                :class="{ active: activeTab === 'block' }"
-                @click="activeTab = 'block'"
-            >
-                Event
-            </div>
-        </nav>
+        <div class="details-header">
+            <nav class="details-nav hstack">
+                <div 
+                    class="details-nav-item" 
+                    :class="{ active: activeTab === 'agent' }"
+                    @click="activeTab = 'agent'"
+                >
+                    Agent
+                </div>
+                <div 
+                    class="details-nav-item" 
+                    :class="{ active: activeTab === 'block' }"
+                    @click="activeTab = 'block'"
+                >
+                    Event
+                </div>
+            </nav>
+        </div>
         <div class="details-content">
             <div v-if="activeTab === 'agent'" class="agent-details">
                 <div class="agent-details-header">
@@ -27,14 +29,14 @@
                     <input type="text" />
                     <label>Description</label>
                     <textarea />
-                    <label>Icon</label>
-                    <input type="file" />
                 </div>
 
                 <div class="prompt">
-                    <h4>Prompt</h4>
+                    <label>Prompt</label>
                     <textarea></textarea>
                 </div>
+
+                <hr />
 
                 <h4>Context</h4>
                 <div class="context-variables">
@@ -46,31 +48,6 @@
                         {{ variable }}
                     </div>
                 </div>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
-                <p>Select a block to see more details</p>
             </div>
 
             <div v-if="activeTab === 'block'" class="block-details">
@@ -146,26 +123,34 @@
     watch(() => props.selectedBlock, (newBlock) => {
         if (newBlock) {
             activeTab.value = 'block';
+        } else {
+            activeTab.value = 'agent';
         }
     });
 </script>
 
 <style scoped>
     .details {
-        position: sticky;
-        top: calc(var(--toolbar-height) + 1px);
-        height: calc(100vh - var(--toolbar-height));
+        height: 100%;
         overflow-y: auto;
+    }
+
+    .details-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: var(--space-xs) var(--space-m);
+        backdrop-filter: blur(20px);
+        background-color: var(--color-chrome-transparent);
+        border-bottom: 1px solid var(--color-surface-tint);
     }
 
     .details-nav {
         background-color: var(--color-surface-tint-light);
         border-radius: var(--radius);
         border: 1px solid var(--color-surface-tint);
-        gap: var(--space-m);
-        padding: 1px;
-        position: sticky;
-        top: 0;
+        gap: 2px;
+        padding: 2px;
     }
 
     .details-nav-item {
@@ -189,6 +174,10 @@
     .details-nav-item.active {  
         background-color: var(--color-surface-fg);
         color: var(--color-surface);
+    }
+
+    .details-content {
+        padding: var(--space-m);
     }
 
     .context-variables {

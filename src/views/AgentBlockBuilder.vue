@@ -41,18 +41,20 @@
                     
                 </div>
             </div>
-            <div class="flow-overview vstack">
+            <div class="flow-overview vstack" @click="handleFlowBackgroundClick">
                 <BlockflowEvent
+                    uid="receive-message"
                     :stepNumber="1"
                     title="Receive message"
                     type="trigger"
                     description="A message from a customer, usually a chat (synchronous) or email (asynchronous)"
                     :outputs="['message']"
-                    :selected="selectedBlock?.title === 'Receive message'"
+                    :selected="selectedBlock?.uid === 'receive-message'"
                     @select="handleBlockSelect"
                 />
                 <BlockflowDivider />
                 <BlockflowEvent
+                    uid="gather-context"
                     :stepNumber="2"
                     title="Gather context"
                     type="expert"
@@ -64,94 +66,103 @@
                         'context.support_history',
                         'context.customer_sites'
                     ]"
-                    :selected="selectedBlock?.title === 'Gather context'"
+                    :selected="selectedBlock?.uid === 'gather-context'"
                     @select="handleBlockSelect"
                 />
                 <BlockflowDivider />
                 <BlockflowEvent
+                    uid="interpret-meaning"
                     :stepNumber="3"
                     title="Interpret meaning"
                     type="expert"
                     description="Uses Natural Language Processing (NLP) to understand intent and needs."
                     :inputs="['message']"
                     :outputs="['context.needs', 'context.intent']"
-                    :selected="selectedBlock?.title === 'Interpret meaning'"
+                    :selected="selectedBlock?.uid === 'interpret-meaning'"
                     @select="handleBlockSelect"
                 />
                 <BlockflowDivider />
                 <BlockflowEvent
+                    uid="assign-tags"
                     :stepNumber="4"
                     title="Assign tags"
                     type="expert"
                     description="Generate a tag or list of tags based on text. Optionally define a list of tags to choose from."
                     :inputs="['message']"
                     :outputs="['context.tags']"
-                    :selected="selectedBlock?.title === 'Assign tags'"
+                    :selected="selectedBlock?.uid === 'assign-tags'"
                     @select="handleBlockSelect"
                 />
                 <BlockflowDivider />
                 <BlockflowEvent
+                    uid="analyze-sentiment"
                     :stepNumber="5"
                     title="Analyze sentiment"
                     type="expert"
                     description="Determines how the customer is feeling"
                     :inputs="['message']"
                     :outputs="['context.sentiment']"
-                    :selected="selectedBlock?.title === 'Analyze sentiment'"
+                    :selected="selectedBlock?.uid === 'analyze-sentiment'"
                     @select="handleBlockSelect"
                 />
                 <BlockflowDivider />
                 <BlockflowEvent
+                    uid="if-else"
                     :stepNumber="6"
                     title="If/Else"
                     type="flow"
                     description="accepts inputs and allows rules to determine the next step"
-                    :selected="selectedBlock?.title === 'If/Else'"
+                    :selected="selectedBlock?.uid === 'if-else'"
                     @select="handleBlockSelect"
                 >
                     <template #rules>
                         <BlockflowRule ruleVariable="tag" ruleValue="billing">
                             <BlockflowEvent
+                                uid="compose-escalation-billing"
                                 title="Compose escalation"
                                 type="expert"
                                 description="Summarizes conversation and includes relevant links."
-                                :inputs="['context']"
+                                :inputs="['message', 'context']"
                                 :outputs="['conversation_escalation_summary']"
-                                :selected="selectedBlock?.title === 'Compose escalation'"
+                                :selected="selectedBlock?.uid === 'compose-escalation-billing'"
                                 @select="handleBlockSelect"
                             />
                             <BlockflowDivider />
                             <BlockflowEvent
+                                uid="send-email-billing"
                                 title="Send email"
                                 type="tool"
                                 description="Send an email"
                                 :inputs="['email_address', 'email_subject', 'email_body']"
-                                :selected="selectedBlock?.title === 'Send email'"
+                                :selected="selectedBlock?.uid === 'send-email-billing'"
                                 @select="handleBlockSelect"
                             />
                             <BlockflowDivider />
                         </BlockflowRule>
                         <BlockflowRule ruleVariable="tag" ruleValue="legal">
                             <BlockflowEvent
+                                uid="create-zendesk-legal"
                                 title="Create Zendesk ticket"
                                 type="tool"
                                 description="forward information to legal team via zendesk"
-                                :selected="selectedBlock?.title === 'Create Zendesk ticket'"
+                                :selected="selectedBlock?.uid === 'create-zendesk-legal'"
                                 @select="handleBlockSelect"
                             />
                             <BlockflowDivider />
                             <BlockflowEvent
-                                title="Respond to customer"
+                                uid="send-response-legal"
+                                title="Send response"
                                 type="tool"
                                 description="respond to customer via original channel"
-                                :selected="selectedBlock?.title === 'Respond to customer'"
+                                :selected="selectedBlock?.uid === 'send-response-legal'"
                                 @select="handleBlockSelect"
                             />
                             <BlockflowDivider />
                             <BlockflowEvent
+                                uid="end-flow-legal"
                                 title="End flow"
                                 type="exit"
-                                :selected="selectedBlock?.title === 'End flow'"
+                                :selected="selectedBlock?.uid === 'end-flow-legal'"
                                 @select="handleBlockSelect"
                             >
                                 <template #icon>
@@ -161,61 +172,67 @@
                         </BlockflowRule>
                         <BlockflowRule ruleVariable="sentiment" ruleValue="very angry">
                             <BlockflowEvent
+                                uid="escalate-to-human"
                                 title="Escalate to human"
                                 type="tool"
                                 description="Contact a human and wait for guidance"
-                                :selected="selectedBlock?.title === 'Escalate to human'"
+                                :selected="selectedBlock?.uid === 'escalate-to-human'"
                                 @select="handleBlockSelect"
                             >
                                 <template #icon>
                                     <OctagonPause size="16" stroke-width="1.5" />
                                 </template>
                             </BlockflowEvent>
+                            <BlockflowDivider />
                         </BlockflowRule>
                     </template>
                 </BlockflowEvent>
                 <BlockflowDivider />
                 <BlockflowEvent
+                    uid="gather-sources"
                     :stepNumber="7"
                     title="Gather sources"
                     type="expert"
                     description="Collects information from available sources"
                     :inputs="['tags', 'context.customer_profile', 'context.purchase_history', 'context.support_history', 'context.customer_sites']"
                     :outputs="['context.sources']"
-                    :selected="selectedBlock?.title === 'Gather sources'"
+                    :selected="selectedBlock?.uid === 'gather-sources'"
                     @select="handleBlockSelect"
                 />
                 <BlockflowDivider />
                 <BlockflowEvent
+                    uid="compose-response"
                     :stepNumber="8"
                     title="Compose response"
                     type="expert"
                     description="Composes a response to a message based on the context."
                     :inputs="['message','context']"
                     :outputs="['response']"
-                    :selected="selectedBlock?.title === 'Compose response'"
+                    :selected="selectedBlock?.uid === 'compose-response'"
                     @select="handleBlockSelect"
                 />
                 <BlockflowDivider />
                 <BlockflowEvent
+                    uid="send-response"
                     :stepNumber="9"
                     title="Send response"
-                    type="expert"
+                    type="tool"
                     description="Sends a response to a message"
                     :inputs="['message','response']"
-                    :selected="selectedBlock?.title === 'Send response'"
+                    :selected="selectedBlock?.uid === 'send-response'"
                     @select="handleBlockSelect"
                 />
                 <BlockflowDivider />
                 <BlockflowEvent
+                    uid="end-flow"
                     :stepNumber="10"
                     title="End flow"
                     type="action"
-                    :selected="selectedBlock?.title === 'End flow'"
+                    :selected="selectedBlock?.uid === 'end-flow'"
                     @select="handleBlockSelect"
                 />
             </div>
-            <div class="panel">
+            <BlockflowPanel>
                 <BlockflowDetails 
                     :contextVariables="[
                         'customer_profile',
@@ -232,26 +249,42 @@
                     ]"
                     :selectedBlock="selectedBlock"
                 />
-            </div>
-            <div class="panel">
-                <p>Agent chat preview</p>
-            </div>
+            </BlockflowPanel>
+            <BlockflowPanel>
+                <div class="agent-preview vstack">
+                    <div class="agent-preview-content vstack">
+                        <button><Play size="16" stroke-width="1.5" /> Start preview</button>
+                    </div>
+                    <div class="agent-preview-footer hstack">
+                        <input type="text" placeholder="Enter message" />
+                        <button><Send size="16" stroke-width="1.5" /></button>
+                    </div>
+                </div>
+            </BlockflowPanel>
         </div>
     </div>
 </template>
 
 <script setup>
     import { ref } from 'vue';
-    import { OctagonX, OctagonPause } from 'lucide-vue-next';
+    import { OctagonX, OctagonPause, Play, Send } from 'lucide-vue-next';
     import BlockflowEvent from '../components/BlockflowEvent.vue';
     import BlockflowRule from '../components/BlockflowRule.vue';
     import BlockflowDivider from '../components/BlockflowDivider.vue';
     import BlockflowDetails from '../components/BlockflowDetails.vue';
+    import BlockflowPanel from '../components/BlockflowPanel.vue';
 
     const selectedBlock = ref(null);
 
     const handleBlockSelect = (blockData) => {
         selectedBlock.value = blockData;
+    };
+
+    const handleFlowBackgroundClick = (event) => {
+        // Only deselect if clicking directly on the flow-overview container
+        if (event.target.classList.contains('flow-overview')) {
+            selectedBlock.value = null;
+        }
     };
 
     const handleKeydown = (event) => {
@@ -331,9 +364,20 @@
         background-attachment: fixed;
     }
 
-    .panel {
-        width: 320px;
-        flex-shrink: 0;
-        border-left: 1px solid var(--color-surface-tint);
+    .agent-preview {
+        height: 100%;
+    }
+
+    .agent-preview-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .agent-preview-footer {
+        border-top: 1px solid var(--color-surface-tint);
+        padding: var(--space-m);
+        gap: var(--space-xs);
     }
 </style> 

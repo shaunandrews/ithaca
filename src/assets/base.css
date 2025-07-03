@@ -16,6 +16,15 @@ a {
     color: var(--color-accent);
 }
 
+/* Horizontal rules */
+hr {
+    border: none;
+    background: var(--color-surface-tint);
+    height: 3px;
+    border-radius: 3px;
+    margin: var(--space-l) 0;
+}
+
 /* Buttons */
 button {
     color: var(--color-surface-fg);
