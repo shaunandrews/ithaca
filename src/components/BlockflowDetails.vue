@@ -21,6 +21,7 @@
                 <div class="agent-details-header">
                     <h2>Agent details</h2>
                 </div>
+
                 <div class="agent-details-content">
                     <label>Name</label>
                     <input type="text" />
@@ -29,6 +30,12 @@
                     <label>Icon</label>
                     <input type="file" />
                 </div>
+
+                <div class="prompt">
+                    <h4>Prompt</h4>
+                    <textarea></textarea>
+                </div>
+
                 <h4>Context</h4>
                 <div class="context-variables">
                     <div 
@@ -39,7 +46,33 @@
                         {{ variable }}
                     </div>
                 </div>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
+                <p>Select a block to see more details</p>
             </div>
+
             <div v-if="activeTab === 'block'" class="block-details">
                 <div class="block-details-header">
                     <h2>Block details</h2>
@@ -94,33 +127,35 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+    import { ref, watch } from 'vue';
 
-const props = defineProps({
-    contextVariables: {
-        type: Array,
-        default: () => []
-    },
-    selectedBlock: {
-        type: Object,
-        default: null
-    }
-});
+    const props = defineProps({
+        contextVariables: {
+            type: Array,
+            default: () => []
+        },
+        selectedBlock: {
+            type: Object,
+            default: null
+        }
+    });
 
-const activeTab = ref('agent');
+    const activeTab = ref('agent');
 
-// Automatically switch to block tab when a block is selected
-watch(() => props.selectedBlock, (newBlock) => {
-    if (newBlock) {
-        activeTab.value = 'block';
-    }
-});
+    // Automatically switch to block tab when a block is selected
+    watch(() => props.selectedBlock, (newBlock) => {
+        if (newBlock) {
+            activeTab.value = 'block';
+        }
+    });
 </script>
 
 <style scoped>
     .details {
-        padding: var(--space-m);
-        width: 320px;
+        position: sticky;
+        top: calc(var(--toolbar-height) + 1px);
+        height: calc(100vh - var(--toolbar-height));
+        overflow-y: auto;
     }
 
     .details-nav {
@@ -129,6 +164,8 @@ watch(() => props.selectedBlock, (newBlock) => {
         border: 1px solid var(--color-surface-tint);
         gap: var(--space-m);
         padding: 1px;
+        position: sticky;
+        top: 0;
     }
 
     .details-nav-item {

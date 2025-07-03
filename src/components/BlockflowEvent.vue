@@ -5,7 +5,7 @@
             <!-- <ChevronRight size="16" stroke-width="1.5" /> -->
             <div class="event-info">
                 <h3 class="event-title">{{ title }}</h3>
-                <p v-if="description" class="event-description">{{ description }}</p>
+                <!-- <p v-if="description" class="event-description">{{ description }}</p> -->
             </div>
             <span class="event-type">{{ type }}</span>
             <slot name="icon" />
@@ -89,7 +89,6 @@
         background-color: var(--color-surface);
         border: 1px solid var(--color-surface-tint-dark);
         border-radius: var(--radius-l);
-        /* box-shadow: var(--shadow-1); */
         width: fit-content;
         height: fit-content;
         cursor: pointer;
@@ -98,35 +97,41 @@
 
     .event-item:hover {
         border-color: var(--color-accent);
-        box-shadow: 0 0 0 1px var(--color-accent-tint);
     }
 
     .event-item.selected {
-        border-color: var(--color-accent);
-        box-shadow: 0 0 0 2px var(--color-accent-tint), var(--shadow-1);
+        border-color: var(--color-surface-fg);
+        outline: 1px solid var(--color-surface-fg);
     }
 
     .event-item.flow {
         background-color: transparent;
-        cursor: default;
+        border-color: transparent;
+        outline: none;
     }
 
-    .event-item.flow:hover {
-        border-color: var(--color-surface-tint-dark);
-        box-shadow: none;
+    .event-item.flow:hover .event-header {
+        border-color: orange;
     }
 
-    .event-item.flow .event-header {
+    .event-item.flow > .event-header {
+        border-radius: var(--radius-l);
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-surface-tint-dark);
         cursor: pointer;
     }
 
-    .event-item.flow .event-header:hover {
-        background-color: var(--color-surface-tint-light);
-        border-radius: var(--radius-s);
+    .event-item.flow > .event-header:hover {
+        border-color: var(--color-accent);
+    }
+
+    .event-item.flow.selected > .event-header {
+        border-color: var(--color-surface-fg);
+        outline: 1px solid var(--color-surface-fg);
     }
 
     .event-header {
-        align-items: flex-start;
+        align-items: center;
         gap: var(--space-s);
         padding: var(--space-s);
     }
@@ -192,18 +197,10 @@
     }
 
     .rules {
-        gap: var(--space-s);
+        padding: var(--space-xs);
     }
 
     .rules-list {
-        border-top: 1px solid var(--color-surface-tint-dark);
-        /* background: repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 9px,
-            var(--color-surface-tint-light) 9px,
-            var(--color-surface-tint-light) 10px
-        ); */
-        /* background-color: var(--color-surface-tint-light); */
+        gap: var(--space-xs);
     }
 </style>

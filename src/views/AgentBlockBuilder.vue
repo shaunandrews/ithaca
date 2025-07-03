@@ -7,7 +7,7 @@
         </div>
         
         <div class="hstack">
-            <div class="library">
+            <div class="library" style="display: none;">
                 <div class="library-header">
                     <h2>Library</h2>
                 </div>
@@ -93,8 +93,10 @@
                 <BlockflowEvent
                     :stepNumber="5"
                     title="Analyze sentiment"
-                    type="action"
+                    type="expert"
                     description="Determines how the customer is feeling"
+                    :inputs="['message']"
+                    :outputs="['context.sentiment']"
                     :selected="selectedBlock?.title === 'Analyze sentiment'"
                     @select="handleBlockSelect"
                 />
@@ -118,33 +120,37 @@
                                 :selected="selectedBlock?.title === 'Compose escalation'"
                                 @select="handleBlockSelect"
                             />
+                            <BlockflowDivider />
                             <BlockflowEvent
                                 title="Send email"
-                                type="action"
+                                type="tool"
                                 description="Send an email"
                                 :inputs="['email_address', 'email_subject', 'email_body']"
                                 :selected="selectedBlock?.title === 'Send email'"
                                 @select="handleBlockSelect"
                             />
+                            <BlockflowDivider />
                         </BlockflowRule>
                         <BlockflowRule ruleVariable="tag" ruleValue="legal">
                             <BlockflowEvent
                                 title="Create Zendesk ticket"
-                                type="action"
+                                type="tool"
                                 description="forward information to legal team via zendesk"
                                 :selected="selectedBlock?.title === 'Create Zendesk ticket'"
                                 @select="handleBlockSelect"
                             />
+                            <BlockflowDivider />
                             <BlockflowEvent
                                 title="Respond to customer"
-                                type="action"
+                                type="tool"
                                 description="respond to customer via original channel"
                                 :selected="selectedBlock?.title === 'Respond to customer'"
                                 @select="handleBlockSelect"
                             />
+                            <BlockflowDivider />
                             <BlockflowEvent
                                 title="End flow"
-                                type="action"
+                                type="exit"
                                 :selected="selectedBlock?.title === 'End flow'"
                                 @select="handleBlockSelect"
                             >
@@ -156,7 +162,7 @@
                         <BlockflowRule ruleVariable="sentiment" ruleValue="very angry">
                             <BlockflowEvent
                                 title="Escalate to human"
-                                type="action"
+                                type="tool"
                                 description="Contact a human and wait for guidance"
                                 :selected="selectedBlock?.title === 'Escalate to human'"
                                 @select="handleBlockSelect"
@@ -171,12 +177,12 @@
                 <BlockflowDivider />
                 <BlockflowEvent
                     :stepNumber="7"
-                    title="Collect sources"
+                    title="Gather sources"
                     type="expert"
                     description="Collects information from available sources"
                     :inputs="['tags', 'context.customer_profile', 'context.purchase_history', 'context.support_history', 'context.customer_sites']"
                     :outputs="['context.sources']"
-                    :selected="selectedBlock?.title === 'Collect sources'"
+                    :selected="selectedBlock?.title === 'Gather sources'"
                     @select="handleBlockSelect"
                 />
                 <BlockflowDivider />
@@ -185,28 +191,51 @@
                     title="Compose response"
                     type="expert"
                     description="Composes a response to a message based on the context."
-                    :inputs="['context']"
+                    :inputs="['message','context']"
                     :outputs="['response']"
                     :selected="selectedBlock?.title === 'Compose response'"
                     @select="handleBlockSelect"
                 />
+                <BlockflowDivider />
+                <BlockflowEvent
+                    :stepNumber="9"
+                    title="Send response"
+                    type="expert"
+                    description="Sends a response to a message"
+                    :inputs="['message','response']"
+                    :selected="selectedBlock?.title === 'Send response'"
+                    @select="handleBlockSelect"
+                />
+                <BlockflowDivider />
+                <BlockflowEvent
+                    :stepNumber="10"
+                    title="End flow"
+                    type="action"
+                    :selected="selectedBlock?.title === 'End flow'"
+                    @select="handleBlockSelect"
+                />
             </div>
-            <BlockflowDetails 
-                :contextVariables="[
-                    'customer_profile',
-                    'purchase_history',
-                    'support_history',
-                    'customer_sites',
-                    'tags',
-                    'sentiment',
-                    'needs',
-                    'intent',
-                    'sources',
-                    'response',
-                    'conversation_escalation_summary'
-                ]"
-                :selectedBlock="selectedBlock"
-            />
+            <div class="panel">
+                <BlockflowDetails 
+                    :contextVariables="[
+                        'customer_profile',
+                        'purchase_history',
+                        'support_history',
+                        'customer_sites',
+                        'tags',
+                        'sentiment',
+                        'needs',
+                        'intent',
+                        'sources',
+                        'response',
+                        'conversation_escalation_summary'
+                    ]"
+                    :selectedBlock="selectedBlock"
+                />
+            </div>
+            <div class="panel">
+                <p>Agent chat preview</p>
+            </div>
         </div>
     </div>
 </template>
@@ -231,10 +260,7 @@
 </script>
 
 <style scoped>
-    .agent-creation {
-        height: 100%;
-        position: relative;
-    }
+
 
     .creation-header {
         display: flex;
@@ -290,12 +316,11 @@
 
     .flow-overview {
         padding: var(--space-m);
-        border-right: 1px solid var(--color-surface-tint);
         flex: 1;
         flex-wrap: wrap;
         align-items: center;
-        box-shadow: inset 0 1px 12px 1px rgba(0, 0, 0, 0.03),
-                    inset 0 1px 4px 0 rgba(0, 0, 0, 0.01);
+        /* box-shadow: inset 0 1px 12px 1px rgba(0, 0, 0, 0.03),
+                    inset 0 1px 4px 0 rgba(0, 0, 0, 0.01); */
         background: repeating-linear-gradient(
             45deg,
             transparent,
@@ -303,5 +328,12 @@
             var(--color-surface-tint-light) 9px,
             var(--color-surface-tint-light) 10px
         );
+        background-attachment: fixed;
+    }
+
+    .panel {
+        width: 320px;
+        flex-shrink: 0;
+        border-left: 1px solid var(--color-surface-tint);
     }
 </style> 

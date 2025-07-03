@@ -30,18 +30,24 @@
 <style scoped>
     .rule-item {
         gap: var(--space-s);
-        border-right: 1px solid var(--color-surface-tint);
+        border: 1px dashed rgba(255, 166, 0, 0.5);
         padding: var(--space-s);
-    }
-
-    .rule-item:last-child {
-        border-right: none;
+        border-radius: var(--radius-l);
+        background: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 9px,
+            rgba(255, 166, 0, 0.15) 9px,
+            rgba(255, 166, 0, 0.15) 10px
+        );
+        background-color: var(--color-chrome);
+        background-attachment: fixed;
     }
 
     .rule-action {
         display: flex;
         flex-direction: column;
-        gap: var(--space-s);
+        align-items: center;
     }
 
     .rule-variable {
