@@ -170,7 +170,7 @@
                                 </template>
                             </BlockflowEvent>
                         </BlockflowRule>
-                        <BlockflowRule ruleVariable="sentiment" ruleValue="very angry">
+                        <BlockflowRule ruleVariable="context.sentiment" ruleValue="very angry">
                             <BlockflowEvent
                                 uid="escalate-to-human"
                                 title="Escalate to human"
@@ -246,6 +246,13 @@
                         'sources',
                         'response',
                         'conversation_escalation_summary'
+                    ]"
+                    :variables="[
+                        'message',
+                        'tag',
+                        'email_address',
+                        'email_subject',
+                        'email_body'
                     ]"
                     :selectedBlock="selectedBlock"
                 />

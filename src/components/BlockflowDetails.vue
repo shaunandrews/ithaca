@@ -40,13 +40,22 @@
 
                 <h4>Context</h4>
                 <div class="context-variables">
-                    <div 
+                    <BlockflowVariable 
                         v-for="variable in contextVariables" 
                         :key="variable" 
-                        class="context-variable"
-                    >
-                        {{ variable }}
-                    </div>
+                        type="context"
+                        :value="variable"
+                    />
+                </div>
+
+                <h4>Variables</h4>
+                <div class="variables">
+                    <BlockflowVariable 
+                        v-for="variable in variables" 
+                        :key="variable" 
+                        type="variable"
+                        :value="variable"
+                    />
                 </div>
             </div>
 
@@ -72,26 +81,24 @@
                     <div v-if="selectedBlock.inputs && selectedBlock.inputs.length > 0" class="block-inputs">
                         <h4>Inputs</h4>
                         <div class="input-list">
-                            <div 
+                            <BlockflowVariable 
                                 v-for="input in selectedBlock.inputs" 
                                 :key="input" 
-                                class="input-item"
-                            >
-                                {{ input }}
-                            </div>
+                                type="input"
+                                :value="input"
+                            />
                         </div>
                     </div>
                     
                     <div v-if="selectedBlock.outputs && selectedBlock.outputs.length > 0" class="block-outputs">
                         <h4>Outputs</h4>
                         <div class="output-list">
-                            <div 
+                            <BlockflowVariable 
                                 v-for="output in selectedBlock.outputs" 
                                 :key="output" 
-                                class="output-item"
-                            >
-                                {{ output }}
-                            </div>
+                                type="output"
+                                :value="output"
+                            />
                         </div>
                     </div>
                 </div>
@@ -105,9 +112,14 @@
 
 <script setup>
     import { ref, watch } from 'vue';
+    import BlockflowVariable from './BlockflowVariable.vue';
 
     const props = defineProps({
         contextVariables: {
+            type: Array,
+            default: () => []
+        },
+        variables: {
             type: Array,
             default: () => []
         },
@@ -187,16 +199,11 @@
         margin-top: var(--space-s);
     }
 
-    .context-variable {
-        padding: 0 var(--space-xxs);
-        border-radius: var(--radius-s);
-        width: fit-content;
-        font-family: var(--font-monospace);
-        font-size: var(--font-size-s);
-        font-weight: var(--font-weight-semibold);
-        color: var(--color-accent);
-        background-color: var(--color-accent-tint);
-        border-bottom: 1px dashed var(--color-accent);
+    .variables {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+        margin-top: var(--space-s);
     }
 
     .block-info {
@@ -245,27 +252,5 @@
         display: flex;
         flex-wrap: wrap;
         gap: var(--space-xs);
-    }
-
-    .input-item,
-    .output-item {
-        padding: 0 var(--space-xxs);
-        border-radius: var(--radius-s);
-        width: fit-content;
-        font-family: var(--font-monospace);
-        font-size: var(--font-size-s);
-        font-weight: var(--font-weight-semibold);
-    }
-
-    .input-item {
-        color: var(--color-highlight);
-        background-color: var(--color-highlight-tint);
-        border-bottom: 1px dashed var(--color-highlight);
-    }
-
-    .output-item {
-        color: var(--color-accent);
-        background-color: var(--color-accent-tint);
-        border-bottom: 1px dashed var(--color-accent);
     }
 </style> 

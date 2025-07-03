@@ -1,7 +1,7 @@
 <template>
     <div class="rule-item vstack">
         <div class="rule-condition">
-            {{ ruleType }} <span class="rule-variable">{{ ruleVariable }}</span> is <span class="rule-value">{{ ruleValue }}</span>
+            {{ ruleType }} <BlockflowVariable type="rule-variable" :value="ruleVariable" /> is <BlockflowVariable type="rule-value" :value="ruleValue" />
         </div>
         <div class="rule-action">
             <slot />
@@ -10,6 +10,8 @@
 </template>
 
 <script setup>
+    import BlockflowVariable from './BlockflowVariable.vue';
+    
     defineProps({
         ruleType: {
             type: String,
@@ -50,26 +52,5 @@
         align-items: center;
     }
 
-    .rule-variable {
-        padding: 0 var(--space-xxs);
-        border-radius: var(--radius-s);
-        width: fit-content;
-        font-family: var(--font-monospace);
-        font-size: var(--font-size-s);
-        border-bottom: 1px dashed transparent;
-    }
 
-    .rule-variable {
-        font-weight: var(--font-weight-medium);
-        color: var(--color-highlight);
-        background-color: var(--color-highlight-tint);
-        border-bottom-color: var(--color-highlight);
-    }
-
-    .rule-value {
-        font-weight: var(--font-weight-normal);
-        background-color: var(--color-surface-tint);
-        border-bottom-color: var(--color-accent);
-        color: var(--color-surface-fg-secondary);
-    }
 </style> 

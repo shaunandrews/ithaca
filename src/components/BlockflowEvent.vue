@@ -14,12 +14,12 @@
             <div v-if="inputs || outputs" class="event-variables hstack">
                 <div v-if="inputs && inputs.length > 0" class="event-inputs vstack">
                     <h4>Inputs</h4>
-                    <div v-for="input in inputs" :key="input" class="input-item">{{ input }}</div>
+                    <BlockflowVariable v-for="input in inputs" :key="input" type="input" :value="input" />
                 </div>
                 
                 <div v-if="outputs && outputs.length > 0" class="event-outputs vstack">
                     <h4>Outputs</h4>
-                    <div v-for="output in outputs" :key="output" class="output-item">{{ output }}</div>
+                    <BlockflowVariable v-for="output in outputs" :key="output" type="output" :value="output" />
                 </div>
             </div>
             
@@ -34,6 +34,7 @@
 
 <script setup>
     import { ChevronRight, ChevronDown } from 'lucide-vue-next';
+    import BlockflowVariable from './BlockflowVariable.vue';
 
     const props = defineProps({
         uid: {
@@ -177,30 +178,7 @@
         gap: var(--space-xs);
     }
 
-    .input-item,
-    .output-item {
-        padding: 0 var(--space-xxs);
-        border-radius: var(--radius-s);
-        width: fit-content;
-        font-family: var(--font-monospace);
-        font-size: var(--font-size-s);
-        border-bottom: 1px dashed transparent;
-        width: fit-content;
-    }
 
-    .input-item {
-        font-weight: var(--font-weight-medium);
-        color: var(--color-highlight);
-        background-color: var(--color-highlight-tint);
-        border-bottom-color: var(--color-highlight);
-    }
-
-    .output-item {
-        font-weight: var(--font-weight-semibold);
-        color: var(--color-accent);
-        background-color: var(--color-accent-tint);
-        border-bottom-color: var(--color-accent);
-    }
 
     .rules {
         padding: var(--space-xs);
