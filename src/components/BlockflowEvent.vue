@@ -1,6 +1,6 @@
 <template>
-    <div class="event-item" :class="type">
-        <div class="event-header hstack">
+    <div class="event-item" :class="[type, { selected: selected }]" @click="type !== 'flow' ? handleClick($event) : null">
+        <div class="event-header hstack" @click="type === 'flow' ? handleClick($event) : null">
             <div v-if="stepNumber" class="step-number">{{ stepNumber }}</div>
             <!-- <ChevronRight size="16" stroke-width="1.5" /> -->
             <div class="event-info">
@@ -35,7 +35,7 @@
 <script setup>
     import { ChevronRight, ChevronDown } from 'lucide-vue-next';
 
-    defineProps({
+    const props = defineProps({
         title: {
             type: String,
             required: true
@@ -58,8 +58,28 @@
         stepNumber: {
             type: Number,
             default: null
+        },
+        selected: {
+            type: Boolean,
+            default: false
         }
     });
+
+    const emit = defineEmits(['select']);
+
+    const handleClick = (event) => {
+        // Stop event propagation to prevent parent flow blocks from capturing the click
+        event.stopPropagation();
+        
+        emit('select', {
+            title: props.title,
+            type: props.type,
+            description: props.description,
+            inputs: props.inputs || [],
+            outputs: props.outputs || [],
+            stepNumber: props.stepNumber
+        });
+    };
 </script>
 
 <style scoped>
@@ -72,10 +92,37 @@
         /* box-shadow: var(--shadow-1); */
         width: fit-content;
         height: fit-content;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .event-item:hover {
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 1px var(--color-accent-tint);
+    }
+
+    .event-item.selected {
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 2px var(--color-accent-tint), var(--shadow-1);
     }
 
     .event-item.flow {
         background-color: transparent;
+        cursor: default;
+    }
+
+    .event-item.flow:hover {
+        border-color: var(--color-surface-tint-dark);
+        box-shadow: none;
+    }
+
+    .event-item.flow .event-header {
+        cursor: pointer;
+    }
+
+    .event-item.flow .event-header:hover {
+        background-color: var(--color-surface-tint-light);
+        border-radius: var(--radius-s);
     }
 
     .event-header {

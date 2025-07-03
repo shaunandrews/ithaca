@@ -11,28 +11,33 @@
                 <div class="library-header">
                     <h2>Library</h2>
                 </div>
-                <div class="library-content">
-                    <p>A list of things to add to the canvas.</p>
+                <div class="library-content vstack">
                     <h3>Triggers</h3>
-                    <div class="library-item">Manual</div>
-                    <div class="library-item">Webhook</div>
-                    <div class="library-item">Scheduled</div>
-                    <div class="library-item">Chat message</div>
+                    <div class="library-blocks">
+                        <div class="library-item">Manual</div>
+                        <div class="library-item">Webhook</div>
+                        <div class="library-item">Scheduled</div>
+                        <div class="library-item">Chat message</div>
+                    </div>
                     <h3>Actions</h3>
-                    <div class="library-item">Gather context</div>
-                    <div class="library-item">Assign tags</div>
-                    <div class="library-item">Analyze sentiment</div>
-                    <div class="library-item">Send email</div>
-                    <div class="library-item">Create Zendesk ticket</div>
-                    <div class="library-item">HTTP request</div>
+                    <div class="library-blocks">
+                        <div class="library-item">Gather context</div>
+                        <div class="library-item">Assign tags</div>
+                        <div class="library-item">Analyze sentiment</div>
+                        <div class="library-item">Send email</div>
+                        <div class="library-item">Create Zendesk ticket</div>
+                        <div class="library-item">HTTP request</div>
+                    </div>
                     
                     <h3>Flow</h3>
-                    <div class="library-item">If/Else</div>
-                    <div class="library-item">Loop</div>
-                    <div class="library-item">Switch</div>
-                    <div class="library-item">Filter</div>
-                    <div class="library-item">Merge</div>
-                    <div class="library-item">Wait</div>
+                    <div class="library-blocks">
+                        <div class="library-item">If/Else</div>
+                        <div class="library-item">Loop</div>
+                        <div class="library-item">Switch</div>
+                        <div class="library-item">Filter</div>
+                        <div class="library-item">Merge</div>
+                        <div class="library-item">Wait</div>
+                    </div>
                     
                 </div>
             </div>
@@ -43,6 +48,8 @@
                     type="trigger"
                     description="A message from a customer, usually a chat (synchronous) or email (asynchronous)"
                     :outputs="['message']"
+                    :selected="selectedBlock?.title === 'Receive message'"
+                    @select="handleBlockSelect"
                 />
                 <BlockflowDivider />
                 <BlockflowEvent
@@ -57,6 +64,8 @@
                         'context.support_history',
                         'context.customer_sites'
                     ]"
+                    :selected="selectedBlock?.title === 'Gather context'"
+                    @select="handleBlockSelect"
                 />
                 <BlockflowDivider />
                 <BlockflowEvent
@@ -66,6 +75,8 @@
                     description="Uses Natural Language Processing (NLP) to understand intent and needs."
                     :inputs="['message']"
                     :outputs="['context.needs', 'context.intent']"
+                    :selected="selectedBlock?.title === 'Interpret meaning'"
+                    @select="handleBlockSelect"
                 />
                 <BlockflowDivider />
                 <BlockflowEvent
@@ -75,6 +86,8 @@
                     description="Generate a tag or list of tags based on text. Optionally define a list of tags to choose from."
                     :inputs="['message']"
                     :outputs="['context.tags']"
+                    :selected="selectedBlock?.title === 'Assign tags'"
+                    @select="handleBlockSelect"
                 />
                 <BlockflowDivider />
                 <BlockflowEvent
@@ -82,6 +95,8 @@
                     title="Analyze sentiment"
                     type="action"
                     description="Determines how the customer is feeling"
+                    :selected="selectedBlock?.title === 'Analyze sentiment'"
+                    @select="handleBlockSelect"
                 />
                 <BlockflowDivider />
                 <BlockflowEvent
@@ -89,6 +104,8 @@
                     title="If/Else"
                     type="flow"
                     description="accepts inputs and allows rules to determine the next step"
+                    :selected="selectedBlock?.title === 'If/Else'"
+                    @select="handleBlockSelect"
                 >
                     <template #rules>
                         <BlockflowRule ruleVariable="tag" ruleValue="billing">
@@ -98,12 +115,16 @@
                                 description="Summarizes conversation and includes relevant links."
                                 :inputs="['context']"
                                 :outputs="['conversation_escalation_summary']"
+                                :selected="selectedBlock?.title === 'Compose escalation'"
+                                @select="handleBlockSelect"
                             />
                             <BlockflowEvent
                                 title="Send email"
                                 type="action"
                                 description="Send an email"
                                 :inputs="['email_address', 'email_subject', 'email_body']"
+                                :selected="selectedBlock?.title === 'Send email'"
+                                @select="handleBlockSelect"
                             />
                         </BlockflowRule>
                         <BlockflowRule ruleVariable="tag" ruleValue="legal">
@@ -111,15 +132,21 @@
                                 title="Create Zendesk ticket"
                                 type="action"
                                 description="forward information to legal team via zendesk"
+                                :selected="selectedBlock?.title === 'Create Zendesk ticket'"
+                                @select="handleBlockSelect"
                             />
                             <BlockflowEvent
                                 title="Respond to customer"
                                 type="action"
                                 description="respond to customer via original channel"
+                                :selected="selectedBlock?.title === 'Respond to customer'"
+                                @select="handleBlockSelect"
                             />
                             <BlockflowEvent
                                 title="End flow"
                                 type="action"
+                                :selected="selectedBlock?.title === 'End flow'"
+                                @select="handleBlockSelect"
                             >
                                 <template #icon>
                                     <OctagonX size="16" stroke-width="1.5" />
@@ -131,6 +158,8 @@
                                 title="Escalate to human"
                                 type="action"
                                 description="Contact a human and wait for guidance"
+                                :selected="selectedBlock?.title === 'Escalate to human'"
+                                @select="handleBlockSelect"
                             >
                                 <template #icon>
                                     <OctagonPause size="16" stroke-width="1.5" />
@@ -147,6 +176,8 @@
                     description="Collects information from available sources"
                     :inputs="['tags', 'context.customer_profile', 'context.purchase_history', 'context.support_history', 'context.customer_sites']"
                     :outputs="['context.sources']"
+                    :selected="selectedBlock?.title === 'Collect sources'"
+                    @select="handleBlockSelect"
                 />
                 <BlockflowDivider />
                 <BlockflowEvent
@@ -156,52 +187,47 @@
                     description="Composes a response to a message based on the context."
                     :inputs="['context']"
                     :outputs="['response']"
+                    :selected="selectedBlock?.title === 'Compose response'"
+                    @select="handleBlockSelect"
                 />
             </div>
-            <div class="details">
-                <nav class="details-nav hstack">
-                    <div class="details-nav-item active">Agent</div>
-                    <div class="details-nav-item">Event</div>
-                </nav>
-                <div class="details-content">
-                    <div class="agent-details">
-                        <div class="agent-details-header">
-                            <h2>Agent details</h2>
-                        </div>
-                        <div class="agent-details-content">
-                            <label>Name</label>
-                            <input type="text" />
-                            <label>Description</label>
-                            <textarea />
-                            <label>Icon</label>
-                            <input type="file" />
-                        </div>
-                        <h4>Context</h4>
-                        <div class="context-variables">
-                            <div class="context-variable">customer_profile</div>
-                            <div class="context-variable">purchase_history</div>
-                            <div class="context-variable">support_history</div>
-                            <div class="context-variable">customer_sites</div>
-                            <div class="context-variable">tags</div>
-                            <div class="context-variable">sentiment</div>
-                            <div class="context-variable">needs</div>
-                            <div class="context-variable">intent</div>
-                            <div class="context-variable">sources</div>
-                            <div class="context-variable">response</div>
-                            <div class="context-variable">conversation_escalation_summary</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <BlockflowDetails 
+                :contextVariables="[
+                    'customer_profile',
+                    'purchase_history',
+                    'support_history',
+                    'customer_sites',
+                    'tags',
+                    'sentiment',
+                    'needs',
+                    'intent',
+                    'sources',
+                    'response',
+                    'conversation_escalation_summary'
+                ]"
+                :selectedBlock="selectedBlock"
+            />
         </div>
     </div>
 </template>
 
 <script setup>
+    import { ref } from 'vue';
     import { OctagonX, OctagonPause } from 'lucide-vue-next';
     import BlockflowEvent from '../components/BlockflowEvent.vue';
     import BlockflowRule from '../components/BlockflowRule.vue';
     import BlockflowDivider from '../components/BlockflowDivider.vue';
+    import BlockflowDetails from '../components/BlockflowDetails.vue';
+
+    const selectedBlock = ref(null);
+
+    const handleBlockSelect = (blockData) => {
+        selectedBlock.value = blockData;
+    };
+
+    const handleKeydown = (event) => {
+        // Handle keyboard events if needed
+    };
 </script>
 
 <style scoped>
@@ -232,39 +258,34 @@
         transform: translateX(-50%);
     }
 
-    .details {
+    .library {
+        width: 260px;
+        flex-shrink: 0;
         padding: var(--space-m);
-        width: 320px;
+        border-right: 1px solid var(--color-surface-tint);
     }
 
-    .details-nav {
-        background-color: var(--color-surface-tint-light);
-        border-radius: var(--radius);
-        border: 1px solid var(--color-surface-tint);
-        gap: var(--space-m);
-        padding: 1px;
-    }
-
-    .details-nav-item {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: var(--space-xxs) var(--space-s);
-        border-radius: var(--radius-s);
+    .library h3 { 
         font-size: var(--font-size-s);
         font-weight: var(--font-weight-semibold);
         color: var(--color-surface-fg-tertiary);
     }
 
-    .details-nav-item.active {  
-        background-color: var(--color-surface-fg);
-        color: var(--color-surface);
+    .library-content {
+        gap: var(--space-m);
     }
 
-    .library {
-        padding: var(--space-m);
-        border-right: 1px solid var(--color-surface-tint);
+    .library-blocks {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+    }
+
+    .library-item {
+        padding: var(--space-xxs) var(--space-s);
+        border-radius: var(--radius-s);
+        background-color: var(--color-surface-tint-light);
+        border: 1px solid var(--color-surface-tint);
     }
 
     .flow-overview {
@@ -282,24 +303,5 @@
             var(--color-surface-tint-light) 9px,
             var(--color-surface-tint-light) 10px
         );
-    }
-
-    .context-variables {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--space-xs);
-        margin-top: var(--space-s);
-    }
-
-    .context-variable {
-        padding: 0 var(--space-xxs);
-        border-radius: var(--radius-s);
-        width: fit-content;
-        font-family: var(--font-monospace);
-        font-size: var(--font-size-s);
-        font-weight: var(--font-weight-semibold);
-        color: var(--color-accent);
-        background-color: var(--color-accent-tint);
-        border-bottom: 1px dashed var(--color-accent);
     }
 </style> 
