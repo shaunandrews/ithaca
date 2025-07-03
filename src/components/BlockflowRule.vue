@@ -31,6 +31,7 @@
 
 <style scoped>
     .rule-item {
+        min-width: fit-content;
         gap: var(--space-s);
         border: 1px dashed rgba(255, 166, 0, 0.5);
         padding: var(--space-s);

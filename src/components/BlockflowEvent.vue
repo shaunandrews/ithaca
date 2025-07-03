@@ -187,5 +187,6 @@
 
     .rules-list {
         gap: var(--space-xs);
+        overflow-x: auto;
     }
 </style>

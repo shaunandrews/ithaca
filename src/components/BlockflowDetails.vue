@@ -48,6 +48,8 @@
                     />
                 </div>
 
+                <hr />
+
                 <h4>Variables</h4>
                 <div class="variables">
                     <BlockflowVariable 
