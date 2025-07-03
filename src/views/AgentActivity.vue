@@ -70,15 +70,33 @@
             .filter(Boolean);
     });
 
+    const sentimentNames = {
+        1: 'laugh',
+        2: 'smile',
+        3: 'meh',
+        4: 'annoyed',
+        5: 'frown',
+        6: 'angry',
+    };
+
     const filteredConversations = computed(() => {
         if (!search.value) return agentConversations.value;
         const query = search.value.toLowerCase();
-        return agentConversations.value.filter(
-            (c) =>
-                c.event.toLowerCase().includes(query) ||
-                c.summary.toLowerCase().includes(query) ||
-                c.customer.toLowerCase().includes(query)
-        );
+        return agentConversations.value.filter((c) => {
+            const messageCount = messages[c.id]?.length || 0;
+            const searchable = [
+                c.event,
+                c.summary,
+                c.customer,
+                c.datetime,
+                String(messageCount),
+                sentimentNames[c.sentiment],
+            ]
+                .filter(Boolean)
+                .join(' ')
+                .toLowerCase();
+            return searchable.includes(query);
+        });
     });
 
     const sortedConversations = computed(() => {
