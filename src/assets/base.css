@@ -93,6 +93,26 @@ input:focus {
     outline: 2px solid var(--color-accent);
 }
 
+textarea {
+    border: none;
+    display: block;
+    width: 100%;
+    background: var(--color-surface-tint);
+    border-radius: var(--radius);
+    padding: var(--space-xs) var(--space-s);
+    font-size: var(--font-size-s);
+    color: var(--color-surface-fg);
+}
+
+textarea:hover {
+    background: var(--color-surface-tint-dark);
+}
+
+textarea:focus {
+    background: var(--color-surface-tint-dark);
+    outline: 2px solid var(--color-accent);
+}
+
 select {
     appearance: base-select;
     border: none;

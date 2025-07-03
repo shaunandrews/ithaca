@@ -15,6 +15,7 @@
 
     --color-accent: #0640e0;
     --color-accent-dark: #0536b8;
+    --color-accent-tint: rgba(6, 64, 224, 0.1);
     --color-accent-fg: #ffffff;
 
     --color-highlight: #dd0fb7;
@@ -54,6 +55,7 @@
 
         --color-accent: #5494fb;
         --color-accent-dark: #4078c0;
+        --color-accent-tint: rgba(84, 148, 251, 0.1);
         --color-accent-fg: #000000;
         --color-accent-rgb: 84, 148, 251;
 

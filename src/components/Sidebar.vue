@@ -10,7 +10,7 @@
                 />
             </h1>
             <nav>
-                <NavItem
+                <!-- <NavItem
                     to="/insights"
                     label="Insights"
                     :active-routes="[
@@ -23,7 +23,7 @@
                     ]"
                     icon="Microscope"
                     :mini="mini"
-                />
+                /> -->
                 <NavItem
                     to="/"
                     label="Agents"

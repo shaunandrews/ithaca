@@ -5,7 +5,8 @@
                 <input type="search" placeholder="Search agents" />
             </div>
             <div class="toolbar-end">
-                <button @click="$router.push('/agents/new')">New agent</button>
+                <button @click="$router.push('/agents/new/visual')">New agent (visual)</button>
+                <button @click="$router.push('/agents/new/block')">New agent (block)</button>
             </div>
         </div>
 
