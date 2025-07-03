@@ -159,9 +159,9 @@
                 />
             </div>
             <div class="details">
-                <nav>
-                    <div class="active">Agent</div>
-                    <div>Event</div>
+                <nav class="details-nav hstack">
+                    <div class="details-nav-item active">Agent</div>
+                    <div class="details-nav-item">Event</div>
                 </nav>
                 <div class="details-content">
                     <div class="agent-details">
@@ -175,6 +175,20 @@
                             <textarea />
                             <label>Icon</label>
                             <input type="file" />
+                        </div>
+                        <h4>Context</h4>
+                        <div class="context-variables">
+                            <div class="context-variable">customer_profile</div>
+                            <div class="context-variable">purchase_history</div>
+                            <div class="context-variable">support_history</div>
+                            <div class="context-variable">customer_sites</div>
+                            <div class="context-variable">tags</div>
+                            <div class="context-variable">sentiment</div>
+                            <div class="context-variable">needs</div>
+                            <div class="context-variable">intent</div>
+                            <div class="context-variable">sources</div>
+                            <div class="context-variable">response</div>
+                            <div class="context-variable">conversation_escalation_summary</div>
                         </div>
                     </div>
                 </div>
@@ -220,6 +234,32 @@
 
     .details {
         padding: var(--space-m);
+        width: 320px;
+    }
+
+    .details-nav {
+        background-color: var(--color-surface-tint-light);
+        border-radius: var(--radius);
+        border: 1px solid var(--color-surface-tint);
+        gap: var(--space-m);
+        padding: 1px;
+    }
+
+    .details-nav-item {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--space-xxs) var(--space-s);
+        border-radius: var(--radius-s);
+        font-size: var(--font-size-s);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-surface-fg-tertiary);
+    }
+
+    .details-nav-item.active {  
+        background-color: var(--color-surface-fg);
+        color: var(--color-surface);
     }
 
     .library {
@@ -242,5 +282,24 @@
             var(--color-surface-tint-light) 9px,
             var(--color-surface-tint-light) 10px
         );
+    }
+
+    .context-variables {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+        margin-top: var(--space-s);
+    }
+
+    .context-variable {
+        padding: 0 var(--space-xxs);
+        border-radius: var(--radius-s);
+        width: fit-content;
+        font-family: var(--font-monospace);
+        font-size: var(--font-size-s);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-accent);
+        background-color: var(--color-accent-tint);
+        border-bottom: 1px dashed var(--color-accent);
     }
 </style> 
