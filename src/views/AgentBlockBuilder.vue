@@ -7,19 +7,6 @@
         </div>
         
         <div class="hstack">
-            <div class="agent-details">
-                <div class="agent-details-header">
-                    <h2>Agent details</h2>
-                </div>
-                <div class="agent-details-content">
-                    <label>Name</label>
-                    <input type="text" />
-                    <label>Description</label>
-                    <textarea />
-                    <label>Icon</label>
-                    <input type="file" />
-                </div>
-            </div>
             <div class="library">
                 <div class="library-header">
                     <h2>Library</h2>
@@ -49,116 +36,146 @@
                     
                 </div>
             </div>
-            <div class="flow-overview">
-                <ol class="vstack">
-                    <li>
-                        <h3>Receive message</h3>
-                        <div class="event-type">trigger</div>
-                        <div class="event-description">a message from a customer, usually a chat (synchronous) or email (asynchronous)</div>
-                        <div class="event-outputs vstack">
-                            <div class="output-item">message</div>
-                        </div>
-                    </li>
-                    <li>
-                        <h3>Gather context</h3>
-                        <div class="event-type">action</div>
-                        <div class="event-description">gathers information about the customer</div>
-                        <div class="event-inputs vstack">
-                            <div class="input-item">message.author.id</div>
-                        </div>
-                        <div class="event-outputs vstack">
-                            <div class="output-item">context.customer.profile</div>
-                            <div class="output-item">context.customer.purchase_history</div>
-                            <div class="output-item">context.customer.support_history</div>
-                            <div class="output-item">context.customer.sites</div>
-                        </div>
-                    </li>
-                    <li>
-                        <h3>Interpret meaning</h3>
-                        <div class="event-type">action</div>
-                        <div class="event-description">uses Natural Language Processing to understand needs</div>
-                        <div class="event-inputs vstack">
-                            <div class="input-item">message</div>
-                        </div>
-                        <div class="event-outputs vstack">
-                            <div class="output-item">context.customer.needs</div>
-                        </div>
-                    </li>
-                    <li>
-                        <h3>Assign tags</h3>
-                        <div class="event-type">action</div>
-                        <div class="event-description">Generate a tag or list of tags based on text. Optionally define a list of tags to choose from.</div>
-                        <div class="event-inputs vstack">
-                            <div class="input-item">message</div>
-                        </div>
-                        <div class="event-outputs vstack">
-                            <div class="output-item">tag</div>
-                        </div>
-                    </li>
-                    <li>
-                        <h3>Analyze sentiment</h3>
-                        <div class="event-type">action</div>
-                        <div class="event-description">determines how the customer is feeling</div>
-                    </li>
-                    <li>
-                        <h3>If/Else</h3>
-                        <div class="event-type">flow</div>
-                        <div class="event-description">accepts inputs and allows rules to determine the next step</div>
-                        <div class="rules vstack">
-                            <div class="rule-item">
-                                <div class="rule-condition">If <span class="input-item">tag</span> is "billing"</div>
-                                <div class="rule-action">
-                                    <ol>
-                                        <li>
-                                            <h4>Send email</h4>
-                                            <div class="event-description">forward information to billing team via email</div>
-                                        </li>
-                                    </ol>
-                                </div>
-                            </div>
-                            <div class="rule-item">
-                                <div class="rule-condition">If <span class="input-item">tag</span> is "legal"</div>
-                                <div class="rule-action">
-                                    <ol>
-                                        <li>
-                                            <h4>Create Zendesk ticket</h4>
-                                            <div class="event-description">forward information to legal team via zendesk</div>
-                                        </li>
-                                        <li>
-                                            <h4>Respond to customer</h4>
-                                            <div class="event-description">respond to customer via original channel</div>
-                                        </li>
-                                        <li>
-                                            <OctagonX size="16" stroke-width="1.5" />
-                                            <h4>End flow</h4>
-                                        </li>
-                                    </ol>
-                                </div>
-                            </div>
-                            <div class="rule-item">
-                                <div class="rule-condition">If <span class="input-item">sentiment</span> is "very angry"</div>
-                                <div class="rule-action">
-                                    <ol>
-                                        <li>
-                                            <OctagonPause size="16" stroke-width="1.5" />
-                                            <h4>Escalate to human</h4>
-                                            <div class="event-description">Contact a human and wait for guidance</div>
-                                        </li>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ol>
+            <div class="flow-overview vstack">
+                <BlockflowEvent
+                    :stepNumber="1"
+                    title="Receive message"
+                    type="trigger"
+                    description="A message from a customer, usually a chat (synchronous) or email (asynchronous)"
+                    :outputs="['message']"
+                />
+                <BlockflowDivider />
+                <BlockflowEvent
+                    :stepNumber="2"
+                    title="Gather context"
+                    type="expert"
+                    description="Gathers information about the customer"
+                    :inputs="['message.author.id']"
+                    :outputs="[
+                        'context.customer_profile',
+                        'context.purchase_history',
+                        'context.support_history',
+                        'context.customer_sites'
+                    ]"
+                />
+                <BlockflowDivider />
+                <BlockflowEvent
+                    :stepNumber="3"
+                    title="Interpret meaning"
+                    type="expert"
+                    description="Uses Natural Language Processing (NLP) to understand intent and needs."
+                    :inputs="['message']"
+                    :outputs="['context.needs', 'context.intent']"
+                />
+                <BlockflowDivider />
+                <BlockflowEvent
+                    :stepNumber="4"
+                    title="Assign tags"
+                    type="expert"
+                    description="Generate a tag or list of tags based on text. Optionally define a list of tags to choose from."
+                    :inputs="['message']"
+                    :outputs="['context.tags']"
+                />
+                <BlockflowDivider />
+                <BlockflowEvent
+                    :stepNumber="5"
+                    title="Analyze sentiment"
+                    type="action"
+                    description="Determines how the customer is feeling"
+                />
+                <BlockflowDivider />
+                <BlockflowEvent
+                    :stepNumber="6"
+                    title="If/Else"
+                    type="flow"
+                    description="accepts inputs and allows rules to determine the next step"
+                >
+                    <template #rules>
+                        <BlockflowRule ruleVariable="tag" ruleValue="billing">
+                            <BlockflowEvent
+                                title="Compose escalation"
+                                type="expert"
+                                description="Summarizes conversation and includes relevant links."
+                                :inputs="['context']"
+                                :outputs="['conversation_escalation_summary']"
+                            />
+                            <BlockflowEvent
+                                title="Send email"
+                                type="action"
+                                description="Send an email"
+                                :inputs="['email_address', 'email_subject', 'email_body']"
+                            />
+                        </BlockflowRule>
+                        <BlockflowRule ruleVariable="tag" ruleValue="legal">
+                            <BlockflowEvent
+                                title="Create Zendesk ticket"
+                                type="action"
+                                description="forward information to legal team via zendesk"
+                            />
+                            <BlockflowEvent
+                                title="Respond to customer"
+                                type="action"
+                                description="respond to customer via original channel"
+                            />
+                            <BlockflowEvent
+                                title="End flow"
+                                type="action"
+                            >
+                                <template #icon>
+                                    <OctagonX size="16" stroke-width="1.5" />
+                                </template>
+                            </BlockflowEvent>
+                        </BlockflowRule>
+                        <BlockflowRule ruleVariable="sentiment" ruleValue="very angry">
+                            <BlockflowEvent
+                                title="Escalate to human"
+                                type="action"
+                                description="Contact a human and wait for guidance"
+                            >
+                                <template #icon>
+                                    <OctagonPause size="16" stroke-width="1.5" />
+                                </template>
+                            </BlockflowEvent>
+                        </BlockflowRule>
+                    </template>
+                </BlockflowEvent>
+                <BlockflowDivider />
+                <BlockflowEvent
+                    :stepNumber="7"
+                    title="Collect sources"
+                    type="expert"
+                    description="Collects information from available sources"
+                    :inputs="['tags', 'context.customer_profile', 'context.purchase_history', 'context.support_history', 'context.customer_sites']"
+                    :outputs="['context.sources']"
+                />
+                <BlockflowDivider />
+                <BlockflowEvent
+                    :stepNumber="8"
+                    title="Compose response"
+                    type="expert"
+                    description="Composes a response to a message based on the context."
+                    :inputs="['context']"
+                    :outputs="['response']"
+                />
             </div>
-            <div class="canvas">
-                <div class="block">
-                    <div class="block-header">
-                        <h2>Get customer message</h2>
-                        <div class="block-type">Trigger</div>
-                    </div>
-                    <div class="block-content">
-                        A message from the customer.
+            <div class="details">
+                <nav>
+                    <div class="active">Agent</div>
+                    <div>Event</div>
+                </nav>
+                <div class="details-content">
+                    <div class="agent-details">
+                        <div class="agent-details-header">
+                            <h2>Agent details</h2>
+                        </div>
+                        <div class="agent-details-content">
+                            <label>Name</label>
+                            <input type="text" />
+                            <label>Description</label>
+                            <textarea />
+                            <label>Icon</label>
+                            <input type="file" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -168,6 +185,9 @@
 
 <script setup>
     import { OctagonX, OctagonPause } from 'lucide-vue-next';
+    import BlockflowEvent from '../components/BlockflowEvent.vue';
+    import BlockflowRule from '../components/BlockflowRule.vue';
+    import BlockflowDivider from '../components/BlockflowDivider.vue';
 </script>
 
 <style scoped>
@@ -198,24 +218,8 @@
         transform: translateX(-50%);
     }
 
-    .canvas {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: var(--space-xl);
-        background-image: 
-            radial-gradient(circle, var(--color-surface-tint-dark) 1px, transparent 1px);
-        background-size: var(--space-l) var(--space-l);
-        background-position: 0 0;
-        background-color: rgba(0, 0, 0, 0.025);
+    .details {
         padding: var(--space-m);
-        position: relative;
-    }
-
-    .agent-details {
-        padding: var(--space-m);
-        border-right: 1px solid var(--color-surface-tint);
     }
 
     .library {
@@ -226,69 +230,17 @@
     .flow-overview {
         padding: var(--space-m);
         border-right: 1px solid var(--color-surface-tint);
-    }
-
-    .flow-overview ol {
-        gap: var(--space-l);
-        padding: 0;
-    }
-
-    li {
-        list-style: none;
-        background-color: var(--color-surface);
-        border: 1px solid var(--color-surface-tint);
-        padding: var(--space-m);
-        border-radius: var(--radius-l);
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-s);
-    }
-
-    .event-type {
-        color: var(--color-chrome-fg-secondary);
-        font-size: var(--font-size-s);
-    }
-
-    .event-inputs,
-    .event-outputs {
-        gap: var(--space-xs);
-    }
-
-    .input-item,
-    .output-item {
-        padding: 0 var(--space-xxs);
-        border-radius: var(--radius-s);
-        width: fit-content;
-        font-family: var(--font-monospace);
-        font-size: var(--font-size-s);
-        border-bottom: 1px dashed transparent;
-        width: fit-content;
-    }
-
-    .input-item {
-        font-weight: var(--font-weight-medium);
-        color: var(--color-highlight);
-        background-color: var(--color-highlight-tint);
-        border-bottom-color: var(--color-highlight);
-    }
-
-    .output-item {
-        font-weight: var(--font-weight-semibold);
-        color: var(--color-accent);
-        background-color: var(--color-accent-tint);
-        border-bottom-color: var(--color-accent);
-    }
-
-    .rules {
-        gap: var(--space-s);
-    }
-
-    .rule-item {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-s);
-    }
-    .rule-action {
-        padding-left: var(--space-m);
+        flex: 1;
+        flex-wrap: wrap;
+        align-items: center;
+        box-shadow: inset 0 1px 12px 1px rgba(0, 0, 0, 0.03),
+                    inset 0 1px 4px 0 rgba(0, 0, 0, 0.01);
+        background: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 9px,
+            var(--color-surface-tint-light) 9px,
+            var(--color-surface-tint-light) 10px
+        );
     }
 </style> 
