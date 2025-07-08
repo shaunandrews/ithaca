@@ -93,7 +93,7 @@
         list-style: none;
         color: var(--color-surface-fg);
         background-color: var(--color-surface);
-        border: 1px solid var(--color-surface-tint-dark);
+        border: 2px solid var(--color-surface-tint-dark);
         border-radius: var(--radius-l);
         width: fit-content;
         height: fit-content;
