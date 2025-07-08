@@ -3,31 +3,12 @@
         <header v-if="expert">
             <div class="expert-header-start">
                 <h2 class="expert-title">{{ expert.title }}</h2>
-                <nav>
-                    <ul>
-                        <li :class="{ active: isActiveTab('activity') }">
-                            <router-link :to="`/expert/${expert.id}/activity`"
-                                >Activity</router-link
-                            >
-                        </li>
-                        <li :class="{ active: isActiveTab('workbench') }">
-                            <router-link
-                                :to="`/expert/${expert.id}/workbench`"
-                                >Workbench</router-link
-                            >
-                        </li>
-                        <li :class="{ active: isActiveTab('insights') }">
-                            <router-link :to="`/expert/${expert.id}/insights`"
-                                >Insights</router-link
-                            >
-                        </li>
-                        <li :class="{ active: isActiveTab('versions') }">
-                            <router-link :to="`/expert/${expert.id}/versions`"
-                                >Versions</router-link
-                            >
-                        </li>
-                    </ul>
-                </nav>
+                <NavigationTabs
+                    :tabs="tabs"
+                    :is-active-function="isActiveTab"
+                    :disable-initial-transition="true"
+                    @tab-click="handleTabClick"
+                />
             </div>
             <div class="expert-header-end">
                 <button class="primary">Save</button>
@@ -44,12 +25,21 @@
 
 <script setup>
     import { computed } from 'vue';
-    import { useRoute } from 'vue-router';
+    import { useRoute, useRouter } from 'vue-router';
     import { experts } from '@/data/experts.js';
+    import NavigationTabs from '@/components/NavigationTabs.vue';
 
     const route = useRoute();
+    const router = useRouter();
     const expertId = computed(() => Number(route.params.id));
     const expert = computed(() => experts.find((e) => e.id === expertId.value));
+
+    const tabs = computed(() => [
+        { key: 'activity', label: 'Activity', href: `/expert/${expertId.value}/activity` },
+        { key: 'workbench', label: 'Workbench', href: `/expert/${expertId.value}/workbench` },
+        { key: 'insights', label: 'Insights', href: `/expert/${expertId.value}/insights` },
+        { key: 'versions', label: 'Versions', href: `/expert/${expertId.value}/versions` }
+    ]);
 
     function isActiveTab(tabName) {
         const currentPath = route.path;
@@ -64,6 +54,10 @@
             );
         }
         return currentPath === expectedPath;
+    }
+
+    function handleTabClick(tab) {
+        router.push(tab.href);
     }
 </script>
 
@@ -99,35 +93,7 @@
         font-weight: var(--font-weight-semibold);
     }
 
-    nav ul {
-        display: flex;
-        gap: var(--space-xxs);
-        padding: 0;
-        margin: 0;
-    }
 
-    nav li {
-        list-style: none;
-    }
-
-    nav li a {
-        text-decoration: none;
-        color: var(--color-chrome-fg-secondary);
-        font-size: var(--font-size-s);
-        font-weight: var(--font-weight-medium);
-        padding: var(--space-xxs) var(--space-xs);
-        border-radius: var(--radius);
-        display: block;
-    }
-
-    nav li.active a {
-        color: var(--color-chrome-fg);
-        background-color: var(--color-surface-tint-dark);
-    }
-
-    nav li a:hover:not(.active) {
-        background-color: var(--color-surface-tint);
-    }
 
     .expert-not-found {
         padding: var(--space-m);

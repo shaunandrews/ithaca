@@ -194,6 +194,7 @@
         </div>
         <BlockflowPanel>
             <BlockflowDetails 
+                :agent="agent"
                 :contextVariables="workflow.contextVariables"
                 :variables="workflow.variables"
                 :selectedBlock="selectedBlock"

@@ -30,7 +30,7 @@
 
 <script setup>
     import { computed } from 'vue';
-    import { FlaskConical, CirclePower, Hammer, OctagonX, Milestone, CirclePause } from 'lucide-vue-next';
+    import { FlaskConical, SquarePlay, Hammer, OctagonX, Milestone, CirclePause } from 'lucide-vue-next';
     import BlockflowVariable from './BlockflowVariable.vue';
     import { getExpertById } from '../data/workflows.js';
 
@@ -87,7 +87,7 @@
             case 'expert':
                 return FlaskConical;
             case 'trigger':
-                return CirclePower;
+                return SquarePlay;
             case 'tool':
                 return Hammer;
             case 'exit':

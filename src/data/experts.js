@@ -27,7 +27,7 @@ export const experts = [
     },
     {
         id: 2,
-        title: 'Intent Analyzer',
+        title: 'Analyze intent',
         description: 'Uses NLP to understand customer intent and needs from messages.',
         instructions: `
             You are a natural language processing expert. Use [tool title="Input" value="Customer Message"] to analyze the provided message.
@@ -44,8 +44,8 @@ export const experts = [
     },
     {
         id: 3,
-        title: 'Message Tagger',
-        description: 'Generates relevant tags for customer messages based on content analysis.',
+        title: 'Assign tags',
+        description: 'Generates relevant tags for a message based on content analysis.',
         instructions: `
             You are a message classification expert. Use [tool title="Input" value="Message Content"] to analyze the message.
             Generate appropriate tags that categorize the message content (e.g., billing, technical, legal, refund).
@@ -61,7 +61,7 @@ export const experts = [
     },
     {
         id: 4,
-        title: 'Sentiment Analyzer',
+        title: 'Analyze sentiment',
         description: 'Determines customer emotional state and sentiment from messages.',
         instructions: `
             You are a sentiment analysis expert. Use [tool title="Input" value="Customer Message"] to analyze the emotional tone.
@@ -78,7 +78,7 @@ export const experts = [
     },
     {
         id: 5,
-        title: 'Escalation Composer',
+        title: 'Compose escalation',
         description: 'Creates comprehensive escalation summaries for specialized teams.',
         instructions: `
             You are an escalation specialist. Use [tool title="Reference"] to find relevant documentation and procedures.
@@ -95,7 +95,7 @@ export const experts = [
     },
     {
         id: 6,
-        title: 'Source Gatherer',
+        title: 'Gather sources',
         description: 'Collects relevant information from multiple sources based on context.',
         instructions: `
             You are a source compilation expert. Use [tool title="Reference"] to find relevant documentation.
@@ -114,7 +114,7 @@ export const experts = [
     },
     {
         id: 7,
-        title: 'Response Composer',
+        title: 'Compose response',
         description: 'Composes helpful, contextual responses to customer messages.',
         instructions: `
             You are a response composition expert. Use [tool title="Reference"] to find relevant documentation.

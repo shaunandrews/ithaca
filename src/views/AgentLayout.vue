@@ -13,30 +13,12 @@
                         {{ a.title }}
                     </option>
                 </select>
-                <nav>
-                    <ul>
-                        <li :class="{ active: isActiveTab('activity') }">
-                            <router-link :to="`/agent/${agent.id}/activity`"
-                                >Activity</router-link
-                            >
-                        </li>
-                        <li :class="{ active: isActiveTab('insights') }">
-                            <router-link :to="`/agent/${agent.id}/insights`"
-                                >Insights</router-link
-                            >
-                        </li>
-                        <li :class="{ active: isActiveTab('workbench') }">
-                            <router-link :to="`/agent/${agent.id}/workbench`"
-                                >Workbench</router-link
-                            >
-                        </li>
-                        <li :class="{ active: isActiveTab('versions') }">
-                            <router-link :to="`/agent/${agent.id}/versions`"
-                                >Versions</router-link
-                            >
-                        </li>
-                    </ul>
-                </nav>
+                <NavigationTabs
+                    :tabs="tabs"
+                    :is-active-function="isActiveTab"
+                    :disable-initial-transition="true"
+                    @tab-click="handleTabClick"
+                />
             </div>
             <div class="agent-header-end"></div>
         </header>
@@ -55,6 +37,7 @@
     import { computed, ref, onMounted, onUnmounted, provide, watch } from 'vue';
     import { useRoute, useRouter } from 'vue-router';
     import { agents } from '@/data/agents.js';
+    import NavigationTabs from '@/components/NavigationTabs.vue';
 
     const route = useRoute();
     const router = useRouter();
@@ -65,6 +48,13 @@
     watch(agentId, (newVal) => {
         selectedAgentId.value = newVal;
     });
+
+    const tabs = computed(() => [
+        { key: 'activity', label: 'Activity', href: `/agent/${agentId.value}/activity` },
+        { key: 'insights', label: 'Insights', href: `/agent/${agentId.value}/insights` },
+        { key: 'workbench', label: 'Workbench', href: `/agent/${agentId.value}/workbench` },
+        { key: 'versions', label: 'Versions', href: `/agent/${agentId.value}/versions` }
+    ]);
 
     const headerRef = ref(null);
     const headerHeight = ref(0);
@@ -119,6 +109,10 @@
         }
     }
 
+    function handleTabClick(tab) {
+        router.push(tab.href);
+    }
+
     onMounted(() => {
         updateHeaderHeight();
         window.addEventListener('resize', updateHeaderHeight);
@@ -162,35 +156,7 @@
         gap: var(--space-m);
     }
 
-    nav ul {
-        display: flex;
-        gap: var(--space-xxs);
-        padding: 0;
-        margin: 0;
-    }
 
-    nav li {
-        list-style: none;
-    }
-
-    nav li a {
-        text-decoration: none;
-        color: var(--color-chrome-fg-secondary);
-        font-size: var(--font-size-s);
-        font-weight: var(--font-weight-medium);
-        padding: var(--space-xxs) var(--space-xs);
-        border-radius: var(--radius);
-        display: block;
-    }
-
-    nav li.active a {
-        color: var(--color-chrome-fg);
-        background-color: var(--color-surface-tint-dark);
-    }
-
-    nav li a:hover:not(.active) {
-        background-color: var(--color-surface-tint);
-    }
 
     .agent-not-found {
         padding: var(--space-m);
