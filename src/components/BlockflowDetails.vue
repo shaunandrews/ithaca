@@ -69,8 +69,16 @@
             </div>
 
             <div v-if="activeTab === 'block'" class="block-details">
-                <div class="block-details-header">
+                <div class="block-details-header hstack">
                     <h2>{{ selectedBlock?.type === 'rule' ? 'Rule details' : 'Block details' }}</h2>
+                    <button 
+                        v-if="selectedBlock && selectedBlock.type !== 'placeholder' && selectedBlock.type !== 'rule'"
+                        class="delete-button"
+                        @click="handleDeleteEvent"
+                        title="Delete this event (Delete key)"
+                    >
+                        <Trash2 size="16" stroke-width="1.5" />
+                    </button>
                 </div>
                 <div v-if="selectedBlock" class="block-details-content">
                     <!-- Rule details -->
@@ -96,6 +104,18 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Placeholder details -->
+                    <div v-else-if="selectedBlock.type === 'placeholder'" class="placeholder-info">
+                        <label>Type</label>
+                        <input type="text" value="Event Placeholder" readonly />
+                        
+                        <label>Description</label>
+                        <textarea readonly>This is a placeholder for a new event. Select an event type from the dropdown above to add it to the workflow.</textarea>
+                        
+                        <label>Position</label>
+                        <input type="number" :value="selectedBlock.position" readonly />
                     </div>
 
                     <!-- Regular block details -->
@@ -186,7 +206,7 @@
 
 <script setup>
     import { ref, watch } from 'vue';
-    import { Play, Send } from 'lucide-vue-next';
+    import { Play, Send, Trash2 } from 'lucide-vue-next';
     import BlockflowVariable from './BlockflowVariable.vue';
 
     const props = defineProps({
@@ -204,6 +224,8 @@
         }
     });
 
+    const emit = defineEmits(['deleteEvent']);
+
     const activeTab = ref('agent');
 
     // Automatically switch to block tab when a block is selected
@@ -214,6 +236,12 @@
             activeTab.value = 'agent';
         }
     });
+
+    const handleDeleteEvent = () => {
+        if (props.selectedBlock && props.selectedBlock.type !== 'placeholder' && props.selectedBlock.type !== 'rule') {
+            emit('deleteEvent', props.selectedBlock);
+        }
+    };
 </script>
 
 <style scoped>
@@ -267,6 +295,39 @@
         padding: var(--space-m);
     }
 
+    .block-details-content {
+        padding: var(--space-m);
+    }
+
+    .block-details-header {
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-m) var(--space-m) 0 var(--space-m);
+    }
+
+    .block-details-header h2 {
+        margin: 0;
+    }
+
+    .delete-button {
+        padding: var(--space-xs);
+        border: 1px solid var(--color-surface-tint);
+        border-radius: var(--radius-s);
+        background-color: var(--color-surface-tint-light);
+        color: var(--color-surface-fg-tertiary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+
+    .delete-button:hover {
+        background-color: var(--color-surface-tint);
+        color: var(--color-surface-fg-secondary);
+        border-color: var(--color-surface-tint-dark);
+    }
+
     .context-variables {
         display: flex;
         flex-wrap: wrap;
@@ -295,8 +356,16 @@
         margin-bottom: var(--space-m);
     }
 
+    .placeholder-info {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-s);
+        margin-bottom: var(--space-m);
+    }
+
     .block-info label,
-    .rule-info label {
+    .rule-info label,
+    .placeholder-info label {
         font-size: var(--font-size-s);
         font-weight: var(--font-weight-semibold);
         color: var(--color-surface-fg-secondary);
@@ -305,7 +374,9 @@
     .block-info input,
     .block-info textarea,
     .rule-info input,
-    .rule-info textarea {
+    .rule-info textarea,
+    .placeholder-info input,
+    .placeholder-info textarea {
         padding: var(--space-xs);
         border: 1px solid var(--color-surface-tint);
         border-radius: var(--radius-s);
@@ -315,7 +386,8 @@
     }
 
     .block-info textarea,
-    .rule-info textarea {
+    .rule-info textarea,
+    .placeholder-info textarea {
         min-height: 60px;
         resize: vertical;
     }
