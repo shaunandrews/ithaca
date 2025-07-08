@@ -5,7 +5,6 @@
                 <component :is="getIcon(type)" size="18" stroke-width="1.5" />
             </div>
             <h3 class="event-title">{{ title }}</h3>
-            <div v-if="stepNumber" class="step-number">{{ stepNumber }}</div>
         </div>
         <div class="event-content">
             <div v-if="type !== 'flow' && ((inputs && inputs.length > 0) || (outputs && outputs.length > 0))" class="event-variables hstack">
@@ -30,8 +29,10 @@
 </template>
 
 <script setup>
+    import { computed } from 'vue';
     import { FlaskConical, CirclePower, Hammer, OctagonX, Milestone, CirclePause } from 'lucide-vue-next';
     import BlockflowVariable from './BlockflowVariable.vue';
+    import { getExpertById } from '../data/workflows.js';
 
     const props = defineProps({
         uid: {
@@ -47,9 +48,9 @@
             required: true,
             validator: (value) => ['trigger', 'action', 'flow', 'expert', 'tool', 'exit', 'pause'].includes(value)
         },
-        description: {
-            type: String,
-            required: true
+        expertId: {
+            type: Number,
+            default: null
         },
         inputs: {
             type: Array
@@ -72,6 +73,14 @@
     });
 
     const emit = defineEmits(['select']);
+
+    // Get expert information for expert-type steps
+    const expertInfo = computed(() => {
+        if (props.type === 'expert' && props.expertId) {
+            return getExpertById(props.expertId);
+        }
+        return null;
+    });
 
     const getIcon = (type) => {
         switch (type) {
@@ -100,7 +109,7 @@
             uid: props.uid,
             title: props.title,
             type: props.type,
-            description: props.description,
+            expertId: props.expertId,
             inputs: props.inputs || [],
             outputs: props.outputs || [],
             stepNumber: props.stepNumber,
@@ -158,16 +167,6 @@
         padding: var(--space-s);
     }
     
-    .step-number {
-        color: var(--color-surface-fg-tertiary);
-        opacity: 0;
-    }
-
-    .event-item:hover .step-number,
-    .event-item.selected .step-number {
-        opacity: 1;
-    }
-    
     .event-title {
         flex-grow: 1;
         font-size: var(--font-size-m);
@@ -193,12 +192,33 @@
         gap: var(--space-xs);
     }
 
+    .event-expert {
+        padding: var(--space-s);
+        border-top: 1px solid var(--color-surface-tint-dark);
+        background-color: var(--color-surface-tint-light);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+
+    .expert-title {
+        font-size: var(--font-size-s);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-accent);
+    }
+
+    .expert-description {
+        font-size: var(--font-size-xs);
+        color: var(--color-surface-fg-secondary);
+        line-height: 1.4;
+    }
+
     .rules {
         margin-top: var(--space-xs);
     }
 
     .rules-list {
-        gap: var(--space-xs);
-        overflow-x: auto;
+        align-items: flex-start;
+        gap: var(--space-s);
     }
 </style>

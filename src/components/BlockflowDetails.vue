@@ -14,7 +14,7 @@
                     :class="{ active: activeTab === 'block' }"
                     @click="activeTab = 'block'"
                 >
-                    Event
+                    Block
                 </div>
                 <div 
                     class="details-nav-item" 
@@ -71,14 +71,9 @@
             <div v-if="activeTab === 'block'" class="block-details">
                 <div class="block-details-header hstack">
                     <h2>{{ selectedBlock?.type === 'rule' ? 'Rule details' : 'Block details' }}</h2>
-                    <button 
-                        v-if="selectedBlock && selectedBlock.type !== 'placeholder' && selectedBlock.type !== 'rule'"
-                        class="delete-button"
-                        @click="handleDeleteEvent"
-                        title="Delete this event (Delete key)"
-                    >
-                        <Trash2 size="16" stroke-width="1.5" />
-                    </button>
+                    <div class="block-type">
+                        {{ selectedBlock?.type }}
+                    </div>
                 </div>
                 <div v-if="selectedBlock" class="block-details-content">
                     <!-- Rule details -->
@@ -108,31 +103,17 @@
 
                     <!-- Placeholder details -->
                     <div v-else-if="selectedBlock.type === 'placeholder'" class="placeholder-info">
-                        <label>Type</label>
-                        <input type="text" value="Event Placeholder" readonly />
-                        
-                        <label>Description</label>
-                        <textarea readonly>This is a placeholder for a new event. Select an event type from the dropdown above to add it to the workflow.</textarea>
-                        
-                        <label>Position</label>
-                        <input type="number" :value="selectedBlock.position" readonly />
+                        <p>This is a placeholder block. Select a block type to edit details here.</p>
                     </div>
 
-                    <!-- Regular block details -->
                     <div v-else class="block-info">
-                        <label>Title</label>
-                        <input type="text" :value="selectedBlock.title" readonly />
+                        <h3>{{ selectedBlock.title }}</h3>
                         
-                        <label>Type</label>
-                        <input type="text" :value="selectedBlock.type" readonly />
+                        <div v-if="selectedBlock.type === 'expert' && selectedExpert" class="expert-info">
+                            <div class="expert-title">{{ selectedExpert.title }}</div>
+                            <div class="expert-description">{{ selectedExpert.description }}</div>                        
+                        </div>
                         
-                        <label>Description</label>
-                        <textarea :value="selectedBlock.description" readonly />
-                        
-                        <label v-if="selectedBlock.stepNumber">Step Number</label>
-                        <input v-if="selectedBlock.stepNumber" type="number" :value="selectedBlock.stepNumber" readonly />
-                        
-                        <!-- Show rules for flow events -->
                         <div v-if="selectedBlock.type === 'flow' && selectedBlock.branches && selectedBlock.branches.length > 0" class="flow-rules">
                             <h4>Rules in this flow</h4>
                             <div class="rules-list">
@@ -143,7 +124,7 @@
                                         <span class="rule-operator">is</span>
                                         <span class="rule-value">{{ branch.condition.value }}</span>
                                     </div>
-                                    <!-- <div v-if="branch.steps && branch.steps.length > 0" class="rule-steps">
+                                    <div v-if="branch.steps && branch.steps.length > 0" class="rule-steps">
                                         <span class="steps-count">{{ branch.steps.length }} step{{ branch.steps.length === 1 ? '' : 's' }}</span>
                                         <div class="steps-preview">
                                             <div v-for="step in branch.steps" :key="step.uid" class="step-preview">
@@ -151,7 +132,7 @@
                                                 <span class="step-type">{{ step.type }}</span>
                                             </div>
                                         </div>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -180,6 +161,15 @@
                             />
                         </div>
                     </div>
+
+                    <button 
+                        v-if="selectedBlock && selectedBlock.type !== 'placeholder' && selectedBlock.type !== 'rule'"
+                        class="delete-button"
+                        @click="handleDeleteEvent"
+                        title="Delete this event (Delete key)"
+                    >
+                        <Trash2 size="16" stroke-width="1.5" /> Delete
+                    </button>
                 </div>
                 <div v-else class="block-details-content">
                     <p>Select a block or rule to see more details</p>
@@ -205,9 +195,10 @@
 </template>
 
 <script setup>
-    import { ref, watch } from 'vue';
+    import { ref, watch, computed } from 'vue';
     import { Play, Send, Trash2 } from 'lucide-vue-next';
     import BlockflowVariable from './BlockflowVariable.vue';
+    import { getExpertById } from '../data/workflows.js';
 
     const props = defineProps({
         contextVariables: {
@@ -227,6 +218,14 @@
     const emit = defineEmits(['deleteEvent']);
 
     const activeTab = ref('agent');
+
+    // Get expert information for expert-type steps
+    const selectedExpert = computed(() => {
+        if (props.selectedBlock?.type === 'expert' && props.selectedBlock.expertId) {
+            return getExpertById(props.selectedBlock.expertId);
+        }
+        return null;
+    });
 
     // Automatically switch to block tab when a block is selected
     watch(() => props.selectedBlock, (newBlock) => {
@@ -289,43 +288,6 @@
     .details-nav-item.active {  
         background-color: var(--color-surface-fg);
         color: var(--color-surface);
-    }
-
-    .details-content {
-        padding: var(--space-m);
-    }
-
-    .block-details-content {
-        padding: var(--space-m);
-    }
-
-    .block-details-header {
-        justify-content: space-between;
-        align-items: center;
-        padding: var(--space-m) var(--space-m) 0 var(--space-m);
-    }
-
-    .block-details-header h2 {
-        margin: 0;
-    }
-
-    .delete-button {
-        padding: var(--space-xs);
-        border: 1px solid var(--color-surface-tint);
-        border-radius: var(--radius-s);
-        background-color: var(--color-surface-tint-light);
-        color: var(--color-surface-fg-tertiary);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s ease;
-    }
-
-    .delete-button:hover {
-        background-color: var(--color-surface-tint);
-        color: var(--color-surface-fg-secondary);
-        border-color: var(--color-surface-tint-dark);
     }
 
     .context-variables {
@@ -602,5 +564,105 @@
     .agent-preview-content button:hover,
     .agent-preview-footer button:hover {
         background-color: var(--color-surface-tint);
+    }
+
+    .expert-info {
+        margin-top: var(--space-m);
+        padding: var(--space-m);
+        border: 1px solid var(--color-surface-tint);
+        border-radius: var(--radius-s);
+        background-color: var(--color-surface-tint-light);
+    }
+
+    .expert-details {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xxs);
+    }
+
+    .expert-title {
+        font-size: var(--font-size-m);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-surface-fg);
+    }
+
+    .expert-description {
+        font-size: var(--font-size-s);
+        color: var(--color-surface-fg-secondary);
+    }
+
+    .info-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+        margin-bottom: var(--space-m);
+    }
+
+    .info-group:last-child {
+        margin-bottom: 0;
+    }
+
+    .info-group label {
+        font-size: var(--font-size-s);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-surface-fg-secondary);
+    }
+
+    .info-group small {
+        font-size: var(--font-size-xs);
+        color: var(--color-surface-fg-tertiary);
+        margin-top: var(--space-xxs);
+    }
+
+    .tools-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+
+    .tool-item {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xxs);
+        padding: var(--space-xs);
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-surface-tint);
+        border-radius: var(--radius-xs);
+    }
+
+    .tool-title {
+        font-size: var(--font-size-s);
+        font-weight: var(--font-weight-medium);
+        color: var(--color-surface-fg);
+    }
+
+    .tool-subtitle {
+        font-size: var(--font-size-xs);
+        color: var(--color-surface-fg-tertiary);
+    }
+
+    .usage-badge {
+        display: inline-block;
+        padding: var(--space-xxs) var(--space-xs);
+        border-radius: var(--radius-xs);
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-medium);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .usage-high {
+        background-color: var(--color-red-tint);
+        color: var(--color-red-fg);
+    }
+
+    .usage-medium {
+        background-color: var(--color-yellow-tint);
+        color: var(--color-yellow-fg);
+    }
+
+    .usage-daily {
+        background-color: var(--color-green-tint);
+        color: var(--color-green-fg);
     }
 </style> 

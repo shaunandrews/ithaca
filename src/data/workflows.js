@@ -1,3 +1,5 @@
+import { experts } from './experts.js';
+
 export const sampleAgentWorkflow = {
     id: 'sample-agent-workflow',
     name: 'Customer Support Agent',
@@ -8,18 +10,17 @@ export const sampleAgentWorkflow = {
             stepNumber: 1,
             title: 'Receive message',
             type: 'trigger',
-            description: 'A message from a customer, usually a chat (synchronous) or email (asynchronous)',
             inputs: [],
             outputs: ['message']
         },
         {
             uid: 'gather-context',
             stepNumber: 2,
-            title: 'Gather context',
+            title: getExpertById(1)?.title || 'Gather context',
             type: 'expert',
-            description: 'Gathers information about the customer',
-            inputs: ['message.author.id'],
-            outputs: [
+            expertId: 1,
+            inputs: getExpertById(1)?.inputs || ['message.author.id'],
+            outputs: getExpertById(1)?.outputs || [
                 'context.customer_profile',
                 'context.purchase_history',
                 'context.support_history',
@@ -29,29 +30,29 @@ export const sampleAgentWorkflow = {
         {
             uid: 'interpret-meaning',
             stepNumber: 3,
-            title: 'Interpret meaning',
+            title: getExpertById(2)?.title || 'Interpret meaning',
             type: 'expert',
-            description: 'Uses Natural Language Processing (NLP) to understand intent and needs.',
-            inputs: ['message'],
-            outputs: ['context.needs', 'context.intent']
+            expertId: 2,
+            inputs: getExpertById(2)?.inputs || ['message'],
+            outputs: getExpertById(2)?.outputs || ['context.needs', 'context.intent']
         },
         {
             uid: 'assign-tags',
             stepNumber: 4,
-            title: 'Assign tags',
+            title: getExpertById(3)?.title || 'Assign tags',
             type: 'expert',
-            description: 'Generate a tag or list of tags based on text. Optionally define a list of tags to choose from.',
-            inputs: ['message'],
-            outputs: ['context.tags']
+            expertId: 3,
+            inputs: getExpertById(3)?.inputs || ['message'],
+            outputs: getExpertById(3)?.outputs || ['context.tags']
         },
         {
             uid: 'analyze-sentiment',
             stepNumber: 5,
-            title: 'Analyze sentiment',
+            title: getExpertById(4)?.title || 'Analyze sentiment',
             type: 'expert',
-            description: 'Determines how the customer is feeling',
-            inputs: ['message'],
-            outputs: ['context.sentiment']
+            expertId: 4,
+            inputs: getExpertById(4)?.inputs || ['message'],
+            outputs: getExpertById(4)?.outputs || ['context.sentiment']
         },
         {
             uid: 'if-else',
@@ -59,7 +60,6 @@ export const sampleAgentWorkflow = {
             title: 'If/Else',
             type: 'control-flow',
             controlType: 'conditional',
-            description: 'accepts inputs and allows rules to determine the next step',
             inputs: ['context.tags', 'context.sentiment'],
             outputs: [],
             branches: [
@@ -72,17 +72,16 @@ export const sampleAgentWorkflow = {
                     steps: [
                         {
                             uid: 'compose-escalation-billing',
-                            title: 'Compose escalation',
+                            title: getExpertById(5)?.title || 'Compose escalation',
                             type: 'expert',
-                            description: 'Summarizes conversation and includes relevant links.',
-                            inputs: ['message', 'context'],
-                            outputs: ['conversation_escalation_summary']
+                            expertId: 5,
+                            inputs: getExpertById(5)?.inputs || ['message', 'context'],
+                            outputs: getExpertById(5)?.outputs || ['conversation_escalation_summary']
                         },
                         {
                             uid: 'send-email-billing',
                             title: 'Send email',
                             type: 'tool',
-                            description: 'Send an email',
                             inputs: ['email_address', 'email_subject', 'email_body'],
                             outputs: []
                         }
@@ -99,7 +98,6 @@ export const sampleAgentWorkflow = {
                             uid: 'create-zendesk-legal',
                             title: 'Create Zendesk ticket',
                             type: 'tool',
-                            description: 'forward information to legal team via zendesk',
                             inputs: [],
                             outputs: []
                         },
@@ -107,7 +105,6 @@ export const sampleAgentWorkflow = {
                             uid: 'send-response-legal',
                             title: 'Send response',
                             type: 'tool',
-                            description: 'respond to customer via original channel',
                             inputs: [],
                             outputs: []
                         },
@@ -115,7 +112,6 @@ export const sampleAgentWorkflow = {
                             uid: 'end-flow-legal',
                             title: 'End flow',
                             type: 'exit',
-                            description: 'Terminates the workflow',
                             inputs: [],
                             outputs: []
                         }
@@ -132,7 +128,6 @@ export const sampleAgentWorkflow = {
                             uid: 'escalate-to-human',
                             title: 'Escalate to human',
                             type: 'tool',
-                            description: 'Contact a human and wait for guidance',
                             inputs: [],
                             outputs: []
                         },
@@ -140,7 +135,6 @@ export const sampleAgentWorkflow = {
                             uid: 'wait-for-response',
                             title: 'Wait for response',
                             type: 'pause',
-                            description: 'Wait for human response before continuing',
                             inputs: [],
                             outputs: []
                         }
@@ -151,27 +145,26 @@ export const sampleAgentWorkflow = {
         {
             uid: 'gather-sources',
             stepNumber: 7,
-            title: 'Gather sources',
+            title: getExpertById(6)?.title || 'Gather sources',
             type: 'expert',
-            description: 'Collects information from available sources',
-            inputs: ['tags', 'context.customer_profile', 'context.purchase_history', 'context.support_history', 'context.customer_sites'],
-            outputs: ['context.sources']
+            expertId: 6,
+            inputs: getExpertById(6)?.inputs || ['tags', 'context.customer_profile', 'context.purchase_history', 'context.support_history', 'context.customer_sites'],
+            outputs: getExpertById(6)?.outputs || ['context.sources']
         },
         {
             uid: 'compose-response',
             stepNumber: 8,
-            title: 'Compose response',
+            title: getExpertById(7)?.title || 'Compose response',
             type: 'expert',
-            description: 'Composes a response to a message based on the context.',
-            inputs: ['message', 'context'],
-            outputs: ['response']
+            expertId: 7,
+            inputs: getExpertById(7)?.inputs || ['message', 'context'],
+            outputs: getExpertById(7)?.outputs || ['response']
         },
         {
             uid: 'send-response',
             stepNumber: 9,
             title: 'Send response',
             type: 'tool',
-            description: 'Sends a response to a message',
             inputs: ['message', 'response'],
             outputs: []
         },
@@ -180,7 +173,6 @@ export const sampleAgentWorkflow = {
             stepNumber: 10,
             title: 'End flow',
             type: 'exit',
-            description: 'Completes the workflow',
             inputs: [],
             outputs: []
         }
@@ -215,6 +207,11 @@ export const workflows = [
 // Helper function to get a workflow by ID
 export function getWorkflowById(id) {
     return workflows.find(workflow => workflow.id === id)
+}
+
+// Helper function to get an expert by ID for workflow steps
+export function getExpertById(id) {
+    return experts.find(expert => expert.id === id)
 }
 
 // Helper function to flatten all steps (including nested ones) for easy searching

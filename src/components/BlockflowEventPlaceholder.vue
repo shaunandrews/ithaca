@@ -104,7 +104,7 @@
     }
 
     .event-placeholder.selected {
-        border-color: var(--color-accent);
+        border-color: var(--color-surface-fg);
     }
 
     .event-header {
