@@ -179,7 +179,7 @@ export const sampleAgentWorkflow = {
             uid: 'end-flow',
             stepNumber: 10,
             title: 'End flow',
-            type: 'action',
+            type: 'exit',
             description: 'Completes the workflow',
             inputs: [],
             outputs: []

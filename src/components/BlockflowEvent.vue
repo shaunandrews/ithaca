@@ -137,10 +137,6 @@
         border-radius: 0;
     }
 
-    .event-item.flow:hover .event-header {
-        border-color: rgba(255, 166, 0, 0.2);
-    }
-
     .event-item.flow > .event-header {
         border-radius: var(--radius-l);
         background-color: var(--color-surface);

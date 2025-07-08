@@ -71,7 +71,7 @@
                             :ruleVariable="branch.condition.variable"
                             :ruleValue="branch.condition.value"
                             :steps="branch.steps"
-                            :selected="selectedBlock?.type === 'rule' && selectedBlock?.variable === branch.condition.variable && selectedBlock?.value === branch.condition.value"
+                            :selected="(selectedBlock?.type === 'rule' && selectedBlock?.variable === branch.condition.variable && selectedBlock?.value === branch.condition.value) || (selectedBlock?.type === 'flow' && selectedBlock?.uid === step.uid)"
                             @select="handleBlockSelect"
                         >
                             <template v-for="(branchStep, stepIndex) in branch.steps" :key="branchStep.uid">
@@ -188,7 +188,7 @@
             </template>
             
             <BlockflowDivider 
-                v-if="!placeholders.some(p => p.position === workflow.steps.length)"
+                v-if="!placeholders.some(p => p.position === workflow.steps.length) && (workflow.steps.length === 0 || workflow.steps[workflow.steps.length - 1].type !== 'exit')"
                 :position="workflow.steps.length"
                 @addEvent="handleDividerClick"
             />
