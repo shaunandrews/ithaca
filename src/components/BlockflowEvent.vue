@@ -147,7 +147,6 @@
 
     .event-item.flow.selected > .event-header {
         border-color: var(--color-surface-fg);
-        outline: 1px solid var(--color-surface-fg);
     }
 
     .event-header {

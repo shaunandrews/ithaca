@@ -16,6 +16,13 @@
                 >
                     Event
                 </div>
+                <div 
+                    class="details-nav-item" 
+                    :class="{ active: activeTab === 'preview' }"
+                    @click="activeTab = 'preview'"
+                >
+                    Preview
+                </div>
             </nav>
         </div>
         <div class="details-content">
@@ -108,12 +115,28 @@
                     <p>Select a block to see more details</p>
                 </div>
             </div>
+
+            <div v-if="activeTab === 'preview'" class="preview-details">
+                <div class="preview-details-header">
+                    <h2>Agent preview</h2>
+                </div>
+                <div class="agent-preview vstack">
+                    <div class="agent-preview-content vstack">
+                        <button><Play size="16" stroke-width="1.5" /> Start preview</button>
+                    </div>
+                    <div class="agent-preview-footer hstack">
+                        <input type="text" placeholder="Enter message" />
+                        <button><Send size="16" stroke-width="1.5" /></button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
     import { ref, watch } from 'vue';
+    import { Play, Send } from 'lucide-vue-next';
     import BlockflowVariable from './BlockflowVariable.vue';
 
     const props = defineProps({
@@ -254,5 +277,62 @@
         display: flex;
         flex-wrap: wrap;
         gap: var(--space-xs);
+    }
+
+    .agent-preview {
+        height: 100%;
+        gap: var(--space-m);
+    }
+
+    .agent-preview-content {
+        flex: 1;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .agent-preview-footer {
+        border-top: 1px solid var(--color-surface-tint);
+        padding-top: var(--space-m);
+        gap: var(--space-xs);
+    }
+
+    .agent-preview-footer input {
+        flex: 1;
+        padding: var(--space-xs);
+        border: 1px solid var(--color-surface-tint);
+        border-radius: var(--radius-s);
+        background-color: var(--color-surface-tint-light);
+        font-size: var(--font-size-s);
+        color: var(--color-surface-fg);
+    }
+
+    .agent-preview-footer button {
+        padding: var(--space-xs);
+        border: 1px solid var(--color-surface-tint);
+        border-radius: var(--radius-s);
+        background-color: var(--color-surface-tint-light);
+        color: var(--color-surface-fg);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: var(--space-xs);
+    }
+
+    .agent-preview-content button {
+        padding: var(--space-s) var(--space-m);
+        border: 1px solid var(--color-surface-tint);
+        border-radius: var(--radius-s);
+        background-color: var(--color-surface-tint-light);
+        color: var(--color-surface-fg);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: var(--space-xs);
+        font-size: var(--font-size-s);
+    }
+
+    .agent-preview-content button:hover,
+    .agent-preview-footer button:hover {
+        background-color: var(--color-surface-tint);
     }
 </style> 

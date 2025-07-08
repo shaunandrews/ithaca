@@ -100,24 +100,13 @@
                 :selectedBlock="selectedBlock"
             />
         </BlockflowPanel>
-        <BlockflowPanel>
-            <div class="agent-preview vstack">
-                <div class="agent-preview-content vstack">
-                    <button><Play size="16" stroke-width="1.5" /> Start preview</button>
-                </div>
-                <div class="agent-preview-footer hstack">
-                    <input type="text" placeholder="Enter message" />
-                    <button><Send size="16" stroke-width="1.5" /></button>
-                </div>
-            </div>
-        </BlockflowPanel>
     </div>
 </template>
 
 <script setup>
     import { ref, computed } from 'vue';
     import { useRoute } from 'vue-router';
-    import { OctagonX, OctagonPause, Play, Send } from 'lucide-vue-next';
+    import { OctagonX, OctagonPause } from 'lucide-vue-next';
     import BlockflowEvent from '../components/BlockflowEvent.vue';
     import BlockflowRule from '../components/BlockflowRule.vue';
     import BlockflowDivider from '../components/BlockflowDivider.vue';
@@ -191,7 +180,7 @@
         height: 100%;
         min-width: 800px;
         overflow-y: auto;
-        /* flex: 1; */
+        flex: 1;
         align-items: center;
         box-shadow: inset 0 1px 12px 1px rgba(0, 0, 0, 0.03),
                     inset 0 1px 4px 0 rgba(0, 0, 0, 0.01);
@@ -208,11 +197,5 @@
 
     .flow-overview > * {
         flex-shrink: 0;
-    }
-
-    .agent-preview-footer {
-        border-top: 1px solid var(--color-surface-tint);
-        padding: var(--space-m);
-        gap: var(--space-xs);
     }
 </style> 
