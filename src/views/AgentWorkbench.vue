@@ -60,6 +60,7 @@
                     :description="step.description"
                     :inputs="step.inputs || []"
                     :outputs="step.outputs || []"
+                    :branches="step.branches || []"
                     :selected="selectedBlock?.uid === step.uid"
                     @select="handleBlockSelect"
                 >
@@ -69,6 +70,9 @@
                             :key="`${step.uid}-${branch.condition.variable}-${branch.condition.value}`"
                             :ruleVariable="branch.condition.variable"
                             :ruleValue="branch.condition.value"
+                            :steps="branch.steps"
+                            :selected="selectedBlock?.type === 'rule' && selectedBlock?.variable === branch.condition.variable && selectedBlock?.value === branch.condition.value"
+                            @select="handleBlockSelect"
                         >
                             <template v-for="(branchStep, branchIndex) in branch.steps" :key="branchStep.uid">
                                 <BlockflowEvent
@@ -82,15 +86,15 @@
                                     @select="handleBlockSelect"
                                 >
                                 </BlockflowEvent>
-                                <BlockflowDivider v-if="branchIndex < branch.steps.length - 1" />
+                                <BlockflowDivider v-if="branchIndex < branch.steps.length - 1 && branchStep.type !== 'exit'" />
                             </template>
-                            <BlockflowDivider v-if="branch.steps.length > 0" />
+                            <BlockflowDivider v-if="branch.steps.length > 0 && branch.steps[branch.steps.length - 1].type !== 'exit'" />
                         </BlockflowRule>
                     </template>
                 </BlockflowEvent>
                 
                 <!-- Divider between main steps -->
-                <BlockflowDivider v-if="index < workflow.steps.length - 1" />
+                <BlockflowDivider v-if="index < workflow.steps.length - 1 && step.type !== 'exit'" />
             </template>
         </div>
         <BlockflowPanel>
@@ -106,7 +110,6 @@
 <script setup>
     import { ref, computed } from 'vue';
     import { useRoute } from 'vue-router';
-    import { OctagonX, OctagonPause } from 'lucide-vue-next';
     import BlockflowEvent from '../components/BlockflowEvent.vue';
     import BlockflowRule from '../components/BlockflowRule.vue';
     import BlockflowDivider from '../components/BlockflowDivider.vue';
@@ -181,6 +184,7 @@
         min-width: 800px;
         overflow-y: auto;
         flex: 1;
+        padding: var(--space-m) 0;
         align-items: center;
         box-shadow: inset 0 1px 12px 1px rgba(0, 0, 0, 0.03),
                     inset 0 1px 4px 0 rgba(0, 0, 0, 0.01);

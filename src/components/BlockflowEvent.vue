@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-    import { ChevronRight, ChevronDown, FlaskConical, CirclePower, Hammer, OctagonX, Milestone } from 'lucide-vue-next';
+    import { FlaskConical, CirclePower, Hammer, OctagonX, Milestone, CirclePause } from 'lucide-vue-next';
     import BlockflowVariable from './BlockflowVariable.vue';
 
     const props = defineProps({
@@ -45,7 +45,7 @@
         type: {
             type: String,
             required: true,
-            validator: (value) => ['trigger', 'action', 'flow', 'expert', 'tool', 'exit'].includes(value)
+            validator: (value) => ['trigger', 'action', 'flow', 'expert', 'tool', 'exit', 'pause'].includes(value)
         },
         description: {
             type: String,
@@ -64,6 +64,10 @@
         selected: {
             type: Boolean,
             default: false
+        },
+        branches: {
+            type: Array,
+            default: () => []
         }
     });
 
@@ -81,6 +85,8 @@
                 return OctagonX;
             case 'flow':
                 return Milestone;
+            case 'pause':
+                return CirclePause;
             default:
                 return null;
         }
@@ -97,7 +103,8 @@
             description: props.description,
             inputs: props.inputs || [],
             outputs: props.outputs || [],
-            stepNumber: props.stepNumber
+            stepNumber: props.stepNumber,
+            branches: props.branches || []
         });
     };
 </script>
@@ -131,7 +138,7 @@
     }
 
     .event-item.flow:hover .event-header {
-        border-color: orange;
+        border-color: rgba(255, 166, 0, 0.2);
     }
 
     .event-item.flow > .event-header {

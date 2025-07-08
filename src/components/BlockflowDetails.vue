@@ -70,10 +70,36 @@
 
             <div v-if="activeTab === 'block'" class="block-details">
                 <div class="block-details-header">
-                    <h2>Block details</h2>
+                    <h2>{{ selectedBlock?.type === 'rule' ? 'Rule details' : 'Block details' }}</h2>
                 </div>
                 <div v-if="selectedBlock" class="block-details-content">
-                    <div class="block-info">
+                    <!-- Rule details -->
+                    <div v-if="selectedBlock.type === 'rule'" class="rule-info">
+                        <label>Rule Type</label>
+                        <input type="text" :value="selectedBlock.ruleType" readonly />
+                        
+                        <label>Variable</label>
+                        <input type="text" :value="selectedBlock.variable" readonly />
+                        
+                        <label>Value</label>
+                        <input type="text" :value="selectedBlock.value" readonly />
+                        
+                        <label>Description</label>
+                        <textarea :value="selectedBlock.description" readonly />
+                        
+                        <div v-if="selectedBlock.steps && selectedBlock.steps.length > 0" class="rule-steps">
+                            <h4>Steps in this rule</h4>
+                            <div class="steps-list">
+                                <div v-for="step in selectedBlock.steps" :key="step.uid" class="step-item">
+                                    <span class="step-title">{{ step.title }}</span>
+                                    <span class="step-type">{{ step.type }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Regular block details -->
+                    <div v-else class="block-info">
                         <label>Title</label>
                         <input type="text" :value="selectedBlock.title" readonly />
                         
@@ -85,9 +111,33 @@
                         
                         <label v-if="selectedBlock.stepNumber">Step Number</label>
                         <input v-if="selectedBlock.stepNumber" type="number" :value="selectedBlock.stepNumber" readonly />
+                        
+                        <!-- Show rules for flow events -->
+                        <div v-if="selectedBlock.type === 'flow' && selectedBlock.branches && selectedBlock.branches.length > 0" class="flow-rules">
+                            <h4>Rules in this flow</h4>
+                            <div class="rules-list">
+                                <div v-for="branch in selectedBlock.branches" :key="`${branch.condition.variable}-${branch.condition.value}`" class="rule-item">
+                                    <div class="rule-condition">
+                                        <span class="rule-type">{{ branch.condition.type || 'If' }}</span>
+                                        <span class="rule-variable">{{ branch.condition.variable }}</span>
+                                        <span class="rule-operator">is</span>
+                                        <span class="rule-value">{{ branch.condition.value }}</span>
+                                    </div>
+                                    <!-- <div v-if="branch.steps && branch.steps.length > 0" class="rule-steps">
+                                        <span class="steps-count">{{ branch.steps.length }} step{{ branch.steps.length === 1 ? '' : 's' }}</span>
+                                        <div class="steps-preview">
+                                            <div v-for="step in branch.steps" :key="step.uid" class="step-preview">
+                                                <span class="step-title">{{ step.title }}</span>
+                                                <span class="step-type">{{ step.type }}</span>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div v-if="selectedBlock.inputs && selectedBlock.inputs.length > 0" class="block-inputs">
+                    <div v-if="selectedBlock.type !== 'rule' && selectedBlock.inputs && selectedBlock.inputs.length > 0" class="block-inputs">
                         <h4>Inputs</h4>
                         <div class="input-list">
                             <BlockflowVariable 
@@ -99,7 +149,7 @@
                         </div>
                     </div>
                     
-                    <div v-if="selectedBlock.outputs && selectedBlock.outputs.length > 0" class="block-outputs">
+                    <div v-if="selectedBlock.type !== 'rule' && selectedBlock.outputs && selectedBlock.outputs.length > 0" class="block-outputs">
                         <h4>Outputs</h4>
                         <div class="output-list">
                             <BlockflowVariable 
@@ -112,7 +162,7 @@
                     </div>
                 </div>
                 <div v-else class="block-details-content">
-                    <p>Select a block to see more details</p>
+                    <p>Select a block or rule to see more details</p>
                 </div>
             </div>
 
@@ -238,14 +288,24 @@
         margin-bottom: var(--space-m);
     }
 
-    .block-info label {
+    .rule-info {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-s);
+        margin-bottom: var(--space-m);
+    }
+
+    .block-info label,
+    .rule-info label {
         font-size: var(--font-size-s);
         font-weight: var(--font-weight-semibold);
         color: var(--color-surface-fg-secondary);
     }
 
     .block-info input,
-    .block-info textarea {
+    .block-info textarea,
+    .rule-info input,
+    .rule-info textarea {
         padding: var(--space-xs);
         border: 1px solid var(--color-surface-tint);
         border-radius: var(--radius-s);
@@ -254,9 +314,145 @@
         color: var(--color-surface-fg);
     }
 
-    .block-info textarea {
+    .block-info textarea,
+    .rule-info textarea {
         min-height: 60px;
         resize: vertical;
+    }
+
+    .rule-steps {
+        margin-top: var(--space-m);
+    }
+
+    .rule-steps h4 {
+        font-size: var(--font-size-s);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-surface-fg-secondary);
+        margin-bottom: var(--space-xs);
+    }
+
+    .steps-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+
+    .step-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-xs);
+        border: 1px solid var(--color-surface-tint);
+        border-radius: var(--radius-s);
+        background-color: var(--color-surface-tint-light);
+    }
+
+    .step-title {
+        font-size: var(--font-size-s);
+        font-weight: var(--font-weight-medium);
+        color: var(--color-surface-fg);
+    }
+
+    .step-type {
+        font-size: var(--font-size-xs);
+        color: var(--color-surface-fg-tertiary);
+        text-transform: capitalize;
+    }
+
+    .flow-rules {
+        margin-top: var(--space-m);
+    }
+
+    .flow-rules h4 {
+        font-size: var(--font-size-s);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-surface-fg-secondary);
+        margin-bottom: var(--space-xs);
+    }
+
+    .flow-rules .rules-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-s);
+    }
+
+    .flow-rules .rule-item {
+        padding: var(--space-s);
+        border: 1px solid var(--color-surface-tint);
+        border-radius: var(--radius-s);
+        background-color: var(--color-surface-tint-light);
+    }
+
+    .rule-condition {
+        display: flex;
+        align-items: center;
+        gap: var(--space-xs);
+        margin-bottom: var(--space-xs);
+    }
+
+    .rule-type {
+        font-weight: var(--font-weight-medium);
+        color: var(--color-surface-fg);
+    }
+
+    .rule-variable {
+        font-weight: var(--font-weight-medium);
+        color: var(--color-surface-fg);
+        background-color: var(--color-surface-tint);
+        padding: 2px 6px;
+        border-radius: var(--radius-xs);
+        font-size: var(--font-size-xs);
+    }
+
+    .rule-operator {
+        font-size: var(--font-size-s);
+        color: var(--color-surface-fg-tertiary);
+    }
+
+    .rule-value {
+        font-weight: var(--font-weight-medium);
+        color: var(--color-surface-fg);
+        background-color: var(--color-surface-tint);
+        padding: 2px 6px;
+        border-radius: var(--radius-xs);
+        font-size: var(--font-size-xs);
+    }
+
+    .rule-steps {
+        margin-top: var(--space-xs);
+    }
+
+    .steps-count {
+        font-size: var(--font-size-xs);
+        color: var(--color-surface-fg-tertiary);
+        margin-bottom: var(--space-xs);
+        display: block;
+    }
+
+    .steps-preview {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xxs);
+    }
+
+    .step-preview {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-xxs) var(--space-xs);
+        background-color: var(--color-surface);
+        border-radius: var(--radius-xs);
+        font-size: var(--font-size-xs);
+    }
+
+    .step-preview .step-title {
+        font-weight: var(--font-weight-medium);
+        color: var(--color-surface-fg);
+    }
+
+    .step-preview .step-type {
+        color: var(--color-surface-fg-tertiary);
+        text-transform: capitalize;
     }
 
     .block-inputs,

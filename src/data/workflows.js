@@ -135,6 +135,14 @@ export const sampleAgentWorkflow = {
                             description: 'Contact a human and wait for guidance',
                             inputs: [],
                             outputs: []
+                        },
+                        {
+                            uid: 'wait-for-response',
+                            title: 'Wait for response',
+                            type: 'pause',
+                            description: 'Wait for human response before continuing',
+                            inputs: [],
+                            outputs: []
                         }
                     ]
                 }
