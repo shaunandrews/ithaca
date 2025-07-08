@@ -1,17 +1,14 @@
 <template>
     <div class="event-item" :class="[type, { selected: selected }]" @click="type !== 'flow' ? handleClick($event) : null">
         <div class="event-header hstack" @click="type === 'flow' ? handleClick($event) : null">
-            <div v-if="stepNumber" class="step-number">{{ stepNumber }}</div>
-            <!-- <ChevronRight size="16" stroke-width="1.5" /> -->
-            <div class="event-info">
-                <h3 class="event-title">{{ title }}</h3>
-                <!-- <p v-if="description" class="event-description">{{ description }}</p> -->
+            <div class="event-icon">
+                <component :is="getIcon(type)" size="18" stroke-width="1.5" />
             </div>
-            <span class="event-type">{{ type }}</span>
-            <slot name="icon" />
+            <h3 class="event-title">{{ title }}</h3>
+            <div v-if="stepNumber" class="step-number">{{ stepNumber }}</div>
         </div>
         <div class="event-content">
-            <div v-if="inputs || outputs" class="event-variables hstack">
+            <div v-if="type !== 'flow' && ((inputs && inputs.length > 0) || (outputs && outputs.length > 0))" class="event-variables hstack">
                 <div v-if="inputs && inputs.length > 0" class="event-inputs vstack">
                     <h4>Inputs</h4>
                     <BlockflowVariable v-for="input in inputs" :key="input" type="input" :value="input" />
@@ -33,7 +30,7 @@
 </template>
 
 <script setup>
-    import { ChevronRight, ChevronDown } from 'lucide-vue-next';
+    import { ChevronRight, ChevronDown, FlaskConical, CirclePower, Hammer, OctagonX, Milestone } from 'lucide-vue-next';
     import BlockflowVariable from './BlockflowVariable.vue';
 
     const props = defineProps({
@@ -48,7 +45,7 @@
         type: {
             type: String,
             required: true,
-            validator: (value) => ['trigger', 'action', 'flow'].includes(value)
+            validator: (value) => ['trigger', 'action', 'flow', 'expert', 'tool', 'exit'].includes(value)
         },
         description: {
             type: String,
@@ -71,6 +68,23 @@
     });
 
     const emit = defineEmits(['select']);
+
+    const getIcon = (type) => {
+        switch (type) {
+            case 'expert':
+                return FlaskConical;
+            case 'trigger':
+                return CirclePower;
+            case 'tool':
+                return Hammer;
+            case 'exit':
+                return OctagonX;
+            case 'flow':
+                return Milestone;
+            default:
+                return null;
+        }
+    };
 
     const handleClick = (event) => {
         // Stop event propagation to prevent parent flow blocks from capturing the click
@@ -107,12 +121,11 @@
 
     .event-item.selected {
         border-color: var(--color-surface-fg);
-        outline: 1px solid var(--color-surface-fg);
     }
 
     .event-item.flow {
         background-color: transparent;
-        border-color: transparent;
+        border: none;
         outline: none;
         border-radius: 0;
     }
@@ -124,7 +137,7 @@
     .event-item.flow > .event-header {
         border-radius: var(--radius-l);
         background-color: var(--color-surface);
-        border: 1px solid var(--color-surface-tint-dark);
+        border: 2px solid var(--color-surface-tint-dark);
         cursor: pointer;
     }
 
@@ -145,25 +158,25 @@
     
     .step-number {
         color: var(--color-surface-fg-tertiary);
+        opacity: 0;
     }
 
-    .event-info {
-        flex: 1;
+    .event-item:hover .step-number,
+    .event-item.selected .step-number {
+        opacity: 1;
     }
     
     .event-title {
+        flex-grow: 1;
         font-size: var(--font-size-m);
         font-weight: var(--font-weight-semibold);
     }
 
-    .event-description {
-        font-size: var(--font-size-s);
-        color: var(--color-surface-fg-tertiary);
-        line-height: var(--line-height-tight);
-    }
-
-    .event-type {
-        color: var(--color-surface-fg-tertiary);
+    .event-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-surface-fg-secondary);
     }
 
     .event-variables {
@@ -178,11 +191,8 @@
         gap: var(--space-xs);
     }
 
-
-
     .rules {
-        padding: var(--space-xs);
-        padding-bottom: 0;
+        margin-top: var(--space-xs);
     }
 
     .rules-list {

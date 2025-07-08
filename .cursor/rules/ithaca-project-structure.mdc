@@ -1,8 +1,3 @@
----
-description:
-globs:
-alwaysApply: false
----
 # Ithaca Project Structure
 
 Ithaca is a Vue 3 application for managing AI agents and their configurations. The project follows a modular structure with clear separation of concerns.
@@ -14,17 +9,16 @@ Ithaca is a Vue 3 application for managing AI agents and their configurations. T
 - **Routing**: [src/router.js](mdc:src/router.js) - Vue Router configuration with nested routes
 - **Styling**: CSS files in [src/assets/](mdc:src/assets/) using CSS custom properties for theming
 
-## View Structure
+## View Components
 
-The application uses a nested routing structure for agent management:
-
-- **Agent Layout**: [src/views/AgentLayout.vue](mdc:src/views/AgentLayout.vue) - Base layout with header and navigation tabs
-- **Agent Tabs**: Each tab is a separate view component:
-  - [src/views/AgentWorkbench.vue](mdc:src/views/AgentWorkbench.vue) - Instructions and tools configuration
-  - [src/views/AgentVersions.vue](mdc:src/views/AgentVersions.vue) - Version information
-  - [src/views/AgentInsights.vue](mdc:src/views/AgentInsights.vue) - Insights (placeholder)
-  - [src/views/AgentActivity.vue](mdc:src/views/AgentActivity.vue) - Activity list
-- **Other Views**: [src/views/Agents.vue](mdc:src/views/Agents.vue), [src/views/Tools.vue](mdc:src/views/Tools.vue), [src/views/Experts.vue](mdc:src/views/Experts.vue), [src/views/Conversation.vue](mdc:src/views/Conversation.vue)
+Primary application views organized by feature:
+- Agent Views: [src/views/Agents.vue](mdc:src/views/Agents.vue), [src/views/AgentLayout.vue](mdc:src/views/AgentLayout.vue)
+- Agent Management: [src/views/AgentWorkbench.vue](mdc:src/views/AgentWorkbench.vue), [src/views/AgentVisualBuilder.vue](mdc:src/views/AgentVisualBuilder.vue)
+- Individual Agent Views: [src/views/AgentVersions.vue](mdc:src/views/AgentVersions.vue), [src/views/AgentInsights.vue](mdc:src/views/AgentInsights.vue), [src/views/AgentActivity.vue](mdc:src/views/AgentActivity.vue)
+- Expert Views: [src/views/Experts.vue](mdc:src/views/Experts.vue), [src/views/ExpertLayout.vue](mdc:src/views/ExpertLayout.vue), [src/views/ExpertWorkbench.vue](mdc:src/views/ExpertWorkbench.vue)
+- Insights Views: [src/views/InsightsLayout.vue](mdc:src/views/InsightsLayout.vue), [src/views/InsightsTopics.vue](mdc:src/views/InsightsTopics.vue)
+- Conversation Views: [src/views/Conversation.vue](mdc:src/views/Conversation.vue)
+- Tools: [src/views/Tools.vue](mdc:src/views/Tools.vue)
 
 ## Component Organization
 
@@ -46,7 +40,7 @@ Static data is organized in [src/data/](mdc:src/data/):
 ## Routing Patterns
 
 The application uses nested routes for agent management:
-- `/agent/:id` → AgentWorkbench (default)
+- `/agent/:id` → AgentActivity (default)
 - `/agent/:id/workbench` → AgentWorkbench
 - `/agent/:id/versions` → AgentVersions
 - `/agent/:id/insights` → AgentInsights
@@ -58,5 +52,7 @@ The application uses nested routes for agent management:
 - Use Vue 3 Composition API with `<script setup>` syntax
 - Follow the established component naming conventions
 - Maintain separation between views (pages) and components (reusable UI)
+- Use CSS custom properties for consistent theming
+- Keep data logic in the data directory, UI logic in components
 - Use CSS custom properties for consistent theming
 - Keep data logic in the data directory, UI logic in components

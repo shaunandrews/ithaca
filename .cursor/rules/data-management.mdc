@@ -1,8 +1,3 @@
----
-description:
-globs:
-alwaysApply: false
----
 # Data Management & State
 
 The Ithaca project uses a static data approach with well-organized data structures and utility functions.
@@ -73,9 +68,9 @@ const parsedInstructions = computed(() =>
 
 ### Tool Data Flow
 1. Tools are loaded from [src/data/tools.js](mdc:src/data/tools.js)
-2. Agent tools are filtered and displayed in [src/views/AgentWorkbench.vue](mdc:src/views/AgentWorkbench.vue)
-3. Tool autocomplete uses the full tools list
-4. Tool modals display tool details
+2. Agent tools are configured and displayed in [src/views/AgentWorkbench.vue](mdc:src/views/AgentWorkbench.vue)
+3. Tool workflow components use the tools data
+4. Block flow panels display tool details
 
 ### Activity Data Flow
 1. Agent activity is loaded from the agent object
@@ -135,9 +130,11 @@ Currently, the application uses static data. For future state management:
 
 ## Best Practices
 
-1. **Single Source of Truth**: Each data type has one source file
-2. **Consistent Structure**: All data objects follow consistent patterns
-3. **Type Safety**: Consider adding TypeScript for better type safety
-4. **Data Validation**: Validate data structure and relationships
+  1. **Single Source of Truth**: Each data type has one source file
+  2. **Consistent Structure**: All data objects follow consistent patterns
+  3. **Type Safety**: Consider adding TypeScript for better type safety
+  4. **Data Validation**: Validate data structure and relationships
+  5. **Performance**: Use computed properties for expensive operations
+  6. **Caching**: Consider caching frequently accessed data
 5. **Performance**: Use computed properties for expensive operations
 6. **Caching**: Consider caching frequently accessed data

@@ -1,8 +1,3 @@
----
-description:
-globs:
-alwaysApply: false
----
 # Component Patterns & Best Practices
 
 The Ithaca project follows consistent patterns for Vue 3 components using the Composition API.
@@ -143,9 +138,11 @@ List components follow this pattern:
 ## Best Practices
 
 1. **Use Composition API**: Always use `<script setup>` syntax
-2. **Computed Properties**: Use `computed()` for derived state
-3. **Reactive References**: Use `ref()` for local state
-4. **Props Validation**: Define prop types when needed
-5. **Event Naming**: Use kebab-case for event names
+  2. **Computed Properties**: Use `computed()` for derived state
+  3. **Reactive References**: Use `ref()` for local state
+  4. **Props Validation**: Define prop types when needed
+  5. **Event Naming**: Use kebab-case for event names
+  6. **Component Naming**: Use PascalCase for component names
+  7. **File Naming**: Use PascalCase for component files
 6. **Component Naming**: Use PascalCase for component names
 7. **File Naming**: Use PascalCase for component files

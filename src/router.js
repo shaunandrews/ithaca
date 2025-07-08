@@ -19,7 +19,6 @@ import ExpertWorkbench from './views/ExpertWorkbench.vue';
 import ExpertInsights from './views/ExpertInsights.vue';
 import ExpertVersions from './views/ExpertVersions.vue';
 import AgentVisualBuilder from './views/AgentVisualBuilder.vue';
-import AgentBlockBuilder from './views/AgentBlockBuilder.vue';
 
 const routes = [
     {
@@ -65,8 +64,8 @@ const routes = [
     },
     {
         path: '/agents/new/block',
-        name: 'AgentBlockBuilder',
-        component: AgentBlockBuilder,
+        name: 'AgentWorkbenchNew',
+        component: AgentWorkbench,
     },
     {
         path: '/tools',

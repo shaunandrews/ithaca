@@ -13,9 +13,5 @@
         width: 320px;
         flex-shrink: 0;
         border-left: 1px solid var(--color-surface-tint);
-        position: sticky;
-        top: calc(var(--toolbar-height) + 1px);
-        height: calc(100vh - var(--toolbar-height));
-        overflow-y: auto;
     }
 </style> 

@@ -1,8 +1,3 @@
----
-description:
-globs:
-alwaysApply: false
----
 # Agent Architecture & Routing
 
 The agent system uses a sophisticated nested routing architecture that separates concerns and provides better user experience.
@@ -22,8 +17,8 @@ Each agent tab is implemented as a separate view component for better performanc
 ### Workbench Tab
 - **Route**: `/agent/:id` (default) or `/agent/:id/workbench`
 - **Component**: [src/views/AgentWorkbench.vue](mdc:src/views/AgentWorkbench.vue)
-- **Features**: Instructions field with autocomplete, tools configuration, agent preview
-- **Key Components**: [src/components/InstructionsField.vue](mdc:src/components/InstructionsField.vue), [src/components/AgentPreview.vue](mdc:src/components/AgentPreview.vue)
+- **Features**: Visual workflow builder with block-flow components for agent configuration
+- **Key Components**: [src/components/BlockflowEvent.vue](mdc:src/components/BlockflowEvent.vue), [src/components/BlockflowPanel.vue](mdc:src/components/BlockflowPanel.vue)
 
 ### Versions Tab
 - **Route**: `/agent/:id/versions`
@@ -70,5 +65,7 @@ function isActiveTab(tabName) {
 - **Direct URL Access**: Users can bookmark specific tabs
 - **Better Performance**: Only active tab content is rendered
 - **Improved Maintainability**: Each tab is a focused component
+- **SEO Friendly**: Each tab has its own URL
+- **Better UX**: Browser back/forward buttons work correctly
 - **SEO Friendly**: Each tab has its own URL
 - **Better UX**: Browser back/forward buttons work correctly

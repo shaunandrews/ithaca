@@ -33,18 +33,10 @@
     .rule-item {
         min-width: fit-content;
         gap: var(--space-s);
-        border: 1px dashed rgba(255, 166, 0, 0.5);
+        border: 2px solid rgba(255, 166, 0, 0.5);
         padding: var(--space-s);
         border-radius: var(--radius-l);
-        background: repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 9px,
-            rgba(255, 166, 0, 0.15) 9px,
-            rgba(255, 166, 0, 0.15) 10px
-        );
-        background-color: var(--color-chrome);
-        background-attachment: fixed;
+        background-color: rgba(255, 166, 0, 0.05);
     }
 
     .rule-action {
@@ -52,6 +44,4 @@
         flex-direction: column;
         align-items: center;
     }
-
-
 </style> 
