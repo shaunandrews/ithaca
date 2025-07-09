@@ -2,17 +2,14 @@
     <div class="agent-container">
         <header v-if="agent" ref="headerRef">
             <div class="agent-header-start">
-                <select
-                    v-model.number="selectedAgentId"
-                    @change="goToAgent"
-                >
-                    <button>
-                        <selectedcontent />
-                    </button>
-                    <option v-for="a in agents" :key="a.id" :value="a.id">
-                        {{ a.title }}
-                    </option>
-                </select>
+                <div class="agent-selector">
+                    <Dropdown
+                        :selected-value="selectedAgentId"
+                        :options="agentOptions"
+                        :label="agent.title"
+                        @select="selectAgent"
+                    />
+                </div>
                 <NavigationTabs
                     :tabs="tabs"
                     :is-active-function="isActiveTab"
@@ -38,6 +35,7 @@
     import { useRoute, useRouter } from 'vue-router';
     import { agents } from '@/data/agents.js';
     import NavigationTabs from '@/components/NavigationTabs.vue';
+    import Dropdown from '@/components/Dropdown.vue';
 
     const route = useRoute();
     const router = useRouter();
@@ -48,6 +46,13 @@
     watch(agentId, (newVal) => {
         selectedAgentId.value = newVal;
     });
+
+    const agentOptions = computed(() => 
+        agents.map(agent => ({
+            value: agent.id,
+            label: agent.title
+        }))
+    );
 
     const tabs = computed(() => [
         { key: 'activity', label: 'Activity', href: `/agent/${agentId.value}/activity` },
@@ -74,22 +79,9 @@
         }
     }
 
-    function isActiveTab(tabName) {
-        const currentPath = route.path;
-        const expectedPath = `/agent/${agentId.value}/${tabName}`;
-        const defaultPath = `/agent/${agentId.value}`;
-
-        if (tabName === 'activity') {
-            return (
-                currentPath === expectedPath ||
-                currentPath === defaultPath ||
-                currentPath.startsWith(`/agent/${agentId.value}/activity`)
-            );
-        }
-        if (tabName === 'workbench') {
-            return currentPath === expectedPath;
-        }
-        return currentPath === expectedPath;
+    function selectAgent(option) {
+        selectedAgentId.value = option.value;
+        goToAgent();
     }
 
     function goToAgent() {
@@ -107,6 +99,24 @@
             );
             router.push(newPath);
         }
+    }
+
+    function isActiveTab(tabName) {
+        const currentPath = route.path;
+        const expectedPath = `/agent/${agentId.value}/${tabName}`;
+        const defaultPath = `/agent/${agentId.value}`;
+
+        if (tabName === 'activity') {
+            return (
+                currentPath === expectedPath ||
+                currentPath === defaultPath ||
+                currentPath.startsWith(`/agent/${agentId.value}/activity`)
+            );
+        }
+        if (tabName === 'workbench') {
+            return currentPath === expectedPath;
+        }
+        return currentPath === expectedPath;
     }
 
     function handleTabClick(tab) {
@@ -156,7 +166,9 @@
         gap: var(--space-m);
     }
 
-
+    .agent-selector {
+        min-width: 200px;
+    }
 
     .agent-not-found {
         padding: var(--space-m);

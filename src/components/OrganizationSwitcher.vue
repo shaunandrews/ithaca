@@ -1,35 +1,57 @@
 <template>
     <div class="organization-switcher">
-        <select 
-            v-model="selectedOrganization"
-            @change="handleOrganizationChange"
+        <Dropdown
+            :selected-value="selectedOrganization"
+            placement="bottom-start"
+            @select="selectOrganization"
         >
-            <button>
-                <selectedContent></selectedContent>
-            </button>
-            <option 
-                v-for="org in organizations" 
-                :key="org.id" 
-                :value="org.id"
-            >
-                <div class="organization-option hstack">
-                    <span class="organization-logo">
-                        <img 
-                            :src="org.logo" 
-                            :alt="org.name"
-                            height="32"
-                            width="32"
-                        />
-                    </span>
-                    <span>{{ org.name }}</span>
-                </div>
-            </option>
-        </select>
+            <template #trigger="{ isOpen }">
+                <span class="organization-logo">
+                    <img 
+                        :src="selectedOrganizationData.logo" 
+                        :alt="selectedOrganizationData.name"
+                        height="32"
+                        width="32"
+                    />
+                </span>
+                <span class="organization-name">{{ selectedOrganizationData.name }}</span>
+            </template>
+            
+            <template #content="{ close }">
+                <ul class="organization-list" role="listbox">
+                    <li
+                        v-for="org in organizations"
+                        :key="org.id"
+                        class="organization-option"
+                        :class="{ 'selected': org.id === selectedOrganization }"
+                        @click="selectOrganization(org); close()"
+                        role="option"
+                        :aria-selected="org.id === selectedOrganization"
+                        tabindex="0"
+                        @keydown.enter="selectOrganization(org); close()"
+                        @keydown.space.prevent="selectOrganization(org); close()"
+                    >
+                        <span class="organization-logo">
+                            <img 
+                                :src="org.logo" 
+                                :alt="org.name"
+                                height="32"
+                                width="32"
+                            />
+                        </span>
+                        <span class="organization-name">{{ org.name }}</span>
+                        <CheckIcon v-if="org.id === selectedOrganization" class="selected-icon" />
+                    </li>
+                </ul>
+            </template>
+        </Dropdown>
     </div>
 </template>
 
 <script setup>
     import { defineEmits, ref } from 'vue';
+    import { CheckIcon } from 'lucide-vue-next';
+    import Dropdown from './Dropdown.vue';
 
     const emit = defineEmits(['organization-change']);
 
@@ -42,35 +64,14 @@
     const selectedOrganization = ref('automattic');
     const selectedOrganizationData = ref(organizations.find(org => org.id === selectedOrganization.value) || organizations[0]);
 
-    const handleOrganizationChange = () => {
-        const org = organizations.find(org => org.id === selectedOrganization.value);
-        if (org) {
-            selectedOrganizationData.value = org;
-            emit('organization-change', org.id);
-        }
+    const selectOrganization = (org) => {
+        selectedOrganization.value = org.id;
+        selectedOrganizationData.value = org;
+        emit('organization-change', org.id);
     };
 </script>
 
 <style scoped>
-    .organization-switcher {
-        width: 100%;
-        flex: 1;
-    }
-
-    .organization-switcher select {
-        width: 100%;
-        padding-left: var(--space-xxs);
-    }
-
-    .organization-switcher option {
-        
-    }
-
-    .organization-option {
-        align-items: center;
-        gap: var(--space-xs);
-    }
-
     .organization-logo {
         border-radius: var(--radius-s);
         overflow: hidden;
@@ -78,13 +79,63 @@
         align-items: center;
         justify-content: center;
         background-color: #ffffff;
-        height: 32px;
-        width: 32px;
+        height: 18px;
+        width: 18px;
+        flex-shrink: 0;
+    }
+
+    .organization-switcher .organization-logo:first-of-type {
+        margin-left: -2px;
+        margin-right: var(--space-xxs);
     }
 
     .organization-logo img {
         height: 100%;
         width: 100%;
         object-fit: cover;
+    }
+
+    .organization-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .organization-option {
+        display: flex;
+        align-items: center;
+        gap: var(--space-s);
+        padding: var(--space-s);
+        cursor: pointer;
+        transition: background-color 0.15s ease;
+        border: none;
+        background: none;
+        width: 100%;
+        text-align: left;
+    }
+
+    .organization-option:hover {
+        background-color: var(--color-surface-hover);
+    }
+
+    .organization-option:focus {
+        outline: none;
+        background-color: var(--color-surface-hover);
+    }
+
+    .organization-option.selected {
+        background-color: var(--color-primary-surface);
+        color: var(--color-primary);
+    }
+
+    .organization-name {
+        flex: 1;
+        font-weight: 500;
+    }
+
+    .selected-icon {
+        width: 16px;
+        height: 16px;
+        color: var(--color-primary);
     }
 </style> 
