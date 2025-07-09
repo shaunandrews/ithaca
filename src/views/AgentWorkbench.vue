@@ -233,7 +233,7 @@
 </template>
 
 <script setup>
-    import { ref, computed, onMounted, onUnmounted } from 'vue';
+    import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
     import BlockflowEvent from '../components/BlockflowEvent.vue';
     import BlockflowRule from '../components/BlockflowRule.vue';
@@ -243,17 +243,50 @@ import { useRoute } from 'vue-router';
     import BlockflowDetails from '../components/BlockflowDetails.vue';
     import BlockflowPanel from '../components/BlockflowPanel.vue';
     import Dialog from '../components/Dialog.vue';
-    import { sampleAgentWorkflow } from '../data/workflows.js';
+    import { 
+        sampleAgentWorkflow, 
+        tumblrEmailTriageWorkflow, 
+        bigSkyWorkflow, 
+        agentDaveWorkflow, 
+        bloggerWorkflow, 
+        wpForumsWorkflow, 
+        jetpackChatWorkflow,
+        getWorkflowById 
+    } from '../data/workflows.js';
     import { agents } from '@/data/agents.js';
 
     const route = useRoute();
     const agentId = computed(() => Number(route.params.id));
     const agent = computed(() => agents.find((a) => a.id === agentId.value));
 
+    // Function to get workflow by agent ID
+    const getWorkflowByAgentId = (agentId) => {
+        const workflowMapping = {
+            1: sampleAgentWorkflow,           // WP.com Support Chat
+            2: tumblrEmailTriageWorkflow,     // Tumblr Email Triage
+            4: bigSkyWorkflow,                // Big Sky
+            6: agentDaveWorkflow,             // Agent Dave
+            7: bloggerWorkflow,               // Blogger
+            8: wpForumsWorkflow,              // WP.com Forums
+            9: jetpackChatWorkflow            // Jetpack Chat
+        };
+        
+        return workflowMapping[agentId] || sampleAgentWorkflow;
+    };
+
     const selectedBlock = ref(null);
     
-    // Use agent-specific workflow if available, otherwise use sample workflow
-    const workflow = ref(agent.value?.workflow || sampleAgentWorkflow);
+    // Use agent-specific workflow based on agent ID
+    const workflow = ref(getWorkflowByAgentId(agentId.value));
+    
+    // Watch for agent ID changes and update workflow
+    watch(agentId, (newAgentId) => {
+        workflow.value = getWorkflowByAgentId(newAgentId);
+        // Reset state when switching agents
+        selectedBlock.value = null;
+        placeholders.value = [];
+        rulePlaceholders.value = [];
+    });
     
     // Track placeholder events
     const placeholders = ref([]);
