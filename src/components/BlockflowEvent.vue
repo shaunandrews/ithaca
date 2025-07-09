@@ -146,6 +146,17 @@
         border-radius: 0;
     }
 
+    .event-item.flow::after {
+        content: '';
+        display: block;
+        border-radius: var(--radius-l);
+        overflow: hidden;
+        margin-top: var(--space-xs);
+        height: 3px;
+        width: 100%;
+        background-color: var(--color-surface-tint-dark);
+    }
+
     .event-item.flow > .event-header {
         border-radius: var(--radius-l);
         background-color: var(--color-surface);
@@ -159,6 +170,11 @@
 
     .event-item.flow.selected > .event-header {
         border-color: var(--color-surface-fg);
+    }
+
+    .event-item.flow:hover::after,
+    .event-item.flow.selected::after {
+        background-color: var(--color-surface-fg);
     }
 
     .event-header {
@@ -218,7 +234,6 @@
     }
 
     .rules-list {
-        align-items: flex-start;
         gap: var(--space-s);
     }
 </style>
