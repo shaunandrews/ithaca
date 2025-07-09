@@ -1,5 +1,5 @@
 <template>
-    <div class="dropdown" :class="{ 'is-open': isOpen }">
+    <div class="dropdown" :class="{ 'is-open': isOpen, 'mini': mini }">
         <!-- Trigger button -->
         <button 
             ref="triggerRef"
@@ -15,7 +15,14 @@
                     <span class="dropdown-label">{{ label }}</span>
                 </slot>
             </div>
-            <ChevronDownIcon class="dropdown-chevron" stroke-width="1.5" width="12" height="12" :class="{ 'rotated': isOpen }" />
+            <ChevronDownIcon 
+                v-if="!mini"
+                class="dropdown-chevron" 
+                stroke-width="1.5" 
+                width="12" 
+                height="12" 
+                :class="{ 'rotated': isOpen }" 
+            />
         </button>
 
         <!-- Dropdown content -->
@@ -74,6 +81,10 @@
             default: 'bottom-start'
         },
         disabled: {
+            type: Boolean,
+            default: false
+        },
+        mini: {
             type: Boolean,
             default: false
         }
@@ -147,6 +158,12 @@
     .dropdown-trigger:disabled {
         opacity: 0.5;
         cursor: not-allowed;
+    }
+
+    .dropdown.mini .dropdown-trigger {
+        padding: var(--space-xxs);
+        justify-content: center;
+        border: transparent;
     }
 
     .dropdown-trigger-content {

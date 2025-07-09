@@ -10,6 +10,8 @@
                 />
             </h1>
 
+            <OrganizationSwitcher :mini="mini" @organization-change="handleOrganizationChange" />
+
             <nav>
                 <NavItem
                     to="/"
@@ -33,8 +35,6 @@
                     :mini="mini"
                 />
             </nav>
-
-            <OrganizationSwitcher @organization-change="handleOrganizationChange" />
         </div>
         <div class="sidebar-end">
             <div class="user">

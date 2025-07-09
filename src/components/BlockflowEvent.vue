@@ -22,6 +22,11 @@
             <div v-if="type === 'flow'" class="rules vstack">
                 <div class="rules-list hstack">
                     <slot name="rules" />
+                    <div class="rules-add-button" @click="handleAddRule">
+                        <div class="plus-button">
+                            <Plus size="16" stroke-width="2" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -30,7 +35,7 @@
 
 <script setup>
     import { computed } from 'vue';
-    import { FlaskConical, SquarePlay, Hammer, OctagonX, Milestone, CirclePause } from 'lucide-vue-next';
+    import { FlaskConical, SquarePlay, Hammer, OctagonX, Milestone, CirclePause, Plus } from 'lucide-vue-next';
     import BlockflowVariable from './BlockflowVariable.vue';
     import { getExpertById } from '../data/workflows.js';
 
@@ -72,7 +77,7 @@
         }
     });
 
-    const emit = defineEmits(['select']);
+    const emit = defineEmits(['select', 'addRule']);
 
     // Get expert information for expert-type steps
     const expertInfo = computed(() => {
@@ -116,6 +121,15 @@
             branches: props.branches || []
         });
     };
+
+    const handleAddRule = (event) => {
+        event.stopPropagation();
+        emit('addRule', {
+            uid: props.uid,
+            title: props.title,
+            type: props.type
+        });
+    };
 </script>
 
 <style scoped>
@@ -146,17 +160,6 @@
         border-radius: 0;
     }
 
-    .event-item.flow::after {
-        content: '';
-        display: block;
-        border-radius: var(--radius-l);
-        overflow: hidden;
-        margin-top: var(--space-xs);
-        height: 3px;
-        width: 100%;
-        background-color: var(--color-surface-tint-dark);
-    }
-
     .event-item.flow > .event-header {
         border-radius: var(--radius-l);
         background-color: var(--color-surface);
@@ -170,11 +173,6 @@
 
     .event-item.flow.selected > .event-header {
         border-color: var(--color-surface-fg);
-    }
-
-    .event-item.flow:hover::after,
-    .event-item.flow.selected::after {
-        background-color: var(--color-surface-fg);
     }
 
     .event-header {
@@ -234,6 +232,41 @@
     }
 
     .rules-list {
-        gap: var(--space-s);
+        gap: var(--space-xs);
+        overflow-x: auto;
+    }
+
+    .rules-add-button {
+        cursor: pointer;
+        padding: var(--space-xs);
+        border-radius: var(--radius-m);
+        background-color: transparent;
+        border: 2px solid rgba(255, 166, 0, 0.4);
+        /* background-color: rgba(255, 166, 0, 0.05); */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        opacity: 0.6;
+        min-width: 40px;
+        height: 40px;
+    }
+
+    .rules-add-button:hover {
+        background-color: rgba(255, 166, 0, 0.1);
+        border-color: rgba(255, 166, 0, 0.5);
+        opacity: 1;
+    }
+
+    .rules-add-button:hover .plus-button {
+        color: rgba(255, 166, 0, 1);
+    }
+
+    .plus-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 166, 0, 0.5);
+        transition: color 0.2s ease;
     }
 </style>

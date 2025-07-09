@@ -1,8 +1,9 @@
 <template>
-    <div class="organization-switcher">
+    <div class="organization-switcher" :class="{'mini': mini}">
         <Dropdown
             :selected-value="selectedOrganization"
             placement="bottom-start"
+            :mini="mini"
             @select="selectOrganization"
         >
             <template #trigger="{ isOpen }">
@@ -14,7 +15,7 @@
                         width="32"
                     />
                 </span>
-                <span class="organization-name">{{ selectedOrganizationData.name }}</span>
+                <span v-if="!mini" class="organization-name">{{ selectedOrganizationData.name }}</span>
             </template>
             
             <template #content="{ close }">
@@ -49,9 +50,16 @@
 </template>
 
 <script setup>
-    import { defineEmits, ref } from 'vue';
+    import { defineEmits, defineProps, ref } from 'vue';
     import { CheckIcon } from 'lucide-vue-next';
     import Dropdown from './Dropdown.vue';
+
+    const props = defineProps({
+        mini: {
+            type: Boolean,
+            default: false
+        }
+    });
 
     const emit = defineEmits(['organization-change']);
 
@@ -87,6 +95,11 @@
     .organization-switcher .organization-logo:first-of-type {
         margin-left: -2px;
         margin-right: var(--space-xxs);
+    }
+
+    .organization-switcher.mini .organization-logo:first-of-type {
+        margin-left: 3px;
+        margin-right: 0;
     }
 
     .organization-logo img {
