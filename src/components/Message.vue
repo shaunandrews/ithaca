@@ -5,14 +5,11 @@
     >
         <div class="text" @click="handleTextClick" tabindex="0">
             <div v-if="message.role === 'user'" class="author">
-                <img
-                    :src="gravatarUrl(customer)"
-                    alt="User avatar"
-                    height="24"
-                    width="24"
-                    class="avatar"
+                <WidgetCustomer 
+                    :email="customer" 
+                    variant="compact" 
+                    size="medium"
                 />
-                <span class="email">{{ customer }}</span>
             </div>
             <div class="content" v-html="renderedContent"></div>
             
@@ -63,6 +60,7 @@
     import CryptoJS from 'crypto-js';
     import { marked } from 'marked';
     import { Copy, Link } from 'lucide-vue-next';
+    import WidgetCustomer from '@/components/WidgetCustomer.vue';
 
     const props = defineProps({
         message: {
@@ -103,14 +101,6 @@
     function formatDate(datetime) {
         const date = new Date(datetime);
         return date.toLocaleString();
-    }
-
-    function gravatarUrl(email) {
-        if (!email) return '';
-        const hash = CryptoJS.SHA256(email.trim().toLowerCase()).toString(
-            CryptoJS.enc.Hex
-        );
-        return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
     }
 
     function handleTextClick() {
@@ -341,11 +331,6 @@
         font-weight: var(--font-weight-medium);
         margin-top: var(--space-xxs);
         font-size: var(--font-size-m);
-    }
-
-    .avatar {
-        border-radius: var(--radius);
-        border: 1px solid var(--color-surface-tint-dark);
     }
 
     .suggested-replies {

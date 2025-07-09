@@ -1,14 +1,13 @@
 <template>
     <div class="customer-details">
         <div class="customer-header vstack">
-            <img
-                :src="gravatarUrl('sarah.jones@example.com')"
-                alt="Customer avatar"
-                height="40"
-                width="40"
-                class="customer-avatar"
+            <WidgetCustomer 
+                email="sarah.jones@example.com" 
+                name="Sarah Jones" 
+                variant="detailed" 
+                size="large"
+                :show-email="false"
             />
-            <h3 class="customer-name">Sarah Jones</h3>
         </div>
 
         <div class="details-section">
@@ -166,14 +165,7 @@
 
 <script setup>
     import CryptoJS from 'crypto-js';
-
-    function gravatarUrl(email) {
-        if (!email) return '';
-        const hash = CryptoJS.SHA256(email.trim().toLowerCase()).toString(
-            CryptoJS.enc.Hex
-        );
-        return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
-    }
+    import WidgetCustomer from '@/components/WidgetCustomer.vue';
 </script>
 
 <style scoped>
@@ -183,21 +175,9 @@
         gap: var(--space-m);
     }
 
-    .customer-avatar {
-        border-radius: var(--radius-m);
-        border: 2px solid var(--color-surface-tint);
-    }
-
-    .customer-info {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-xxs);
-    }
-
-    .customer-name {
-        font-size: var(--font-size-s);
-        font-weight: var(--font-weight-medium);
-        color: var(--color-chrome-fg-primary);
+    .customer-header {
+        align-items: center;
+        gap: var(--space-s);
     }
 
     .details-section {

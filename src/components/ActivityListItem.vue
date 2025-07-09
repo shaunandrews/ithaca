@@ -1,13 +1,10 @@
 <template>
     <RouterLink :to="to" class="activity-list-item">
         <div class="customer">
-            <img
-                :src="getGravatarUrl(item.customer)"
-                alt="Gravatar"
-                width="20"
-                height="20"
-                class="gravatar"
-                :title="item.customer"
+            <WidgetCustomer 
+                :email="item.customer" 
+                variant="avatar-only" 
+                size="small"
             />
         </div>
         <div class="event">{{ item.event }}</div>
@@ -18,7 +15,7 @@
             {{ messageCount }}
         </div>
         <div class="sentiment">
-            <SentimentDisplay 
+            <WidgetSentiment 
                 :sentiment="item.sentiment" 
                 variant="icon" 
                 icon-size="20" 
@@ -32,7 +29,8 @@
     import { RouterLink } from 'vue-router';
     import { MessagesSquare } from 'lucide-vue-next';
     import { useActivityUtils } from '@/composables/useActivityUtils.js';
-    import SentimentDisplay from '@/components/SentimentDisplay.vue';
+    import WidgetSentiment from '@/components/WidgetSentiment.vue';
+    import WidgetCustomer from '@/components/WidgetCustomer.vue';
 
     const props = defineProps({
         item: {
@@ -45,7 +43,7 @@
         },
     });
 
-    const { getMessageCount, formatRelativeTime, getGravatarUrl } = useActivityUtils();
+    const { getMessageCount, formatRelativeTime } = useActivityUtils();
     const messageCount = getMessageCount(props.item.id);
 </script>
 
@@ -81,19 +79,6 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
-    }
-
-    .gravatar {
-        border-radius: var(--radius-s);
-        vertical-align: middle;
-        margin-right: var(--space-xxs);
-        transition: transform 0.1s ease-in-out;
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
-    }
-
-    .activity-list-item:hover .gravatar {
-        transform: scale(1.1) rotate(3deg);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
 
     .event {

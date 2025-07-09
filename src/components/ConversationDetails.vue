@@ -15,8 +15,12 @@
                 <hr />
 
                 <p>"{{ conversation.quote }}"</p>
-                <p>{{ conversation.customer }}</p>
-                <p>{{ sentimentLabel }}</p>
+                <WidgetCustomer 
+                    :email="conversation.customer" 
+                    variant="compact" 
+                    size="medium"
+                />
+                <WidgetSentiment :sentiment="conversation.sentiment" variant="both" />
 
                 <h4>Topic</h4>
                 <p>{{ conversation.event }}</p>
@@ -133,12 +137,14 @@
 
 <script setup>
     import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
-    import { Hourglass, ListChecks, Book, Hammer, ChevronDown, MessageSquare, User, Calendar, Tags, Quote, Laugh, Smile, Meh, Annoyed, Frown, Angry, ThumbsUp, Undo2, Check } from 'lucide-vue-next';
+    import { Hourglass, ListChecks, Book, Hammer, ChevronDown, MessageSquare, User, Calendar, Tags, Quote, ThumbsUp, Undo2, Check } from 'lucide-vue-next';
     import SourceRating from '@/components/SourceRating.vue';
     import ClassifierRating from '@/components/ClassifierRating.vue';
     import Badge from '@/components/Badge.vue';
     import CustomerDetails from '@/components/CustomerDetails.vue';
     import NavigationTabs from '@/components/NavigationTabs.vue';
+    import WidgetSentiment from '@/components/WidgetSentiment.vue';
+    import WidgetCustomer from '@/components/WidgetCustomer.vue';
 
     const props = defineProps({
         selectedMessage: {
@@ -182,37 +188,6 @@
         rateAllTrigger.value = 0;
         allClassifiersApproved.value = false;
         approveAllTrigger.value = 0;
-    });
-
-    // Sentiment icon mapping for conversation details
-    const sentimentIcon = computed(() => {
-        if (!props.conversation) return Frown;
-        
-        const sentimentMap = {
-            1: Laugh,    // laugh
-            2: Smile,    // smile
-            3: Meh,      // meh
-            4: Annoyed,  // annoyed
-            5: Frown,    // frown
-            6: Angry     // angry
-        };
-        
-        return sentimentMap[props.conversation.sentiment] || Frown;
-    });
-
-    const sentimentLabel = computed(() => {
-        if (!props.conversation) return 'Unknown';
-        
-        const sentimentLabels = {
-            1: 'Very Happy',
-            2: 'Happy',
-            3: 'Neutral',
-            4: 'Annoyed',
-            5: 'Unhappy',
-            6: 'Angry'
-        };
-        
-        return sentimentLabels[props.conversation.sentiment] || 'Unknown';
     });
 
     const handleScroll = () => {

@@ -4,20 +4,15 @@
         @click="$router.push(to)"
     >
         <div class="hstack customer">
-            <img
-                :src="getGravatarUrl(item.customer)"
-                alt="Gravatar"
-                width="32"
-                height="32"
-                class="gravatar"
-                :title="item.customer"
+            <WidgetCustomer 
+                :email="item.customer" 
+                variant="compact" 
+                size="medium"
             />
-
-            <div class="customer-name">{{ item.customer }}</div>
         </div>
         <div class="event-type">{{ item.event }}</div>
 
-        <SentimentDisplay 
+        <WidgetSentiment 
             :sentiment="item.sentiment" 
             variant="both" 
             icon-size="16" 
@@ -56,7 +51,8 @@
 <script setup>
     import { MessagesSquare } from 'lucide-vue-next';
     import { useActivityUtils } from '@/composables/useActivityUtils.js';
-    import SentimentDisplay from '@/components/SentimentDisplay.vue';
+    import WidgetSentiment from '@/components/WidgetSentiment.vue';
+    import WidgetCustomer from '@/components/WidgetCustomer.vue';
 
     const props = defineProps({
         item: {
@@ -69,7 +65,7 @@
         }
     });
 
-    const { getMessageCount, formatAbsoluteTime, getGravatarUrl } = useActivityUtils();
+    const { getMessageCount, formatAbsoluteTime } = useActivityUtils();
     const messageCount = getMessageCount(props.item.id);
 </script>
 

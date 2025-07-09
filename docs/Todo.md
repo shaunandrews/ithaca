@@ -4,9 +4,11 @@
 - [x] Make converstaion overview list sticky
 - [x] Update converstation summary
     - Reconsider click action, find another place for convo details
-- [ ] Consider permanent sidebar, with tabs like on Workbench
-- [ ] What to do with conversation bottom bar? Focus on reviewing
-- [ ] All activity button is broken after "memory" update
+- [x] Consider permanent sidebar, with tabs like on Workbench
+- [x] What to do with conversation bottom bar?
+- [x] All activity button is broken after "memory" update
+- [ ] Instead of fixed "sources" and "classifiers," consider these as expert and tool calls, and adapt the UI accordingly
+- [ ] Implement a Review mode, which walks the user through the converasation one message at a time, allowing them to rate tool usages/outcomes
 
 ## Workbench
 - [ ] Adding a new block
