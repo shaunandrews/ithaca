@@ -90,10 +90,10 @@
             </div>
 
             <button 
-                v-if="selectedBlock && selectedBlock.type !== 'placeholder' && selectedBlock.type !== 'rule'"
+                v-if="selectedBlock && selectedBlock.type !== 'placeholder' && selectedBlock.type !== 'rule-placeholder'"
                 class="delete-button"
                 @click="handleDeleteEvent"
-                title="Delete this event (Delete key)"
+                :title="selectedBlock.type === 'rule' ? 'Delete this rule (Delete key)' : 'Delete this event (Delete key)'"
             >
                 <Trash2 size="16" stroke-width="1.5" /> Delete
             </button>
@@ -130,7 +130,7 @@
     });
 
     const handleDeleteEvent = () => {
-        if (props.selectedBlock && props.selectedBlock.type !== 'placeholder' && props.selectedBlock.type !== 'rule') {
+        if (props.selectedBlock && props.selectedBlock.type !== 'placeholder' && props.selectedBlock.type !== 'rule-placeholder') {
             emit('deleteEvent', props.selectedBlock);
         }
     };

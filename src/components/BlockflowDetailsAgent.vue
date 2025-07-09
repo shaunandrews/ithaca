@@ -23,6 +23,14 @@
             <textarea></textarea>
         </div>
 
+
+        <hr />
+
+        <div>
+            <label>Greeting</label>
+            <textarea></textarea>
+            <small>This is the greeting message that will be sent when they start a conversation with the agent. Often used for previewing and testing agents.</small>
+        </div>
         <hr />
 
         <h4>Global context</h4>

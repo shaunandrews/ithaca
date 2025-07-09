@@ -62,6 +62,7 @@
                     :branches="step.branches || []"
                     :selected="selectedBlock?.uid === step.uid"
                     @select="handleBlockSelect"
+                    @addRule="handleAddRule"
                 >
                     <template #rules>
                         <BlockflowRule 
@@ -147,6 +148,19 @@
                                 @addEvent="handleDividerClick"
                             />
                         </BlockflowRule>
+                        
+                        <!-- Rule placeholders -->
+                        <BlockflowRulePlaceholder
+                            v-for="placeholder in rulePlaceholders.filter(p => p.flowId === step.uid)"
+                            :key="placeholder.uid"
+                            :uid="placeholder.uid"
+                            :position="placeholder.position"
+                            :flowId="placeholder.flowId"
+                            :selected="selectedBlock?.uid === placeholder.uid"
+                            @confirm="handleRulePlaceholderConfirm"
+                            @remove="handleRulePlaceholderRemove"
+                            @select="handleBlockSelect"
+                        />
                     </template>
                 </BlockflowEvent>
                 
@@ -205,8 +219,10 @@
         <!-- Delete Confirmation Dialog -->
         <Dialog
             :isOpen="deleteDialogOpen"
-            title="Delete Event"
-            :description="`Are you sure you want to delete &quot;${eventToDelete?.title}&quot;? This action cannot be undone.`"
+            :title="eventToDelete?.type === 'rule' ? 'Delete Rule' : 'Delete Event'"
+            :description="eventToDelete?.type === 'rule' 
+                ? `Are you sure you want to delete the rule &quot;${eventToDelete?.ruleType} ${eventToDelete?.variable} is ${eventToDelete?.value}&quot;? This action cannot be undone.`
+                : `Are you sure you want to delete &quot;${eventToDelete?.title}&quot;? This action cannot be undone.`"
             :actions="[
                 { key: 'cancel', label: 'Cancel', variant: 'secondary' },
                 { key: 'confirm', label: 'Delete', variant: 'destructive' }
@@ -223,6 +239,7 @@ import { useRoute } from 'vue-router';
     import BlockflowRule from '../components/BlockflowRule.vue';
     import BlockflowDivider from '../components/BlockflowDivider.vue';
     import BlockflowEventPlaceholder from '../components/BlockflowEventPlaceholder.vue';
+    import BlockflowRulePlaceholder from '../components/BlockflowRulePlaceholder.vue';
     import BlockflowDetails from '../components/BlockflowDetails.vue';
     import BlockflowPanel from '../components/BlockflowPanel.vue';
     import Dialog from '../components/Dialog.vue';
@@ -240,6 +257,9 @@ import { useRoute } from 'vue-router';
     
     // Track placeholder events
     const placeholders = ref([]);
+    
+    // Track rule placeholders
+    const rulePlaceholders = ref([]);
     
     // Delete dialog state
     const deleteDialogOpen = ref(false);
@@ -261,7 +281,7 @@ import { useRoute } from 'vue-router';
         if (event.key === 'Delete' || event.key === 'Backspace') {
             // Only handle if not typing in an input field
             if (event.target.tagName !== 'INPUT' && event.target.tagName !== 'TEXTAREA') {
-                if (selectedBlock.value && selectedBlock.value.type !== 'placeholder' && selectedBlock.value.type !== 'rule') {
+                if (selectedBlock.value && selectedBlock.value.type !== 'placeholder' && selectedBlock.value.type !== 'rule-placeholder') {
                     event.preventDefault();
                     showDeleteDialog(selectedBlock.value);
                 }
@@ -279,7 +299,7 @@ import { useRoute } from 'vue-router';
     });
 
     const showDeleteDialog = (blockData) => {
-        if (!blockData || blockData.type === 'placeholder' || blockData.type === 'rule') {
+        if (!blockData || blockData.type === 'placeholder' || blockData.type === 'rule-placeholder') {
             return;
         }
         
@@ -298,28 +318,52 @@ import { useRoute } from 'vue-router';
     };
 
     const handleDeleteEvent = (blockData) => {
-        if (!blockData || blockData.type === 'placeholder' || blockData.type === 'rule') {
+        if (!blockData || blockData.type === 'placeholder' || blockData.type === 'rule-placeholder') {
             return;
         }
 
-        // Find and remove the event from the workflow
-        if (blockData.branchId) {
-            // Delete from a specific branch
-            const [stepUid, branchIndex] = blockData.branchId.split('|');
-            const flowStep = workflow.value.steps.find(s => s.uid === stepUid);
+        // Handle rule deletion
+        if (blockData.type === 'rule') {
+            // Find the flow step that contains this rule
+            const flowStep = workflow.value.steps.find(step => {
+                return step.branches && step.branches.some(branch => 
+                    branch.condition.variable === blockData.variable && 
+                    branch.condition.value === blockData.value
+                );
+            });
             
-            if (flowStep && flowStep.branches && flowStep.branches[branchIndex]) {
-                const branchSteps = flowStep.branches[branchIndex].steps;
-                const stepIndex = branchSteps.findIndex(s => s.uid === blockData.uid);
-                if (stepIndex !== -1) {
-                    branchSteps.splice(stepIndex, 1);
+            if (flowStep && flowStep.branches) {
+                // Find and remove the rule branch
+                const branchIndex = flowStep.branches.findIndex(branch => 
+                    branch.condition.variable === blockData.variable && 
+                    branch.condition.value === blockData.value
+                );
+                
+                if (branchIndex !== -1) {
+                    flowStep.branches.splice(branchIndex, 1);
                 }
             }
         } else {
-            // Delete from main workflow
-            const stepIndex = workflow.value.steps.findIndex(s => s.uid === blockData.uid);
-            if (stepIndex !== -1) {
-                workflow.value.steps.splice(stepIndex, 1);
+            // Handle regular event deletion
+            // Find and remove the event from the workflow
+            if (blockData.branchId) {
+                // Delete from a specific branch
+                const [stepUid, branchIndex] = blockData.branchId.split('|');
+                const flowStep = workflow.value.steps.find(s => s.uid === stepUid);
+                
+                if (flowStep && flowStep.branches && flowStep.branches[branchIndex]) {
+                    const branchSteps = flowStep.branches[branchIndex].steps;
+                    const stepIndex = branchSteps.findIndex(s => s.uid === blockData.uid);
+                    if (stepIndex !== -1) {
+                        branchSteps.splice(stepIndex, 1);
+                    }
+                }
+            } else {
+                // Delete from main workflow
+                const stepIndex = workflow.value.steps.findIndex(s => s.uid === blockData.uid);
+                if (stepIndex !== -1) {
+                    workflow.value.steps.splice(stepIndex, 1);
+                }
             }
         }
 
@@ -350,6 +394,29 @@ import { useRoute } from 'vue-router';
             description: 'Select an event type to add to the workflow',
             position: data.position,
             branchId: data.branchId || null
+        };
+    };
+
+    const handleAddRule = (data) => {
+        // Generate a unique ID for the rule placeholder
+        const placeholderUid = `rule_placeholder_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        
+        // Add a rule placeholder for this flow event
+        rulePlaceholders.value.push({
+            uid: placeholderUid,
+            flowId: data.uid,
+            position: 0, // Rules are added at the end
+            type: 'rule-placeholder'
+        });
+        
+        // Select the new rule placeholder
+        selectedBlock.value = {
+            uid: placeholderUid,
+            type: 'rule-placeholder',
+            title: 'New Rule',
+            description: 'Define a condition and action for this rule',
+            flowId: data.uid,
+            position: 0
         };
     };
 
@@ -401,6 +468,43 @@ import { useRoute } from 'vue-router';
     const handlePlaceholderRemove = (data) => {
         // Remove the placeholder
         placeholders.value = placeholders.value.filter(p => p.uid !== data.uid);
+        
+        // Clear selection if this placeholder was selected
+        if (selectedBlock.value?.uid === data.uid) {
+            selectedBlock.value = null;
+        }
+    };
+
+    const handleRulePlaceholderConfirm = (data) => {
+        // Remove the placeholder
+        rulePlaceholders.value = rulePlaceholders.value.filter(p => p.uid !== data.uid);
+        
+        // Find the flow step and add the new rule
+        const flowStep = workflow.value.steps.find(s => s.uid === data.flowId);
+        if (flowStep) {
+            if (!flowStep.branches) {
+                flowStep.branches = [];
+            }
+            
+            // Add the new rule branch
+            flowStep.branches.push({
+                condition: {
+                    type: 'If',
+                    variable: data.variable,
+                    value: data.value,
+                    operator: data.condition
+                },
+                steps: []
+            });
+        }
+        
+        // Clear selection
+        selectedBlock.value = null;
+    };
+
+    const handleRulePlaceholderRemove = (data) => {
+        // Remove the rule placeholder
+        rulePlaceholders.value = rulePlaceholders.value.filter(p => p.uid !== data.uid);
         
         // Clear selection if this placeholder was selected
         if (selectedBlock.value?.uid === data.uid) {
