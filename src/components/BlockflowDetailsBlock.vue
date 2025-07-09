@@ -3,9 +3,7 @@
         <div v-if="selectedBlock" class="block-details-header hstack">
             <div class="block-info-header">
                 <h3 v-if="selectedBlock.title" class="block-title">{{ selectedBlock.title }}</h3>
-                <div class="block-type">
-                    {{ selectedBlock.type }}
-                </div>
+                <Badge :variant="selectedBlock.type">{{ selectedBlock.type }}</Badge>
             </div>
         </div>
 
@@ -111,6 +109,7 @@
     import { computed } from 'vue';
     import { Trash2 } from 'lucide-vue-next';
     import BlockflowVariable from './BlockflowVariable.vue';
+    import Badge from './Badge.vue';
     import { getExpertById } from '../data/workflows.js';
 
     const props = defineProps({
@@ -201,9 +200,5 @@
         margin: 0;
     }
 
-    .block-type {
-        font-size: var(--font-size-s);
-        color: var(--color-surface-fg-secondary);
-        text-transform: capitalize;
-    }
+
 </style> 
