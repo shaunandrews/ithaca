@@ -2,8 +2,7 @@
     <div class="conversation-view">
         <div v-if="conversation" class="columns hstack">
             <div
-                class="conversation"
-                :class="{ 'panel-open': selectedMessage }"
+                class="conversation panel-open"
                 ref="conversationContainer"
             >
                 <header
@@ -38,7 +37,7 @@
                                 :summary="conversation.summary"
                                 :title="conversation.event"
                                 @click="selectConversationSummary"
-                                :is-selected="isConversationSummarySelected"
+                                :is-selected="selectedMessage === null"
                             />
 
                             <Message
@@ -70,13 +69,10 @@
                 </div>
             </div>
 
-            <Panel v-if="selectedMessage || isConversationSummarySelected">
+            <Panel v-if="conversation">
                 <ConversationDetails
                     :selected-message="selectedMessage"
-                    :conversation="
-                        isConversationSummarySelected ? conversation : null
-                    "
-                    @close="closePanel"
+                    :conversation="conversation"
                     @view-source="openSourceModal"
                 />
             </Panel>
@@ -215,7 +211,6 @@
 
     const selectedMessage = ref(null);
     const selectedIdx = ref(null);
-    const isConversationSummarySelected = ref(false);
 
     // Source modal state
     const isSourceModalOpen = ref(false);
@@ -258,15 +253,16 @@
         const selectedParam = route.query.selected;
         const summarySelectedParam = route.query.summarySelected;
 
-        if (summarySelectedParam === 'true') {
-            isConversationSummarySelected.value = true;
-        } else if (selectedParam !== undefined && conversation.value) {
+        if (selectedParam !== undefined && conversation.value) {
             const idx = Number(selectedParam);
             if (idx >= 0 && idx < conversationMessages.value.length) {
                 selectedMessage.value = conversationMessages.value[idx];
                 selectedIdx.value = idx;
             }
         }
+        // Default to showing conversation summary if no specific message is selected
+        // Note: We don't need to set isConversationSummarySelected since the panel
+        // now shows the conversation summary by default when no message is selected
 
         // Add click outside listener for tags popover
         document.addEventListener('click', handleClickOutside);
@@ -301,10 +297,18 @@
 
     function selectMessage(msg, idx) {
         if (selectedIdx.value === idx) {
-            closePanel();
+            // If clicking the same message, deselect it to show conversation summary
+            selectedMessage.value = null;
+            selectedIdx.value = null;
+            // Update URL to remove selection
+            const newQuery = { ...route.query };
+            delete newQuery.selected;
+            router.replace({
+                ...route,
+                query: newQuery,
+            });
         } else {
-            // Close conversation summary selection if switching to message
-            isConversationSummarySelected.value = false;
+            // Select the message
             selectedMessage.value = msg;
             selectedIdx.value = idx;
             // Update URL to remember selection
@@ -313,40 +317,18 @@
                 query: {
                     ...route.query,
                     selected: idx.toString(),
-                    summarySelected: undefined,
                 },
             });
         }
     }
 
     function selectConversationSummary() {
-        if (isConversationSummarySelected.value) {
-            closePanel();
-        } else {
-            // Close message selection if switching to conversation summary
-            selectedMessage.value = null;
-            selectedIdx.value = null;
-            isConversationSummarySelected.value = true;
-            // Update URL to remember selection
-            router.replace({
-                ...route,
-                query: {
-                    ...route.query,
-                    summarySelected: 'true',
-                    selected: undefined,
-                },
-            });
-        }
-    }
-
-    function closePanel() {
+        // Clear any selected message to show conversation summary
         selectedMessage.value = null;
         selectedIdx.value = null;
-        isConversationSummarySelected.value = false;
-        // Remove selected parameters from URL
+        // Update URL to remove message selection
         const newQuery = { ...route.query };
         delete newQuery.selected;
-        delete newQuery.summarySelected;
         router.replace({
             ...route,
             query: newQuery,
@@ -405,6 +387,16 @@
         display: flex;
         flex-direction: column;
         overflow-y: auto;
+        /* box-shadow: inset 0 1px 12px 1px rgba(0, 0, 0, 0.03),
+                    inset 0 1px 4px 0 rgba(0, 0, 0, 0.01);
+        background: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 1px,
+            var(--color-surface-tint-light) 1px,
+            var(--color-surface-tint-light) 8px
+        );
+        background-attachment: fixed; */
     }
 
     .conversation-main {
@@ -438,14 +430,14 @@
         position: sticky;
         top: 0;
         width: 100%;
-        background-color: var(--color-chrome-transparent);
-        backdrop-filter: blur(12px);
         z-index: 100;
         min-height: var(--toolbar-height);
         transition: border-bottom-color 0.15s ease;
     }
 
     .conversation-header.has-border {
+        background-color: var(--color-chrome-transparent);
+        backdrop-filter: blur(12px);
         border-bottom-color: var(--color-surface-tint);
     }
 

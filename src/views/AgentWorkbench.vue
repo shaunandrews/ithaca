@@ -200,7 +200,7 @@
 
 <script setup>
     import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
-import { useRoute } from 'vue-router';
+    import { useRoute } from 'vue-router';
     import BlockflowEvent from '../components/BlockflowEvent.vue';
     import BlockflowRule from '../components/BlockflowRule.vue';
     import BlockflowDivider from '../components/BlockflowDivider.vue';
@@ -558,8 +558,6 @@ import { useRoute } from 'vue-router';
         height: 100%;
         overflow: hidden;
     }
-    
-
 
     .flow-overview {
         height: 100%;

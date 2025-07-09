@@ -1,19 +1,14 @@
 <template>
     <div class="conversation-details-sidebar" ref="conversationDetails">
         <header class="hstack" :class="{ 'has-border': isScrolled }">
-            <div class="hstack header-start">
-                <h3>{{ conversation ? 'Conversation Details' : 'Message Details' }}</h3>
-                <Badge v-if="selectedMessage" :variant="selectedMessage.role === 'agent' ? 'agent' : 'customer'">
-                    {{ selectedMessage.role === 'agent' ? 'Agent' : 'Customer' }}
-                </Badge>
-                <Badge v-else-if="conversation" variant="conversation">
-                    Conversation
-                </Badge>
-            </div>
-            <button class="small" @click="$emit('close')"><XIcon size="18" stroke-width="1.5" /></button>
+            <NavigationTabs 
+                :tabs="tabs" 
+                :active-tab="activeTab" 
+                @tab-click="handleTabClick"
+            />
         </header>
         <div class="content vstack" ref="content">
-            <template v-if="conversation">
+            <template v-if="activeTab === 'conversation'">
                 <div class="conversation-details">
                     <h4>
                         <MessageSquare strokeWidth="1.5" height="16" width="16" />
@@ -66,89 +61,97 @@
                     <p class="quote-text">"{{ conversation.quote }}"</p>
                 </div>
             </template>
-            <template v-else-if="selectedMessage && selectedMessage.role === 'agent'">
-                <div class="thoughts vstack">
-                    <div class="thought thinking-time hstack" @click="toggleThoughts" :class="{ 'is-expanded': isThoughtsExpanded }">
-                        <Hourglass height="16" width="16" class="hourglass-icon" />
-                        <ChevronDown height="16" width="16" class="chevron-icon" />
-                        <span
-                            >Thought for
-                            {{ selectedMessage.meta?.thinkingTime }}ms...</span
-                        >
+            
+            <template v-else-if="activeTab === 'message'">
+                <template v-if="!selectedMessage">
+                    <div class="empty-message">
+                        <p>Select a message to see details</p>
                     </div>
-                    <div class="thoughts-list vstack" v-show="isThoughtsExpanded">
-                        <div class="thought hstack">
-                            <ListChecks strokeWidth="1.5" height="16" width="16" />
-                            Completed 7 classifiers
+                </template>
+                <template v-else-if="selectedMessage.role === 'agent'">
+                    <div class="thoughts vstack">
+                        <div class="thought thinking-time hstack" @click="toggleThoughts" :class="{ 'is-expanded': isThoughtsExpanded }">
+                            <Hourglass height="16" width="16" class="hourglass-icon" />
+                            <ChevronDown height="16" width="16" class="chevron-icon" />
+                            <span
+                                >Thought for
+                                {{ selectedMessage.meta?.thinkingTime }}ms...</span
+                            >
                         </div>
-                        <div class="thought hstack">
-                            <Book strokeWidth="1.5" height="16" width="16" />
-                            Referenced 3 sources
+                        <div class="thoughts-list vstack" v-show="isThoughtsExpanded">
+                            <div class="thought hstack">
+                                <ListChecks strokeWidth="1.5" height="16" width="16" />
+                                Completed 7 classifiers
+                            </div>
+                            <div class="thought hstack">
+                                <Book strokeWidth="1.5" height="16" width="16" />
+                                Referenced 3 sources
+                            </div>
+                            <div class="thought hstack">
+                                <Hammer strokeWidth="1.5" height="16" width="16" />
+                                Used @persona tool
+                            </div>
                         </div>
-                        <div class="thought hstack">
-                            <Hammer strokeWidth="1.5" height="16" width="16" />
-                            Used @persona tool
+                    </div>
+                    <div class="sources">
+                        <div class="sources-header hstack">
+                            <h4>
+                                <Book strokeWidth="1.5" height="16" width="16" />
+                                Sources ({{
+                                    selectedMessage.meta?.sources?.length || 0
+                                }})
+                            </h4>
+                            <button 
+                                class="rate-all-button small" 
+                                @click="rateAllSources"
+                                :disabled="!selectedMessage.meta?.sources?.length"
+                            >
+                                <component :is="allSourcesRated ? Undo2 : ThumbsUp" strokeWidth="1.5" height="16" width="16" />
+                                {{ allSourcesRated ? 'Reset' : 'All' }}
+                            </button>
                         </div>
+                        <ul>
+                            <SourceRating
+                                v-for="source in selectedMessage.meta
+                                    ?.sources || []"
+                                :key="source.name"
+                                :source="source"
+                                :rate-all-trigger="rateAllTrigger"
+                                @view-source="$emit('view-source', $event)"
+                            />
+                        </ul>
                     </div>
-                </div>
-                <div class="sources">
-                    <div class="sources-header hstack">
-                        <h4>
-                            <Book strokeWidth="1.5" height="16" width="16" />
-                            Sources ({{
-                                selectedMessage.meta?.sources?.length || 0
-                            }})
-                        </h4>
-                        <button 
-                            class="rate-all-button small" 
-                            @click="rateAllSources"
-                            :disabled="!selectedMessage.meta?.sources?.length"
-                        >
-                            <component :is="allSourcesRated ? Undo2 : ThumbsUp" strokeWidth="1.5" height="16" width="16" />
-                            {{ allSourcesRated ? 'Reset' : 'All' }}
-                        </button>
+                    <div class="classifiers">
+                        <div class="classifiers-header hstack">
+                            <h4>
+                                <ListChecks strokeWidth="1.5" height="16" width="16" />
+                                Classifiers ({{
+                                    selectedMessage.meta?.classifiers?.length || 0
+                                }})
+                            </h4>
+                            <button 
+                                class="rate-all-button small" 
+                                @click="approveAllClassifiers"
+                                :disabled="!selectedMessage.meta?.classifiers?.length"
+                            >
+                                <component :is="allClassifiersApproved ? Undo2 : Check" strokeWidth="1.5" height="16" width="16" />
+                                {{ allClassifiersApproved ? 'Reset' : 'All' }}
+                            </button>
+                        </div>
+                        <ul>
+                            <ClassifierRating
+                                v-for="classifier in selectedMessage.meta
+                                    ?.classifiers || []"
+                                :key="classifier.name"
+                                :classifier="classifier"
+                                :approve-all-trigger="approveAllTrigger"
+                            />
+                        </ul>
                     </div>
-                    <ul>
-                        <SourceRating
-                            v-for="source in selectedMessage.meta
-                                ?.sources || []"
-                            :key="source.name"
-                            :source="source"
-                            :rate-all-trigger="rateAllTrigger"
-                            @view-source="$emit('view-source', $event)"
-                        />
-                    </ul>
-                </div>
-                <div class="classifiers">
-                    <div class="classifiers-header hstack">
-                        <h4>
-                            <ListChecks strokeWidth="1.5" height="16" width="16" />
-                            Classifiers ({{
-                                selectedMessage.meta?.classifiers?.length || 0
-                            }})
-                        </h4>
-                        <button 
-                            class="rate-all-button small" 
-                            @click="approveAllClassifiers"
-                            :disabled="!selectedMessage.meta?.classifiers?.length"
-                        >
-                            <component :is="allClassifiersApproved ? Undo2 : Check" strokeWidth="1.5" height="16" width="16" />
-                            {{ allClassifiersApproved ? 'Reset' : 'All' }}
-                        </button>
-                    </div>
-                    <ul>
-                        <ClassifierRating
-                            v-for="classifier in selectedMessage.meta
-                                ?.classifiers || []"
-                            :key="classifier.name"
-                            :classifier="classifier"
-                            :approve-all-trigger="approveAllTrigger"
-                        />
-                    </ul>
-                </div>
-            </template>
-            <template v-else>
-                <CustomerDetails />
+                </template>
+                <template v-else>
+                    <CustomerDetails />
+                </template>
             </template>
         </div>
     </div>
@@ -156,11 +159,12 @@
 
 <script setup>
     import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
-    import { XIcon, Hourglass, ListChecks, Book, Hammer, ChevronDown, MessageSquare, User, Calendar, Tags, Quote, Laugh, Smile, Meh, Annoyed, Frown, Angry, ThumbsUp, Undo2, Check } from 'lucide-vue-next';
+    import { Hourglass, ListChecks, Book, Hammer, ChevronDown, MessageSquare, User, Calendar, Tags, Quote, Laugh, Smile, Meh, Annoyed, Frown, Angry, ThumbsUp, Undo2, Check } from 'lucide-vue-next';
     import SourceRating from '@/components/SourceRating.vue';
     import ClassifierRating from '@/components/ClassifierRating.vue';
     import Badge from '@/components/Badge.vue';
     import CustomerDetails from '@/components/CustomerDetails.vue';
+    import NavigationTabs from '@/components/NavigationTabs.vue';
 
     const props = defineProps({
         selectedMessage: {
@@ -173,7 +177,7 @@
         },
     });
 
-    defineEmits(['close', 'view-source']);
+    defineEmits(['view-source']);
 
     const content = ref(null);
     const conversationDetails = ref(null);
@@ -183,6 +187,28 @@
     const allSourcesRated = ref(false);
     const approveAllTrigger = ref(0);
     const allClassifiersApproved = ref(false);
+    const activeTab = ref('conversation');
+
+    // Define tabs
+    const tabs = computed(() => [
+        { key: 'conversation', label: 'Conversation' },
+        { key: 'message', label: 'Message' }
+    ]);
+
+    // Auto-switch to message tab when a message is selected
+    watch(() => props.selectedMessage, (newMessage) => {
+        if (newMessage) {
+            activeTab.value = 'message';
+        } else {
+            // Reset to conversation tab when no message is selected
+            activeTab.value = 'conversation';
+        }
+        // Reset rating states when message changes
+        allSourcesRated.value = false;
+        rateAllTrigger.value = 0;
+        allClassifiersApproved.value = false;
+        approveAllTrigger.value = 0;
+    });
 
     // Sentiment icon mapping for conversation details
     const sentimentIcon = computed(() => {
@@ -225,6 +251,10 @@
         isThoughtsExpanded.value = !isThoughtsExpanded.value;
     };
 
+    const handleTabClick = (tab) => {
+        activeTab.value = tab.key;
+    };
+
     const rateAllSources = () => {
         // Toggle between rating all and undoing all
         if (props.selectedMessage?.meta?.sources?.length) {
@@ -254,14 +284,6 @@
             }
         }
     };
-
-    // Reset state when selected message changes
-    watch(() => props.selectedMessage, () => {
-        allSourcesRated.value = false;
-        rateAllTrigger.value = 0;
-        allClassifiersApproved.value = false;
-        approveAllTrigger.value = 0;
-    });
 
     onMounted(() => {
         if (conversationDetails.value) {
@@ -447,5 +469,19 @@
     .rate-all-button:disabled {
         opacity: 0.5;
         cursor: not-allowed;
+    }
+
+    .empty-message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 200px;
+        color: var(--color-chrome-fg-secondary);
+        font-style: italic;
+    }
+
+    .empty-message p {
+        margin: 0;
+        text-align: center;
     }
 </style>

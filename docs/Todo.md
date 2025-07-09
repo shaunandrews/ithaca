@@ -6,6 +6,7 @@
     - Reconsider click action, find another place for convo details
 - [ ] Consider permanent sidebar, with tabs like on Workbench
 - [ ] What to do with conversation bottom bar? Focus on reviewing
+- [ ] All activity button is broken after "memory" update
 
 ## Workbench
 - [ ] Adding a new block

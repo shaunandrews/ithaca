@@ -148,7 +148,7 @@
 <style scoped>
     .text {
         padding: var(--space-m) var(--space-l);
-        border-radius: var(--radius-xl);
+        border-radius: var(--radius-l);
         border: 1px solid transparent;
         line-height: var(--line-height-relaxed);
         transition: all 0.15s ease-in-out;
@@ -163,6 +163,7 @@
     }
 
     .message.agent .text {
+        /* background: var(--color-surface); */
         color: var(--color-surface-fg);
     }
 
