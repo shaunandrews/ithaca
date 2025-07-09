@@ -1,21 +1,13 @@
 <template>
     <div class="agent-activity">
         <div class="activity-content vstack">
-            <header class="hstack">
-                <h2>Conversations</h2>
-                <select>
-                    <option value="newest" selected>Newest</option>
-                    <option value="oldest">Oldest</option>
-                </select>
-                <input
-                    type="search"
-                    v-model="search"
-                    placeholder="Search conversations"
-                />
-            </header>
-
             <div class="activity-list vstack">
                 <div class="list-header">
+                    <input
+                        type="search"
+                        v-model="search"
+                        placeholder="Search conversations"
+                    />
                     <div class="customer" @click="toggleSort('customer')">
                         Customer
                     </div>

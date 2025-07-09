@@ -9,21 +9,10 @@
                     width="56"
                 />
             </h1>
+
+            <OrganizationSwitcher @organization-change="handleOrganizationChange" />
+
             <nav>
-                <!-- <NavItem
-                    to="/insights"
-                    label="Insights"
-                    :active-routes="[
-                        'Insights',
-                        'InsightsTopicsDefault',
-                        'InsightsTopics',
-                        'InsightsSentiment',
-                        'InsightsPerformance',
-                        'InsightsActivity',
-                    ]"
-                    icon="Microscope"
-                    :mini="mini"
-                /> -->
                 <NavItem
                     to="/"
                     label="Agents"
@@ -72,13 +61,18 @@
     import { defineProps, defineEmits } from 'vue';
     import { PanelLeft, PanelLeftOpen, Microscope } from 'lucide-vue-next';
     import NavItem from './NavItem.vue';
+    import OrganizationSwitcher from './OrganizationSwitcher.vue';
 
     const props = defineProps({
         mini: Boolean,
         isMobile: Boolean,
     });
 
-    const emit = defineEmits(['toggle']);
+    const emit = defineEmits(['toggle', 'organization-change']);
+
+    const handleOrganizationChange = (organizationId) => {
+        emit('organization-change', organizationId);
+    };
 </script>
 
 <style scoped>
@@ -140,7 +134,7 @@
     }
 
     .user {
-        background-color: var(--color-surface-tint);
+        background-color: var(--color-surface-1);
         color: var(--color-chrome-fg);
         height: 32px;
         width: 32px;
@@ -173,6 +167,6 @@
     }
 
     .sidebar-toggle:hover {
-        background-color: var(--color-surface-tint);
+        background-color: var(--color-surface-1);
     }
 </style>

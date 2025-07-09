@@ -5,8 +5,7 @@
                 <input type="search" placeholder="Search agents" />
             </div>
             <div class="toolbar-end">
-                <button @click="$router.push('/agents/new/visual')">New agent (visual)</button>
-                <button @click="$router.push('/agents/new/block')">New agent (block)</button>
+                <button @click="$router.push('/agents/new/visual')">New agent (n-2-n)</button>
             </div>
         </div>
 
