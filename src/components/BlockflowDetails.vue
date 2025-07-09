@@ -498,4 +498,26 @@
         background-color: var(--color-green-tint);
         color: var(--color-green-fg);
     }
+
+    /* Definition list styles */
+    dl {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: var(--space-xs) var(--space-m);
+        margin: var(--space-m) 0;
+    }
+
+    dt {
+        font-size: var(--font-size-s);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-surface-fg-secondary);
+        text-align: right;
+        padding-right: var(--space-xs);
+    }
+
+    dd {
+        font-size: var(--font-size-s);
+        color: var(--color-surface-fg);
+        margin: 0;
+    }
 </style> 
