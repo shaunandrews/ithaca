@@ -67,63 +67,19 @@
                             class="sticky-overview"
                         />
                     </div>
-
-                    <div class="conversation-stats hstack">
-                        <div class="stats-item quote">
-                            <component
-                                :is="sentimentIcon"
-                                stroke-width="1.5"
-                                size="18"
-                            />
-                            "{{ conversation.quote }}"
-                        </div>
-                        <div class="stats-item">
-                            <MessagesSquare size="18" stroke-width="1.5" />
-                            {{ conversationMessages.length }} message{{
-                                conversationMessages.length === 1 ? '' : 's'
-                            }}
-                        </div>
-                        <div class="stats-item">
-                            <Timer size="18" stroke-width="1.5" /> 90 mins
-                        </div>
-                        <div
-                            v-if="
-                                conversation.tags &&
-                                conversation.tags.length > 0
-                            "
-                            class="stats-item tags-item"
-                            ref="tagsContainer"
-                            @click.prevent="toggleTagsPopover"
-                        >
-                            <Tags stroke-width="1.5" size="18" />
-                            {{ conversation.tags.length }} tag{{
-                                conversation.tags.length === 1 ? '' : 's'
-                            }}
-                            <div v-if="showTagsPopover" class="tags-popover">
-                                <div class="tags-list vstack">
-                                    <div
-                                        v-for="tag in conversation.tags"
-                                        :key="tag"
-                                        class="tag-item"
-                                    >
-                                        {{ tag }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
-            <MessageDetailsPanel
-                v-if="selectedMessage || isConversationSummarySelected"
-                :selected-message="selectedMessage"
-                :conversation="
-                    isConversationSummarySelected ? conversation : null
-                "
-                @close="closePanel"
-                @view-source="openSourceModal"
-            />
+            <Panel v-if="selectedMessage || isConversationSummarySelected">
+                <ConversationDetails
+                    :selected-message="selectedMessage"
+                    :conversation="
+                        isConversationSummarySelected ? conversation : null
+                    "
+                    @close="closePanel"
+                    @view-source="openSourceModal"
+                />
+            </Panel>
         </div>
 
         <div v-else class="empty vstack">
@@ -236,7 +192,8 @@
     import ConversationOverview from '@/components/ConversationOverview.vue';
     import Modal from '@/components/Modal.vue';
     import ButtonBack from '@/components/ButtonBack.vue';
-    import MessageDetailsPanel from '@/components/MessageDetailsPanel.vue';
+    import Panel from '@/components/Panel.vue';
+    import ConversationDetails from '@/components/ConversationDetails.vue';
 
     const route = useRoute();
     const router = useRouter();
@@ -492,38 +449,6 @@
         border-bottom-color: var(--color-surface-tint);
     }
 
-    .conversation-stats {
-        font-size: var(--font-size-s);
-        align-items: center;
-        padding-right: var(--space-xs);
-        border-radius: var(--radius-xl);
-        border: 1px solid var(--color-surface-tint);
-        background: var(--color-tooltip);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.8);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        color: var(--color-tooltip-fg);
-        position: sticky;
-        bottom: var(--space-s);
-        z-index: 100;
-    }
-
-    .stats-item {
-        display: flex;
-        align-items: center;
-        gap: var(--space-xs);
-        padding: var(--space-xs) var(--space-s);
-        border-right: 1px solid var(--color-surface-tint);
-    }
-
-    .stats-item.quote {
-        flex: 1;
-    }
-
-    .stats-item:last-child {
-        border-right: none;
-    }
-
     h1 {
         font-size: var(--font-size-m);
         position: absolute;
@@ -586,53 +511,5 @@
         display: flex;
         flex-wrap: wrap;
         gap: var(--space-xs);
-    }
-
-    .tag {
-        background: var(--color-surface);
-        padding: var(--space-xxs) var(--space-s);
-        border-radius: var(--radius-s);
-        font-size: var(--font-size-s);
-        border: 1px solid var(--color-surface-tint);
-    }
-
-    .tags-item {
-        position: relative;
-    }
-
-    .tags-item a {
-        color: var(--color-tooltip-fg);
-        text-decoration: none;
-    }
-
-    .tags-item a:hover {
-        text-decoration: underline;
-    }
-
-    .tags-popover {
-        position: absolute;
-        bottom: 100%;
-        right: calc(var(--space-xs) * -1);
-        background: var(--color-tooltip);
-        backdrop-filter: blur(12px);
-        color: var(--color-tooltip-fg);
-        border-radius: var(--radius-m);
-        z-index: 1000;
-        width: 180px;
-        margin-bottom: var(--space-xxs);
-    }
-
-    .sticky-overview {
-        position: sticky;
-        top: var(--toolbar-height);
-        align-self: flex-start;
-        z-index: 90;
-    }
-
-    .tags-list {
-        gap: var(--space-xs);
-        padding: var(--space-s);
-        max-height: 280px;
-        overflow-y: auto;
     }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="details-panel" ref="detailsPanel">
+    <div class="conversation-details-sidebar" ref="conversationDetails">
         <header class="hstack" :class="{ 'has-border': isScrolled }">
             <div class="hstack header-start">
                 <h3>{{ conversation ? 'Conversation Details' : 'Message Details' }}</h3>
@@ -12,7 +12,7 @@
             </div>
             <button class="small" @click="$emit('close')"><XIcon size="18" stroke-width="1.5" /></button>
         </header>
-        <div class="panel-content vstack" ref="panelContent">
+        <div class="content vstack" ref="content">
             <template v-if="conversation">
                 <div class="conversation-details">
                     <h4>
@@ -175,8 +175,8 @@
 
     defineEmits(['close', 'view-source']);
 
-    const panelContent = ref(null);
-    const detailsPanel = ref(null);
+    const content = ref(null);
+    const conversationDetails = ref(null);
     const isScrolled = ref(false);
     const isThoughtsExpanded = ref(false);
     const rateAllTrigger = ref(0);
@@ -216,8 +216,8 @@
     });
 
     const handleScroll = () => {
-        if (detailsPanel.value) {
-            isScrolled.value = detailsPanel.value.scrollTop > 0;
+        if (conversationDetails.value) {
+            isScrolled.value = conversationDetails.value.scrollTop > 0;
         }
     };
 
@@ -264,23 +264,20 @@
     });
 
     onMounted(() => {
-        if (detailsPanel.value) {
-            detailsPanel.value.addEventListener('scroll', handleScroll);
+        if (conversationDetails.value) {
+            conversationDetails.value.addEventListener('scroll', handleScroll);
         }
     });
 
     onUnmounted(() => {
-        if (detailsPanel.value) {
-            detailsPanel.value.removeEventListener('scroll', handleScroll);
+        if (conversationDetails.value) {
+            conversationDetails.value.removeEventListener('scroll', handleScroll);
         }
     });
 </script>
 
 <style scoped>
-    .details-panel {
-        min-width: 420px;
-        max-width: 420px;
-        border-left: 1px solid var(--color-surface-tint);
+    .conversation-details-sidebar {
         display: flex;
         flex-direction: column;
         overflow-y: auto;
@@ -306,7 +303,7 @@
         border-bottom-color: var(--color-surface-tint);
     }
 
-    .panel-content {
+    .content {
         padding: var(--space-m);
         padding-top: 0;
         flex: 1;

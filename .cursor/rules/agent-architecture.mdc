@@ -18,7 +18,7 @@ Each agent tab is implemented as a separate view component for better performanc
 - **Route**: `/agent/:id` (default) or `/agent/:id/workbench`
 - **Component**: [src/views/AgentWorkbench.vue](mdc:src/views/AgentWorkbench.vue)
 - **Features**: Visual workflow builder with block-flow components for agent configuration
-- **Key Components**: [src/components/BlockflowEvent.vue](mdc:src/components/BlockflowEvent.vue), [src/components/BlockflowPanel.vue](mdc:src/components/BlockflowPanel.vue)
+- **Key Components**: [src/components/BlockflowEvent.vue](mdc:src/components/BlockflowEvent.vue), [src/components/Panel.vue](mdc:src/components/Panel.vue)
 
 ### Versions Tab
 - **Route**: `/agent/:id/versions`

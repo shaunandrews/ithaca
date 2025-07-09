@@ -172,7 +172,7 @@
                 @addEvent="handleDividerClick"
             />
         </div>
-        <BlockflowPanel>
+        <Panel>
             <BlockflowDetails 
                 :agent="agent"
                 :contextVariables="workflow.contextVariables"
@@ -180,7 +180,7 @@
                 :selectedBlock="selectedBlock"
                 @deleteEvent="showDeleteDialog"
             />
-        </BlockflowPanel>
+        </Panel>
         
         <!-- Delete Confirmation Dialog -->
         <Dialog
@@ -207,7 +207,7 @@ import { useRoute } from 'vue-router';
     import BlockflowEventPlaceholder from '../components/BlockflowEventPlaceholder.vue';
     import BlockflowRulePlaceholder from '../components/BlockflowRulePlaceholder.vue';
     import BlockflowDetails from '../components/BlockflowDetails.vue';
-    import BlockflowPanel from '../components/BlockflowPanel.vue';
+    import Panel from '../components/Panel.vue';
     import Dialog from '../components/Dialog.vue';
     import { 
         sampleAgentWorkflow, 

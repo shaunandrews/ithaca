@@ -1,5 +1,5 @@
 <template>
-    <div class="blockflow-panel">
+    <div class="panel">
         <slot />
     </div>
 </template>
@@ -9,7 +9,7 @@
 </script>
 
 <style scoped>
-    .blockflow-panel {
+    .panel {
         width: 320px;
         flex-shrink: 0;
         border-left: 1px solid var(--color-surface-tint);
