@@ -67,6 +67,7 @@
             
             <div v-if="selectedBlock.type !== 'rule' && selectedBlock.inputs && selectedBlock.inputs.length > 0" class="block-inputs">
                 <h4>Inputs</h4>
+                <p>Data that the block will use to perform its action.</p>
                 <div class="input-list">
                     <BlockflowVariable 
                         v-for="input in selectedBlock.inputs" 
@@ -79,6 +80,7 @@
             
             <div v-if="selectedBlock.type !== 'rule' && selectedBlock.outputs && selectedBlock.outputs.length > 0" class="block-outputs">
                 <h4>Outputs</h4>
+                <p>Data that the block will produce as a result of its action.</p>
                 <div class="output-list">
                     <BlockflowVariable 
                         v-for="output in selectedBlock.outputs" 
@@ -88,6 +90,8 @@
                     />
                 </div>
             </div>
+
+            <hr />
 
             <button 
                 v-if="selectedBlock && selectedBlock.type !== 'placeholder' && selectedBlock.type !== 'rule-placeholder'"
@@ -100,6 +104,7 @@
         </div>
 
         <div v-else class="block-details-content no-block-selected">
+            <p>Select a block to view details, or add a new block to the workflow.</p>
             <BlockflowLibrary />
         </div>
     </div>

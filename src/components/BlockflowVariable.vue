@@ -10,7 +10,7 @@
     </div>
     
     <!-- Teleported Tooltip -->
-    <Teleport to="body">
+    <!-- <Teleport to="body">
         <div 
             v-if="showTooltip && tooltipPosition" 
             class="blockflow-variable-tooltip" 
@@ -29,7 +29,7 @@
                 <code class="tooltip-example-value">{{ getExample() }}</code>
             </div>
         </div>
-    </Teleport>
+    </Teleport> -->
 </template>
 
 <script setup>

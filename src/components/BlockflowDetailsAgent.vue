@@ -34,6 +34,7 @@
         <hr />
 
         <h4>Global context</h4>
+        <p>Data that is available to all blocks in the workflow.</p>
         <div class="context-variables">
             <BlockflowVariable 
                 v-for="variable in contextVariables" 
@@ -46,6 +47,7 @@
         <hr />
 
         <h4>Variables</h4>
+        <p>Data that is used in the workflow, but not available to all blocks.</p>
         <div class="variables">
             <BlockflowVariable 
                 v-for="variable in variables" 

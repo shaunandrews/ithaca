@@ -2,7 +2,7 @@
     <RouterLink :to="to" class="activity-list-item">
         <div class="customer">
             <img
-                :src="gravatarUrl(item.customer)"
+                :src="getGravatarUrl(item.customer)"
                 alt="Gravatar"
                 width="20"
                 height="20"
@@ -12,23 +12,27 @@
         </div>
         <div class="event">{{ item.event }}</div>
         <div class="summary">{{ item.summary }}</div>
-        <div class="datetime">{{ formatDate(item.datetime) }}</div>
+        <div class="datetime">{{ formatRelativeTime(item.datetime) }}</div>
         <div class="message-count">
             <MessagesSquare size="16" stroke-width="1.5" />
             {{ messageCount }}
         </div>
-        <div class="sentiment" :class="sentimentClass">
-            <component :is="sentimentIcon" stroke-width="2" size="20" />
+        <div class="sentiment">
+            <SentimentDisplay 
+                :sentiment="item.sentiment" 
+                variant="icon" 
+                icon-size="20" 
+                stroke-width="2" 
+            />
         </div>
     </RouterLink>
 </template>
 
 <script setup>
-    import CryptoJS from 'crypto-js';
     import { RouterLink } from 'vue-router';
-    import { MessagesSquare, Laugh, Smile, Meh, Annoyed, Frown, Angry } from 'lucide-vue-next';
-    import { messages } from '@/data/messages.js';
-    import { computed } from 'vue';
+    import { MessagesSquare } from 'lucide-vue-next';
+    import { useActivityUtils } from '@/composables/useActivityUtils.js';
+    import SentimentDisplay from '@/components/SentimentDisplay.vue';
 
     const props = defineProps({
         item: {
@@ -41,78 +45,8 @@
         },
     });
 
-    const messageCount = computed(() => {
-        return messages[props.item.id]?.length || 0;
-    });
-
-    // Sentiment icon mapping
-    const sentimentIcon = computed(() => {
-        if (!props.item) return Frown;
-        
-        const sentimentMap = {
-            1: Laugh,    // laugh
-            2: Smile,    // smile
-            3: Meh,      // meh
-            4: Annoyed,  // annoyed
-            5: Frown,    // frown
-            6: Angry     // angry
-        };
-        
-        return sentimentMap[props.item.sentiment] || Frown;
-    });
-
-    // Sentiment color class mapping
-    const sentimentClass = computed(() => {
-        if (!props.item) return 'sentiment-negative';
-        
-        const classMap = {
-            1: 'sentiment-positive',    // laugh - green
-            2: 'sentiment-positive',    // smile - green
-            3: 'sentiment-neutral',     // meh - yellow
-            4: 'sentiment-warning',     // annoyed - orange
-            5: 'sentiment-negative',    // frown - red
-            6: 'sentiment-negative'     // angry - red
-        };
-        
-        return classMap[props.item.sentiment] || 'sentiment-negative';
-    });
-
-    function formatDate(datetime) {
-        const now = new Date();
-        const date = new Date(datetime);
-        const diffMs = now - date;
-        const diffSeconds = Math.floor(diffMs / 1000);
-        const diffMinutes = Math.floor(diffSeconds / 60);
-        const diffHours = Math.floor(diffMinutes / 60);
-        const diffDays = Math.floor(diffHours / 24);
-        const diffWeeks = Math.floor(diffDays / 7);
-        const diffMonths = Math.floor(diffDays / 30);
-        const diffYears = Math.floor(diffDays / 365);
-
-        if (diffSeconds < 60) {
-            return 'now';
-        } else if (diffMinutes < 60) {
-            return `${diffMinutes} min`;
-        } else if (diffHours < 24) {
-            return `${diffHours} hr`;
-        } else if (diffDays < 7) {
-            return `${diffDays} day${diffDays > 1 ? 's' : ''}`;
-        } else if (diffWeeks < 4) {
-            return `${diffWeeks} week${diffWeeks > 1 ? 's' : ''}`;
-        } else if (diffMonths < 12) {
-            return `${diffMonths} month${diffMonths > 1 ? 's' : ''}`;
-        } else {
-            return `${diffYears} year${diffYears > 1 ? 's' : ''}`;
-        }
-    }
-
-    function gravatarUrl(email) {
-        if (!email) return '';
-        const hash = CryptoJS.SHA256(email.trim().toLowerCase()).toString(
-            CryptoJS.enc.Hex
-        );
-        return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
-    }
+    const { getMessageCount, formatRelativeTime, getGravatarUrl } = useActivityUtils();
+    const messageCount = getMessageCount(props.item.id);
 </script>
 
 <style scoped>
@@ -184,22 +118,6 @@
         flex: 0 0 auto;
         display: flex;
         align-items: center;
-    }
-
-    .sentiment.sentiment-positive {
-        color: #22c55e; /* green */
-    }
-
-    .sentiment.sentiment-neutral {
-        color: #eab308; /* yellow */
-    }
-
-    .sentiment.sentiment-warning {
-        color: #f97316; /* orange */
-    }
-
-    .sentiment.sentiment-negative {
-        color: #ef4444; /* red */
     }
 
     .message-count {

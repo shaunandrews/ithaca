@@ -8,6 +8,7 @@
                         v-model="search"
                         placeholder="Search conversations"
                     />
+                    
                     <div class="customer" @click="toggleSort('customer')">
                         Customer
                     </div>
@@ -24,35 +25,76 @@
                     <div class="sentiment" @click="toggleSort('sentiment')">
                         Mood
                     </div>
+
+                    <div class="view-toggle hstack">
+                        <button 
+                            :class="{ small: true, active: viewMode === 'list' }"
+                            @click="viewMode = 'list'"
+                            title="List View"
+                        >
+                            <Rows4 />
+                        </button>
+                        <button 
+                            :class="{ small: true, active: viewMode === 'stack' }"
+                            @click="viewMode = 'stack'"
+                            title="Stack View"
+                        >
+                            <Rows2 />
+                        </button>
+                    </div>
                 </div>
 
-                <ActivityListItem
-                    v-for="conversation in sortedConversations"
-                    :key="conversation.id"
-                    :item="conversation"
-                    :to="`/agent/${agent.id}/activity/${conversation.id}`"
-                />
+                <!-- List View -->
+                <div v-if="viewMode === 'list'" class="list-view">
+                    <ActivityListItem
+                        v-for="conversation in sortedConversations"
+                        :key="conversation.id"
+                        :item="conversation"
+                        :to="`/agent/${agent.id}/activity/${conversation.id}`"
+                    />
+                </div>
+
+                <!-- Stack View -->
+                <div v-else class="stack-view vstack">
+                    <ActivityStackItem
+                        v-for="conversation in sortedConversations"
+                        :key="conversation.id"
+                        :item="conversation"
+                        :to="`/agent/${agent.id}/activity/${conversation.id}`"
+                    />
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-    import { computed, ref } from 'vue';
+    import { computed, ref, watch } from 'vue';
     import { useRoute } from 'vue-router';
+    import { Rows4, Rows2 } from 'lucide-vue-next';
     import { agents } from '@/data/agents.js';
     import { conversations } from '@/data/conversations.js';
     import { messages } from '@/data/messages.js';
     import ActivityListItem from '@/components/ActivityListItem.vue';
+    import ActivityStackItem from '@/components/ActivityStackItem.vue';
 
     const route = useRoute();
     const agentId = computed(() => Number(route.params.id));
     const agent = computed(() => agents.find((a) => a.id === agentId.value));
 
     const search = ref('');
+    
+    // Initialize viewMode from localStorage with fallback to 'list'
+    const ACTIVITY_VIEW_MODE_KEY = 'ithaca-activity-view-mode';
+    const viewMode = ref(localStorage.getItem(ACTIVITY_VIEW_MODE_KEY) || 'list');
 
     const sortKey = ref('datetime');
     const sortAsc = ref(false); // newest first by default
+
+    // Persist viewMode changes to localStorage
+    watch(viewMode, (newValue) => {
+        localStorage.setItem(ACTIVITY_VIEW_MODE_KEY, newValue);
+    });
 
     const agentConversations = computed(() => {
         if (!agent.value?.conversationIds) return [];
@@ -180,7 +222,6 @@
         font-size: var(--font-size-s);
         font-weight: var(--font-weight-semibold);
         color: var(--color-chrome-fg-tertiary);
-        border-top: 1px solid var(--color-surface-tint);
     }
 
     .list-header > div {
@@ -199,5 +240,10 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    .stack-view {
+        gap: var(--space-m);
+        padding: var(--space-m);
     }
 </style>

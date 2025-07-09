@@ -1,8 +1,5 @@
 <template>
     <div class="library">
-        <div class="library-header">
-            <h2>Library</h2>
-        </div>
         <div class="library-content vstack">
             <h3>Triggers</h3>
             <div class="library-blocks">
@@ -38,19 +35,6 @@
 </script>
 
 <style scoped>
-    .library {
-        width: 260px;
-        flex-shrink: 0;
-        padding: var(--space-m);
-        border-right: 1px solid var(--color-surface-tint);
-    }
-
-    .library h3 { 
-        font-size: var(--font-size-s);
-        font-weight: var(--font-weight-semibold);
-        color: var(--color-surface-fg-tertiary);
-    }
-
     .library-content {
         gap: var(--space-m);
     }
