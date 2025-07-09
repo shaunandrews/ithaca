@@ -165,6 +165,7 @@
         background-color: var(--color-surface);
         border: 2px solid var(--color-surface-tint-dark);
         cursor: pointer;
+        margin: 0 var(--space-xs);
     }
 
     .event-item.flow > .event-header:hover {
@@ -234,6 +235,7 @@
     .rules-list {
         gap: var(--space-xs);
         overflow-x: auto;
+        padding: 0 var(--space-xs);
     }
 
     .rules-add-button {
