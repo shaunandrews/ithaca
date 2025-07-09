@@ -1,13 +1,15 @@
 <template>
-    <router-link :to="to" class="back-link">
+    <button @click="handleClick" class="back-link">
         <ArrowLeft stroke-width="1.5" height="18" width="18" /> {{ text }}
-    </router-link>
+    </button>
 </template>
 
 <script setup>
     import { ArrowLeft } from 'lucide-vue-next';
+    import { useRouter } from 'vue-router';
+    import { useConversationMemory } from '@/composables/useConversationMemory.js';
 
-    defineProps({
+    const props = defineProps({
         to: {
             type: String,
             required: true,
@@ -16,19 +18,23 @@
             type: String,
             default: 'Back',
         },
+        clearMemory: {
+            type: Boolean,
+            default: false,
+        },
+        agentId: {
+            type: Number,
+            required: false,
+        },
     });
+
+    const router = useRouter();
+    const { clearConversation } = useConversationMemory();
+
+    function handleClick() {
+        if (props.clearMemory && props.agentId) {
+            clearConversation(props.agentId);
+        }
+        router.push(props.to);
+    }
 </script>
-
-<style scoped>
-    .back-link {
-        text-decoration: none;
-        font-size: var(--font-size-s);
-        display: inline-flex;
-        align-items: center;
-        gap: var(--space-xs);
-    }
-
-    .back-link:hover {
-        text-decoration: underline;
-    }
-</style>

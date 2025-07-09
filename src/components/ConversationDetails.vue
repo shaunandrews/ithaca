@@ -9,57 +9,31 @@
         </header>
         <div class="content vstack" ref="content">
             <template v-if="activeTab === 'conversation'">
-                <div class="conversation-details">
-                    <h4>
-                        <MessageSquare strokeWidth="1.5" height="16" width="16" />
-                        Event
-                    </h4>
-                    <p>{{ conversation.event }}</p>
-                </div>
+                <h4>Summary</h4>
+                <p>{{ conversation.summary }}</p>
                 
-                <div class="conversation-details">
-                    <h4>
-                        <User strokeWidth="1.5" height="16" width="16" />
-                        Customer
-                    </h4>
-                    <p>{{ conversation.customer }}</p>
-                </div>
+                <hr />
+
+                <p>"{{ conversation.quote }}"</p>
+                <p>{{ conversation.customer }}</p>
+                <p>{{ sentimentLabel }}</p>
+
+                <h4>Topic</h4>
+                <p>{{ conversation.event }}</p>
+
+                <p>{{ new Date(conversation.datetime).toLocaleString() }}</p>
                 
-                <div class="conversation-details">
-                    <h4>
-                        <Calendar strokeWidth="1.5" height="16" width="16" />
-                        Date & Time
-                    </h4>
-                    <p>{{ new Date(conversation.datetime).toLocaleString() }}</p>
-                </div>
                 
-                <div class="conversation-details">
+                <template v-if="conversation.tags && conversation.tags.length > 0">
                     <h4>
-                        <component :is="sentimentIcon" strokeWidth="1.5" height="16" width="16" />
-                        Sentiment
-                    </h4>
-                    <p>{{ sentimentLabel }}</p>
-                </div>
-                
-                <div v-if="conversation.tags && conversation.tags.length > 0" class="conversation-details">
-                    <h4>
-                        <Tags strokeWidth="1.5" height="16" width="16" />
                         Tags ({{ conversation.tags.length }})
                     </h4>
-                    <div class="tags-list">
+                    <div class="tags-list hstack">
                         <span v-for="tag in conversation.tags" :key="tag" class="tag">
                             {{ tag }}
                         </span>
                     </div>
-                </div>
-                
-                <div class="conversation-details">
-                    <h4>
-                        <Quote strokeWidth="1.5" height="16" width="16" />
-                        Key Quote
-                    </h4>
-                    <p class="quote-text">"{{ conversation.quote }}"</p>
-                </div>
+                </template>
             </template>
             
             <template v-else-if="activeTab === 'message'">
@@ -312,7 +286,7 @@
         justify-content: space-between;
         align-items: center;
         background-color: var(--color-chrome-transparent);
-        border-bottom: 1px solid transparent;
+        border-bottom: 1px solid var(--color-surface-tint);
         backdrop-filter: blur(12px);
         flex-shrink: 0;
         position: sticky;
@@ -327,34 +301,13 @@
 
     .content {
         padding: var(--space-m);
-        padding-top: 0;
         flex: 1;
         gap: var(--space-l);
-    }
-
-    h3 {
-        font-size: var(--font-size-m);
     }
     
     .header-start {
         gap: var(--space-s);
         align-items: center;
-    }
-    
-    h4 {
-        font-size: var(--font-size-s);
-        font-weight: var(--font-weight-medium);
-        margin: var(--space-xs);
-        display: flex;
-        align-items: center;
-        gap: var(--space-xs);
-    }
-
-    p {
-        font-size: var(--font-size-s);
-        color: var(--color-chrome-fg-secondary);
-        line-height: var(--line-height-tight);
-        margin-bottom: var(--space-s);
     }
 
     .thoughts {
@@ -427,48 +380,23 @@
         flex-direction: column;
     }
 
-    .conversation-details {
-        border-radius: var(--radius-l);
-        border: 1px solid var(--color-surface-tint);
-        padding: var(--space-m);
-    }
-
-    .conversation-details h4 {
-        margin-top: 0;
-        margin-bottom: var(--space-s);
-    }
-
-    .conversation-details p {
-        margin: 0;
-        color: var(--color-chrome-fg);
-    }
-
-    .tags-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--space-xs);
-    }
-
-    .tag {
-        background: var(--color-surface);
-        padding: var(--space-xxs) var(--space-s);
-        border-radius: var(--radius-s);
-        font-size: var(--font-size-s);
-        border: 1px solid var(--color-surface-tint);
-    }
-
-    .quote-text {
-        font-style: italic;
-        color: var(--color-chrome-fg) !important;
-        background: var(--color-surface-tint);
-        padding: var(--space-s);
-        border-radius: var(--radius-s);
-        border-left: 3px solid var(--color-accent);
-    }
-
     .rate-all-button:disabled {
         opacity: 0.5;
         cursor: not-allowed;
+    }
+
+    .tags-list {
+        gap: var(--space-xs);
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .tag {
+        width: fit-content;
+        font-size: var(--font-size-s);
+        padding: var(--space-xxs) var(--space-xs);
+        background-color: var(--color-surface-tint);
+        border-radius: var(--radius);
     }
 
     .empty-message {

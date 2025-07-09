@@ -2,7 +2,7 @@
 
 ## Conversation
 - [x] Make converstaion overview list sticky
-- [ ] Update converstation summary
+- [x] Update converstation summary
     - Reconsider click action, find another place for convo details
 - [ ] Consider permanent sidebar, with tabs like on Workbench
 - [ ] What to do with conversation bottom bar? Focus on reviewing

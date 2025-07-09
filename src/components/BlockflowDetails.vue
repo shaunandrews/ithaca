@@ -1,6 +1,6 @@
 <template>
     <div class="details">
-        <div class="details-header">
+        <div class="details-header hstack">
             <NavigationTabs
                 :tabs="tabs"
                 :active-tab="activeTab"
@@ -122,7 +122,9 @@
         position: sticky;
         top: 0;
         z-index: 100;
-        padding: var(--space-xs) var(--space-m);
+        padding: var(--space-s) var(--space-m);
+        min-height: var(--toolbar-height);
+        align-items: center;
         backdrop-filter: blur(20px);
         background-color: var(--color-chrome-transparent);
         border-bottom: 1px solid var(--color-surface-tint);

@@ -1,11 +1,12 @@
 <template>
     <div class="conversation-meta">
+        <div class="conversation-zendesk">
+            <a href="#">Zendesk #{{ zendeskId }}</a>
+        </div>
+
         <div class="conversation-link">
             <button class="small"><Link size="16" stroke-width="1.5" /></button>
         </div>
-        <!-- <div class="conversation-zendesk">
-            <a href="#">Zendesk #{{ zendeskId }}</a>
-        </div> -->
     </div>
 </template>
 
@@ -27,7 +28,7 @@
 <style scoped>
     .conversation-meta {
         display: flex;
-        gap: var(--space-m);
+        gap: var(--space-xs);
         font-size: var(--font-size-s);
         align-items: center;
         flex-wrap: wrap;

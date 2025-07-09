@@ -11,6 +11,8 @@
                 >
                     <ButtonBack
                         :to="`/agent/${agentId}/activity`"
+                        :agent-id="agentId"
+                        :clear-memory="true"
                         text="All activity"
                     />
                     <h1>{{ conversation.event }}</h1>
@@ -33,13 +35,6 @@
                 <div class="conversation-main vstack">
                     <div class="conversation-content hstack">
                         <div class="messages">
-                            <ConversationSummary
-                                :summary="conversation.summary"
-                                :title="conversation.event"
-                                @click="selectConversationSummary"
-                                :is-selected="selectedMessage === null"
-                            />
-
                             <Message
                                 v-for="(msg, idx) in conversationMessages"
                                 :key="idx"
@@ -83,9 +78,12 @@
             <p>Uh oh, I wasn't able to find that conversation.</p>
             <p>
                 Try going back to the
-                <router-link :to="`/agent/${agentId}/activity`"
-                    >activity page</router-link
-                >
+                <ButtonBack
+                    :to="`/agent/${agentId}/activity`"
+                    :agent-id="agentId"
+                    :clear-memory="true"
+                    text="activity page"
+                />
                 and selecting a different conversation.
             </p>
         </div>
@@ -173,16 +171,12 @@
         Annoyed,
         Frown,
         Angry,
-        Timer,
-        Tags,
-        MessagesSquare,
         ListOrdered,
     } from 'lucide-vue-next';
     import { agents } from '@/data/agents.js';
     import { conversations } from '@/data/conversations.js';
     import { messages } from '@/data/messages.js';
     import { useConversationMemory } from '@/composables/useConversationMemory.js';
-    import ConversationSummary from '@/components/ConversationSummary.vue';
     import ConversationMeta from '@/components/ConversationMeta.vue';
     import Message from '@/components/Message.vue';
     import ConversationOverview from '@/components/ConversationOverview.vue';
