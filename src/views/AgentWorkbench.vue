@@ -423,15 +423,39 @@
         // Remove the placeholder
         placeholders.value = placeholders.value.filter(p => p.uid !== data.uid);
         
-        // Create a new step
+        // Create a new step with enhanced data based on selection
         const newStep = {
             uid: `step_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
             type: data.type,
-            title: getDefaultTitle(data.type),
-            description: getDefaultDescription(data.type),
-            inputs: [],
-            outputs: [],
-            stepNumber: null // Will be recalculated
+            title: data.title || getDefaultTitle(data.type),
+            description: data.description || getDefaultDescription(data.type),
+            inputs: data.inputs || [],
+            outputs: data.outputs || [],
+            stepNumber: null, // Will be recalculated
+            // Add specific properties based on type
+            ...(data.type === 'expert' && { 
+                expertId: data.expertId,
+                tools: data.tools || []
+            }),
+            ...(data.type === 'tool' && { 
+                toolId: data.toolId,
+                icon: data.icon,
+                value: data.value
+            }),
+            ...(data.type === 'flow' && { 
+                flowType: data.flowType,
+                branches: data.flowType === 'if-else' ? [
+                    {
+                        condition: {
+                            type: 'If',
+                            variable: 'condition',
+                            value: 'true',
+                            operator: 'equals'
+                        },
+                        steps: []
+                    }
+                ] : []
+            })
         };
         
         // Insert the new step at the specified position
@@ -460,7 +484,11 @@
             inputs: newStep.inputs,
             outputs: newStep.outputs,
             stepNumber: newStep.stepNumber,
-            branchId: data.branchId
+            branchId: data.branchId,
+            // Include type-specific data
+            ...(data.type === 'expert' && { expertId: data.expertId, tools: data.tools }),
+            ...(data.type === 'tool' && { toolId: data.toolId, icon: data.icon, value: data.value }),
+            ...(data.type === 'flow' && { flowType: data.flowType, branches: newStep.branches })
         };
     };
 
