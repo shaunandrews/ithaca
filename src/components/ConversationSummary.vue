@@ -32,34 +32,15 @@
     .summary {
         padding: var(--space-s) var(--space-l);
         gap: var(--space-xs);
-        border: 1.5px solid var(--color-surface-tint);
         border-radius: var(--radius-xl);
-        background: repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 8px,
-            var(--color-surface-tint-light) 8px,
-            var(--color-surface-tint-light) 10px
-        );
         cursor: pointer;
-        color: var(--color-chrome-fg-secondary);
-        transition: border-color 0.15s ease, background-color 0.15s ease;
-    }
-
-    .summary:hover {
         color: var(--color-chrome-fg);
+        transition: border-color 0.15s ease, background-color 0.15s ease;
     }
 
     .summary.selected {
         border-color: var(--color-accent);
         color: var(--color-chrome-fg);
-        background: repeating-linear-gradient(
-            45deg,
-            var(--color-surface-tint-light),
-            var(--color-surface-tint-light) 8px,
-            var(--color-surface-tint) 8px,
-            var(--color-surface-tint) 10px
-        );
     }
 
     .summary-header {

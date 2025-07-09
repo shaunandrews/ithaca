@@ -34,6 +34,7 @@
     import { computed, ref, onMounted, onUnmounted, provide, watch } from 'vue';
     import { useRoute, useRouter } from 'vue-router';
     import { agents } from '@/data/agents.js';
+    import { useConversationMemory } from '@/composables/useConversationMemory.js';
     import NavigationTabs from '@/components/NavigationTabs.vue';
     import Dropdown from '@/components/Dropdown.vue';
 
@@ -41,6 +42,7 @@
     const router = useRouter();
     const agentId = computed(() => Number(route.params.id));
     const agent = computed(() => agents.find((a) => a.id === agentId.value));
+    const { getLastConversation, hasStoredConversation } = useConversationMemory();
 
     const selectedAgentId = ref(agentId.value);
     watch(agentId, (newVal) => {
@@ -54,12 +56,19 @@
         }))
     );
 
-    const tabs = computed(() => [
-        { key: 'activity', label: 'Activity', href: `/agent/${agentId.value}/activity` },
-        { key: 'insights', label: 'Insights', href: `/agent/${agentId.value}/insights` },
-        { key: 'workbench', label: 'Workbench', href: `/agent/${agentId.value}/workbench` },
-        { key: 'versions', label: 'Versions', href: `/agent/${agentId.value}/versions` }
-    ]);
+    const tabs = computed(() => {
+        const lastConversationId = getLastConversation(agentId.value);
+        const activityHref = lastConversationId 
+            ? `/agent/${agentId.value}/activity/${lastConversationId}`
+            : `/agent/${agentId.value}/activity`;
+
+        return [
+            { key: 'activity', label: 'Activity', href: activityHref },
+            { key: 'insights', label: 'Insights', href: `/agent/${agentId.value}/insights` },
+            { key: 'workbench', label: 'Workbench', href: `/agent/${agentId.value}/workbench` },
+            { key: 'versions', label: 'Versions', href: `/agent/${agentId.value}/versions` }
+        ];
+    });
 
     const headerRef = ref(null);
     const headerHeight = ref(0);
@@ -90,13 +99,27 @@
         
         if (isViewingConversation) {
             // If viewing a conversation, redirect to the activity screen for the new agent
-            router.push(`/agent/${selectedAgentId.value}/activity`);
+            // Check if the new agent has a stored conversation
+            const lastConversationId = getLastConversation(selectedAgentId.value);
+            const activityPath = lastConversationId 
+                ? `/agent/${selectedAgentId.value}/activity/${lastConversationId}`
+                : `/agent/${selectedAgentId.value}/activity`;
+            router.push(activityPath);
         } else {
             // Otherwise, just replace the agent ID in the current path
-            const newPath = route.path.replace(
+            let newPath = route.path.replace(
                 `/agent/${agentId.value}`,
                 `/agent/${selectedAgentId.value}`
             );
+            
+            // If we're going to the activity tab and there's a stored conversation, include it
+            if (newPath === `/agent/${selectedAgentId.value}/activity` || newPath === `/agent/${selectedAgentId.value}`) {
+                const lastConversationId = getLastConversation(selectedAgentId.value);
+                if (lastConversationId) {
+                    newPath = `/agent/${selectedAgentId.value}/activity/${lastConversationId}`;
+                }
+            }
+            
             router.push(newPath);
         }
     }

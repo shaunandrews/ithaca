@@ -69,18 +69,21 @@
 </template>
 
 <script setup>
-    import { computed, ref, watch } from 'vue';
-    import { useRoute } from 'vue-router';
+    import { computed, ref, watch, onMounted } from 'vue';
+    import { useRoute, useRouter } from 'vue-router';
     import { Rows4, Rows2 } from 'lucide-vue-next';
     import { agents } from '@/data/agents.js';
     import { conversations } from '@/data/conversations.js';
     import { messages } from '@/data/messages.js';
+    import { useConversationMemory } from '@/composables/useConversationMemory.js';
     import ActivityListItem from '@/components/ActivityListItem.vue';
     import ActivityStackItem from '@/components/ActivityStackItem.vue';
 
     const route = useRoute();
+    const router = useRouter();
     const agentId = computed(() => Number(route.params.id));
     const agent = computed(() => agents.find((a) => a.id === agentId.value));
+    const { getLastConversation, hasStoredConversation } = useConversationMemory();
 
     const search = ref('');
     
@@ -179,6 +182,23 @@
             sortAsc.value = true;
         }
     }
+
+    // Check if we should redirect to a stored conversation when component mounts
+    onMounted(() => {
+        // Only redirect if:
+        // 1. We're on the exact activity page (not in a conversation)
+        // 2. There's a stored conversation for this agent
+        // 3. The stored conversation exists in the agent's conversation list
+        if (route.path === `/agent/${agentId.value}/activity` && hasStoredConversation(agentId.value)) {
+            const lastConversationId = getLastConversation(agentId.value);
+            const conversationExists = agentConversations.value.some(c => c.id === lastConversationId);
+            
+            if (conversationExists) {
+                // Use replace instead of push to avoid adding to history
+                router.replace(`/agent/${agentId.value}/activity/${lastConversationId}`);
+            }
+        }
+    });
 </script>
 
 <style scoped>

@@ -212,7 +212,7 @@
 </template>
 
 <script setup>
-    import { computed, ref, onMounted, onUnmounted, inject } from 'vue';
+    import { computed, ref, onMounted, onUnmounted, inject, watch } from 'vue';
     import { useRoute, useRouter } from 'vue-router';
     import {
         Laugh,
@@ -229,6 +229,7 @@
     import { agents } from '@/data/agents.js';
     import { conversations } from '@/data/conversations.js';
     import { messages } from '@/data/messages.js';
+    import { useConversationMemory } from '@/composables/useConversationMemory.js';
     import ConversationSummary from '@/components/ConversationSummary.vue';
     import ConversationMeta from '@/components/ConversationMeta.vue';
     import Message from '@/components/Message.vue';
@@ -241,6 +242,7 @@
     const router = useRouter();
     const agentId = computed(() => Number(route.params.id));
     const activityId = computed(() => Number(route.params.activityId));
+    const { rememberConversation } = useConversationMemory();
 
     // Inject header height from parent
     const headerHeight = inject('headerHeight', ref(0));
@@ -291,6 +293,11 @@
 
     // Initialize selected message from URL query parameter
     onMounted(() => {
+        // Remember this conversation for the current agent
+        if (agentId.value && activityId.value) {
+            rememberConversation(agentId.value, activityId.value);
+        }
+
         const selectedParam = route.query.selected;
         const summarySelectedParam = route.query.summarySelected;
 
@@ -313,6 +320,13 @@
                 'scroll',
                 handleScroll
             );
+        }
+    });
+
+    // Watch for changes in agentId or activityId to update memory
+    watch([agentId, activityId], ([newAgentId, newActivityId]) => {
+        if (newAgentId && newActivityId) {
+            rememberConversation(newAgentId, newActivityId);
         }
     });
 
