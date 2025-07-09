@@ -99,8 +99,8 @@
             </button>
         </div>
 
-        <div v-else class="block-details-content">
-            <p>Select a block or rule to see more details</p>
+        <div v-else class="block-details-content no-block-selected">
+            <BlockflowLibrary />
         </div>
     </div>
 </template>
@@ -110,6 +110,7 @@
     import { Trash2 } from 'lucide-vue-next';
     import BlockflowVariable from './BlockflowVariable.vue';
     import Badge from './Badge.vue';
+    import BlockflowLibrary from './BlockflowLibrary.vue';
     import { getExpertById } from '../data/workflows.js';
 
     const props = defineProps({
