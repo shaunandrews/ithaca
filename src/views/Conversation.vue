@@ -435,6 +435,10 @@
         border-bottom-color: var(--color-surface-tint);
     }
 
+    .header-end {
+        gap: var(--space-xxs)
+    }
+
     h1 {
         font-size: var(--font-size-m);
         position: absolute;
