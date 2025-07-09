@@ -64,9 +64,8 @@
     }
 
     function handleTabClick(tab, event) {
-        if (!tab.href || tab.href === '#') {
-            event.preventDefault();
-        }
+        // Always prevent default for internal navigation
+        event.preventDefault();
         emit('tabClick', tab);
     }
 
