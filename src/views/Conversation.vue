@@ -64,6 +64,7 @@
                                         idx
                                     )
                             "
+                            class="sticky-overview"
                         />
                     </div>
 
@@ -605,6 +606,13 @@
         z-index: 1000;
         width: 180px;
         margin-bottom: var(--space-xxs);
+    }
+
+    .sticky-overview {
+        position: sticky;
+        top: var(--toolbar-height);
+        align-self: flex-start;
+        z-index: 90;
     }
 
     .tags-list {

@@ -38,6 +38,7 @@
         flex: 0 0 200px;
         max-width: 200px;
         overflow-y: auto;
+        max-height: calc(100vh - var(--toolbar-height) - var(--space-s) * 2);
     }
 
     .overview-item {
