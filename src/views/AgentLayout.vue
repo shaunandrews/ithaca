@@ -42,31 +42,44 @@
     const router = useRouter();
     const agentId = computed(() => Number(route.params.id));
     const agent = computed(() => agents.find((a) => a.id === agentId.value));
-    const { getLastConversation, hasStoredConversation } = useConversationMemory();
+    const { getLastConversation, hasStoredConversation } =
+        useConversationMemory();
 
     const selectedAgentId = ref(agentId.value);
     watch(agentId, (newVal) => {
         selectedAgentId.value = newVal;
     });
 
-    const agentOptions = computed(() => 
-        agents.map(agent => ({
+    const agentOptions = computed(() =>
+        agents.map((agent) => ({
             value: agent.id,
-            label: agent.title
+            label: agent.title,
         }))
     );
 
     const tabs = computed(() => {
         const lastConversationId = getLastConversation(agentId.value);
-        const activityHref = lastConversationId 
+        const activityHref = lastConversationId
             ? `/agent/${agentId.value}/activity/${lastConversationId}`
             : `/agent/${agentId.value}/activity`;
 
         return [
             { key: 'activity', label: 'Activity', href: activityHref },
-            { key: 'insights', label: 'Insights', href: `/agent/${agentId.value}/insights` },
-            { key: 'workbench', label: 'Workbench', href: `/agent/${agentId.value}/workbench` },
-            { key: 'versions', label: 'Versions', href: `/agent/${agentId.value}/versions` }
+            {
+                key: 'insights',
+                label: 'Insights',
+                href: `/agent/${agentId.value}/insights`,
+            },
+            {
+                key: 'workbench',
+                label: 'Workbench',
+                href: `/agent/${agentId.value}/workbench`,
+            },
+            {
+                key: 'versions',
+                label: 'Versions',
+                href: `/agent/${agentId.value}/versions`,
+            },
         ];
     });
 
@@ -96,12 +109,14 @@
     function goToAgent() {
         // Check if we're currently viewing a conversation (has activityId parameter)
         const isViewingConversation = route.params.activityId !== undefined;
-        
+
         if (isViewingConversation) {
             // If viewing a conversation, redirect to the activity screen for the new agent
             // Check if the new agent has a stored conversation
-            const lastConversationId = getLastConversation(selectedAgentId.value);
-            const activityPath = lastConversationId 
+            const lastConversationId = getLastConversation(
+                selectedAgentId.value
+            );
+            const activityPath = lastConversationId
                 ? `/agent/${selectedAgentId.value}/activity/${lastConversationId}`
                 : `/agent/${selectedAgentId.value}/activity`;
             router.push(activityPath);
@@ -111,15 +126,20 @@
                 `/agent/${agentId.value}`,
                 `/agent/${selectedAgentId.value}`
             );
-            
+
             // If we're going to the activity tab and there's a stored conversation, include it
-            if (newPath === `/agent/${selectedAgentId.value}/activity` || newPath === `/agent/${selectedAgentId.value}`) {
-                const lastConversationId = getLastConversation(selectedAgentId.value);
+            if (
+                newPath === `/agent/${selectedAgentId.value}/activity` ||
+                newPath === `/agent/${selectedAgentId.value}`
+            ) {
+                const lastConversationId = getLastConversation(
+                    selectedAgentId.value
+                );
                 if (lastConversationId) {
                     newPath = `/agent/${selectedAgentId.value}/activity/${lastConversationId}`;
                 }
             }
-            
+
             router.push(newPath);
         }
     }
@@ -196,5 +216,27 @@
     .agent-not-found {
         padding: var(--space-m);
         text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--space-s);
+        }
+
+        .agent-header-start,
+        .agent-header-end {
+            width: 100%;
+        }
+
+        .agent-header-end {
+            justify-content: flex-end;
+        }
+
+        .agent-selector {
+            min-width: 0;
+            width: 100%;
+        }
     }
 </style>
