@@ -12,7 +12,7 @@
             type: String,
             default: 'default',
             validator: (value) =>
-                ['default', 'agent', 'customer', 'conversation', 'trigger', 'expert', 'control-flow', 'flow', 'tool', 'exit', 'pause', 'rule', 'placeholder'].includes(value),
+                ['default', 'agent', 'customer', 'conversation', 'trigger', 'expert', 'control-flow', 'flow', 'tool', 'exit', 'pause', 'rule', 'placeholder', 'rule-placeholder'].includes(value),
         },
     });
 
@@ -100,5 +100,11 @@
         background-color: rgba(107, 114, 128, 0.1);
         border: 1px solid rgba(107, 114, 128, 0.2);
         color: rgb(107, 114, 128);
+    }
+
+    .badge--rule-placeholder {
+        background-color: rgba(255, 166, 0, 0.1);
+        border: 1px solid rgba(255, 166, 0, 0.2);
+        color: rgb(255, 166, 0);
     }
 </style>

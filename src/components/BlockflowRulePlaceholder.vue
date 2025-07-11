@@ -16,7 +16,6 @@
             :selectedValue="selectedCondition"
             @select="handleConditionSelect"
             class="condition-dropdown"
-            :disabled="!selectedVariable"
         />
         <Dropdown 
             v-if="needsValue"
@@ -25,7 +24,6 @@
             :selectedValue="selectedValue"
             @select="handleValueSelect"
             class="value-dropdown"
-            :disabled="!selectedCondition"
         />
     
         <div class="rule-actions hstack">
@@ -41,7 +39,7 @@
 
 <script setup>
     import { ref, computed } from 'vue';
-    import { X, Check } from 'lucide-vue-next';
+    import { X, Check, Equal, ChevronRight, ChevronLeft, SquareCheck, SquareDashed, Fullscreen } from 'lucide-vue-next';
     import Dropdown from './Dropdown.vue';
 
     const props = defineProps({
@@ -83,12 +81,12 @@
 
     // Condition options
     const conditionOptions = ref([
-        { value: 'equals', label: 'equals' },
-        { value: 'contains', label: 'contains' },
-        { value: 'greater_than', label: 'greater than' },
-        { value: 'less_than', label: 'less than' },
-        { value: 'exists', label: 'exists' },
-        { value: 'empty', label: 'is empty' }
+        { value: 'equals', label: 'equals', icon: Equal },
+        { value: 'contains', label: 'contains', icon: Fullscreen },
+        { value: 'greater_than', label: 'greater than', icon: ChevronRight },
+        { value: 'less_than', label: 'less than', icon: ChevronLeft },
+        { value: 'exists', label: 'exists', icon: SquareCheck },
+        { value: 'empty', label: 'is empty', icon: SquareDashed }
     ]);
 
     // Value options - these would be dynamic based on the selected variable
@@ -147,9 +145,6 @@
 
     const handleVariableSelect = (option) => {
         selectedVariable.value = option.value;
-        // Reset dependent fields
-        selectedCondition.value = '';
-        selectedValue.value = '';
     };
 
     const handleConditionSelect = (option) => {

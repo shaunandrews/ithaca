@@ -115,7 +115,7 @@ onUnmounted(() => {
     .resize-knob {
         position: absolute;
         left: -4px;
-        top: 50%;
+        top: calc(50% - var(--toolbar-height));
         z-index: 10001;
         width: 8px;
         height: 32px;
@@ -127,7 +127,6 @@ onUnmounted(() => {
     }
 
     .resize-knob.is-hovering {
-        /* background: red; */
         border-color: var(--color-surface-fg-secondary)
     }
 

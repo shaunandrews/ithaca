@@ -12,6 +12,7 @@
             <div class="dropdown-trigger-content">
                 <slot name="trigger" :is-open="isOpen">
                     <!-- Default trigger content -->
+                    <component v-if="selectedOption?.icon" :is="selectedOption.icon" class="dropdown-trigger-icon" size="16" stroke-width="1.5" />
                     <span class="dropdown-label">{{ label }}</span>
                 </slot>
             </div>
@@ -49,6 +50,7 @@
                             @keydown.enter="selectOption(option)"
                             @keydown.space.prevent="selectOption(option)"
                         >
+                            <component v-if="option.icon" :is="option.icon" class="dropdown-option-icon" size="16" stroke-width="1.5" />
                             {{ option.label }}
                         </div>
                     </slot>
@@ -95,6 +97,10 @@
     const isOpen = ref(false);
     const triggerRef = ref(null);
     const dropdownId = computed(() => `dropdown-${Math.random().toString(36).substr(2, 9)}`);
+
+    const selectedOption = computed(() => {
+        return props.options.find(option => option.value === props.selectedValue);
+    });
 
     const toggleDropdown = () => {
         if (props.disabled) return;
@@ -173,6 +179,11 @@
         flex: 1;
     }
 
+    .dropdown-trigger-icon {
+        color: var(--color-surface-fg-secondary);
+        flex-shrink: 0;
+    }
+
     .dropdown-label {
         flex: 1;
         font-weight: var(--font-weight-medium);
@@ -186,18 +197,6 @@
 
     .dropdown-chevron.rotated {
         transform: rotate(180deg);
-    }
-
-    .dropdown-content {
-        background: var(--color-surface);
-        border: 1px solid var(--color-surface-tint-dark);
-        border-radius: var(--radius);
-        font-size: var(--font-size-s);
-        color: var(--color-surface-fg);
-        min-width: 150px;
-        max-height: 300px;
-        overflow-y: auto;
-        padding: 0;
     }
 
     .dropdown-option {
@@ -215,6 +214,11 @@
         color: var(--color-surface-fg);
         font-size: var(--font-size-s);
         text-align: left;
+    }
+
+    .dropdown-option-icon {
+        color: var(--color-surface-fg-secondary);
+        flex-shrink: 0;
     }
 
     .dropdown-option:first-child {
