@@ -1,31 +1,36 @@
 <template>
-    <div class="event-item" :class="[type, { selected: selected }]" @click="type !== 'flow' ? handleClick($event) : null">
-        <div class="event-header hstack" @click="type === 'flow' ? handleClick($event) : null">
+    <div
+        class="event-item"
+        :class="[type, { selected: selected }]"
+        @click="type !== 'flow' ? handleClick($event) : null"
+    >
+        <div
+            class="event-header hstack"
+            @click="type === 'flow' ? handleClick($event) : null"
+        >
             <div class="event-icon">
                 <component :is="getIcon(type)" size="18" stroke-width="1.5" />
             </div>
-            <h3 class="event-title">{{ title }}</h3>
-        </div>
-        <div class="event-content">
-            <div v-if="type !== 'flow' && ((inputs && inputs.length > 0) || (outputs && outputs.length > 0))" class="event-variables hstack">
-                <div v-if="inputs && inputs.length > 0" class="event-inputs vstack">
-                    <h4>Inputs</h4>
-                    <BlockflowVariable v-for="input in inputs" :key="input" type="input" :value="input" />
-                </div>
-                
-                <div v-if="outputs && outputs.length > 0" class="event-outputs vstack">
-                    <h4>Outputs</h4>
-                    <BlockflowVariable v-for="output in outputs" :key="output" type="output" :value="output" />
+
+            <div class="event-details vstack">
+                <h3 class="event-title">{{ title }}</h3>
+                <div
+                    class="expert-description"
+                    v-if="type === 'expert' && expertInfo"
+                >
+                    {{ expertInfo.description }}
                 </div>
             </div>
-            
-            <div v-if="type === 'flow'" class="rules vstack">
-                <div class="rules-list hstack">
-                    <slot name="rules" />
-                    <div class="rules-add-button" @click="handleAddRule">
-                        <div class="plus-button">
-                            <Plus size="16" stroke-width="2" />
-                        </div>
+        </div>
+        <div
+            class="rules vstack"
+            v-if="type === 'flow'"
+        >
+            <div class="rules-list hstack">
+                <slot name="rules" />
+                <div class="rules-add-button" @click="handleAddRule">
+                    <div class="plus-button">
+                        <Plus size="16" stroke-width="2" />
                     </div>
                 </div>
             </div>
@@ -181,12 +186,6 @@
         gap: var(--space-s);
         padding: var(--space-s);
     }
-    
-    .event-title {
-        flex-grow: 1;
-        font-size: var(--font-size-m);
-        font-weight: var(--font-weight-semibold);
-    }
 
     .event-icon {
         display: flex;
@@ -195,37 +194,21 @@
         color: var(--color-surface-fg-secondary);
     }
 
-    .event-variables {
-        gap: var(--space-s);
-        padding: var(--space-s);
-        border-top: 1px solid var(--color-surface-tint-dark);
-        background-color: var(--color-surface-tint-light);
+    .event-details {
+        gap: var(--space-xxs);
     }
 
-    .event-inputs,
-    .event-outputs {
-        gap: var(--space-xs);
-    }
-
-    .event-expert {
-        padding: var(--space-s);
-        border-top: 1px solid var(--color-surface-tint-dark);
-        background-color: var(--color-surface-tint-light);
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-xs);
-    }
-
-    .expert-title {
-        font-size: var(--font-size-s);
+    .event-title {
+        flex-grow: 1;
+        font-size: var(--font-size-m);
         font-weight: var(--font-weight-semibold);
-        color: var(--color-accent);
     }
 
     .expert-description {
-        font-size: var(--font-size-xs);
+        font-size: var(--font-size-s);
         color: var(--color-surface-fg-secondary);
-        line-height: 1.4;
+        max-width: 200px;
+        line-height: var(--line-height-tight);
     }
 
     .rules {
