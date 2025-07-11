@@ -172,7 +172,7 @@
                 @addEvent="handleDividerClick"
             />
         </div>
-        <Panel>
+        <Panel resizable>
             <BlockflowDetails 
                 :agent="agent"
                 :contextVariables="workflow.contextVariables"

@@ -64,7 +64,7 @@
                 </div>
             </div>
 
-            <Panel v-if="conversation">
+            <Panel v-if="conversation" resizable>
                 <ConversationDetails
                     :selected-message="selectedMessage"
                     :conversation="conversation"

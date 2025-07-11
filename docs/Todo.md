@@ -12,19 +12,20 @@
 
 ## Workbench
 - [ ] Adding a new block
-    - Update the block types, and selection interface. Only show expert, tool, and flow blocks.
-    - Need to allow for picking from existing experts and tools. Need a quick picker, and maybe a way to open a larger library/modal/sidebar.
+    - [ ] Update the block types, and selection interface. Only show expert, tool, and flow blocks.
+    - [ ] Need to allow for picking from existing experts and tools. Need a quick picker, and maybe a way to open a larger library/modal/sidebar.
 - [ ] Editing a block
-    - How to pick input variable(s)
-    - Customize prompts and ouputs
+    - [ ] How to pick input variable(s)
+    - [ ] Customize prompts and ouputs
+    - [x] Editing expert instructions
 - [ ] Adding a new rule
-    - Need a better UI for picking conditions, inputs, and values.
+    - [ ] Need a better UI for picking conditions, inputs, and values.
 - [ ] Editing rules
-    - Details sidebar UI needs improvement
-    - Sidebar list of blocks within the rules
+    - [ ] Details sidebar UI needs improvement
+    - [ ] Sidebar list of blocks within the rules
 - [ ] Previewing a workflow
-    - Need to simulate the workflow "running" with a log in the sidebar.
-    - Blocks in the flow needs to visually simulate running states: in-progress, running, pending, finished, error
+    - [ ] Need to simulate the workflow "running" with a log in the sidebar.
+    - [ ] Blocks in the flow needs to visually simulate running states: in-progress, running, pending, finished, error
 
 ## Versions
 - [ ] Needs a basic design for listing lots of versions

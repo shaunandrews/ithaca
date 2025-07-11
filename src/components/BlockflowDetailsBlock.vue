@@ -39,7 +39,41 @@
             </div>
 
             <div v-else class="block-info">
-                <div v-if="selectedBlock.type === 'expert' && selectedExpert" class="expert-description">{{ selectedExpert.description }}</div>
+                <!-- Expert-specific section -->
+                <div v-if="selectedBlock.type === 'expert' && selectedExpert" class="expert-section">
+                    <div class="expert-description">{{ selectedExpert.description }}</div>
+                    
+                    <div class="expert-instructions">
+                        <h4>Instructions</h4>
+                        <p class="instructions-description">Configure what this expert should do. Add tools by typing @tool.</p>
+                        <InstructionsField
+                            :parsedInstructions="parsedInstructions"
+                            :autocomplete="autocomplete"
+                            :tools="availableTools"
+                            @input="onInstructionsInput"
+                            @keydown="onInstructionsKeydown"
+                            @select-tool="selectTool"
+                        />
+                    </div>
+
+                    <hr />
+
+                    <div v-if="selectedExpert.tools && selectedExpert.tools.length > 0" class="expert-tools">
+                        <h4>Available Tools</h4>
+                        <p class="tools-description">Tools that this expert can use to perform its tasks.</p>
+                        <div class="tools-list">
+                            <ToolListItem
+                                v-for="(tool, idx) in selectedExpert.tools"
+                                :key="idx"
+                                :icon="tool.icon"
+                                :title="tool.title"
+                                :subtitle="tool.subtitle || tool.description"
+                            />
+                        </div>
+                    </div>
+
+                    <hr />
+                </div>
                 
                 <div v-if="selectedBlock.type === 'flow' && selectedBlock.branches && selectedBlock.branches.length > 0" class="flow-rules">
                     <h4>Rules in this flow</h4>
@@ -97,9 +131,9 @@
                 v-if="selectedBlock && selectedBlock.type !== 'placeholder' && selectedBlock.type !== 'rule-placeholder'"
                 class="delete-button"
                 @click="handleDeleteEvent"
-                :title="selectedBlock.type === 'rule' ? 'Delete this rule (Delete key)' : 'Delete this event (Delete key)'"
+                :title="selectedBlock.type === 'rule' ? 'Remove this rule (Delete key)' : 'Remove this event (Delete key)'"
             >
-                <Trash2 size="16" stroke-width="1.5" /> Delete
+                <SquareMinus size="16" stroke-width="1.5" /> Remove
             </button>
         </div>
 
@@ -111,12 +145,16 @@
 </template>
 
 <script setup>
-    import { computed } from 'vue';
-    import { Trash2 } from 'lucide-vue-next';
+    import { computed, ref, watch } from 'vue';
+    import { SquareMinus } from 'lucide-vue-next';
     import BlockflowVariable from './BlockflowVariable.vue';
     import Badge from './Badge.vue';
     import BlockflowLibrary from './BlockflowLibrary.vue';
+    import InstructionsField from './InstructionsField.vue';
+    import ToolListItem from './ToolListItem.vue';
     import { getExpertById } from '../data/workflows.js';
+    import { parseInstructions } from '../data/parseInstructions.js';
+    import { tools } from '../data/tools.js';
 
     const props = defineProps({
         selectedBlock: {
@@ -134,6 +172,135 @@
         }
         return null;
     });
+
+    // Parse expert instructions for the InstructionsField
+    const parsedInstructions = computed(() => {
+        if (selectedExpert.value && selectedExpert.value.instructions) {
+            return parseInstructions(selectedExpert.value.instructions);
+        }
+        return [];
+    });
+
+    // Available tools for the expert
+    const availableTools = computed(() => {
+        if (selectedExpert.value && selectedExpert.value.tools) {
+            return selectedExpert.value.tools;
+        }
+        return tools; // Fallback to all tools
+    });
+
+    // Autocomplete state for InstructionsField
+    const autocomplete = ref({
+        show: false,
+        x: 0,
+        y: 0,
+        query: '',
+        filtered: [],
+        caretNode: null,
+        selected: ''
+    });
+
+    // Instructions field event handlers
+    const onInstructionsInput = (e) => {
+        const sel = window.getSelection();
+        if (!sel.rangeCount) return;
+        const range = sel.getRangeAt(0);
+        const node = range.startContainer;
+        const text = node.textContent;
+        const caretPos = range.startOffset;
+        const before = text.slice(0, caretPos);
+        const atIdx = before.lastIndexOf('@');
+        if (atIdx !== -1 && (atIdx === 0 || /\s/.test(before[atIdx - 1]))) {
+            const query = before.slice(atIdx + 1);
+            const filtered = availableTools.value.filter((t) =>
+                t.title.toLowerCase().startsWith(query.toLowerCase())
+            );
+            if (filtered.length > 0) {
+                const rect = range.getBoundingClientRect();
+                autocomplete.value = {
+                    show: true,
+                    x: rect.left + window.scrollX,
+                    y: rect.bottom + window.scrollY,
+                    query,
+                    filtered,
+                    caretNode: node,
+                    atIdx,
+                    caretPos,
+                    selected: filtered[0]?.title || ''
+                };
+            } else {
+                autocomplete.value.show = false;
+            }
+        } else {
+            autocomplete.value.show = false;
+        }
+    };
+
+    const onInstructionsKeydown = (e) => {
+        if (autocomplete.value.show) {
+            if (e.key === 'ArrowDown' || e.key === 'Tab') {
+                e.preventDefault();
+                const idx = autocomplete.value.filtered.findIndex(
+                    (t) => t.title === autocomplete.value.selected
+                );
+                const nextIdx = (idx + 1) % autocomplete.value.filtered.length;
+                autocomplete.value.selected = autocomplete.value.filtered[nextIdx].title;
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                const idx = autocomplete.value.filtered.findIndex(
+                    (t) => t.title === autocomplete.value.selected
+                );
+                const prevIdx = (idx - 1 + autocomplete.value.filtered.length) % autocomplete.value.filtered.length;
+                autocomplete.value.selected = autocomplete.value.filtered[prevIdx].title;
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                const tool = autocomplete.value.filtered.find(
+                    (t) => t.title === autocomplete.value.selected
+                ) || autocomplete.value.filtered[0];
+                if (tool) selectTool(tool);
+            } else if (e.key === 'Escape') {
+                autocomplete.value.show = false;
+            }
+        }
+    };
+
+    const selectTool = (tool) => {
+        if (!autocomplete.value.caretNode) return;
+        const node = autocomplete.value.caretNode;
+        const text = node.textContent;
+        const atIdx = autocomplete.value.atIdx;
+        const caretPos = autocomplete.value.caretPos;
+        const before = text.slice(0, atIdx);
+        const after = text.slice(caretPos);
+        const parent = node.parentNode;
+        
+        // Replace the text node with before, span, after
+        const beforeNode = document.createTextNode(before);
+        const span = document.createElement('span');
+        span.className = 'highlight-tool';
+        span.setAttribute('contenteditable', 'false');
+        span.textContent = `@${tool.title}`;
+        if (tool.value) {
+            const valueSpan = document.createElement('span');
+            valueSpan.className = 'tool-value';
+            valueSpan.textContent = `:${tool.value}`;
+            span.appendChild(valueSpan);
+        }
+        const afterNode = document.createTextNode(after);
+        
+        parent.replaceChild(afterNode, node);
+        parent.insertBefore(span, afterNode);
+        parent.insertBefore(beforeNode, span);
+        
+        // Move caret after the inserted span
+        const range = document.createRange();
+        range.setStartAfter(span);
+        range.collapse(true);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        autocomplete.value.show = false;
+    };
 
     const handleDeleteEvent = () => {
         if (props.selectedBlock && props.selectedBlock.type !== 'placeholder' && props.selectedBlock.type !== 'rule-placeholder') {
@@ -205,6 +372,4 @@
         color: var(--color-surface-fg);
         margin: 0;
     }
-
-
 </style> 
