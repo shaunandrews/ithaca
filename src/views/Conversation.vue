@@ -1,6 +1,28 @@
 <template>
     <div class="conversation-view">
         <div v-if="conversation" class="columns hstack">
+            <!-- Activity List Panel (left side) -->
+            <div class="activity-panel" v-if="showActivityList">
+                <div class="activity-header">
+                    <h3>Activity</h3>
+                    <input
+                        type="search"
+                        v-model="activitySearch"
+                        placeholder="Search conversations"
+                        class="activity-search"
+                    />
+                </div>
+                <div class="activity-list">
+                    <ActivityListItem
+                        v-for="conv in filteredAgentConversations"
+                        :key="conv.id"
+                        :item="conv"
+                        :to="`/agent/${agentId}/activity/${conv.id}`"
+                        :class="{ active: conv.id === activityId }"
+                    />
+                </div>
+            </div>
+
             <div
                 class="conversation panel-open"
                 ref="conversationContainer"
@@ -184,6 +206,7 @@
     import ButtonBack from '@/components/ButtonBack.vue';
     import Panel from '@/components/Panel.vue';
     import ConversationDetails from '@/components/ConversationDetails.vue';
+    import ActivityListItem from '@/components/ActivityListItem.vue';
 
     const route = useRoute();
     const router = useRouter();
@@ -202,6 +225,41 @@
     const conversationMessages = computed(
         () => messages[activityId.value] || []
     );
+
+    // Activity list state
+    const activitySearch = ref('');
+    const showActivityList = ref(true);
+
+    // Get agent conversations for the activity list
+    const agentConversations = computed(() => {
+        if (!agent.value?.conversationIds) return [];
+        return agent.value.conversationIds
+            .map((id) => conversations.find((c) => c.id === id))
+            .filter(Boolean);
+    });
+
+    // Filter conversations based on search
+    const filteredAgentConversations = computed(() => {
+        if (!activitySearch.value) return agentConversations.value;
+        const query = activitySearch.value.toLowerCase();
+        return agentConversations.value.filter((c) => {
+            const searchable = [
+                c.event,
+                c.summary,
+                c.customer,
+                c.datetime,
+            ]
+                .filter(Boolean)
+                .join(' ')
+                .toLowerCase();
+            return searchable.includes(query);
+        });
+    });
+
+    // Check if we should show the activity list based on screen size
+    const checkScreenSize = () => {
+        showActivityList.value = window.innerWidth >= 1200; // Show on large screens
+    };
 
     const selectedMessage = ref(null);
     const selectedIdx = ref(null);
@@ -268,6 +326,10 @@
                 handleScroll
             );
         }
+
+        // Check screen size and add resize listener
+        checkScreenSize();
+        window.addEventListener('resize', checkScreenSize);
     });
 
     // Watch for changes in agentId or activityId to update memory
@@ -279,6 +341,7 @@
 
     onUnmounted(() => {
         document.removeEventListener('click', handleClickOutside);
+        window.removeEventListener('resize', checkScreenSize);
 
         // Remove scroll listener
         if (conversationContainer.value) {
@@ -501,5 +564,116 @@
         display: flex;
         flex-wrap: wrap;
         gap: var(--space-xs);
+    }
+
+    /* Activity Panel Styles */
+    .activity-panel {
+        width: 320px;
+        background: var(--color-surface);
+        border-right: 1px solid var(--color-surface-tint);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .activity-header {
+        padding: var(--space-m);
+        border-bottom: 1px solid var(--color-surface-tint);
+        background: var(--color-chrome);
+    }
+
+    .activity-header h3 {
+        margin: 0 0 var(--space-s) 0;
+        font-size: var(--font-size-m);
+        font-weight: var(--font-weight-semibold);
+    }
+
+    .activity-search {
+        width: 100%;
+        padding: var(--space-xs);
+        border: 1px solid var(--color-surface-tint);
+        border-radius: var(--radius-s);
+        background: var(--color-surface);
+        font-size: var(--font-size-s);
+    }
+
+    .activity-search:focus {
+        outline: none;
+        border-color: var(--color-primary);
+    }
+
+    .activity-list {
+        flex: 1;
+        overflow-y: auto;
+        padding: var(--space-s);
+    }
+
+    .activity-list :deep(.activity-list-item) {
+        display: flex;
+        align-items: center;
+        gap: var(--space-s);
+        padding: var(--space-s);
+        border-radius: var(--radius-s);
+        text-decoration: none;
+        color: inherit;
+        margin-bottom: var(--space-xs);
+        transition: background-color 0.15s ease;
+    }
+
+    .activity-list :deep(.activity-list-item:hover) {
+        background: var(--color-surface-tint);
+    }
+
+    .activity-list :deep(.activity-list-item.active) {
+        background: var(--color-primary-subtle);
+        color: var(--color-primary);
+    }
+
+    .activity-list :deep(.activity-list-item.active:hover) {
+        background: var(--color-primary-subtle);
+    }
+
+    .activity-list :deep(.customer) {
+        flex-shrink: 0;
+    }
+
+    .activity-list :deep(.event) {
+        flex: 1;
+        min-width: 0;
+        font-weight: var(--font-weight-medium);
+        font-size: var(--font-size-s);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .activity-list :deep(.summary) {
+        display: none; /* Hide summary in compact view */
+    }
+
+    .activity-list :deep(.datetime) {
+        flex-shrink: 0;
+        font-size: var(--font-size-xs);
+        color: var(--color-text-subtle);
+    }
+
+    .activity-list :deep(.message-count) {
+        flex-shrink: 0;
+        font-size: var(--font-size-xs);
+        color: var(--color-text-subtle);
+        display: flex;
+        align-items: center;
+        gap: var(--space-xxs);
+    }
+
+    .activity-list :deep(.sentiment) {
+        flex-shrink: 0;
+    }
+
+    /* Hide activity panel on smaller screens */
+    @media (max-width: 1199px) {
+        .activity-panel {
+            display: none;
+        }
     }
 </style>

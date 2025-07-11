@@ -12,6 +12,7 @@
 - [x] All activity button is broken after "memory" update
 - [ ] Instead of fixed "sources" and "classifiers," consider these as expert and tool calls, and adapt the UI accordingly
 - [ ] Implement a Review mode, which walks the user through the converasation one message at a time, allowing them to rate tool usages/outcomes
+- [ ] Consider combining Conversation.vue with Activity.vue somehow. A more streamlined inbox-style view.
 
 ## Workbench
 - [ ] Adding a new block
