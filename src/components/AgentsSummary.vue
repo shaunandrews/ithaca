@@ -1,56 +1,56 @@
 <template>
     <div class="agents-summary hstack">
-        <div class="stat hstack">
-            <div class="stat-value">
+        <div class="stat text-small hstack">
+            <div class="stat-value text-semibold">
                 <TrendingUp size="16" stroke-width="1.5" />
                 {{ totalConversations.toLocaleString() }}
             </div>
             <label>Total conversations</label>
         </div>
-        <div class="stat hstack">
-            <div class="stat-value">
+        <div class="stat text-small hstack">
+            <div class="stat-value text-semibold">
                 <TrendingUp size="16" stroke-width="1.5" />
                 {{ formatResponseTime(avgResponseTime) }}
             </div>
             <label>Avg. response time</label>
         </div>
-        <div class="stat hstack">
-            <div class="stat-value">
+        <div class="stat text-small hstack">
+            <div class="stat-value text-semibold">
                 <TrendingDown size="16" stroke-width="1.5" />
                 {{ avgUptime }}%
             </div>
             <label>Avg. uptime</label>
         </div>
-        <div class="stat hstack">
-            <div class="stat-value">
+        <div class="stat text-small hstack">
+            <div class="stat-value text-semibold">
                 <TrendingUp size="16" stroke-width="1.5" />
                 {{ avgResolutionRate }}%
             </div>
             <label>Avg. resolution rate</label>
         </div>
-        <div class="stat hstack">
-            <div class="stat-value">
+        <div class="stat text-small hstack">
+            <div class="stat-value text-semibold">
                 <TrendingUp size="16" stroke-width="1.5" />
                 {{ avgFirstContactResolution }}%
             </div>
             <label>Avg. first contact resolution</label>
         </div>
-        <div class="stat hstack">
-            <div class="stat-value">
+        <div class="stat text-small hstack">
+            <div class="stat-value text-semibold">
                 <TrendingUp size="16" stroke-width="1.5" />
                 {{ avgQualityScore }}/5
             </div>
             <label>Avg. quality score</label>
         </div>
-        <div class="stat hstack">
-            <div class="stat-value">
+        <div class="stat text-small hstack">
+            <div class="stat-value text-semibold">
                 <TrendingUp size="16" stroke-width="1.5" />
                 {{ avgSatisfactionRating }}/5
             </div>
             <label>Avg. satisfaction rating</label>
         </div>
-        <div class="stat hstack">
-            <div class="stat-value">
+        <div class="stat text-small hstack">
+            <div class="stat-value text-semibold">
                 <TrendingUp size="16" stroke-width="1.5" />
                 {{ avgCorrectionRate }}%
             </div>
@@ -180,8 +180,8 @@
         max-width: calc(25% - var(--space-xs) * 3 / 4);
         padding-bottom: var(--space-xxs);
         gap: var(--space-xs);
-        font-size: var(--font-size-s);
         color: var(--color-surface-fg-tertiary);
+        /* Uses .text-small utility class */
     }
 
     .stat:hover {
@@ -194,6 +194,6 @@
         align-items: center;
         justify-content: flex-end;
         min-width: 60px;
-        font-weight: var(--font-weight-semibold);
+        /* Uses .text-semibold utility class */
     }
 </style>

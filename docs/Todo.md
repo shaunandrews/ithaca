@@ -1,4 +1,7 @@
-#Todo
+# Todo
+
+## General
+- [x] Toolbar component
 
 ## Conversation
 - [x] Make converstaion overview list sticky

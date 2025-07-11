@@ -175,7 +175,7 @@
 
     .dropdown-label {
         flex: 1;
-        font-weight: 500;
+        font-weight: var(--font-weight-medium);
     }
 
     .dropdown-chevron {

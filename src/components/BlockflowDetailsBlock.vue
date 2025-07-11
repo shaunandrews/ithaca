@@ -8,137 +8,164 @@
         </div>
 
         <div v-if="selectedBlock" class="block-details-content">
-            <!-- Rule details -->
-            <div v-if="selectedBlock.type === 'rule'" class="rule-info">
-                <label>Rule Type</label>
-                <input type="text" :value="selectedBlock.ruleType" readonly />
-                
-                <label>Variable</label>
-                <input type="text" :value="selectedBlock.variable" readonly />
-                
-                <label>Value</label>
-                <input type="text" :value="selectedBlock.value" readonly />
-                
-                <label>Description</label>
-                <textarea :value="selectedBlock.description" readonly />
-                
-                <div v-if="selectedBlock.steps && selectedBlock.steps.length > 0" class="rule-steps">
-                    <h4>Steps in this rule</h4>
-                    <div class="steps-list">
-                        <div v-for="step in selectedBlock.steps" :key="step.uid" class="step-item">
-                            <span class="step-title">{{ step.title }}</span>
-                            <span class="step-type">{{ step.type }}</span>
+            <!-- Placeholder Block -->
+            <template v-if="isPlaceholder">
+                <div class="placeholder-info">
+                    <p>This is a placeholder block. Select a block type to edit details here.</p>
+                </div>
+            </template>
+
+            <!-- Rule Block -->
+            <template v-else-if="isRule">
+                <div class="rule-info">
+                    <label>Rule Type</label>
+                    <input type="text" :value="selectedBlock.ruleType" readonly />
+                    
+                    <label>Variable</label>
+                    <input type="text" :value="selectedBlock.variable" readonly />
+                    
+                    <label>Value</label>
+                    <input type="text" :value="selectedBlock.value" readonly />
+                    
+                    <label>Description</label>
+                    <textarea :value="selectedBlock.description" readonly />
+                    
+                    <div v-if="hasSteps" class="rule-steps">
+                        <h4>Steps in this rule</h4>
+                        <div class="steps-list">
+                            <div v-for="step in selectedBlock.steps" :key="step.uid" class="step-item">
+                                <span class="step-title">{{ step.title }}</span>
+                                <span class="step-type">{{ step.type }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </template>
 
-            <!-- Placeholder details -->
-            <div v-else-if="selectedBlock.type === 'placeholder'" class="placeholder-info">
-                <p>This is a placeholder block. Select a block type to edit details here.</p>
-            </div>
-
-            <div v-else class="block-info">
-                <!-- Expert-specific section -->
-                <div v-if="selectedBlock.type === 'expert' && selectedExpert" class="expert-section">
-                    <div class="expert-description">{{ selectedExpert.description }}</div>
-                    
-                    <div class="expert-instructions">
-                        <h4>Instructions</h4>
-                        <p class="instructions-description">Configure what this expert should do. Add tools by typing @tool.</p>
-                        <InstructionsField
-                            :parsedInstructions="parsedInstructions"
-                            :autocomplete="autocomplete"
-                            :tools="availableTools"
-                            @input="onInstructionsInput"
-                            @keydown="onInstructionsKeydown"
-                            @select-tool="selectTool"
-                        />
-                    </div>
-
-                    <hr />
-
-                    <div v-if="selectedExpert.tools && selectedExpert.tools.length > 0" class="expert-tools">
-                        <h4>Available Tools</h4>
-                        <p class="tools-description">Tools that this expert can use to perform its tasks.</p>
-                        <div class="tools-list">
-                            <ToolListItem
-                                v-for="(tool, idx) in selectedExpert.tools"
-                                :key="idx"
-                                :icon="tool.icon"
-                                :title="tool.title"
-                                :subtitle="tool.subtitle || tool.description"
+            <!-- Expert Block -->
+            <template v-else-if="isExpert">
+                <div class="block-info">
+                    <div class="expert-section">
+                        <div class="expert-description">{{ selectedExpert.description }}</div>
+                        
+                        <div class="expert-instructions">
+                            <h4>Instructions</h4>
+                            <p class="instructions-description">Configure what this expert should do. Add tools by typing @tool.</p>
+                            <InstructionsField
+                                :parsedInstructions="parsedInstructions"
+                                :autocomplete="autocomplete"
+                                :tools="availableTools"
+                                @input="onInstructionsInput"
+                                @keydown="onInstructionsKeydown"
+                                @select-tool="selectTool"
                             />
                         </div>
-                    </div>
 
-                    <hr />
-                </div>
-                
-                <div v-if="selectedBlock.type === 'flow' && selectedBlock.branches && selectedBlock.branches.length > 0" class="flow-rules">
-                    <h4>Rules in this flow</h4>
-                    <div class="rules-list">
-                        <div v-for="branch in selectedBlock.branches" :key="`${branch.condition.variable}-${branch.condition.value}`" class="rule-item">
-                            <div class="rule-condition">
-                                <span class="rule-type">{{ branch.condition.type || 'If' }}</span>
-                                <span class="rule-variable">{{ branch.condition.variable }}</span>
-                                <span class="rule-operator">is</span>
-                                <span class="rule-value">{{ branch.condition.value }}</span>
+                        <hr />
+
+                        <div v-if="hasExpertTools" class="expert-tools">
+                            <h4>Available Tools</h4>
+                            <p class="tools-description">Tools that this expert can use to perform its tasks.</p>
+                            <div class="tools-list">
+                                <ToolListItem
+                                    v-for="(tool, idx) in selectedExpert.tools"
+                                    :key="idx"
+                                    :icon="tool.icon"
+                                    :title="tool.title"
+                                    :subtitle="tool.subtitle || tool.description"
+                                />
                             </div>
-                            <div v-if="branch.steps && branch.steps.length > 0" class="rule-steps">
-                                <span class="steps-count">{{ branch.steps.length }} step{{ branch.steps.length === 1 ? '' : 's' }}</span>
-                                <div class="steps-preview">
-                                    <div v-for="step in branch.steps" :key="step.uid" class="step-preview">
-                                        <span class="step-title">{{ step.title }}</span>
-                                        <span class="step-type">{{ step.type }}</span>
+                        </div>
+
+                        <hr />
+                    </div>
+                </div>
+            </template>
+
+            <!-- Flow Block -->
+            <template v-else-if="isFlow">
+                <div class="block-info">
+                    <div class="flow-rules">
+                        <h4>Rules in this flow</h4>
+                        <div class="rules-list">
+                            <div v-for="branch in selectedBlock.branches" :key="`${branch.condition.variable}-${branch.condition.value}`" class="rule-item">
+                                <div class="rule-condition">
+                                    <span class="rule-type">{{ branch.condition.type || 'If' }}</span>
+                                    <span class="rule-variable">{{ branch.condition.variable }}</span>
+                                    <span class="rule-operator">is</span>
+                                    <span class="rule-value">{{ branch.condition.value }}</span>
+                                </div>
+                                <div v-if="branch.steps && branch.steps.length > 0" class="rule-steps">
+                                    <span class="steps-count">{{ branch.steps.length }} step{{ branch.steps.length === 1 ? '' : 's' }}</span>
+                                    <div class="steps-preview">
+                                        <div v-for="step in branch.steps" :key="step.uid" class="step-preview">
+                                            <span class="step-title">{{ step.title }}</span>
+                                            <span class="step-type">{{ step.type }}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div v-if="selectedBlock.type !== 'rule' && selectedBlock.inputs && selectedBlock.inputs.length > 0" class="block-inputs">
-                <h4>Inputs</h4>
-                <p>Data that the block will use to perform its action.</p>
-                <div class="input-list">
-                    <BlockflowVariable 
-                        v-for="input in selectedBlock.inputs" 
-                        :key="input" 
-                        type="input"
-                        :value="input"
-                    />
-                </div>
-            </div>
-            
-            <div v-if="selectedBlock.type !== 'rule' && selectedBlock.outputs && selectedBlock.outputs.length > 0" class="block-outputs">
-                <h4>Outputs</h4>
-                <p>Data that the block will produce as a result of its action.</p>
-                <div class="output-list">
-                    <BlockflowVariable 
-                        v-for="output in selectedBlock.outputs" 
-                        :key="output" 
-                        type="output"
-                        :value="output"
-                    />
-                </div>
-            </div>
+            </template>
 
-            <hr />
+            <!-- Other Block Types -->
+            <template v-else>
+                <div class="block-info">
+                    <!-- Generic block content would go here -->
+                </div>
+            </template>
 
-            <button 
-                v-if="selectedBlock && selectedBlock.type !== 'placeholder' && selectedBlock.type !== 'rule-placeholder'"
-                class="delete-button"
-                @click="handleDeleteEvent"
-                :title="selectedBlock.type === 'rule' ? 'Remove this rule (Delete key)' : 'Remove this event (Delete key)'"
-            >
-                <SquareMinus size="16" stroke-width="1.5" /> Remove
-            </button>
+            <!-- Common Inputs/Outputs Section -->
+            <template v-if="hasInputs">
+                <div class="block-inputs">
+                    <h4>Inputs</h4>
+                    <p>Data that the block will use to perform its action.</p>
+                    <div class="input-list">
+                        <BlockflowVariable 
+                            v-for="input in selectedBlock.inputs" 
+                            :key="input" 
+                            type="input"
+                            :value="input"
+                        />
+                    </div>
+                </div>
+            </template>
+            
+            <template v-if="hasOutputs">
+                <div class="block-outputs">
+                    <h4>Outputs</h4>
+                    <p>Data that the block will produce as a result of its action.</p>
+                    <div class="output-list">
+                        <BlockflowVariable 
+                            v-for="output in selectedBlock.outputs" 
+                            :key="output" 
+                            type="output"
+                            :value="output"
+                        />
+                    </div>
+                </div>
+            </template>
+
+            <!-- Common Delete Button -->
+            <template v-if="showDeleteButton">
+                <hr />
+                <button 
+                    class="delete-button"
+                    @click="handleDeleteEvent"
+                    :title="isRule ? 'Remove this rule (Delete key)' : 'Remove this event (Delete key)'"
+                >
+                    <SquareMinus size="16" stroke-width="1.5" /> Remove
+                </button>
+            </template>
         </div>
 
         <div v-else class="block-details-content no-block-selected">
             <p>Select a block to view details, or add a new block to the workflow.</p>
+
+            <hr />
+
             <BlockflowLibrary />
         </div>
     </div>
@@ -164,6 +191,52 @@
     });
 
     const emit = defineEmits(['deleteEvent']);
+
+    // Block type computed properties for cleaner template logic
+    const isPlaceholder = computed(() => {
+        return props.selectedBlock?.type === 'placeholder';
+    });
+
+    const isRule = computed(() => {
+        return props.selectedBlock?.type === 'rule';
+    });
+
+    const isExpert = computed(() => {
+        return props.selectedBlock?.type === 'expert' && selectedExpert.value;
+    });
+
+    const isFlow = computed(() => {
+        return props.selectedBlock?.type === 'flow' && 
+               props.selectedBlock.branches && 
+               props.selectedBlock.branches.length > 0;
+    });
+
+    // Feature-based computed properties
+    const hasSteps = computed(() => {
+        return props.selectedBlock?.steps && props.selectedBlock.steps.length > 0;
+    });
+
+    const hasInputs = computed(() => {
+        return !isRule.value && 
+               props.selectedBlock?.inputs && 
+               props.selectedBlock.inputs.length > 0;
+    });
+
+    const hasOutputs = computed(() => {
+        return !isRule.value && 
+               props.selectedBlock?.outputs && 
+               props.selectedBlock.outputs.length > 0;
+    });
+
+    const hasExpertTools = computed(() => {
+        return selectedExpert.value?.tools && selectedExpert.value.tools.length > 0;
+    });
+
+    const showDeleteButton = computed(() => {
+        return props.selectedBlock && 
+               !isPlaceholder.value && 
+               props.selectedBlock.type !== 'rule-placeholder';
+    });
 
     // Get expert information for expert-type steps
     const selectedExpert = computed(() => {
@@ -336,14 +409,6 @@
         margin-top: var(--space-m);
     }
 
-    .block-inputs h4,
-    .block-outputs h4 {
-        font-size: var(--font-size-s);
-        font-weight: var(--font-weight-semibold);
-        color: var(--color-surface-fg-secondary);
-        margin-bottom: var(--space-xs);
-    }
-
     .input-list,
     .output-list {
         display: flex;
@@ -372,4 +437,4 @@
         color: var(--color-surface-fg);
         margin: 0;
     }
-</style> 
+</style>

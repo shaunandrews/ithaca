@@ -13,7 +13,7 @@
             </div>
             <div class="content" v-html="renderedContent"></div>
             
-            <div v-if="message.role === 'agent'" class="meta">
+            <div v-if="message.role === 'agent'" class="meta text-meta">
                 <!-- <div class="meta-item timestamp">{{ formatDate(datetime) }}</div> -->
                 <div class="agent-info">
                     <div class="meta-item agent-name">WP.com Support Chat</div>
@@ -166,10 +166,6 @@
         margin-top: var(--space-xs);
         display: flex;
         align-items: center;
-        font-size: var(--font-size-xs);
-        font-weight: var(--font-weight-medium);
-        text-transform: uppercase;
-        color: var(--color-chrome-fg-tertiary);
         gap: var(--space-xs);
     }
 
@@ -292,9 +288,11 @@
         background: var(--color-surface-tint);
         padding: var(--space-xxs) var(--space-xs);
         border-radius: var(--radius-s);
-        font-family: var(--font-family-mono, 'SF Mono', Consolas, monospace);
-        font-size: 0.9em;
         border: 1px solid var(--color-surface-tint);
+    }
+
+    .content :deep(code) {
+        @apply text-code;
     }
 
     .content :deep(pre) {

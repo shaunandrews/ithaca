@@ -89,15 +89,15 @@
 
     .dialog-title {
         margin: 0;
-        font-size: 1.25rem;
-        font-weight: 600;
+        font-size: var(--font-size-xl);
+        font-weight: var(--font-weight-semibold);
         color: var(--color-surface-fg);
     }
 
     .dialog-description {
         margin: 0.5rem 0 0;
         color: var(--color-surface-fg-muted);
-        line-height: 1.5;
+        line-height: var(--line-height-normal);
     }
 
     .dialog-body {
@@ -121,8 +121,8 @@
         background: var(--color-surface);
         color: var(--color-surface-fg);
         cursor: pointer;
-        font-size: 0.875rem;
-        font-weight: 500;
+        font-size: var(--font-size-s);
+        font-weight: var(--font-weight-medium);
         transition: all 0.2s ease;
     }
 

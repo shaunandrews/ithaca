@@ -106,8 +106,32 @@ export function usePopoverPosition(triggerRef, popoverRef, options = {}) {
                 break;
         }
 
-        // Constrain to viewport bounds
-        x = Math.max(OFFSET, Math.min(x, viewport.width - popoverRect.width - OFFSET));
+        // Constrain to viewport bounds while preserving alignment intent
+        const [mainDir, align] = finalPlacement.split('-');
+        
+        // For end alignments, try to preserve right-edge alignment
+        if (align === 'end' && (mainDir === 'top' || mainDir === 'bottom')) {
+            // Only constrain if absolutely necessary (tooltip would go off-screen)
+            if (x + popoverRect.width > viewport.width - OFFSET) {
+                x = viewport.width - popoverRect.width - OFFSET;
+            }
+            // Don't constrain left edge for end alignments unless really necessary
+            if (x < OFFSET) {
+                x = OFFSET;
+            }
+        } else if (align === 'start' && (mainDir === 'top' || mainDir === 'bottom')) {
+            // For start alignments, try to preserve left-edge alignment  
+            if (x < OFFSET) {
+                x = OFFSET;
+            }
+            if (x + popoverRect.width > viewport.width - OFFSET) {
+                x = viewport.width - popoverRect.width - OFFSET;
+            }
+        } else {
+            // Default constraining for center and vertical alignments
+            x = Math.max(OFFSET, Math.min(x, viewport.width - popoverRect.width - OFFSET));
+        }
+        
         y = Math.max(OFFSET, Math.min(y, viewport.height - popoverRect.height - OFFSET));
 
         position.value = {

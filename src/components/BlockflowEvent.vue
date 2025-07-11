@@ -207,7 +207,7 @@
     .expert-description {
         font-size: var(--font-size-s);
         color: var(--color-surface-fg-secondary);
-        max-width: 200px;
+        max-width: 260px;
         line-height: var(--line-height-tight);
     }
 

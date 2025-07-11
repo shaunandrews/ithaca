@@ -452,6 +452,6 @@
     .item-description {
         font-size: var(--font-size-xs);
         color: var(--color-surface-fg-secondary);
-        line-height: 1.4;
+        line-height: var(--line-height-compact);
     }
 </style> 

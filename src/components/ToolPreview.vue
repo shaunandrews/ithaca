@@ -8,7 +8,7 @@
             <img v-if="tool.icon" :src="tool.icon" class="tool-icon" />
             <h5 class="tool-title">{{ tool.title }}</h5>
         </div>
-        <p class="tool-description">{{ tool.description }}</p>
+        <p class="tool-description text-description">{{ tool.description }}</p>
     </div>
 </template>
 
@@ -48,8 +48,7 @@
         font-size: var(--font-size-s);
     }
     .tool-description {
-        font-size: var(--font-size-s);
-        color: var(--color-surface-fg-secondary);
+        /* Uses .text-description utility class */
         margin: 0;
     }
 </style>

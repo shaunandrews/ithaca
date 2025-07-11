@@ -19,8 +19,8 @@
                 />
             </span>
             <div class="vstack">
-                <span class="autocomplete-title">{{ tool.title }}</span>
-                <span class="autocomplete-desc">{{ tool.description }}</span>
+                <span class="autocomplete-title text-medium">{{ tool.title }}</span>
+                <span class="autocomplete-desc text-small">{{ tool.description }}</span>
             </div>
         </li>
     </ul>
@@ -76,14 +76,14 @@
     }
 
     .autocomplete-title {
-        font-weight: var(--font-weight-medium);
+        /* Uses .text-medium utility class */
     }
 
     .autocomplete-desc {
         flex: 1;
         white-space: normal;
-        font-size: var(--font-size-s);
         line-height: var(--line-height-tight);
         opacity: 0.7;
+        /* Uses .text-small utility class */
     }
 </style>

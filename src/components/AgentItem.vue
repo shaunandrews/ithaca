@@ -61,7 +61,7 @@
 
     .agent-description {
         color: var(--color-surface-fg-secondary);
-        line-height: 1.5em;
+        line-height: var(--line-height-normal);
         min-height: 3em; /* Always at least 2 lines tall */
         display: -webkit-box;
         -webkit-line-clamp: 2;

@@ -131,7 +131,7 @@
     }
 
     .details-content {
-        padding: var(--space-m);
+        padding: var(--space-m) var(--space-l);
     }
 
     .details-content h2 {
@@ -196,101 +196,4 @@
     .agent-preview-footer button:hover {
         background-color: var(--color-surface-tint);
     }
-
-    .expert-info {
-        margin-top: var(--space-m);
-        padding: var(--space-m);
-        border: 1px solid var(--color-surface-tint);
-        border-radius: var(--radius-s);
-        background-color: var(--color-surface-tint-light);
-    }
-
-    .expert-details {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-xxs);
-    }
-
-    .expert-title {
-        font-size: var(--font-size-m);
-        font-weight: var(--font-weight-semibold);
-        color: var(--color-surface-fg);
-    }
-
-    .info-group {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-xs);
-        margin-bottom: var(--space-m);
-    }
-
-    .info-group:last-child {
-        margin-bottom: 0;
-    }
-
-    .info-group label {
-        font-size: var(--font-size-s);
-        font-weight: var(--font-weight-semibold);
-        color: var(--color-surface-fg-secondary);
-    }
-
-    .info-group small {
-        font-size: var(--font-size-xs);
-        color: var(--color-surface-fg-tertiary);
-        margin-top: var(--space-xxs);
-    }
-
-    .tools-list {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-xs);
-    }
-
-    .tool-item {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-xxs);
-        padding: var(--space-xs);
-        background-color: var(--color-surface);
-        border: 1px solid var(--color-surface-tint);
-        border-radius: var(--radius-xs);
-    }
-
-    .tool-title {
-        font-size: var(--font-size-s);
-        font-weight: var(--font-weight-medium);
-        color: var(--color-surface-fg);
-    }
-
-    .tool-subtitle {
-        font-size: var(--font-size-xs);
-        color: var(--color-surface-fg-tertiary);
-    }
-
-    .usage-badge {
-        display: inline-block;
-        padding: var(--space-xxs) var(--space-xs);
-        border-radius: var(--radius-xs);
-        font-size: var(--font-size-xs);
-        font-weight: var(--font-weight-medium);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .usage-high {
-        background-color: var(--color-red-tint);
-        color: var(--color-red-fg);
-    }
-
-    .usage-medium {
-        background-color: var(--color-yellow-tint);
-        color: var(--color-yellow-fg);
-    }
-
-    .usage-daily {
-        background-color: var(--color-green-tint);
-        color: var(--color-green-fg);
-    }
-
-
 </style> 

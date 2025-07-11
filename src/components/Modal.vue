@@ -58,7 +58,7 @@
         right: 1rem;
         background: transparent;
         border: none;
-        font-size: 1.5rem;
+        font-size: var(--font-size-l);
         cursor: pointer;
     }
 </style>

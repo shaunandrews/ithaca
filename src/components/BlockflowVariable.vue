@@ -282,11 +282,11 @@
     }
 
     .tooltip-type {
-        font-size: var(--font-size-xs);
-        font-weight: var(--font-weight-medium);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
         opacity: 0.7;
+    }
+
+    .tooltip-type {
+        @apply text-meta;
     }
 
     .tooltip-name {
@@ -308,20 +308,22 @@
     }
 
     .tooltip-example-label {
-        font-size: var(--font-size-xs);
-        font-weight: var(--font-weight-medium);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
         opacity: 0.7;
     }
 
+    .tooltip-example-label {
+        @apply text-meta;
+    }
+
     .tooltip-example-value {
-        font-family: var(--font-monospace);
-        font-size: var(--font-size-xs);
         background: rgba(255, 255, 255, 0.1);
         padding: var(--space-xxs) var(--space-xs);
         border-radius: var(--radius-s);
         color: var(--color-tooltip-fg);
+    }
+
+    .tooltip-example-value {
+        @apply text-code text-xs;
     }
 
     /* Type-specific tooltip styling */

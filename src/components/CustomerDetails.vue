@@ -14,27 +14,27 @@
             <h4>Personal Context</h4>
             <div class="context-grid">
                 <div class="context-item">
-                    <span class="label">Site URL:</span>
+                    <span class="text-label">Site URL:</span>
                     <span class="value">myawesomeblog.wordpress.com</span>
                 </div>
                 <div class="context-item">
-                    <span class="label">Site Title:</span>
+                    <span class="text-label">Site Title:</span>
                     <span class="value">My Awesome Blog</span>
                 </div>
                 <div class="context-item">
-                    <span class="label">User Role:</span>
+                    <span class="text-label">User Role:</span>
                     <span class="value">Administrator</span>
                 </div>
                 <div class="context-item">
-                    <span class="label">Plan:</span>
+                    <span class="text-label">Plan:</span>
                     <span class="value">Business</span>
                 </div>
                 <div class="context-item">
-                    <span class="label">Account Type:</span>
+                    <span class="text-label">Account Type:</span>
                     <span class="value">WordPress.com</span>
                 </div>
                 <div class="context-item">
-                    <span class="label">Location:</span>
+                    <span class="text-label">Location:</span>
                     <span class="value">San Francisco, CA</span>
                 </div>
             </div>
@@ -49,8 +49,8 @@
                         <span class="purchase-amount">$300/year</span>
                     </div>
                     <div class="purchase-meta">
-                        <span class="purchase-date">Renewed Jan 15, 2024</span>
-                        <span class="purchase-status active">Active</span>
+                        <span class="purchase-date text-xs">Renewed Jan 15, 2024</span>
+                        <span class="purchase-status text-badge active">Active</span>
                     </div>
                 </div>
 
@@ -60,8 +60,8 @@
                         <span class="purchase-amount">$18/year</span>
                     </div>
                     <div class="purchase-meta">
-                        <span class="purchase-date">Renewed Jan 15, 2024</span>
-                        <span class="purchase-status active">Active</span>
+                        <span class="purchase-date text-xs">Renewed Jan 15, 2024</span>
+                        <span class="purchase-status text-badge active">Active</span>
                     </div>
                 </div>
 
@@ -71,8 +71,8 @@
                         <span class="purchase-amount">$79</span>
                     </div>
                     <div class="purchase-meta">
-                        <span class="purchase-date">Purchased Dec 3, 2023</span>
-                        <span class="purchase-status completed">Completed</span>
+                        <span class="purchase-date text-xs">Purchased Dec 3, 2023</span>
+                        <span class="purchase-status text-badge completed">Completed</span>
                     </div>
                 </div>
 
@@ -82,8 +82,8 @@
                         <span class="purchase-amount">$48/year</span>
                     </div>
                     <div class="purchase-meta">
-                        <span class="purchase-date">Added Nov 22, 2023</span>
-                        <span class="purchase-status active">Active</span>
+                        <span class="purchase-date text-xs">Added Nov 22, 2023</span>
+                        <span class="purchase-status text-badge active">Active</span>
                     </div>
                 </div>
             </div>
@@ -211,11 +211,6 @@
         border-bottom: none;
     }
 
-    .label {
-        font-size: var(--font-size-s);
-        color: var(--color-chrome-fg-secondary);
-        font-weight: var(--font-weight-medium);
-    }
 
     .value {
         font-size: var(--font-size-s);
@@ -262,26 +257,22 @@
         align-items: center;
     }
 
-    .purchase-date {
-        font-size: var(--font-size-xs);
-        color: var(--color-chrome-fg-secondary);
+    .purchase-date text-xs {
+        /* Uses .text-xs utility class */
     }
 
-    .purchase-status {
-        font-size: var(--font-size-xs);
-        font-weight: var(--font-weight-medium);
+    .purchase-status text-badge {
+        /* Uses .text-badge utility class */
         padding: var(--space-xxs) var(--space-xs);
         border-radius: var(--radius-s);
-        text-transform: uppercase;
-        letter-spacing: 0.025em;
     }
 
-    .purchase-status.active {
+    .purchase-status text-badge.active {
         background: var(--color-success-bg);
         color: var(--color-success-fg);
     }
 
-    .purchase-status.completed {
+    .purchase-status text-badge.completed {
         background: var(--color-surface-tint);
         color: var(--color-chrome-fg-secondary);
     }
@@ -340,7 +331,7 @@
         padding: var(--space-xxs) var(--space-xs);
         border-radius: var(--radius-s);
         text-transform: uppercase;
-        letter-spacing: 0.025em;
+        letter-spacing: var(--letter-spacing-wide);
     }
 
     .support-status.resolved {

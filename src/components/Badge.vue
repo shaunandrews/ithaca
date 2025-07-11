@@ -1,5 +1,5 @@
 <template>
-    <div class="badge" :class="badgeClass">
+    <div class="badge text-badge" :class="badgeClass">
         <slot />
     </div>
 </template>
@@ -28,10 +28,6 @@
         align-items: center;
         padding: var(--space-xxs) var(--space-xs);
         border-radius: var(--radius-xl);
-        font-size: var(--font-size-xs);
-        font-weight: var(--font-weight-medium);
-        text-transform: uppercase;
-        letter-spacing: 0.025em;
     }
 
     .badge--default {
