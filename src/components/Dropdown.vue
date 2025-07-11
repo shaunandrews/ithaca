@@ -134,7 +134,7 @@
         align-items: center;
         justify-content: space-between;
         gap: var(--space-xxs);
-        padding: var(--space-xxs) var(--space-xs);
+        padding: var(--space-xs) var(--space-xs);
         background: var(--color-surface);
         border: 1px solid var(--color-surface-tint-dark);
         border-radius: var(--radius);
