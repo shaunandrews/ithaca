@@ -1,8 +1,10 @@
 <template>
     <div class="agent-details">
-        <h3 v-if="agent" class="agent-title">{{ agent.title }}</h3>
-        <p v-if="agent">{{ agent.description }}</p>
-        
+        <header>
+            <h3 v-if="agent" class="agent-title">{{ agent.title }}</h3>
+            <p v-if="agent" class="text-description">{{ agent.description }}</p>
+        </header>
+
         <dl>
             <dt>Created</dt>
             <dd>{{ agent.createdAt }}</dd>
@@ -18,19 +20,21 @@
         
         <hr />
 
-        <div class="prompt">
-            <label>Base prompt</label>
-            <textarea></textarea>
-        </div>
+        <FieldGroup 
+            label="Base prompt"
+            type="textarea"
+            :rows="4"
+            v-model="basePrompt"
+        />
 
+        <FieldGroup 
+            label="Greeting"
+            type="textarea"
+            :rows="3"
+            v-model="greeting"
+            description="This is the greeting message that will be sent when they start a conversation with the agent. Often used for previewing and testing agents."
+        />
 
-        <hr />
-
-        <div>
-            <label>Greeting</label>
-            <textarea></textarea>
-            <small>This is the greeting message that will be sent when they start a conversation with the agent. Often used for previewing and testing agents.</small>
-        </div>
         <hr />
 
         <h4>Global context</h4>
@@ -60,7 +64,9 @@
 </template>
 
 <script setup>
+    import { ref } from 'vue';
     import BlockflowVariable from './BlockflowVariable.vue';
+    import FieldGroup from './FieldGroup.vue';
 
     const props = defineProps({
         agent: {
@@ -76,6 +82,10 @@
             default: () => []
         }
     });
+
+    // Reactive data for form fields
+    const basePrompt = ref(props.agent?.basePrompt || '');
+    const greeting = ref(props.agent?.greeting || '');
 </script>
 
 <style scoped>

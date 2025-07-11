@@ -22,13 +22,16 @@
     - [ ] Customize prompts and ouputs
     - [x] Editing expert instructions
 - [ ] Adding a new rule
-    - [ ] Need a better UI for picking conditions, inputs, and values.
+    - [x] Need a better UI for picking conditions, inputs, and values.
+    - [ ] Autocomplete for variables
+    - [ ] Disable/Explain invalid variables and conditionals (greater than doesn't make sense for a string)
 - [ ] Editing rules
     - [ ] Details sidebar UI needs improvement
     - [ ] Sidebar list of blocks within the rules
 - [ ] Previewing a workflow
     - [ ] Need to simulate the workflow "running" with a log in the sidebar.
     - [ ] Blocks in the flow needs to visually simulate running states: in-progress, running, pending, finished, error
+- [ ] Drag-n-drop
 
 ## Versions
 - [ ] Needs a basic design for listing lots of versions
