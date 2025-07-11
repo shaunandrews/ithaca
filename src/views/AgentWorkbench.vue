@@ -36,6 +36,7 @@
                             :key="`${step.uid}-${branch.condition.variable}-${branch.condition.value}`"
                             :ruleVariable="branch.condition.variable"
                             :ruleValue="branch.condition.value"
+                            :ruleCondition="branch.condition.type || CONDITIONS.EQUALS.value"
                             :steps="branch.steps"
                             :selected="(selectedBlock?.type === 'rule' && selectedBlock?.variable === branch.condition.variable && selectedBlock?.value === branch.condition.value) || (selectedBlock?.type === 'flow' && selectedBlock?.uid === step.uid)"
                             @select="handleBlockSelect"
@@ -220,6 +221,7 @@
         getWorkflowById 
     } from '../data/workflows.js';
     import { agents } from '@/data/agents.js';
+    import { CONDITIONS } from '../components/../utils/ruleConditions.js';
 
     const route = useRoute();
     const agentId = computed(() => Number(route.params.id));

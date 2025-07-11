@@ -1,7 +1,7 @@
 <template>
     <div class="rule-item vstack" :class="{ selected: selected }" @click="handleClick">
         <div class="rule-condition">
-            {{ ruleType }} <BlockflowVariable type="rule-variable" :value="ruleVariable" /> is <BlockflowVariable type="rule-value" :value="ruleValue" />
+            {{ ruleType }} <BlockflowVariable type="rule-variable" :value="ruleVariable" /> {{ getConditionLabel(ruleCondition) }} <BlockflowVariable type="rule-value" :value="ruleValue" />
         </div>
         <div class="rule-action">
             <slot />
@@ -11,6 +11,7 @@
 
 <script setup>
     import BlockflowVariable from './BlockflowVariable.vue';
+    import { getConditionLabel } from '../utils/ruleConditions.js';
     
     const props = defineProps({
         ruleType: {
@@ -26,6 +27,10 @@
             type: String,
             required: true
         },
+        ruleCondition: {
+            type: String,
+            default: 'equals'
+        },
         selected: {
             type: Boolean,
             default: false
@@ -38,6 +43,8 @@
 
     const emit = defineEmits(['select']);
 
+    // getConditionLabel imported from utils
+
     const handleClick = (event) => {
         // Stop event propagation to prevent parent elements from capturing the click
         event.stopPropagation();
@@ -48,8 +55,9 @@
             variable: props.ruleVariable,
             value: props.ruleValue,
             steps: props.steps || [],
-            title: `${props.ruleType} ${props.ruleVariable} is ${props.ruleValue}`,
-            description: `Rule that executes when ${props.ruleVariable} equals ${props.ruleValue}`
+            title: `${props.ruleType} statement`,
+            description: `Rule that executes when ${props.ruleVariable} ${getConditionLabel(props.ruleCondition)} ${props.ruleValue}`,
+            ruleCondition: props.ruleCondition
         });
     };
 </script>

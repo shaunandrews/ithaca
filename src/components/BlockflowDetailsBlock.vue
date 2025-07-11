@@ -1,10 +1,8 @@
 <template>
     <div class="block-details">
         <div v-if="selectedBlock" class="block-details-header hstack">
-            <div class="block-info-header">
-                <h3 v-if="selectedBlock.title" class="block-title">{{ selectedBlock.title }}</h3>
-                <Badge :variant="selectedBlock.type">{{ selectedBlock.type }}</Badge>
-            </div>
+            <h3 v-if="selectedBlock.title" class="block-title">{{ selectedBlock.title }}</h3>
+            <Badge :variant="selectedBlock.type">{{ selectedBlock.type }}</Badge>
         </div>
 
         <div v-if="selectedBlock" class="block-details-content">
@@ -17,26 +15,28 @@
 
             <!-- Rule Block -->
             <template v-else-if="isRule">
-                <div class="rule-info">
-                    <label>Rule Type</label>
-                    <input type="text" :value="selectedBlock.ruleType" readonly />
-                    
-                    <label>Variable</label>
-                    <input type="text" :value="selectedBlock.variable" readonly />
-                    
-                    <label>Value</label>
-                    <input type="text" :value="selectedBlock.value" readonly />
-                    
-                    <label>Description</label>
-                    <textarea :value="selectedBlock.description" readonly />
-                    
-                    <div v-if="hasSteps" class="rule-steps">
-                        <h4>Steps in this rule</h4>
-                        <div class="steps-list">
-                            <div v-for="step in selectedBlock.steps" :key="step.uid" class="step-item">
-                                <span class="step-title">{{ step.title }}</span>
-                                <span class="step-type">{{ step.type }}</span>
-                            </div>
+                <p class="text-description">{{ selectedBlock.description }}</p>
+                <hr />
+
+                <h4>Expression</h4>
+                <RuleExpressionEditor
+                    :initialVariable="selectedBlock.variable"
+                    :initialCondition="selectedBlock.ruleType || 'equals'"
+                    :initialValue="selectedBlock.value"
+                    :showActions="false"
+                    @update:variable="handleRuleVariableUpdate"
+                    @update:condition="handleRuleConditionUpdate"
+                    @update:value="handleRuleValueUpdate"
+                />
+                
+                <div v-if="hasSteps" class="rule-steps">
+                    <hr />
+
+                    <h4>Steps in this rule</h4>
+                    <div class="steps-list">
+                        <div v-for="step in selectedBlock.steps" :key="step.uid" class="step-item">
+                            <span class="step-title">{{ step.title }}</span>
+                            <span class="step-type">{{ step.type }}</span>
                         </div>
                     </div>
                 </div>
@@ -88,12 +88,17 @@
                     <div class="flow-rules">
                         <h4>Rules in this flow</h4>
                         <div class="rules-list">
-                            <div v-for="branch in selectedBlock.branches" :key="`${branch.condition.variable}-${branch.condition.value}`" class="rule-item">
-                                <div class="rule-condition">
-                                    <span class="rule-type">{{ branch.condition.type || 'If' }}</span>
-                                    <span class="rule-variable">{{ branch.condition.variable }}</span>
-                                    <span class="rule-operator">is</span>
-                                    <span class="rule-value">{{ branch.condition.value }}</span>
+                            <div v-for="(branch, branchIndex) in selectedBlock.branches" :key="`${branch.condition.variable}-${branch.condition.value}`" class="rule-item">
+                                <div class="flow-rule-expression">
+                                    <RuleExpressionEditor
+                                        :initialVariable="branch.condition.variable"
+                                        :initialCondition="branch.condition.type || 'equals'"
+                                        :initialValue="branch.condition.value"
+                                        :showActions="false"
+                                        @update:variable="(value) => handleFlowRuleUpdate(branchIndex, 'variable', value)"
+                                        @update:condition="(value) => handleFlowRuleUpdate(branchIndex, 'condition', value)"
+                                        @update:value="(value) => handleFlowRuleUpdate(branchIndex, 'value', value)"
+                                    />
                                 </div>
                                 <div v-if="branch.steps && branch.steps.length > 0" class="rule-steps">
                                     <span class="steps-count">{{ branch.steps.length }} step{{ branch.steps.length === 1 ? '' : 's' }}</span>
@@ -172,13 +177,14 @@
 </template>
 
 <script setup>
-    import { computed, ref, watch } from 'vue';
+    import { computed, ref } from 'vue';
     import { SquareMinus } from 'lucide-vue-next';
     import BlockflowVariable from './BlockflowVariable.vue';
     import Badge from './Badge.vue';
     import BlockflowLibrary from './BlockflowLibrary.vue';
     import InstructionsField from './InstructionsField.vue';
     import ToolListItem from './ToolListItem.vue';
+    import RuleExpressionEditor from './RuleExpressionEditor.vue';
     import { getExpertById } from '../data/workflows.js';
     import { parseInstructions } from '../data/parseInstructions.js';
     import { tools } from '../data/tools.js';
@@ -274,7 +280,7 @@
     });
 
     // Instructions field event handlers
-    const onInstructionsInput = (e) => {
+    const onInstructionsInput = () => {
         const sel = window.getSelection();
         if (!sel.rangeCount) return;
         const range = sel.getRangeAt(0);
@@ -380,6 +386,24 @@
             emit('deleteEvent', props.selectedBlock);
         }
     };
+
+    // Rule editing handlers (prototype - no real data persistence)
+    const handleRuleVariableUpdate = (value) => {
+        console.log('Rule variable updated:', value);
+    };
+
+    const handleRuleConditionUpdate = (value) => {
+        console.log('Rule condition updated:', value);
+    };
+
+    const handleRuleValueUpdate = (value) => {
+        console.log('Rule value updated:', value);
+    };
+
+    // Flow rule editing handlers (prototype - no real data persistence)
+    const handleFlowRuleUpdate = (branchIndex, field, value) => {
+        console.log(`Flow rule ${branchIndex} ${field} updated:`, value);
+    };
 </script>
 
 <style scoped>
@@ -423,6 +447,8 @@
 
     .block-details-header {
         margin-bottom: var(--space-m);
+        justify-content: space-between;
+        align-items: center;
     }
 
     .block-info-header {
@@ -436,5 +462,13 @@
         font-weight: var(--font-weight-semibold);
         color: var(--color-surface-fg);
         margin: 0;
+    }
+
+    .flow-rule-expression {
+        margin-bottom: var(--space-s);
+        padding: var(--space-s);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-s);
+        background-color: var(--color-surface-bg-subtle);
     }
 </style>
