@@ -36,7 +36,7 @@
         size: {
             type: String,
             default: 'medium',
-            validator: (value) => ['small', 'medium', 'large'].includes(value),
+            validator: (value) => ['small', 'medium', 'large', 'xlarge'].includes(value),
         },
         showAvatar: {
             type: Boolean,
@@ -75,6 +75,7 @@
             small: 20,
             medium: 24,
             large: 40,
+            xlarge: 64,
         };
         return sizes[props.size];
     });
@@ -184,6 +185,21 @@
         font-size: var(--font-size-s);
     }
 
+    .size-xlarge .customer-avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: var(--radius-l);
+        border: 3px solid var(--color-surface-tint);
+    }
+
+    .size-xlarge .customer-name {
+        font-size: var(--font-size-l);
+    }
+
+    .size-xlarge .customer-email {
+        font-size: var(--font-size-m);
+    }
+
     /* Hover effects */
     .widget-customer:hover .customer-avatar {
         transform: scale(1.05);
@@ -191,5 +207,9 @@
 
     .size-large:hover .customer-avatar {
         transform: scale(1.1);
+    }
+
+    .size-xlarge:hover .customer-avatar {
+        transform: scale(1.08);
     }
 </style>
