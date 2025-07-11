@@ -3,11 +3,15 @@
         <div 
             v-if="resizable"
             class="resize-handle"
+            :class="{ 'is-hovering': isHovering }"
             @mousedown="startResize"
+            @mouseenter="isHovering = true"
+            @mouseleave="isHovering = false"
         ></div>
         <div
             v-if="resizable"
             class="resize-knob"
+            :class="{ 'is-dragging': isResizing, 'is-hovering': isHovering }"
         ></div>
         <slot />
     </div>
@@ -37,6 +41,7 @@ const props = defineProps({
 
 const currentWidth = ref(props.defaultWidth);
 const isResizing = ref(false);
+const isHovering = ref(false);
 const startX = ref(0);
 const startWidth = ref(0);
 
@@ -94,6 +99,7 @@ onUnmounted(() => {
         cursor: ew-resize;
         background: transparent;
         z-index: 10000;
+        transition: var(--transition-quick);
     }
 
     .resize-handle:hover {
@@ -103,7 +109,7 @@ onUnmounted(() => {
 
     .resize-handle:active {
         background: var(--color-accent);
-        opacity: 1;
+        opacity: 0.6;
     }
 
     .resize-knob {
@@ -116,6 +122,17 @@ onUnmounted(() => {
         background: var(--color-chrome);
         border: 1px solid var(--color-surface-tint-dark);
         border-radius: 4px;
+        transition: var(--transition-quick);
         pointer-events: none;
+    }
+
+    .resize-knob.is-hovering {
+        /* background: red; */
+        border-color: var(--color-surface-fg-secondary)
+    }
+
+    .resize-knob.is-dragging {
+        background: var(--color-accent);
+        border-color: var(--color-accent-fg);
     }
 </style> 
