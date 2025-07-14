@@ -271,15 +271,6 @@
         list-style-type: decimal;
     }
 
-    .content :deep(blockquote) {
-        margin: var(--space-m) 0;
-        padding: var(--space-s) var(--space-m);
-        border-left: 3px solid var(--color-accent);
-        background: var(--color-surface-tint);
-        border-radius: 0 var(--radius-s) var(--radius-s) 0;
-        font-style: italic;
-    }
-
     .content :deep(blockquote p) {
         margin: 0;
     }
