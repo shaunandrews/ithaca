@@ -32,6 +32,7 @@ chat with my site
 - [ ] Chat as a whole, random sample of messages
 
 ## Workbench
+- [x] Editing agent details including name, description, model, language, temperature (an AI thing), and custom instructions.
 - [ ] Adding a new block
     - [ ] Update the block types, and selection interface. Only show expert, tool, and flow blocks.
     - [ ] Need to allow for picking from existing experts and tools. Need a quick picker, and maybe a way to open a larger library/modal/sidebar.
