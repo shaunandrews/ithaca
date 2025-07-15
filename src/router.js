@@ -1,9 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import InsightsLayout from './views/InsightsLayout.vue';
-import InsightsTopics from './views/InsightsTopics.vue';
-import InsightsSentiment from './views/InsightsSentiment.vue';
-import InsightsPerformance from './views/InsightsPerformance.vue';
-import InsightsActivity from './views/InsightsActivity.vue';
 import Agents from './views/Agents.vue';
 import Tools from './views/Tools.vue';
 import AgentLayout from './views/AgentLayout.vue';
@@ -21,37 +16,6 @@ import ExpertVersions from './views/ExpertVersions.vue';
 import AgentVisualBuilder from './views/AgentVisualBuilder.vue';
 
 const routes = [
-    {
-        path: '/insights',
-        component: InsightsLayout,
-        children: [
-            {
-                path: '',
-                name: 'InsightsTopicsDefault',
-                component: InsightsTopics,
-            },
-            {
-                path: 'topics',
-                name: 'InsightsTopics',
-                component: InsightsTopics,
-            },
-            {
-                path: 'sentiment',
-                name: 'InsightsSentiment',
-                component: InsightsSentiment,
-            },
-            {
-                path: 'performance',
-                name: 'InsightsPerformance',
-                component: InsightsPerformance,
-            },
-            {
-                path: 'activity',
-                name: 'InsightsActivity',
-                component: InsightsActivity,
-            },
-        ],
-    },
     {
         path: '/',
         name: 'Agents',
