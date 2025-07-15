@@ -357,95 +357,182 @@ export const tumblrEmailTriageWorkflow = {
 
 export const bigSkyWorkflow = {
     id: 'big-sky-workflow',
-    name: 'Big Sky HTML Block Parser',
-    description: 'Designing beautiful sites for WordPress.com by parsing HTML blocks',
+    name: 'Big Sky Conversation QA',
+    description: 'AI website builder assistant for WordPress.com with conversation QA support',
     steps: [
         {
-            uid: 'receive-request',
+            uid: 'receive-messages',
             stepNumber: 1,
-            title: 'Receive parse request',
+            title: 'Receive messages',
             type: 'trigger',
             inputs: [],
-            outputs: ['html_input', 'block_name']
+            outputs: ['messages']
         },
         {
-            uid: 'validate-html',
+            uid: 'message-parsing',
             stepNumber: 2,
-            title: 'Validate HTML structure',
-            type: 'tool',
-            inputs: ['html_input'],
-            outputs: ['html_valid', 'validation_errors']
-        },
-        {
-            uid: 'parse-html',
-            stepNumber: 3,
-            title: 'Parse HTML content',
-            type: 'tool',
-            inputs: ['html_input'],
-            outputs: ['parsed_blocks', 'block_tree']
-        },
-        {
-            uid: 'search-block',
-            stepNumber: 4,
-            title: 'Search for requested block',
+            title: 'Message and Context Parser',
             type: 'expert',
             expertId: 1,
-            inputs: ['parsed_blocks', 'block_name'],
-            outputs: ['block_found', 'matching_blocks']
+            inputs: ['messages'],
+            outputs: ['parsed_messages']
         },
         {
-            uid: 'handle-result',
-            stepNumber: 5,
-            title: 'Handle search result',
+            uid: 'classify-message',
+            stepNumber: 3,
+            title: 'Classify Latest Message',
+            type: 'expert',
+            expertId: 2,
+            inputs: ['parsed_messages'],
+            outputs: ['question_tags']
+        },
+        {
+            uid: 'conditional-routing',
+            stepNumber: 4,
+            title: 'Route based on inquiry type',
             type: 'control-flow',
             controlType: 'conditional',
-            inputs: ['block_found', 'matching_blocks'],
+            inputs: ['question_tags'],
             outputs: [],
             branches: [
                 {
                     condition: {
                         type: 'equals',
-                        variable: 'block_found',
-                        value: 'true'
+                        variable: 'question_tags.inquiry_type',
+                        value: 'request-for-human-support'
                     },
                     steps: [
                         {
-                            uid: 'extract-block-html',
-                            title: 'Extract block HTML',
-                            type: 'tool',
-                            inputs: ['matching_blocks'],
-                            outputs: ['block_html']
+                            uid: 'check-context',
+                            title: 'Check for Context Sequential Chain',
+                            type: 'expert',
+                            expertId: 3,
+                            inputs: ['messages'],
+                            outputs: ['context_tags']
                         },
                         {
-                            uid: 'return-success',
-                            title: 'Return success response',
-                            type: 'tool',
-                            inputs: ['block_html'],
-                            outputs: ['response']
+                            uid: 'escalation-decision',
+                            title: 'Escalation Decision',
+                            type: 'control-flow',
+                            controlType: 'conditional',
+                            inputs: ['context_tags'],
+                            outputs: [],
+                            branches: [
+                                {
+                                    condition: {
+                                        type: 'equals',
+                                        variable: 'context_tags.should_escalate_to_human_support',
+                                        value: 'true'
+                                    },
+                                    steps: [
+                                        {
+                                            uid: 'escalate-to-human',
+                                            title: 'Escalate to human support',
+                                            type: 'tool',
+                                            inputs: [],
+                                            outputs: ['message', 'flags']
+                                        }
+                                    ]
+                                },
+                                {
+                                    condition: {
+                                        type: 'equals',
+                                        variable: 'context_tags.should_escalate_to_human_support',
+                                        value: 'false'
+                                    },
+                                    steps: [
+                                        {
+                                            uid: 'conversation-qa-for-context',
+                                            title: 'Conversation QA for more context',
+                                            type: 'expert',
+                                            expertId: 4,
+                                            inputs: ['messages'],
+                                            outputs: ['message', 'sources', 'flags']
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 },
                 {
                     condition: {
                         type: 'equals',
-                        variable: 'block_found',
-                        value: 'false'
+                        variable: 'question_tags.is_legal_inquiry',
+                        value: 'true'
                     },
                     steps: [
                         {
-                            uid: 'generate-error',
-                            title: 'Generate error message',
-                            type: 'expert',
-                            expertId: 2,
-                            inputs: ['block_name', 'parsed_blocks'],
-                            outputs: ['error_message']
-                        },
-                        {
-                            uid: 'return-error',
-                            title: 'Return error response',
+                            uid: 'legal-escalation',
+                            title: 'Forward to human support (Legal)',
                             type: 'tool',
-                            inputs: ['error_message'],
-                            outputs: ['response']
+                            inputs: [],
+                            outputs: ['message', 'flags']
+                        }
+                    ]
+                },
+                {
+                    condition: {
+                        type: 'equals',
+                        variable: 'question_tags.is_wpengine_inquiry',
+                        value: 'true'
+                    },
+                    steps: [
+                        {
+                            uid: 'wpengine-escalation',
+                            title: 'Forward to human support (WPEngine)',
+                            type: 'tool',
+                            inputs: [],
+                            outputs: ['message', 'flags']
+                        }
+                    ]
+                },
+                {
+                    condition: {
+                        type: 'equals',
+                        variable: 'question_tags.is_ai_question',
+                        value: 'true'
+                    },
+                    steps: [
+                        {
+                            uid: 'ai-partnerships-escalation',
+                            title: 'Forward to human support (AI Partnerships)',
+                            type: 'tool',
+                            inputs: [],
+                            outputs: ['message', 'flags']
+                        }
+                    ]
+                },
+                {
+                    condition: {
+                        type: 'equals',
+                        variable: 'question_tags.is_frustrated_with_wordpress_com',
+                        value: 'true'
+                    },
+                    steps: [
+                        {
+                            uid: 'frustrated-user-escalation',
+                            title: 'Forward to human support (Frustrated User)',
+                            type: 'tool',
+                            inputs: [],
+                            outputs: ['message', 'flags']
+                        }
+                    ]
+                },
+                {
+                    condition: {
+                        type: 'default',
+                        variable: '',
+                        value: ''
+                    },
+                    steps: [
+                        {
+                            uid: 'support-qa-chain',
+                            title: 'Support QA Chain',
+                            type: 'expert',
+                            expertId: 5,
+                            inputs: ['messages'],
+                            outputs: ['message', 'sources', 'flags']
                         }
                     ]
                 }
@@ -453,7 +540,7 @@ export const bigSkyWorkflow = {
         },
         {
             uid: 'end-flow',
-            stepNumber: 6,
+            stepNumber: 5,
             title: 'End flow',
             type: 'exit',
             inputs: [],
@@ -461,19 +548,27 @@ export const bigSkyWorkflow = {
         }
     ],
     variables: [
-        'html_input',
-        'block_name',
-        'html_valid',
-        'validation_errors',
-        'parsed_blocks',
-        'block_tree',
-        'block_found',
-        'matching_blocks',
-        'block_html',
-        'error_message',
-        'response'
+        'messages',
+        'parsed_messages',
+        'question_tags',
+        'context_tags',
+        'message',
+        'sources',
+        'flags'
     ],
-    contextVariables: []
+    contextVariables: [
+        'inquiry_type',
+        'is_legal_inquiry',
+        'is_wpengine_inquiry',
+        'is_ai_question',
+        'is_frustrated_with_wordpress_com',
+        'language',
+        'product',
+        'category',
+        'should_escalate_to_human_support',
+        'forward_to_human_support',
+        'canned_response'
+    ]
 }
 
 export const agentDaveWorkflow = {

@@ -1,7 +1,24 @@
 # Todo
 
+docsbot
+talk to vip and t51
+
+chat with my site
+- sizable amount of content
+- more interesting for stores, letting customers explore products in a conversational way
+- would they want to tweak AI, how?
+  - They can tweak the experts
+  - default templates/workflows
+
+- Expert
+- Creating workflows from templates/duplicating others
+
 ## General
 - [x] Toolbar component
+- [ ] Better listing for Agents, Experts, and Tools
+- [ ] More examples of agents and experts
+- [ ] More realistic examples of tools
+- [ ] Agent example; Chat with a site
 
 ## Conversation
 - [x] Make converstaion overview list sticky
@@ -12,6 +29,7 @@
 - [x] All activity button is broken after "memory" update
 - [ ] Instead of fixed "sources" and "classifiers," consider these as expert and tool calls, and adapt the UI accordingly
 - [ ] Implement a Review mode, which walks the user through the converasation one message at a time, allowing them to rate tool usages/outcomes
+- [ ] Chat as a whole, random sample of messages
 
 ## Workbench
 - [ ] Adding a new block
@@ -32,6 +50,7 @@
     - [ ] Need to simulate the workflow "running" with a log in the sidebar.
     - [ ] Blocks in the flow needs to visually simulate running states: in-progress, running, pending, finished, error
 - [ ] Drag-n-drop
+- [ ] Saving changes, creating new versions
 
 ## Versions
 - [ ] Needs a basic design for listing lots of versions
@@ -49,5 +68,10 @@
 ## Tools
 - [ ] A much better home screen design with more tools
 - [ ] Create a better data object, and use it for the workbench and Experts screens
+- [ ] Connecting/Disconnecting
+- [ ] Using tools
 
 ## Organization
+- [ ] Basic account settings/profile
+- [ ] Billing, account management, etc
+- [ ] Creating/Joining/Leaving orgs
