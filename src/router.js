@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Agents from './views/Agents.vue';
+import NewAgent from './views/NewAgent.vue';
 import Tools from './views/Tools.vue';
 import AgentLayout from './views/AgentLayout.vue';
 import AgentWorkbench from './views/AgentWorkbench.vue';
@@ -13,7 +14,6 @@ import ExpertActivity from './views/ExpertActivity.vue';
 import ExpertWorkbench from './views/ExpertWorkbench.vue';
 import ExpertInsights from './views/ExpertInsights.vue';
 import ExpertVersions from './views/ExpertVersions.vue';
-import AgentVisualBuilder from './views/AgentVisualBuilder.vue';
 
 const routes = [
     {
@@ -22,14 +22,9 @@ const routes = [
         component: Agents,
     },
     {
-        path: '/agents/new/visual',
-        name: 'AgentVisualBuilder',
-        component: AgentVisualBuilder,
-    },
-    {
-        path: '/agents/new/block',
-        name: 'AgentWorkbenchNew',
-        component: AgentWorkbench,
+        path: '/agents/new',
+        name: 'NewAgent',
+        component: NewAgent,
     },
     {
         path: '/tools',

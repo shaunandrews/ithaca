@@ -9,12 +9,32 @@
                     class="conversation-header hstack"
                     :class="{ 'has-border': isScrolled }"
                 >
-                    <ButtonBack
-                        :to="`/agent/${agentId}/activity`"
-                        :agent-id="agentId"
-                        :clear-memory="true"
-                        text="All activity"
-                    />
+                    <div class="header-start hstack">
+                        <ButtonBack
+                            :to="`/agent/${agentId}/activity`"
+                            :agent-id="agentId"
+                            :clear-memory="true"
+                            text="All activity"
+                        />
+                        <div class="nav-buttons hstack">
+                            <button
+                                class="small nav-button"
+                                @click="goToPrevious"
+                                :disabled="!hasPrevious"
+                                title="Previous conversation"
+                            >
+                                <ChevronUp size="16" stroke-width="1.5" />
+                            </button>
+                            <button
+                                class="small nav-button"
+                                @click="goToNext"
+                                :disabled="!hasNext"
+                                title="Next conversation"
+                            >
+                                <ChevronDown size="16" stroke-width="1.5" />
+                            </button>
+                        </div>
+                    </div>
                     <h1>{{ conversation.event }}</h1>
                     <div class="header-end hstack">
                         <ConversationMeta
@@ -172,6 +192,8 @@
         Frown,
         Angry,
         ListOrdered,
+        ChevronUp,
+        ChevronDown,
     } from 'lucide-vue-next';
     import { agents } from '@/data/agents.js';
     import { conversations } from '@/data/conversations.js';
@@ -202,6 +224,25 @@
     const conversationMessages = computed(
         () => messages[activityId.value] || []
     );
+
+    // Navigation logic for prev/next conversations
+    const agentConversations = computed(() => {
+        return conversations
+            .filter((c) => c.agentId === agentId.value)
+            .sort((a, b) => new Date(b.datetime) - new Date(a.datetime));
+    });
+
+    const currentConversationIndex = computed(() => {
+        return agentConversations.value.findIndex((c) => c.id === activityId.value);
+    });
+
+    const hasPrevious = computed(() => {
+        return currentConversationIndex.value > 0;
+    });
+
+    const hasNext = computed(() => {
+        return currentConversationIndex.value < agentConversations.value.length - 1;
+    });
 
     const selectedMessage = ref(null);
     const selectedIdx = ref(null);
@@ -361,6 +402,20 @@
     function toggleOverview() {
         showOverview.value = !showOverview.value;
     }
+
+    function goToPrevious() {
+        if (hasPrevious.value) {
+            const prevConversation = agentConversations.value[currentConversationIndex.value - 1];
+            router.push(`/agent/${agentId.value}/activity/${prevConversation.id}`);
+        }
+    }
+
+    function goToNext() {
+        if (hasNext.value) {
+            const nextConversation = agentConversations.value[currentConversationIndex.value + 1];
+            router.push(`/agent/${agentId.value}/activity/${nextConversation.id}`);
+        }
+    }
 </script>
 
 <style scoped>
@@ -501,5 +556,28 @@
         display: flex;
         flex-wrap: wrap;
         gap: var(--space-xs);
+    }
+
+    .header-start {
+        gap: var(--space-xs);
+        align-items: center;
+    }
+
+    .nav-buttons {
+        gap: var(--space-xxs);
+    }
+
+    .nav-button {
+        padding: var(--space-xxs);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 28px;
+        height: 28px;
+    }
+
+    .nav-button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
     }
 </style>

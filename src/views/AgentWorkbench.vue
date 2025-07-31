@@ -229,6 +229,13 @@
 
     // Function to get workflow by agent ID
     const getWorkflowByAgentId = (agentId) => {
+        // First, check if the agent has its own workflow
+        const currentAgent = agents.find(a => a.id === agentId);
+        if (currentAgent && currentAgent.workflow) {
+            return currentAgent.workflow;
+        }
+        
+        // Fallback to predefined workflows for existing agents
         const workflowMapping = {
             1: sampleAgentWorkflow,           // WP.com Support Chat
             2: tumblrEmailTriageWorkflow,     // Tumblr Email Triage
@@ -239,7 +246,23 @@
             9: jetpackChatWorkflow            // Jetpack Chat
         };
         
-        return workflowMapping[agentId] || sampleAgentWorkflow;
+        return workflowMapping[agentId] || {
+            id: `agent-${agentId}-workflow`,
+            name: 'New Workflow',
+            description: 'A new workflow',
+            steps: [
+                {
+                    uid: 'start',
+                    stepNumber: 1,
+                    title: 'Start',
+                    type: 'trigger',
+                    inputs: [],
+                    outputs: ['message']
+                }
+            ],
+            variables: ['message'],
+            contextVariables: []
+        };
     };
 
     const selectedBlock = ref(null);
